@@ -1,0 +1,7 @@
+bridge-utils
+ebtables
+virtualbox
+virtualbox-guest-iso
+virtualbox-host-dkms
+libvirt
+virt-manager

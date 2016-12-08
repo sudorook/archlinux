@@ -1,0 +1,11 @@
+gst-libav
+gst-plugins-bad
+gst-plugins-base
+gst-plugins-good
+gst-plugins-ugly
+gstreamer0.10-bad
+gstreamer0.10-base
+gstreamer0.10-ffmpeg
+gstreamer0.10-good
+gstreamer0.10-ugly
+gstreamer0.10-plugins
