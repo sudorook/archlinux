@@ -1,4 +1,5 @@
 bridge-utils
+dnsmasq
 ebtables
 virtualbox
 virtualbox-guest-iso
