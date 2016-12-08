@@ -1,8 +1,11 @@
 bash-completion
+dialog
 grub
+iw
 os-prober
 reflector
 sudo
+wpa_supplicant
 xorg
 xorg-apps
 xorg-drivers
