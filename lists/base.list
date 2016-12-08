@@ -1,6 +1,7 @@
 bash-completion
 grub
 os-prober
+reflector
 sudo
 xorg
 xorg-apps
