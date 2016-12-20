@@ -1,8 +1,12 @@
 ddrescue
 encfs
 gnupg
-lynx
 parallel
 net-tools
 nmap
-words
+android-tools
+dosfstools
+hfsprogs
+ntfs-3g
+squashfs-tools
+tlp
