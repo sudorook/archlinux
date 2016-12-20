@@ -1,8 +1,8 @@
+cinnamon
 lightdm
 lightdm-gtk-greeter
+nemo-share
+nemo-fileroller
 xdg-utils
 xdg-user-dirs
 xdg-user-dirs-gtk
-cinnamon
-nemo-share
-nemo-fileroller
