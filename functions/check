@@ -1,5 +1,6 @@
-dir="$(dirname "$0")"
+#! /bin/bash
 
+dir="$(dirname "$0")"
 deps="$dir/lists/deps.list"
 
 function check_fail {
