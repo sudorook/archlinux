@@ -1,0 +1,38 @@
+#! /bin/bash
+set -eu
+
+dir="$(dirname "$0")"
+
+show_error() {
+  echo -e "\033[1;31m$@\033[m" 1>&2
+}
+show_info() {
+  echo -e "\033[1;32m$@\033[0m"
+}
+show_warning() {
+  echo -e "\033[1;33m$@\033[0m"
+}
+show_question() {
+  echo -e "\033[1;34m$@\033[0m"
+}
+show_success() {
+  echo -e "\033[1;35m$@\033[0m"
+}
+show_header() {
+  echo -e "\033[1;36m$@\033[0m"
+}
+show_listitem() {
+  echo -e "\033[0;37m$@\033[0m"
+}
+
+
+. $dir/functions/00-check
+. $dir/functions/01-base
+. $dir/functions/01-misc
+. $dir/functions/02-desktop
+. $dir/functions/03-network
+. $dir/functions/03-packages
+
+install_dependencies
+
+
