@@ -1,0 +1,16 @@
+#! /bin/bash
+set -eu
+
+dir="$(dirname "$0")"
+
+zsh="$dir/list/zsh.list"
+zshrc="$dir/dotfiles/zshrc"
+function install_zsh {
+  show_info "Install zsh."
+  sudo pacman -S $(cat $zsh)
+  check_fail
+  show_info "Copying zshrc."
+  cp -f $zshrc $HOME/.zshrc
+  show_success "Zsh installed."
+}
+

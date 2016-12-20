@@ -1,0 +1,19 @@
+#! /bin/bash
+set -eu
+
+dir="$(dirname "$0")"
+
+base="$dir/lists/base.list"
+toprc="$dir/dotfiles/toprc"
+function install_base {
+  show_info "Installing base packages."
+  sudo pacman -S $(cat $base)
+  check_fail
+  show_success "Base packages installed."
+
+  show_info "Installing toprc."
+  cp -r $toprc $HOME/.toprc
+  show_success "Installed toprc."
+
+  sudo visudo
+}

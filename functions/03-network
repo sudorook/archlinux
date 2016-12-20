@@ -1,0 +1,28 @@
+#! /bin/bash
+set -eu
+
+dir="$(dirname "$0")"
+
+networking="$dir/list/network.list"
+function install_network {
+  show_info "Set up networking."
+  sudo pacman -S $(cat $networking)
+  check_fail
+  show_success "Applications installed."
+
+  show_info "Setting up MAC address randomization."
+  echo "" >> /etc/NetworkManager/NetworkManager.conf
+  echo "## Trying built-in MAC Address randomization" >> /etc/NetworkManager/NetworkManager.conf
+  echo "[connection]" >> /etc/NetworkManager/NetworkManager.conf
+  echo "wifi.cloned-mac-address=random" >> /etc/NetworkManager/NetworkManager.conf
+  echo "ethernet.cloned-mac-address=random" >> /etc/NetworkManager/NetworkManager.conf
+
+  show_info "Downloading openvpn config files."
+  mkdir -p ~/.openvpn
+  # wget ...
+  # tar xf ...
+
+  show_info "Enabling ufw."
+  sudo ufw enable
+}
+

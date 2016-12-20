@@ -1,0 +1,28 @@
+#! /bin/bash
+set -eu
+
+dir="$(dirname "$0")"
+
+gnome="$dir/list/gnome.list"
+function install_gnome {
+  show_info "Set up GNOME desktop environment."
+  sudo pacman -S $(cat $gnome)
+  check_fail
+  show_success "GNOME installed."
+
+  show_info "Putting things into place."
+  sudo systemctl enable gdm.service
+  show_info "Done."
+}
+
+cinnamon="$dir/list/cinnamon.list"
+function install_cinnamon {
+  show_info "Set up cinnamon desktop environment."
+  sudo pacman -S $(cat $cinnamon)
+  check_fail
+  show_success "Cinnamon installed."
+  
+  show_info "Putting things into place."
+  sudo systemctl enable lightdm.service
+  show_info "Done."
+}
