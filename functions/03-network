@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-networking="$dir/list/network.list"
+networking="$dir/lists/network.list"
 function install_network {
   show_info "Set up networking."
   sudo pacman -S $(cat $networking)

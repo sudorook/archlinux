@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-zsh="$dir/list/zsh.list"
+zsh="$dir/lists/zsh.list"
 zshrc="$dir/dotfiles/zshrc"
 function install_zsh {
   show_info "Install zsh."

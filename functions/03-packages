@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-apps="$dir/list/apps.list"
+apps="$dir/lists/apps.list"
 function install_apps {
   show_info "Installing desktop applications."
   sudo pacman -S $(cat $apps)
@@ -61,7 +61,7 @@ function install_kvm {
   sudo usermod -aG kvm,libvirt $(whoami)
 }
 
-virtualbox="$dir/list/virtualbox.list"
+virtualbox="$dir/lists/virtualbox.list"
 vboxservice="$dir/services/virtualbox-modprobe.service"
 function install_virtualbox {
   show_info "Install VirtualBox."
