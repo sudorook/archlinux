@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-apps="$dir/lists/apps.list"
+apps="$dir/data/apps.list"
 function install_apps {
   show_info "Installing desktop applications."
   sudo pacman -S $(cat $apps)
@@ -11,7 +11,7 @@ function install_apps {
   show_success "Applications installed."
 }
 
-codecs="$dir/lists/codecs.list"
+codecs="$dir/data/codecs.list"
 function install_codecs {
   show_info "Installing codecs."
   sudo pacman -S $(cat $codecs)
@@ -19,7 +19,7 @@ function install_codecs {
   show_success "Codecs installed."
 }
 
-dev="$dir/lists/dev.list"
+dev="$dir/data/dev.list"
 vimrc="$dir/dotfiles/vimrc"
 npmrc="$dir/dotfiles/npmrc"
 gitignore="$dir/dotfiles/gitignore"
@@ -36,7 +36,7 @@ function install_dev {
   show_success "Dotfiles installed."
 }
 
-fonts="$dir/lists/fonts.list"
+fonts="$dir/data/fonts.list"
 function install_fonts {
   show_info "Installing fonts."
   sudo pacman -S $(cat $fonts)
@@ -44,7 +44,7 @@ function install_fonts {
   show_success "Fonts installed."
 }
 
-games="$dir/lists/games.list"
+games="$dir/data/games.list"
 function install_games {
   show_info "Installing game emulators."
   sudo pacman -S $(cat $games)
@@ -52,7 +52,7 @@ function install_games {
   show_success "Emulators installed."
 }
 
-kvm="$dir/lists/kvm.list"
+kvm="$dir/data/kvm.list"
 function install_kvm {
   show_info "Installing KVM."
   sudo pacman -S $(cat $kvm)
@@ -61,7 +61,7 @@ function install_kvm {
   sudo usermod -aG kvm,libvirt $(whoami)
 }
 
-virtualbox="$dir/lists/virtualbox.list"
+virtualbox="$dir/data/virtualbox.list"
 vboxservice="$dir/services/virtualbox-modprobe.service"
 function install_virtualbox {
   show_info "Install VirtualBox."

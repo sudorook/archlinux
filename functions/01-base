@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-base="$dir/lists/base.list"
+base="$dir/data/base.list"
 toprc="$dir/dotfiles/toprc"
 function install_base {
   show_info "Installing base packages."
