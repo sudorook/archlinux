@@ -14,3 +14,20 @@ function install_zsh {
   show_success "Zsh installed."
 }
 
+zsh="$dir/data/grsec.list"
+function install_grsec {
+  show_info "Install grsecurity."
+  sudo pacman -S $(cat $grsec)
+  check_fail
+  show_success "Grsecurity-patched kernel installed."
+  # need to set pax rules or enable learning mode
+}
+
+zsh="$dir/data/utils.list"
+function install_utils {
+  show_info "Install general utilities."
+  sudo pacman -S $(cat $utils)
+  check_fail
+  show_success "Utilities installed."
+  # need to enable tlp
+}
