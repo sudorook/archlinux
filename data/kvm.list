@@ -1,6 +1,6 @@
 bridge-utils
 dnsmasq
 ebtables
-qemu
 libvirt
+qemu
 virt-manager
