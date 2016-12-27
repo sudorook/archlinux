@@ -14,7 +14,7 @@ function install_arc_gtk {
   rm -rf arc-theme
 }
 
-function set_adapta_gtk {
+function install_adapta_gtk {
   git clone https://github.com/euphonia/Adapta adapta-gtk-theme
   cd adapta-gtk-theme
   ./autogen.sh \
@@ -31,7 +31,7 @@ function set_adapta_gtk {
 }
 
 numix_folders="$dir/configs/numix-folders"
-function set_numix_icons {
+function install_numix_icons {
   cp "$numix_folders" ~/.config/
   git clone https://github.com/numixproject/numix-folders numix-folders
   git clone https://github.com/numixproject/numix-icon-theme numix-icon-theme
@@ -45,4 +45,13 @@ function set_numix_icons {
   rm -rf numix-icon-theme
   rm -rf numix-icon-theme-circle
   rm -rf numix-icon-theme-square
+}
+
+function set_lightdm_theme {
+  show_info "unfinished. needs work."
+  # set:
+  #  theme-name
+  #  icon-theme
+  #  font-name
+  #  xft-hintstyle (set to slight)
 }
