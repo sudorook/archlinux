@@ -16,4 +16,8 @@ function install_base {
   show_success "Installed toprc."
 
   sudo visudo
+  # configure pacman.conf and enable: 
+  #   Color
+  #   CheckSpace
+  #   ILoveCandy
 }
