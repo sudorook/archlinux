@@ -30,4 +30,5 @@ function install_utils {
   check_fail
   show_success "Utilities installed."
   # need to enable tlp
+  # need to enable mdns_minimal in /etc/nsswitch.conf
 }
