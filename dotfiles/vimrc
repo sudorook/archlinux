@@ -1,0 +1,127 @@
+"global settings
+set nocompatible
+set background=dark
+"set title
+"set titlestring=%t
+set incsearch
+set hlsearch
+set smartcase
+set noerrorbells
+set novisualbell
+"set tabstop=3
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set smarttab
+set autoindent
+set smartindent
+"set ruler
+set wildmenu
+set wildignore=*.o,*~,*.pyc,*.lo
+filetype plugin indent on
+syntax on
+
+"encryption
+set cm=blowfish
+
+"pathogen
+"execute pathogen#infect()
+
+"airline
+set noshowmode
+set laststatus=2
+set t_Co=256
+set guifont=Monospace\ Regular\ for\ Powerline\ 10 
+"let g:airline#extensions#tabline#enabled=1
+let g:airline_powerline_fonts=1
+let g:airline_theme="term"
+
+"syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+"let g:syntastic_always_populate_loc_list=1
+"let g:syntastic_auto_loc_list=1
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_check_on_wq=0
+"let g:syntastic_c_remove_include_errors=1
+"let g:syntastic_cpp_include_dirs=[
+"  \ \"/usr/include/qt", 
+"  \ \"/usr/include/qt/QtGui", 
+"  \ \"/usr/include/qt/QtCore", 
+"  \ \"/usr/include/qt/QtWidgets"]
+
+"bash
+au FileType bash,zsh,fish,sh setlocal shiftwidth=2
+"au FileType bash,zsh,fish,sh setlocal tabstop=2
+au FileType bash,zsh,fish,sh setlocal softtabstop=2
+au FileType bash,zsh,fish,sh setlocal expandtab
+au FileType bash,zsh,fish,sh setlocal showmatch
+au FileType bash,zsh,fish,sh setlocal smartindent
+
+"latex
+"set grepprg=grep\ -nH\ $*
+"let g:tex_flavor="latex"
+
+"python
+"let g:jedi#force_py_version=3
+
+"c/cpp
+au FileType h,c,hpp,cpp setlocal shiftwidth=2
+"au FileType h,c,hpp,cpp setlocal tabstop=2
+au FileType h,c,hpp,cpp setlocal softtabstop=2
+au FileType h,c,hpp,cpp setlocal expandtab
+au FileType h,c,hpp,cpp setlocal showmatch
+au FileType h,c,hpp,cpp setlocal autoindent
+au FileType h,c,hpp,cpp setlocal cindent
+"au FileType h,c,hpp,cpp setlocal comments=sl:/*,mb:\ *,elx:\ */
+au FileType h,c,hpp,cpp map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+au FileType h,c,hpp,cpp imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
+
+"omnicppcomplete
+"set omnifunc=syntaxcomplete#Complete " override built-in C omnicomplete with C++ OmniCppComplete plugin
+"let OmniCpp_GlobalScopeSearch   = 1
+"let OmniCpp_DisplayMode         = 1
+"let OmniCpp_ShowScopeInAbbr     = 0 "do not show namespace in pop-up
+"let OmniCpp_ShowPrototypeInAbbr = 1 "show prototype in pop-up
+"let OmniCpp_ShowAccess          = 1 "show access in pop-up
+"let OmniCpp_SelectFirstItem     = 1 "select first item in pop-up
+"set completeopt=menuone,menu,longest
+
+"html
+au FileType html,css,scss,less setlocal shiftwidth=2
+"au FileType html,css,scss,less setlocal tabstop=2
+au FileType html,css,scss,less setlocal softtabstop=2
+au FileType html,css,scss,less setlocal expandtab
+
+"vim-taglist
+let Tlist_Compact_Format=1
+let Tlist_GainFocus_On_ToggleOpen=1
+let Tlist_Close_On_Select=1
+nnoremap <c-l> :TlistToggle<cr>
+
+"nerdtree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeDirArrowExpandable = '►'
+let g:NERDTreeDirArrowCollapsible = '▼'
+
+"nerd-commenter
+let g:NERDSpaceDelims=1
+let g:NERDCompactSexyComs=1
+let g:NERDDefaultAlign='left'
+let g:NERDCommentEmptyLines=1
+
+"allow per-directory vimrc
+set exrc 
+set secure
+
+"save cursor position
+augroup resCur
+  autocmd!
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+augroup END
