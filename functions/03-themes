@@ -75,10 +75,14 @@ function install_papirus_icons {
 }
 
 function set_lightdm_theme {
-  show_info "unfinished. needs work."
-  # set:
-  #  theme-name
-  #  icon-theme
-  #  font-name
-  #  xft-hintstyle (set to slight)
+  if pacman -Qs lighdm-gtk-greeter > /dev/null; then
+    sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" \
+      /etc/lightdm/lightdm-gtk-greeter.conf
+    sed -i "s/^#theme-name=$/icon-theme=Papirus-Dark/g" \
+      /etc/lightdm/lightdm-gtk-greeter.conf
+    sed -i "s/^#font-name=$/font-name=Noto Sans/g" \
+      /etc/lightdm/lightdm-gtk-greeter.conf
+    sed -i "s/^#xft-hintstyle=$/xfg-hintstyle=slight/g" \
+      /etc/lightdm/lightdm-gtk-greeter.conf
+  fi
 }
