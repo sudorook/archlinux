@@ -55,6 +55,25 @@ function install_numix_icons {
   rm -rf numix-icon-theme-square
 }
 
+function install_papirus_icons {
+  git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
+
+  sudo rsync -Prad --delete-excluded \
+    papirus-icon-theme/ePapirus/ \
+    /usr/share/icons/ePapirus/
+  sudo rsync -Prad --delete-excluded \
+    papirus-icon-theme/Papirus/ \
+    /usr/share/icons/Papirus/
+  sudo rsync -Prad --delete-excluded \
+    papirus-icon-theme/Papirus-Dark/ \
+    /usr/share/icons/Papirus-Dark/
+  sudo rsync -Prad --delete-excluded \
+    papirus-icon-theme/Papirus-Light/ \
+    /usr/share/icons/Papirus-Light/
+
+  rm -rf papirus-icon-theme
+}
+
 function set_lightdm_theme {
   show_info "unfinished. needs work."
   # set:
