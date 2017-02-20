@@ -1,0 +1,12 @@
+#! /bin/bash
+set -eu
+
+dir="$(dirname "$0")"
+
+# set gvfs metadata
+# disable xdg PUBLIC and TEMPLATE
+# stop pulseaudio ringing
+# set dconf settings
+# pick themes (gnome, cinnamon, lightdm, etc.)
+# set up tor browser
+# download scripts and add to path
