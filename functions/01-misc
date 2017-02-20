@@ -11,7 +11,7 @@ function install_zsh {
   check_fail
   show_info "Copying zshrc."
   cp -f $zshrc $HOME/.zshrc
-  show_success "Zsh installed."
+  show_success "zsh installed."
 }
 
 zsh="$dir/data/grsec.list"
