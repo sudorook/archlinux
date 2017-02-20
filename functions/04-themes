@@ -30,42 +30,38 @@ function install_adapta_gtk {
   rm -rf adapta-gtk-theme
 }
 
+papirussrc="papirus-icon-theme"
+icondest="/usr/share/icons"
 function install_papirus_icons {
   git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 
   sudo rsync -Prad --delete-excluded \
-    papirus-icon-theme/ePapirus/ \
-    /usr/share/icons/ePapirus/
+    ${papirussrc}/ePapirus/ 
+    ${icondest}/ePapirus/
 
   sudo rsync -Prad --delete-excluded \
-    papirus-icon-theme/Papirus/ \
-    /usr/share/icons/Papirus/
+    ${papirussrc}/Papirus/ \
+    ${icondest}/Papirus/
 
   sudo rsync -Prad --delete-excluded \
-    papirus-icon-theme/Papirus-Dark/ \
-    /usr/share/icons/Papirus-Dark/
+    ${papirussrc}/Papirus-Dark/ \
+    ${icondest}/Papirus-Dark/
 
   sudo rsync -Prad --delete-excluded \
-    papirus-icon-theme/Papirus-Light/ \
-    /usr/share/icons/Papirus-Light/
+    ${papirussrc}/Papirus-Light/ \
+    ${icondest}/Papirus-Light/
 
-  rm -rf papirus-icon-theme
+  rm -rf ${papirussrc}
 }
 
+lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
   if pacman -Qs lighdm-gtk-greeter > /dev/null; then
-    sudo sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" \
-      /etc/lightdm/lightdm-gtk-greeter.conf
-
-    sudo sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" \
-      /etc/lightdm/lightdm-gtk-greeter.conf
-
+    sudo sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" ${lightdmconf}
+    sudo sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" ${lightdmconf}
     if pacman -Qs noto-fonts > /dev/null; then
-      sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" \
-        /etc/lightdm/lightdm-gtk-greeter.conf
+      sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" ${lightdmconf}
     fi
-
-    sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" \
-      /etc/lightdm/lightdm-gtk-greeter.conf
+    sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" ${lightdmconf}
   fi
 }

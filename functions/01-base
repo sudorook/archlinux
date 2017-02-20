@@ -5,6 +5,7 @@ dir="$(dirname "$0")"
 
 base="$dir/data/base.list"
 toprc="$dir/dotfiles/toprc"
+pacmanconf="/etc/pacman.conf"
 function install_base {
   show_info "Installing base packages."
   sudo pacman -S $(cat $base)
@@ -17,6 +18,6 @@ function install_base {
 
   show_info "Enable sudo insults."
   sudo visudo # Consider using another sed script (DANGEROUS!!!)
-  sudo sed -i "/^#Color$/Color" /etc/pacman.conf
-  sudo sed -i "/^CheckSpace$/a ILoveCandy" /etc/pacman.conf
+  sudo sed -i "/^#Color$/Color" ${pacmanconf}
+  sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
 }
