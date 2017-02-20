@@ -36,12 +36,15 @@ function install_papirus_icons {
   sudo rsync -Prad --delete-excluded \
     papirus-icon-theme/ePapirus/ \
     /usr/share/icons/ePapirus/
+
   sudo rsync -Prad --delete-excluded \
     papirus-icon-theme/Papirus/ \
     /usr/share/icons/Papirus/
+
   sudo rsync -Prad --delete-excluded \
     papirus-icon-theme/Papirus-Dark/ \
     /usr/share/icons/Papirus-Dark/
+
   sudo rsync -Prad --delete-excluded \
     papirus-icon-theme/Papirus-Light/ \
     /usr/share/icons/Papirus-Light/
@@ -53,12 +56,15 @@ function set_lightdm_theme {
   if pacman -Qs lighdm-gtk-greeter > /dev/null; then
     sudo sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
+
     sudo sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
+
     if pacman -Qs noto-fonts > /dev/null; then
       sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" \
         /etc/lightdm/lightdm-gtk-greeter.conf
     fi
+
     sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
   fi
