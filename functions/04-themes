@@ -4,7 +4,7 @@ set -eu
 dir="$(dirname "$0")"
 
 function install_arc_gtk {
-  git clone https://github.com/euphonia/arc-theme arc-theme
+  git clone https://github.com/pseudorook/arc-theme arc-theme
   cd arc-theme
   npm install
   ./autogen.sh --prefix=/usr
@@ -15,7 +15,7 @@ function install_arc_gtk {
 }
 
 function install_adapta_gtk {
-  git clone https://github.com/euphonia/Adapta adapta-gtk-theme
+  git clone https://github.com/pseudorook/Adapta adapta-gtk-theme
   cd adapta-gtk-theme
   ./autogen.sh \
     --prefix=/usr \

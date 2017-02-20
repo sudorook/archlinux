@@ -32,7 +32,7 @@ show_listitem() {
 . $dir/functions/02-desktop
 . $dir/functions/03-network
 . $dir/functions/03-packages
-. $dir/functions/03-themes
+. $dir/functions/04-themes
 
 # install_dependencies
 show_question "question"
