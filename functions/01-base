@@ -15,9 +15,8 @@ function install_base {
   cp -r $toprc $HOME/.toprc
   show_success "Installed toprc."
 
-  sudo visudo
-  # configure pacman.conf and enable: 
-  #   Color
-  #   CheckSpace
-  #   ILoveCandy
+  show_info "Enable sudo insults."
+  sudo visudo # Consider using another sed script (DANGEROUS!!!)
+  sudo sed -i "/^CheckSpace$/a Color" /etc/pacman.conf
+  sudo sed -i "/^CheckSpace$/a ILoveCandy" /etc/pacman.conf
 }
