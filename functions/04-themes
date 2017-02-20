@@ -3,6 +3,13 @@ set -eu
 
 dir="$(dirname "$0")"
 
+themes="${dir}/data/themes.list"
+function install_theme_deps {
+  show_info "Installing theme dependencies."
+  sudo pacman -S $(cat ${themes})
+  show_success "Theme dependencies installed."
+}
+
 function install_arc_gtk {
   git clone https://github.com/pseudorook/arc-theme arc-theme
   cd arc-theme
