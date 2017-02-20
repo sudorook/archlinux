@@ -17,6 +17,7 @@ function install_network {
   echo "[connection]" >> ${nmconf}
   echo "wifi.cloned-mac-address=random" >> ${nmconf}
   echo "ethernet.cloned-mac-address=random" >> ${nmconf}
+  sudo systemctl restart NetworkManager
 
   show_info "Downloading openvpn config files."
   mkdir -p ~/.openvpn
