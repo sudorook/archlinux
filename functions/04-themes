@@ -55,8 +55,10 @@ function set_lightdm_theme {
       /etc/lightdm/lightdm-gtk-greeter.conf
     sudo sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
-    sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" \
-      /etc/lightdm/lightdm-gtk-greeter.conf
+    if pacman -Qs noto-fonts > /dev/null; then
+      sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" \
+        /etc/lightdm/lightdm-gtk-greeter.conf
+    fi
     sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
   fi
