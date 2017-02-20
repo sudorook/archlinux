@@ -53,11 +53,11 @@ function set_lightdm_theme {
   if pacman -Qs lighdm-gtk-greeter > /dev/null; then
     sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
-    sed -i "s/^#theme-name=$/icon-theme=Papirus-Dark/g" \
+    sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
     sed -i "s/^#font-name=$/font-name=Noto Sans/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
-    sed -i "s/^#xft-hintstyle=$/xfg-hintstyle=slight/g" \
+    sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" \
       /etc/lightdm/lightdm-gtk-greeter.conf
   fi
 }
