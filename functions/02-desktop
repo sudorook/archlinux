@@ -3,10 +3,10 @@ set -eu
 
 dir="$(dirname "$0")"
 
-gnome="$dir/data/gnome.list"
+gnome="${dir}/data/gnome.list"
 function install_gnome {
   show_info "Set up GNOME desktop environment."
-  sudo pacman -S $(cat $gnome)
+  sudo pacman -S $(cat ${gnome})
   check_fail
   show_success "GNOME installed."
 
@@ -15,10 +15,10 @@ function install_gnome {
   show_info "Done."
 }
 
-cinnamon="$dir/data/cinnamon.list"
+cinnamon="${dir}/data/cinnamon.list"
 function install_cinnamon {
   show_info "Set up cinnamon desktop environment."
-  sudo pacman -S $(cat $cinnamon)
+  sudo pacman -S $(cat ${cinnamon})
   check_fail
   show_success "Cinnamon installed."
   

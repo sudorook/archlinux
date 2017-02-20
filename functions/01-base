@@ -3,17 +3,17 @@ set -eu
 
 dir="$(dirname "$0")"
 
-base="$dir/data/base.list"
-toprc="$dir/dotfiles/toprc"
+base="${dir}/data/base.list"
+toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
 function install_base {
   show_info "Installing base packages."
-  sudo pacman -S $(cat $base)
+  sudo pacman -S $(cat ${base})
   check_fail
   show_success "Base packages installed."
 
   show_info "Installing toprc."
-  cp -r $toprc $HOME/.toprc
+  cp -r ${toprc} ${HOME}/.toprc
   show_success "Installed toprc."
 
   show_info "Enable sudo insults."

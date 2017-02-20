@@ -3,70 +3,70 @@ set -eu
 
 dir="$(dirname "$0")"
 
-apps="$dir/data/apps.list"
+apps="${dir}/data/apps.list"
 function install_apps {
   show_info "Installing desktop applications."
-  sudo pacman -S $(cat $apps)
+  sudo pacman -S $(cat ${apps})
   check_fail
   show_success "Applications installed."
 }
 
-codecs="$dir/data/codecs.list"
+codecs="${dir}/data/codecs.list"
 function install_codecs {
   show_info "Installing codecs."
-  sudo pacman -S $(cat $codecs)
+  sudo pacman -S $(cat ${codecs})
   check_fail
   show_success "Codecs installed."
 }
 
-dev="$dir/data/dev.list"
-vimrc="$dir/dotfiles/vimrc"
-npmrc="$dir/dotfiles/npmrc"
-gitignore="$dir/dotfiles/gitignore"
+dev="${dir}/data/dev.list"
+vimrc="${dir}/dotfiles/vimrc"
+npmrc="${dir}/dotfiles/npmrc"
+gitignore="${dir}/dotfiles/gitignore"
 function install_dev {
   show_info "Installing languages and editors for development."
-  sudo pacman -S $(cat $dev)
+  sudo pacman -S $(cat ${dev})
   check_fail
   show_success "Languages and editors installed."
   
   show_info "Installing dotfiles."
-  cp -f $vimrc $HOME/.vimrc
-  cp -f $npmrc $HOME/.npmrc
-  cp -f $gitignore $HOME/.gitignore
+  cp -f ${vimrc} ${HOME}/.vimrc
+  cp -f ${npmrc} ${HOME}/.npmrc
+  cp -f ${gitignore} ${HOME}/.gitignore
   show_success "Dotfiles installed."
 }
 
-fonts="$dir/data/fonts.list"
+fonts="${dir}/data/fonts.list"
 function install_fonts {
   show_info "Installing fonts."
-  sudo pacman -S $(cat $fonts)
+  sudo pacman -S $(cat ${fonts})
   check_fail
   show_success "Fonts installed."
 }
 
-games="$dir/data/games.list"
+games="${dir}/data/games.list"
 function install_games {
   show_info "Installing game emulators."
-  sudo pacman -S $(cat $games)
+  sudo pacman -S $(cat ${games})
   check_fail
   show_success "Emulators installed."
 }
 
-kvm="$dir/data/kvm.list"
+kvm="${dir}/data/kvm.list"
 function install_kvm {
   show_info "Installing KVM."
-  sudo pacman -S $(cat $kvm)
+  sudo pacman -S $(cat ${kvm})
   check_fail
   show_success "KVM installed."
   sudo usermod -aG kvm,libvirt $(whoami)
   # need to set group to 78 in qemu.conf
 }
 
-virtualbox="$dir/data/virtualbox.list"
-vboxservice="$dir/services/virtualbox-modprobe.service"
+virtualbox="${dir}/data/virtualbox.list"
+vboxservice="${dir}/services/virtualbox-modprobe.service"
 function install_virtualbox {
   show_info "Install VirtualBox."
-  sudo pacman -S $(cat $virtualbox)
+  sudo pacman -S $(cat ${virtualbox})
   check_fail
   show_success "VirtualBox installed."
   
@@ -76,7 +76,7 @@ function install_virtualbox {
 
   show_info "Setting up custom services."
   sudo ln -s /etc/modules-load.d/virtualbox-host-modules-arch.conf /dev/null
-  sudo cp -f $vboxservice /etc/systemd/system
+  sudo cp -f ${vboxservice} /etc/systemd/system
   sudo systemctl enable virtualbox-modprobe.service
   show_success "Done."
 }

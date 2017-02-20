@@ -1,7 +1,7 @@
 #! /bin/bash
 
 dir="$(dirname "$0")"
-deps="$dir/data/deps.list"
+deps="${dir}/data/deps.list"
 
 function check_fail {
   EXITSTATUS=$1
@@ -14,13 +14,13 @@ function check_fail {
 function install_dependencies {
   show_info "Checking dependencies."
   for package in $(cat $deps); do
-    if ! pacman -Qi $package > /dev/null 2>&1; then
-      show_info "$package is needed for this script."
-      sudo pacman -S $package
+    if ! pacman -Qi ${package} > /dev/null 2>&1; then
+      show_info "${package} is needed for this script."
+      sudo pacman -S ${package}
       check_fail
-      show_success "$package now installed."
+      show_success "${package} now installed."
     else
-      show_success "$package is already installed."
+      show_success "${package} is already installed."
     fi
   done
 }
