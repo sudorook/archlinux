@@ -72,3 +72,22 @@ function set_lightdm_theme {
     sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" ${lightdmconf}
   fi
 }
+
+qt5ctconf="${dir}/configs/qt5ct.conf"
+pkgbuilddir="${HOME}/.pkgbuild"
+function set_qtcompat {
+  show_info "Building qt5-styleplugins."
+  mkdir -p ${pkgbuilddir}
+  cd ${pkgbuilddir}
+  wget https://aur.archlinux.org/cgit/aur.git/snapshot/qt5-styleplugins.tar.gz
+  tar xf ${pkgbuilddir}/qt5-styleplugins.tar.gz
+  cd qt5-styleplugins
+  makepkg -si
+  show_success "qt5-styleplugins built and installed."
+  cd ${dir}
+
+  show_info "Copying qt5ct config."
+  mkdir -p ${HOME}/.config/qt5ct
+  cp -f ${qt5ctconf} ${HOME}/.config/qt5ct
+  show_success "qt5ct config opied."
+}
