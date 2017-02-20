@@ -30,31 +30,6 @@ function install_adapta_gtk {
   rm -rf adapta-gtk-theme
 }
 
-numix_folders="$dir/configs/numix-folders"
-function install_numix_icons {
-  git clone https://github.com/numixproject/numix-folders
-  git clone https://github.com/numixproject/numix-icon-theme
-  git clone https://github.com/numixproject/numix-icon-theme-circle
-  git clone https://github.com/numixproject/numix-icon-theme-square
-
-  sudo rsync -Prad --delete-excluded \
-    numix-icon-theme/Numix/ \
-    /usr/share/icons/Numix/
-  sudo rsync -Prad --delete-excluded \
-    numix-icon-theme-circle/Numix-Circle/ \
-    /usr/share/icons/Numix-Circle/
-  sudo rsync -Prad --delete-excluded \
-    numix-icon-theme-square/Numix-Square/ \
-    /usr/share/icons/Numix-Square/
-
-  cp "$numix_folders" ~/.config/
-  sudo ./numix-folders/numix-folders
-  rm -rf numix-folders
-  rm -rf numix-icon-theme
-  rm -rf numix-icon-theme-circle
-  rm -rf numix-icon-theme-square
-}
-
 function install_papirus_icons {
   git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 
