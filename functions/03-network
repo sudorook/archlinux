@@ -4,6 +4,7 @@ set -eu
 dir="$(dirname "$0")"
 
 networking="$dir/data/network.list"
+nmconf="/etc/NetworkManager/NetworkManager.conf"
 function install_network {
   show_info "Set up networking."
   sudo pacman -S $(cat $networking)
@@ -11,11 +12,11 @@ function install_network {
   show_success "Applications installed."
 
   show_info "Setting up MAC address randomization."
-  echo "" >> /etc/NetworkManager/NetworkManager.conf
-  echo "## Trying built-in MAC Address randomization" >> /etc/NetworkManager/NetworkManager.conf
-  echo "[connection]" >> /etc/NetworkManager/NetworkManager.conf
-  echo "wifi.cloned-mac-address=random" >> /etc/NetworkManager/NetworkManager.conf
-  echo "ethernet.cloned-mac-address=random" >> /etc/NetworkManager/NetworkManager.conf
+  echo "" >> ${nmconf}
+  echo "## Trying built-in MAC Address randomization" >> ${nmconf}
+  echo "[connection]" >> ${nmconf}
+  echo "wifi.cloned-mac-address=random" >> ${nmconf}
+  echo "ethernet.cloned-mac-address=random" >> ${nmconf}
 
   show_info "Downloading openvpn config files."
   mkdir -p ~/.openvpn
