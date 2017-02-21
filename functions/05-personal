@@ -3,10 +3,10 @@ set -eu
 
 dir="$(dirname "$0")"
 
-# set gvfs metadata
-# disable xdg PUBLIC and TEMPLATE
-# stop pulseaudio ringing
-# set dconf settings
-# pick themes (gnome, cinnamon, lightdm, etc.)
-# set up tor browser
-# download scripts and add to path
+# Set gvfs metadata
+# Disable xdg PUBLIC and TEMPLATE
+# Stop pulseaudio ringing
+# Set dconf settings
+# Pick themes (gnome, cinnamon, lightdm, etc.)
+# Enable tor andset up tor browser.
+# Download scripts (submodule) and add to path
