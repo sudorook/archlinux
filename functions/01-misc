@@ -32,3 +32,11 @@ function install_utils {
   # need to enable tlp
   # need to enable mdns_minimal in /etc/nsswitch.conf
 }
+
+android="${dir}/data/android.list"
+function install_android {
+  show_info "Installing tools for Android devices."
+  sudo pacman -S $(cat ${android})
+  check_fail
+  show_success "Android tools installed."
+}
