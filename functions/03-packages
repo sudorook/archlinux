@@ -59,7 +59,9 @@ function install_kvm {
   check_fail
   show_success "KVM installed."
   sudo usermod -aG kvm,libvirt $(whoami)
-  # need to set group to 78 in qemu.conf
+
+  sudo systemctl enable libvirtd
+  sudo systemctl start libvirtd
 }
 
 virtualbox="${dir}/data/virtualbox.list"
