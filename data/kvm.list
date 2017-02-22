@@ -2,5 +2,6 @@ bridge-utils
 dnsmasq
 ebtables
 libvirt
+openbsd-netcat
 qemu
 virt-manager
