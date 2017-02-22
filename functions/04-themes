@@ -61,18 +61,6 @@ function install_papirus_icons {
   rm -rf ${papirussrc}
 }
 
-lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
-function set_lightdm_theme {
-  if pacman -Qs lighdm-gtk-greeter > /dev/null; then
-    sudo sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" ${lightdmconf}
-    sudo sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" ${lightdmconf}
-    if pacman -Qs noto-fonts > /dev/null; then
-      sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" ${lightdmconf}
-    fi
-    sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" ${lightdmconf}
-  fi
-}
-
 qt5ctconf="${dir}/configs/qt5ct.conf"
 pkgbuilddir="${HOME}/.pkgbuild"
 function set_qtcompat {
