@@ -29,8 +29,16 @@ function install_utils {
   sudo pacman -S $(cat ${utils})
   check_fail
   show_success "Utilities installed."
-  # need to enable tlp
-  # need to enable mdns_minimal in /etc/nsswitch.conf
+
+  # Enable tlp on laptops.
+  show_question "Is this a laptop? (Y/n)"
+  read -r response
+  if [[ ${response} =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    sudo systemctl enable tlp.service
+    sudo systemctl start tlp.service
+    check_fail
+    show_success "tlp enabled."
+  fi
 }
 
 android="${dir}/data/android.list"
