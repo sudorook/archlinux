@@ -5,7 +5,7 @@ dir="$(dirname "$0")"
 
 gnome="${dir}/data/gnome.list"
 function install_gnome {
-  show_info "Set up GNOME desktop environment."
+  show_info "Setting up GNOME desktop environment."
   sudo pacman -S $(cat ${gnome})
   check_fail
   show_success "GNOME installed."
@@ -17,7 +17,7 @@ function install_gnome {
 
 cinnamon="${dir}/data/cinnamon.list"
 function install_cinnamon {
-  show_info "Set up cinnamon desktop environment."
+  show_info "Setting up cinnamon desktop environment."
   sudo pacman -S $(cat ${cinnamon})
   check_fail
   show_success "Cinnamon installed."
