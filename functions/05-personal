@@ -31,6 +31,16 @@ function invert_brightness {
   else
     sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubconfig}
     sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig}
-    show_success "Brightness inverted"
+    show_success "Brightness inverted."
+  fi
+}
+
+pulseconfig="/etc/pulse/default.pa"
+function disable_pulseaudio_suspend {
+  show_info "Disabling suspend on PulseAudio when sinks/sources idle."
+  if [ -f ${pulseconfig} ]; then
+    sed -i "s/^load-module module-suspend-on-idle$/#load-module module-suspend-on-idle/g" ${pulseconfig}
+  else
+    show_warning "PuleAudio config file missing. Exiting."
   fi
 }
