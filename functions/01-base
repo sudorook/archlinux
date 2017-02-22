@@ -16,6 +16,10 @@ function install_base {
   cp -r ${toprc} ${HOME}/.toprc
   show_success "Installed toprc."
 
+  # Customize sudo and pacman to: 
+  #  - insult incorrect password attempts
+  #  - color pacman output
+  #  - show pacman-game-style progress bare for pacman
   show_info "Enable sudo insults."
   sudo visudo # Consider using another sed script (DANGEROUS!!!)
   sudo sed -i "/^#Color$/Color" ${pacmanconf}
