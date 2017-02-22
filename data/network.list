@@ -1,5 +1,7 @@
+avahi
 gvfs-smb
 networkmanager-openvpn
+nss-mdns
 openssh
 samba
 tor
