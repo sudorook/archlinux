@@ -8,5 +8,4 @@ dir="$(dirname "$0")"
 # Stop pulseaudio ringing
 # Set dconf settings
 # Pick themes (gnome, cinnamon, lightdm, etc.)
-# Enable tor andset up tor browser.
 # Download scripts (submodule) and add to path

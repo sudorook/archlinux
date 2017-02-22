@@ -19,12 +19,11 @@ function install_network {
   echo "ethernet.cloned-mac-address=random" >> ${nmconf}
   sudo systemctl restart NetworkManager
 
-  show_info "Downloading openvpn config files."
-  mkdir -p ~/.openvpn
-  # wget ...
-  # tar xf ...
-
   show_info "Enabling ufw."
   sudo ufw enable
+
+  show_info "Enabling and start tor service."
+  sudo systemctl start tor
+  sudo systemctl enable tor
 }
 
