@@ -26,3 +26,26 @@ function install_cinnamon {
   sudo systemctl enable lightdm.service
   show_info "Done."
 }
+
+function install_desktop {
+  availabledesktops=("GNOME" "Cinnamon")
+  show_question "Which desktop environment do you want?"
+  select reply in "${availabledesktops[@]}"; do
+    case $reply in 
+      "GNOME")
+        show_info "GNOME selected."
+        install_gnome
+        break
+        ;;
+      "Cinnamon")
+        show_info "Cinnamon selected."
+        install_cinnamon
+        break
+        ;;
+      *) 
+        echo "invalid option"
+        break
+        ;;
+    esac
+  done
+}
