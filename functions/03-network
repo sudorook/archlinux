@@ -23,7 +23,14 @@ function install_network {
   sudo ufw enable
 
   show_info "Enabling and start tor service."
-  sudo systemctl start tor
   sudo systemctl enable tor
+  sudo systemctl start tor
+
+  show_info "Enabling local hostname resolution in Avahi."
+  oldhostsline="hosts: files mymachines resolve [!UNAVAIL=return] dns myhostname"
+  newhostsline="hosts: files mymachines mdns_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns myhostname"
+  sudo sed -i "s/${oldhostsline}/${newhostsline}/g" /etc/nsswitch.conf
+  sudo systemctl enable avahi-daemon.service
+  sudo systemctl start avahi-daemon.service
 }
 
