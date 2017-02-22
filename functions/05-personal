@@ -21,3 +21,16 @@ function set_lightdm_theme {
     sudo sed -i "s/^#xft-hintstyle=$/xft-hintstyle=slight/g" ${lightdmconf}
   fi
 }
+
+grubconfig="/etc/default/grub"
+function invert_brightness {
+  oldline=$(cat ${grubconfig} | grep ^GRUB_CMDLINE_LINUX=)
+  bootparams=$(echo ${oldline} | sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p")
+  if [[ ${bootparams} =~ "i915.invert_brightness=1" ]]; then
+    show_info "Brightness already inverted. Skipping."
+  else
+    sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubconfig}
+    sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig}
+    show_success "Brightness inverted"
+  fi
+}
