@@ -55,7 +55,7 @@ function invert_brightness {
     show_info "Brightness already inverted. Skipping."
   else
     sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubconfig}
-    sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig}
+    sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig} # backup
     show_success "Brightness inverted."
   fi
 }
