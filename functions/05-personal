@@ -3,18 +3,43 @@ set -eu
 
 dir="$(dirname "$0")"
 
-# Set gvfs metadata
-# Disable xdg PUBLIC and TEMPLATE
-# Stop pulseaudio ringing
 # Set dconf settings
 # Pick themes (gnome, cinnamon, lightdm, etc.)
 # Download scripts (submodule) and add to path
 
+icontheme="Papirus-Dark"
+xdgdefaultconf="/etc/xdg/user-dirs.defaults"
+function set_icon_theme {
+  gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
+  gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
+
+  gvfs-set-attribute ${HOME}/Projects/ -t string \
+    metadata::custom-icon-name folder-development
+  gvfs-set-attribute ${HOME}/Sync/ -t string \
+    metadata::custom-icon-name folder-cloud
+
+  sudo sed -i "s/*TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
+  sudo sed -i "s/*PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
+}
+
+gtktheme="Arc-Dark"
+function set_gtk_theme {
+  if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
+    gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
+    gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
+    gsettings set org.cinnamon.theme name "'${gtktheme}'"
+  elif [ ${DESKTOP_SESSION} = "gnome" ]; then
+    gsettings set org.gnome.desktop.wm.preferences theme "'${gtktheme}'"
+    gsettings set org.gnome.desktop.interface gtk-theme "'${gtktheme}'"
+  fi
+}
+
+gtktheme="Arc-Dark"
 lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
   if pacman -Qs lighdm-gtk-greeter > /dev/null; then
-    sudo sed -i "s/^#theme-name=$/theme-name=Arc-Dark/g" ${lightdmconf}
-    sudo sed -i "s/^#icon-theme=$/icon-theme=Papirus-Dark/g" ${lightdmconf}
+    sudo sed -i "s/^#theme-name=$/theme-name=${gtktheme}/g" ${lightdmconf}
+    sudo sed -i "s/^#icon-theme=$/icon-theme=${icontheme}/g" ${lightdmconf}
     if pacman -Qs noto-fonts > /dev/null; then
       sudo sed -i "s/^#font-name=$/font-name=Noto Sans/g" ${lightdmconf}
     fi
