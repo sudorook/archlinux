@@ -76,6 +76,24 @@ function set_lightdm_theme {
   fi
 }
 
+gtksettings="${HOME}/.config/gtk-3.0/settings.ini"
+function set_dark_gtk {
+  if test `grep ^gtk-application-prefer-dark-theme= ${gtksettings}`; then
+    isgtkdark=$(grep ^gtk-application-prefer-dark-theme= ${gtksettings} | cut -d"=" -f2)
+    if test ${isgtkdark}; then
+      show_info "Desktop is already set to use dark GTK variants."
+    else
+      sed -i "s/^gtk-application-prefer-dark-theme=${isgtkdark}$/gtk-application-prefer-dark-theme=1/g" ${gtksettings}
+    fi
+  else
+    if [ -e ${gtksettings} ]; then
+      echo "" >> ${gtksettings}
+    fi
+    echo "[Settings]" >> ${gtksettings}
+    echo "gtk-application-prefer-dark-theme=1" >> ${gtksettings}
+  fi
+}
+
 cinnamondconf="${dir}/configs/cinnamon.dconf"
 function import_cinnamon_dconf {
   show_info "Importing cinnamon dconf settings."
