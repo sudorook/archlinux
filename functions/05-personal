@@ -84,6 +84,14 @@ function import_cinnamon_dconf {
   show_success "Cinnamon dconf settings imported."
 }
 
+appdconf="${dir}/configs/apps.dconf"
+function import_apps_dconf {
+  show_info "Importing application dconf settings."
+  dconf load ${appconf}
+  check_fail
+  show_success "Application dconf settings imported."
+}
+
 grubconfig="/etc/default/grub"
 function invert_brightness {
   oldline=$(cat ${grubconfig} | grep ^GRUB_CMDLINE_LINUX=)
