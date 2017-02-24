@@ -87,7 +87,7 @@ function import_cinnamon_dconf {
 appdconf="${dir}/configs/apps.dconf"
 function import_apps_dconf {
   show_info "Importing application dconf settings."
-  dconf load ${appconf}
+  dconf load ${appdconf}
   check_fail
   show_success "Application dconf settings imported."
 }
