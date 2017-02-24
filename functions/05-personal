@@ -76,6 +76,14 @@ function set_lightdm_theme {
   fi
 }
 
+cinnamondconf="${dir}/configs/cinnamon.dconf"
+function import_cinnamon_dconf {
+  show_info "Importing cinnamon dconf settings."
+  dconf load ${cinnamondconf}
+  check_fail
+  show_success "Cinnamon dconf settings imported."
+}
+
 grubconfig="/etc/default/grub"
 function invert_brightness {
   oldline=$(cat ${grubconfig} | grep ^GRUB_CMDLINE_LINUX=)
