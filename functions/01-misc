@@ -29,16 +29,20 @@ function install_utils {
   sudo pacman -S $(cat ${utils})
   check_fail
   show_success "Utilities installed."
+}
+
+laptop="${dir}/data/laptop.list"
+function install_laptop {
+  show_info "Installing laptop utilities."
+  sudo pacman -S $(cat ${laptop})
+  check_fail
+  show_success "Laptop utilities installed."
 
   # Enable tlp on laptops.
-  show_question "Is this a laptop? (Y/n)"
-  read -r response
-  if [[ ${response} =~ ^([yY][eE][sS]|[yY])+$ ]]; then
-    sudo systemctl enable tlp.service
-    sudo systemctl start tlp.service
-    check_fail
-    show_success "tlp enabled."
-  fi
+  sudo systemctl enable tlp.service
+  sudo systemctl start tlp.service
+  check_fail
+  show_success "tlp enabled."
 }
 
 android="${dir}/data/android.list"
