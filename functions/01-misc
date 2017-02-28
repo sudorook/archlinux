@@ -41,7 +41,8 @@ function install_laptop {
   # Enable tlp on laptops.
   sudo systemctl enable tlp.service
   sudo systemctl start tlp.service
-  check_fail
+  sudo systemctl enable tlp-sleep.service
+  sudo systemctl start tlp-sleep.service
   show_success "tlp enabled."
 }
 
