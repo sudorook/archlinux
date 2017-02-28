@@ -33,12 +33,12 @@ function install_desktop {
   select reply in "${availabledesktops[@]}"; do
     case $reply in 
       "GNOME")
-        show_info "GNOME selected."
+        show_info "$reply selected."
         install_gnome
         break
         ;;
       "Cinnamon")
-        show_info "Cinnamon selected."
+        show_info "$reply selected."
         install_cinnamon
         break
         ;;
