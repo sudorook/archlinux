@@ -14,7 +14,7 @@ function install_zsh {
   show_success "zsh installed."
 }
 
-zsh="${dir}/data/grsec.list"
+grsec="${dir}/data/grsec.list"
 function install_grsec {
   show_info "Installing grsecurity."
   sudo pacman -S $(cat ${grsec})
@@ -23,7 +23,7 @@ function install_grsec {
   # need to set pax rules or enable learning mode
 }
 
-zsh="${dir}/data/utils.list"
+utils="${dir}/data/utils.list"
 function install_utils {
   show_info "Installing general utilities."
   sudo pacman -S $(cat ${utils})
