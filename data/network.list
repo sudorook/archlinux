@@ -1,5 +1,6 @@
 avahi
 gvfs-smb
+networkmanager
 networkmanager-openvpn
 nss-mdns
 openssh
