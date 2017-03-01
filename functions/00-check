@@ -24,3 +24,24 @@ function install_dependencies {
     fi
   done
 }
+
+function check_network {
+  wget -q --tries=10 --timeout=20 --spider https://google.com
+  if ! [[ $? -eq 0 ]]; then
+    show_error "Cannot start network connextion."
+    show_info "Trying dhcpcd unit."
+    if [[ $(systemctl is-active dncpcd) == "active" ]]; then
+      show_error "dhcpcd is already active. Exiting."
+      exit 1
+    else
+      sudo systemctl start dhcpcd
+      show_info "Sleep a bit to wait for network interface to finish loading."
+      sleep 10s
+      wget -q --tries=10 --timeout=20 --spider https://google.com
+      if ! [[ $? -eq 0 ]]; then
+        show_error "Cannot start network connextion. Giving up."
+        exit 1
+      fi
+    fi
+  fi
+}
