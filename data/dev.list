@@ -10,9 +10,7 @@ cython
 doxygen
 gcc
 gdb
-git
 gitg
-gitk
 gnuplot
 go
 graphviz
