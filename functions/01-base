@@ -22,6 +22,6 @@ function install_base {
   #  - show pacman-game-style progress bare for pacman
   show_info "Enable sudo insults."
   sudo visudo # Consider using another sed script (DANGEROUS!!!)
-  sudo sed -i "/^#Color$/Color" ${pacmanconf}
+  sudo sed -i "s/^#Color$/Color/" ${pacmanconf}
   sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
 }
