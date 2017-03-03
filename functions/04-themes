@@ -86,5 +86,6 @@ function set_qtcompat {
   show_info "Copying qt5ct config."
   mkdir -p ${HOME}/.config/qt5ct
   cp -f ${qt5ctconf} ${HOME}/.config/qt5ct
+  export QT_QPA_PLATFORMTHEME=qt5ct
   show_success "qt5ct config opied."
 }
