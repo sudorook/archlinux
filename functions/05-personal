@@ -64,7 +64,7 @@ function set_gtk_theme {
   elif [ ${DESKTOP_SESSION} = "gnome" ]; then
     gsettings set org.gnome.desktop.wm.preferences theme "'${gtktheme}'"
     gsettings set org.gnome.desktop.interface gtk-theme "'${gtktheme}'"
-    gnome-shell-extension-tool -e 'user-theme@gnome-shell-extensions.gcampax.github.com'
+    gnome-shell-extension-tool -e "user-theme@gnome-shell-extensions.gcampax.github.com"
     gsettings set org.gnome.shell.extensions.user-theme name "Arc-Dark"
   fi
 }
@@ -108,7 +108,25 @@ function import_cinnamon_dconf {
   show_success "Cinnamon dconf settings imported."
 }
 
-appdconf="${dir}/configs/apps.dconf"
+gnomedconf="${dir}/configs/gnome.dconf"
+function import_gnome_dconf {
+  show_info "Importing gnome dconf settings."
+  dconf load / < ${gnomedconf}
+  check_fail
+  show_success "GNOME dconf settings imported."
+
+  gnome-shell-extension-tool -e "alternate-tab@gnome-shell-extensions.gcampax.github.com"
+}
+
+cinnamondconf="${dir}/configs/cinnamon.dconf"
+function import_cinnamon_dconf {
+  show_info "Importing cinnamon dconf settings."
+  dconf load / < ${cinnamondconf}
+  check_fail
+  show_success "Cinnamon dconf settings imported."
+}
+
+appsdconf="${dir}/configs/apps.dconf"
 function import_apps_dconf {
   show_info "Importing application dconf settings."
   dconf load / < ${appsdconf}
