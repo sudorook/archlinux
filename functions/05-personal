@@ -103,7 +103,7 @@ function set_dark_gtk {
 cinnamondconf="${dir}/configs/cinnamon.dconf"
 function import_cinnamon_dconf {
   show_info "Importing cinnamon dconf settings."
-  dconf load ${cinnamondconf}
+  dconf load / < ${cinnamondconf}
   check_fail
   show_success "Cinnamon dconf settings imported."
 }
@@ -111,7 +111,7 @@ function import_cinnamon_dconf {
 appdconf="${dir}/configs/apps.dconf"
 function import_apps_dconf {
   show_info "Importing application dconf settings."
-  dconf load ${appdconf}
+  dconf load / < ${appsdconf}
   check_fail
   show_success "Application dconf settings imported."
 }
