@@ -114,16 +114,6 @@ function import_gnome_dconf {
   dconf load / < ${gnomedconf}
   check_fail
   show_success "GNOME dconf settings imported."
-
-  gnome-shell-extension-tool -e "alternate-tab@gnome-shell-extensions.gcampax.github.com"
-}
-
-cinnamondconf="${dir}/configs/cinnamon.dconf"
-function import_cinnamon_dconf {
-  show_info "Importing cinnamon dconf settings."
-  dconf load / < ${cinnamondconf}
-  check_fail
-  show_success "Cinnamon dconf settings imported."
 }
 
 appsdconf="${dir}/configs/apps.dconf"
