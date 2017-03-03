@@ -56,6 +56,34 @@ function install_kvm {
   sudo systemctl start libvirtd
 }
 
+kvmguest="${dir}/data/kvm-guest.list"
+function install_kvm_guest {
+  show_info "Installing tools for KVM guests."
+  sudo pacman -S $(cat ${kvm})
+  check_fail
+  show_success "KVM installed."
+
+  show_info "Adding virtio modules to initramfs."
+  virtiomodules="virtio virtio_pci virtio_blk virtio_net virtio_ring"
+  mkinitcpiomodules=$(sed -n "s/^MODULES=\"\(.*\)\"/\1 ${virtiomodules}/p" /etc/mkinitcpio.conf | sed -e "s/^[[:space:]]//g")
+  sed -i "s/^MODULES=\".*\"/MODULES=\"${mkinitcpiomodules}\"/" /etc/mkinitcpio.conf
+  show_info "Rebuilding kernel(s)"
+  sudo mkinitcpio -p linux
+
+  sudo systemctl enable qemu-ga.service
+  sudo systemctl enable spice-vdagentd.service
+
+  # show_info "Manually installing xf86-video-qxl."
+  # mkdir -p ${pkgbuilddir}
+  # cd ${pkgbuilddir}
+  # wget https://aur.archlinux.org/cgit/aur.git/snapshot/xf86-video-qxl.tar.gz
+  # tar xf ${pkgbuilddir}/xf86-video-qxl.tar.gz
+  # cd xf86-video-qxl
+  # makepkg -si
+  # show_success "xf86-video-qxl installed."
+  # cd ${dir}
+}
+
 virtualbox="${dir}/data/virtualbox.list"
 vboxservice="${dir}/services/virtualbox-modprobe.service"
 function install_virtualbox {
