@@ -42,13 +42,17 @@ function set_icon_theme {
     gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
   fi
 
+  mkdir -p ${HOME}/Projects
   gvfs-set-attribute ${HOME}/Projects/ -t string \
     metadata::custom-icon-name folder-development
+  mkdir -p ${HOME}/Sync
   gvfs-set-attribute ${HOME}/Sync/ -t string \
     metadata::custom-icon-name folder-cloud
 
   sudo sed -i "s/*TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
   sudo sed -i "s/*PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
+  rm -rf ${HOME}/Templates
+  rm -rf ${HOME}/Public
 }
 
 gtktheme="Arc-Dark"
