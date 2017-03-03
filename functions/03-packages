@@ -28,7 +28,7 @@ function install_dev {
   sudo pacman -S $(cat ${dev})
   check_fail
   show_success "Languages and editors installed."
-  
+
   show_info "Installing dotfiles."
   cp -f ${vimrc} ${HOME}/.vimrc
   cp -f ${npmrc} ${HOME}/.npmrc
