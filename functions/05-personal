@@ -49,8 +49,8 @@ function set_icon_theme {
   gvfs-set-attribute ${HOME}/Sync/ -t string \
     metadata::custom-icon-name folder-cloud
 
-  sudo sed -i "s/*TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
-  sudo sed -i "s/*PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
+  sudo sed -i "s/^TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
+  sudo sed -i "s/^PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
   rm -rf ${HOME}/Templates
   rm -rf ${HOME}/Public
 }
