@@ -36,14 +36,6 @@ function install_dev {
   show_success "Dotfiles installed."
 }
 
-fonts="${dir}/data/fonts.list"
-function install_fonts {
-  show_info "Installing fonts."
-  sudo pacman -S $(cat ${fonts})
-  check_fail
-  show_success "Fonts installed."
-}
-
 games="${dir}/data/games.list"
 function install_games {
   show_info "Installing game emulators."
