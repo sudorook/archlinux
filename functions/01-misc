@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-zsh="${dir}/data/zsh.list"
+zsh="${dir}/packages/zsh.list"
 zshrc="${dir}/dotfiles/zshrc"
 function install_zsh {
   show_info "Installing zsh."
@@ -14,7 +14,7 @@ function install_zsh {
   show_success "zsh installed."
 }
 
-grsec="${dir}/data/grsec.list"
+grsec="${dir}/packages/grsec.list"
 function install_grsec {
   show_info "Installing grsecurity."
   sudo pacman -S $(cat ${grsec})
@@ -23,7 +23,7 @@ function install_grsec {
   # need to set pax rules or enable learning mode
 }
 
-utils="${dir}/data/utils.list"
+utils="${dir}/packages/utils.list"
 function install_utils {
   show_info "Installing general utilities."
   sudo pacman -S $(cat ${utils})
@@ -31,7 +31,7 @@ function install_utils {
   show_success "Utilities installed."
 }
 
-laptop="${dir}/data/laptop.list"
+laptop="${dir}/packages/laptop.list"
 function install_laptop {
   show_info "Installing laptop utilities."
   sudo pacman -S $(cat ${laptop})
@@ -46,7 +46,7 @@ function install_laptop {
   show_success "tlp enabled."
 }
 
-android="${dir}/data/android.list"
+android="${dir}/packages/android.list"
 function install_android {
   show_info "Installing tools for Android devices."
   sudo pacman -S $(cat ${android})

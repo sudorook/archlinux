@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-apps="${dir}/data/apps.list"
+apps="${dir}/packages/apps.list"
 function install_apps {
   show_info "Installing desktop applications."
   sudo pacman -S $(cat ${apps})
@@ -11,7 +11,7 @@ function install_apps {
   show_success "Applications installed."
 }
 
-codecs="${dir}/data/codecs.list"
+codecs="${dir}/packages/codecs.list"
 function install_codecs {
   show_info "Installing codecs."
   sudo pacman -S $(cat ${codecs})
@@ -19,7 +19,7 @@ function install_codecs {
   show_success "Codecs installed."
 }
 
-dev="${dir}/data/dev.list"
+dev="${dir}/packages/dev.list"
 vimrc="${dir}/dotfiles/vimrc"
 npmrc="${dir}/dotfiles/npmrc"
 gitignore="${dir}/dotfiles/gitignore"
@@ -36,7 +36,7 @@ function install_dev {
   show_success "Dotfiles installed."
 }
 
-games="${dir}/data/games.list"
+games="${dir}/packages/games.list"
 function install_games {
   show_info "Installing game emulators."
   sudo pacman -S $(cat ${games})
@@ -44,7 +44,7 @@ function install_games {
   show_success "Emulators installed."
 }
 
-kvm="${dir}/data/kvm.list"
+kvm="${dir}/packages/kvm.list"
 function install_kvm {
   show_info "Installing KVM."
   sudo pacman -S $(cat ${kvm})
@@ -56,7 +56,7 @@ function install_kvm {
   sudo systemctl start libvirtd
 }
 
-kvmguest="${dir}/data/kvm-guest.list"
+kvmguest="${dir}/packages/kvm-guest.list"
 function install_kvm_guest {
   show_info "Installing tools for KVM guests."
   sudo pacman -S $(cat ${kvm})
@@ -84,7 +84,7 @@ function install_kvm_guest {
   # cd ${dir}
 }
 
-virtualbox="${dir}/data/virtualbox.list"
+virtualbox="${dir}/packages/virtualbox.list"
 vboxservice="${dir}/services/virtualbox-modprobe.service"
 function install_virtualbox {
   show_info "Install VirtualBox."

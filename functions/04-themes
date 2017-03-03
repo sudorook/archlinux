@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-themes="${dir}/data/themes.list"
+themes="${dir}/packages/themes.list"
 function install_theme_deps {
   show_info "Installing theme dependencies."
   sudo pacman -S $(cat ${themes})
@@ -38,7 +38,7 @@ function install_adapta_gtk {
   rm -rf adapta-gtk-theme
 }
 
-fonts="${dir}/data/fonts.list"
+fonts="${dir}/packages/fonts.list"
 function install_fonts {
   show_info "Installing fonts."
   sudo pacman -S $(cat ${fonts})

@@ -3,7 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
-base="${dir}/data/base.list"
+base="${dir}/packages/base.list"
 toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
 function install_base {
