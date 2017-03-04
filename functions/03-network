@@ -4,7 +4,6 @@ set -eu
 dir="$(dirname "$0")"
 
 networking="${dir}/packages/network.list"
-nmconf="/etc/NetworkManager/NetworkManager.conf"
 function install_network {
   show_info "Set up networking."
   sudo pacman -S $(cat ${networking})
