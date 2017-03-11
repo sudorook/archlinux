@@ -77,16 +77,6 @@ function install_kvm_guest {
 
   sudo systemctl enable qemu-ga.service
   sudo systemctl enable spice-vdagentd.service
-
-  # show_info "Manually installing xf86-video-qxl."
-  # mkdir -p ${pkgbuilddir}
-  # cd ${pkgbuilddir}
-  # wget https://aur.archlinux.org/cgit/aur.git/snapshot/xf86-video-qxl.tar.gz
-  # tar xf ${pkgbuilddir}/xf86-video-qxl.tar.gz
-  # cd xf86-video-qxl
-  # makepkg -si
-  # show_success "xf86-video-qxl installed."
-  # cd ${dir}
 }
 
 virtualbox="${dir}/packages/virtualbox.list"
