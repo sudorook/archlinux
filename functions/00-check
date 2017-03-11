@@ -8,7 +8,8 @@ function check_fail {
   EXITSTATUS=${1:-}
   if [[ $EXITSTATUS -gt 0 ]]; then
     show_error "Error code received. Exiting."
-    sleep 3s && main
+    #sleep 3s && main
+    exit
   fi
 }
 
