@@ -1,4 +1,5 @@
 #! /bin/bash
+#set -eu
 
 dir="$(dirname "$0")"
 deps="${dir}/packages/deps.list"
