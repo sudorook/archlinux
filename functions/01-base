@@ -13,15 +13,20 @@ function install_base {
   show_success "Base packages installed."
 
   show_info "Installing toprc."
-  cp -r ${toprc} ${HOME}/.toprc
+  cp -f ${toprc} ${HOME}/.toprc
   show_success "Installed toprc."
 
-  # Customize sudo and pacman to: 
+  # Customize sudo to: 
   #  - insult incorrect password attempts
-  #  - color pacman output
-  #  - show pacman-game-style progress bare for pacman
   show_info "Enable sudo insults."
   sudo visudo # Consider using another sed script (DANGEROUS!!!)
+
+  # Customize pacman to: 
+  #  - color pacman output
+  #  - show pacman-game-style progress bare for pacman
+  show_info "Enabling color and Pacman animation for pacman."
   sudo sed -i "s/^#Color$/Color/" ${pacmanconf}
-  sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
+  if ! test "$(grep ^ILoveCandy$ /etc/pacman.conf)"; then
+    sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
+  fi
 }
