@@ -18,8 +18,10 @@ function install_base {
 
   # Customize sudo to:
   #  - insult incorrect password attempts
-  show_info "Enable sudo insults."
-  sudo visudo # Consider using another sed script (DANGEROUS!!!)
+  show_info "Enabling sudo insults."
+  sudo sh -c 'cat /etc/sudoers | \
+              sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" | \
+              (EDITOR="tee" visudo >/dev/null)'
 
   # Customize pacman to:
   #  - color pacman output
