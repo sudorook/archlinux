@@ -19,7 +19,9 @@ function install_zsh {
 
   show_info "Copying zshrc."
   cp -f ${zshrc} ${HOME}/.zshrc
-  show_success "zsh installed."
+
+  show_info "Changing login shell to zsh. Provide your password."
+  chsh -s /bin/zsh
 }
 
 grsec="${dir}/packages/grsec.list"
