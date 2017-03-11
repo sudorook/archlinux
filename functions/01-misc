@@ -5,10 +5,18 @@ dir="$(dirname "$0")"
 
 zsh="${dir}/packages/zsh.list"
 zshrc="${dir}/dotfiles/zshrc"
+zshdir="${HOME}/.zsh"
 function install_zsh {
   show_info "Installing zsh."
   sudo pacman -S $(cat ${zsh})
   check_fail
+  show_success "zsh installed."
+
+  show_info "Downloading zsh extras."
+  mkdir -p ${zshdir}
+  git clone https://github.com/zsh-users/zsh-history-substring-search ${zshdir}/zsh-history-substring-search
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${zshdir}/zsh-autosuggestions
+
   show_info "Copying zshrc."
   cp -f ${zshrc} ${HOME}/.zshrc
   show_success "zsh installed."
