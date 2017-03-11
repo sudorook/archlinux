@@ -9,7 +9,7 @@ function install_network {
   show_info "Set up networking."
   sudo pacman -S $(cat ${networking})
   check_fail
-  show_success "Applications installed."
+  show_success "Networking applications installed."
 
   show_info "Setting up MAC address randomization in Network Manager."
   if ! test "$(grep "mac-address=random" ${nmconf})"; then
@@ -23,8 +23,9 @@ function install_network {
 
   show_info "Enabling ufw."
   sudo ufw enable
+  sudo systemctl enable ufw.service
 
-  show_info "Enabling and start tor service."
+  show_info "Enabling and starting tor service."
   sudo systemctl enable tor
   sudo systemctl start tor
 
