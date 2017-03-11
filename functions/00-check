@@ -24,7 +24,7 @@ function check_installed {
     elif [[ $(pacman -Ss ${package} | grep -c "\[installed\]") -eq \
             $(pacman -Qs ${package} | grep -c "^local.*(${package})$") ]]; then
       show_listitem "${package} meta-package already installed. Skipping."
-    
+
     # Runs if package is not installed or all members of meta-package are not
     # installed.
     else

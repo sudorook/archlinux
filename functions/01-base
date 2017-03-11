@@ -16,12 +16,12 @@ function install_base {
   cp -f ${toprc} ${HOME}/.toprc
   show_success "Installed toprc."
 
-  # Customize sudo to: 
+  # Customize sudo to:
   #  - insult incorrect password attempts
   show_info "Enable sudo insults."
   sudo visudo # Consider using another sed script (DANGEROUS!!!)
 
-  # Customize pacman to: 
+  # Customize pacman to:
   #  - color pacman output
   #  - show pacman-game-style progress bare for pacman
   show_info "Enabling color and Pacman animation for pacman."

@@ -21,7 +21,7 @@ function install_cinnamon {
   check_installed $(cat ${cinnamon})
   check_fail
   show_success "Cinnamon installed."
-  
+
   show_info "Putting things into place."
   sudo systemctl enable lightdm.service
   show_info "Done."
@@ -31,7 +31,7 @@ function install_desktop {
   availabledesktops=("GNOME" "Cinnamon")
   show_question "Which desktop environment do you want?"
   select reply in "${availabledesktops[@]}"; do
-    case $reply in 
+    case $reply in
       "GNOME")
         show_info "$reply selected."
         install_gnome
@@ -42,7 +42,7 @@ function install_desktop {
         install_cinnamon
         break
         ;;
-      *) 
+      *)
         echo "invalid option"
         break
         ;;

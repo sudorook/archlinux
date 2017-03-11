@@ -14,7 +14,7 @@ function set_noto_fonts {
       gsettings set org.cinnamon.desktop.screensaver font-message "'Noto Sans 14'"
       gsettings set org.cinnamon.desktop.screensaver font-date "'Noto Sans 24'"
       gsettings set org.cinnamon.desktop.screensaver font-time "'Noto Sans 64'"
-      
+
       # desktop environment fonts
       gsettings set org.cinnamon.desktop.interface font-name "'Noto Sans 9'"
       # gsettings set org.nemo.desktop font "'Noto Sans 10'"

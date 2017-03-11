@@ -96,7 +96,7 @@ function install_virtualbox {
   check_installed $(cat ${virtualbox})
   check_fail
   show_success "VirtualBox installed."
-  
+
   show_info "Adding $(whoami) to vboxusers group."
   sudo usermod -aG vboxusers $(whoami)
   show_success "Done."
