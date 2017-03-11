@@ -1,17 +1,6 @@
 bash-completion
-dialog
-grub
 intel-ucode
-iw
-linux
-linux-headers
 linux-lts
 linux-lts-headers
 linux-tools
-os-prober
 reflector
-sudo
-wpa_supplicant
-xorg
-xorg-apps
-xorg-drivers
