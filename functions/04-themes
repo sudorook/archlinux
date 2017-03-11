@@ -12,10 +12,13 @@ function install_theme_deps {
 }
 
 function install_arc_gtk {
+  show_info "Downloading, building, and installing the Arc GTK theme."
   git clone https://github.com/pseudorook/arc-theme arc-theme
   cd arc-theme
+  git checkout mine
   npm install
   ./autogen.sh --prefix=/usr
+  gulp
   make -j`nproc`
   sudo make install
   cd ..
@@ -23,8 +26,10 @@ function install_arc_gtk {
 }
 
 function install_adapta_gtk {
+  show_info "Downloading, building, and installing the Adapta GTK theme."
   git clone https://github.com/pseudorook/Adapta adapta-gtk-theme
   cd adapta-gtk-theme
+  git checkout mine
   ./autogen.sh \
     --prefix=/usr \
     --with-selection_color=#0097A7 \
@@ -46,34 +51,20 @@ function install_fonts {
   show_success "Fonts installed."
 }
 
-papirussrc="papirus-icon-theme"
-icondest="/usr/share/icons"
 function install_papirus_icons {
-  git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
-
-  sudo rsync -Prad --delete-excluded \
-    ${papirussrc}/ePapirus/ 
-    ${icondest}/ePapirus/
-
-  sudo rsync -Prad --delete-excluded \
-    ${papirussrc}/Papirus/ \
-    ${icondest}/Papirus/
-
-  sudo rsync -Prad --delete-excluded \
-    ${papirussrc}/Papirus-Dark/ \
-    ${icondest}/Papirus-Dark/
-
-  sudo rsync -Prad --delete-excluded \
-    ${papirussrc}/Papirus-Light/ \
-    ${icondest}/Papirus-Light/
-
-  rm -rf ${papirussrc}
+  show_info "Downloading and installing the Papirus icon theme."
+  git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme papirus-icon-theme
+  cd papirus-icon-theme
+  sudo make install
+  cd ../
+  rm -rf papirus-icon-theme
 }
 
 qt5ctconf="${dir}/configs/qt5ct.conf"
 pkgbuilddir="${HOME}/.pkgbuild"
 function set_qtcompat {
   show_info "Building qt5-styleplugins."
+  curdir=`pwd`
   mkdir -p ${pkgbuilddir}
   cd ${pkgbuilddir}
   wget https://aur.archlinux.org/cgit/aur.git/snapshot/qt5-styleplugins.tar.gz
@@ -81,11 +72,10 @@ function set_qtcompat {
   cd qt5-styleplugins
   makepkg -si
   show_success "qt5-styleplugins built and installed."
-  cd ${dir}
+  cd ${curdir}
 
   show_info "Copying qt5ct config."
   mkdir -p ${HOME}/.config/qt5ct
   cp -f ${qt5ctconf} ${HOME}/.config/qt5ct
   export QT_QPA_PLATFORMTHEME=qt5ct
-  show_success "qt5ct config opied."
 }
