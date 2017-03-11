@@ -78,7 +78,8 @@ gtktheme="Arc-Dark"
 icontheme="Papirus-Dark"
 lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
-  if pacman -Qs lighdm-gtk-greeter > /dev/null; then
+  show_info "Setting LightDM login GTK theme to ${gtktheme}."
+  if pacman -Qs lightdm-gtk-greeter > /dev/null; then
     sudo sed -i "s/^#theme-name=$/theme-name=${gtktheme}/g" ${lightdmconf}
     sudo sed -i "s/^#icon-theme=$/icon-theme=${icontheme}/g" ${lightdmconf}
     if pacman -Qs noto-fonts > /dev/null; then
