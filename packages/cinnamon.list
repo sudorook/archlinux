@@ -6,3 +6,6 @@ nemo-fileroller
 xdg-utils
 xdg-user-dirs
 xdg-user-dirs-gtk
+xorg
+xorg-apps
+xorg-drivers
