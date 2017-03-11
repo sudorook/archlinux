@@ -7,8 +7,8 @@ dir="$(dirname "$0")"
 # Download scripts (submodule) and add to path
 
 function set_noto_fonts {
-  show_info "Configuring system fonts."
-  if pacman -Qs noto-fonts > /dev/null; then
+  show_header "Configuring system fonts."
+  if pacman -Qs noto-fonts > /dev/null 2>&1; then
     if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
       # screensaver fonts
       gsettings set org.cinnamon.desktop.screensaver font-message "'Noto Sans 14'"
@@ -37,7 +37,7 @@ function set_noto_fonts {
 icontheme="Papirus-Dark"
 xdgdefaultconf="/etc/xdg/user-dirs.defaults"
 function set_icon_theme {
-  show_info "Setting desktop icon theme to Papirus-Dark."
+  show_header "Setting desktop icon theme to Papirus-Dark."
   if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
     gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
   elif [ ${DESKTOP_SESSION} = "gnome" ]; then
@@ -61,7 +61,7 @@ function set_icon_theme {
 
 gtktheme="Arc-Dark"
 function set_gtk_theme {
-  show_info "Setting desktop GTK theme to ${gtktheme}."
+  show_header "Setting desktop GTK theme to ${gtktheme}."
   if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
     gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
     gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
@@ -78,7 +78,7 @@ gtktheme="Arc-Dark"
 icontheme="Papirus-Dark"
 lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
-  show_info "Setting LightDM login GTK theme to ${gtktheme}."
+  show_header "Setting LightDM login GTK theme to ${gtktheme}."
   if pacman -Qs lightdm-gtk-greeter > /dev/null; then
     sudo sed -i "s/^#theme-name=$/theme-name=${gtktheme}/g" ${lightdmconf}
     sudo sed -i "s/^#icon-theme=$/icon-theme=${icontheme}/g" ${lightdmconf}
@@ -91,6 +91,7 @@ function set_lightdm_theme {
 
 gtksettings="${HOME}/.config/gtk-3.0/settings.ini"
 function set_dark_gtk {
+  show_header "Setting global dark theme for gtk applications."
   if test `grep ^gtk-application-prefer-dark-theme= ${gtksettings}`; then
     isgtkdark=$(grep ^gtk-application-prefer-dark-theme= ${gtksettings} | cut -d"=" -f2)
     if test ${isgtkdark}; then
@@ -109,7 +110,7 @@ function set_dark_gtk {
 
 cinnamondconf="${dir}/dconf/cinnamon.dconf"
 function import_cinnamon_dconf {
-  show_info "Importing cinnamon dconf settings."
+  show_header "Importing cinnamon dconf settings."
   dconf load / < ${cinnamondconf}
   check_fail
   show_success "Cinnamon dconf settings imported."
@@ -117,7 +118,7 @@ function import_cinnamon_dconf {
 
 gnomedconf="${dir}/dconf/gnome.dconf"
 function import_gnome_dconf {
-  show_info "Importing gnome dconf settings."
+  show_header "Importing gnome dconf settings."
   dconf load / < ${gnomedconf}
   check_fail
   show_success "GNOME dconf settings imported."
@@ -125,7 +126,7 @@ function import_gnome_dconf {
 
 appsdconf="${dir}/dconf/apps.dconf"
 function import_apps_dconf {
-  show_info "Importing application dconf settings."
+  show_header "Importing application dconf settings."
   dconf load / < ${appsdconf}
   check_fail
   show_success "Application dconf settings imported."
@@ -136,7 +137,7 @@ function invert_brightness {
   oldline=$(cat ${grubconfig} | grep ^GRUB_CMDLINE_LINUX=)
   bootparams=$(echo ${oldline} | sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p")
   if [[ ${bootparams} =~ "i915.invert_brightness=1" ]]; then
-    show_info "Brightness already inverted. Skipping."
+    show_header "Brightness already inverted. Skipping."
   else
     sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubconfig}
     sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig} # backup
@@ -146,7 +147,7 @@ function invert_brightness {
 
 pulseconfig="/etc/pulse/default.pa"
 function disable_pulseaudio_suspend {
-  show_info "Disabling suspend on PulseAudio when sinks/sources idle."
+  show_header "Disabling suspend on PulseAudio when sinks/sources idle."
   if [ -f ${pulseconfig} ]; then
     sed -i "s/^load-module module-suspend-on-idle$/#load-module module-suspend-on-idle/g" ${pulseconfig}
   else

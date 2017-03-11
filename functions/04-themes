@@ -5,14 +5,14 @@ dir="$(dirname "$0")"
 
 themes="${dir}/packages/themes.list"
 function install_theme_deps {
-  show_info "Installing theme dependencies."
+  show_header "Installing theme dependencies."
   check_installed $(cat ${themes})
   check_fail
   show_success "Theme dependencies installed."
 }
 
 function install_arc_gtk {
-  show_info "Downloading, building, and installing the Arc GTK theme."
+  show_header "Downloading, building, and installing the Arc GTK theme."
   git clone https://github.com/pseudorook/arc-theme arc-theme
   cd arc-theme
   git checkout mine
@@ -26,7 +26,7 @@ function install_arc_gtk {
 }
 
 function install_adapta_gtk {
-  show_info "Downloading, building, and installing the Adapta GTK theme."
+  show_header "Downloading, building, and installing the Adapta GTK theme."
   git clone https://github.com/pseudorook/Adapta adapta-gtk-theme
   cd adapta-gtk-theme
   git checkout mine
@@ -45,14 +45,14 @@ function install_adapta_gtk {
 
 fonts="${dir}/packages/fonts.list"
 function install_fonts {
-  show_info "Installing fonts."
+  show_header "Installing fonts."
   check_installed $(cat ${fonts})
   check_fail
   show_success "Fonts installed."
 }
 
 function install_papirus_icons {
-  show_info "Downloading and installing the Papirus icon theme."
+  show_header "Downloading and installing the Papirus icon theme."
   git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme papirus-icon-theme
   cd papirus-icon-theme
   sudo make install
@@ -63,7 +63,7 @@ function install_papirus_icons {
 qt5ctconf="${dir}/configs/qt5ct.conf"
 pkgbuilddir="${HOME}/.pkgbuild"
 function set_qtcompat {
-  show_info "Building qt5-styleplugins."
+  show_header "Building qt5-styleplugins."
   curdir=`pwd`
   mkdir -p ${pkgbuilddir}
   cd ${pkgbuilddir}

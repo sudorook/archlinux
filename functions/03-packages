@@ -5,7 +5,7 @@ dir="$(dirname "$0")"
 
 apps="${dir}/packages/apps.list"
 function install_apps {
-  show_info "Installing desktop applications."
+  show_header "Installing desktop applications."
   check_installed $(cat ${apps})
   check_fail
   show_success "Applications installed."
@@ -13,7 +13,7 @@ function install_apps {
 
 codecs="${dir}/packages/codecs.list"
 function install_codecs {
-  show_info "Installing codecs."
+  show_header "Installing codecs."
   check_installed $(cat ${codecs})
   check_fail
   show_success "Codecs installed."
@@ -24,7 +24,7 @@ vimrc="${dir}/dotfiles/vimrc"
 npmrc="${dir}/dotfiles/npmrc"
 gitignore="${dir}/dotfiles/gitignore"
 function install_dev {
-  show_info "Installing languages and editors for development."
+  show_header "Installing languages and editors for development."
   check_installed $(cat ${dev})
   check_fail
   show_success "Languages and editors installed."
@@ -38,7 +38,7 @@ function install_dev {
 
 games="${dir}/packages/games.list"
 function install_games {
-  show_info "Installing game emulators."
+  show_header "Installing game emulators."
   check_installed $(cat ${games})
   check_fail
   show_success "Emulators installed."
@@ -46,7 +46,7 @@ function install_games {
 
 kvm="${dir}/packages/kvm.list"
 function install_kvm {
-  show_info "Installing KVM."
+  show_header "Installing KVM."
   check_installed $(cat ${kvm})
   check_fail
   show_success "KVM installed."
@@ -59,7 +59,7 @@ function install_kvm {
 kvmguest="${dir}/packages/kvm-guest.list"
 mkinitcpioconf="/etc/mkinitcpio.conf"
 function install_kvm_guest {
-  show_info "Installing tools for KVM guests."
+  show_header "Installing tools for KVM guests."
   check_installed $(cat ${kvmguest})
   check_fail
   show_success "KVM installed."
@@ -92,7 +92,7 @@ function install_kvm_guest {
 virtualbox="${dir}/packages/virtualbox.list"
 vboxservice="${dir}/services/virtualbox-modprobe.service"
 function install_virtualbox {
-  show_info "Install VirtualBox."
+  show_header "Installing VirtualBox."
   check_installed $(cat ${virtualbox})
   check_fail
   show_success "VirtualBox installed."
@@ -110,7 +110,7 @@ function install_virtualbox {
 
 virtualboxguest="${dir}/packages/virtualbox-guest.list"
 function install_virtualbox_guest {
-  show_info "Install packages for VirtualBox guests."
+  show_header "Installing packages for VirtualBox guests."
   check_installed $(cat ${virtualboxguest})
   check_fail
   show_success "VirtualBox guest packages installed."

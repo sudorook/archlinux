@@ -7,7 +7,7 @@ base="${dir}/packages/base.list"
 toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
 function install_base {
-  show_info "Installing base packages."
+  show_header "Installing base packages and their config files."
   check_installed $(cat ${base})
   check_fail
   show_success "Base packages installed."

@@ -6,7 +6,7 @@ dir="$(dirname "$0")"
 networking="${dir}/packages/network.list"
 nmconf="/etc/NetworkManager/NetworkManager.conf"
 function install_network {
-  show_info "Set up networking."
+  show_header "Setting up networking."
   check_installed $(cat ${networking})
   check_fail
   show_success "Networking applications installed."

@@ -7,7 +7,7 @@ zsh="${dir}/packages/zsh.list"
 zshrc="${dir}/dotfiles/zshrc"
 zshdir="${HOME}/.zsh"
 function install_zsh {
-  show_info "Installing zsh."
+  show_header "Installing zsh."
   check_installed $(cat ${zsh})
   check_fail
   show_success "zsh installed."
@@ -26,7 +26,7 @@ function install_zsh {
 
 grsec="${dir}/packages/grsec.list"
 function install_grsec {
-  show_info "Installing grsecurity."
+  show_header "Installing grsecurity."
   check_installed $(cat ${grsec})
   check_fail
   show_success "Grsecurity-patched kernel installed."
@@ -35,7 +35,7 @@ function install_grsec {
 
 utils="${dir}/packages/utils.list"
 function install_utils {
-  show_info "Installing general utilities."
+  show_header "Installing general utilities."
   check_installed $(cat ${utils})
   check_fail
   show_success "Utilities installed."
@@ -43,7 +43,7 @@ function install_utils {
 
 laptop="${dir}/packages/laptop.list"
 function install_laptop {
-  show_info "Installing laptop utilities."
+  show_header "Installing laptop utilities."
   check_installed $(cat ${laptop})
   check_fail
   show_success "Laptop utilities installed."
@@ -59,7 +59,7 @@ function install_laptop {
 
 android="${dir}/packages/android.list"
 function install_android {
-  show_info "Installing tools for Android devices."
+  show_header "Installing tools for Android devices."
   check_installed $(cat ${android})
   check_fail
   show_success "Android tools installed."

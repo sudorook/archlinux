@@ -5,7 +5,7 @@ dir="$(dirname "$0")"
 
 gnome="${dir}/packages/gnome.list"
 function install_gnome {
-  show_info "Setting up GNOME desktop environment."
+  show_header "Setting up GNOME desktop environment."
   check_installed $(cat ${gnome})
   check_fail
   show_success "GNOME installed."
@@ -17,7 +17,7 @@ function install_gnome {
 
 cinnamon="${dir}/packages/cinnamon.list"
 function install_cinnamon {
-  show_info "Setting up cinnamon desktop environment."
+  show_header "Setting up cinnamon desktop environment."
   check_installed $(cat ${cinnamon})
   check_fail
   show_success "Cinnamon installed."

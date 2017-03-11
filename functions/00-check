@@ -35,7 +35,7 @@ function check_installed {
 }
 
 function install_dependencies {
-  show_info "Checking dependencies."
+  show_header "Checking dependencies."
   for package in $(cat $deps); do
     if ! pacman -Qi ${package} > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
@@ -49,7 +49,7 @@ function install_dependencies {
 }
 
 function check_network {
-  show_info "Checking network connection."
+  show_header "Checking network connection."
   wget -q --tries=10 --timeout=20 --spider https://google.com
   if ! [[ $? -eq 0 ]]; then
     show_error "Cannot start network connextion."
