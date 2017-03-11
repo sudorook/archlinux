@@ -57,6 +57,7 @@ function install_kvm {
 }
 
 kvmguest="${dir}/packages/kvm-guest.list"
+mkinitcpioconf="/etc/mkinitcpio.conf"
 function install_kvm_guest {
   show_info "Installing tools for KVM guests."
   sudo pacman -S $(cat ${kvmguest})
@@ -65,10 +66,14 @@ function install_kvm_guest {
 
   show_info "Adding virtio modules to initramfs."
   virtiomodules="virtio virtio_pci virtio_blk virtio_net virtio_ring"
-  mkinitcpiomodules=$(sed -n "s/^MODULES=\"\(.*\)\"/\1 ${virtiomodules}/p" /etc/mkinitcpio.conf | sed -e "s/^[[:space:]]//g")
-  sed -i "s/^MODULES=\".*\"/MODULES=\"${mkinitcpiomodules}\"/" /etc/mkinitcpio.conf
-  show_info "Rebuilding kernel(s)"
-  sudo mkinitcpio -p linux
+  if test "$(grep "^MODULES=.*${virtiomodules}.*" ${mkinitcpioconf})"; then
+    show_info "Virtio modules already specified in ${mkinitcpioconf}."
+  else
+    mkinitcpiomodules=$(sed -n "s/^MODULES=\"\(.*\)\"/\1 ${virtiomodules}/p" ${mkinitcpioconf} | sed -e "s/^[[:space:]]//g")
+    sed -i "s/^MODULES=\".*\"/MODULES=\"${mkinitcpiomodules}\"/" ${mkinitcpioconf}
+    show_info "Rebuilding kernel(s)"
+    sudo mkinitcpio -p linux
+  fi
 
   sudo systemctl enable qemu-ga.service
   sudo systemctl enable spice-vdagentd.service
