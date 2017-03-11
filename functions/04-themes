@@ -6,7 +6,7 @@ dir="$(dirname "$0")"
 themes="${dir}/packages/themes.list"
 function install_theme_deps {
   show_info "Installing theme dependencies."
-  sudo pacman -S $(cat ${themes})
+  check_installed $(cat ${themes})
   check_fail
   show_success "Theme dependencies installed."
 }
@@ -46,7 +46,7 @@ function install_adapta_gtk {
 fonts="${dir}/packages/fonts.list"
 function install_fonts {
   show_info "Installing fonts."
-  sudo pacman -S $(cat ${fonts})
+  check_installed $(cat ${fonts})
   check_fail
   show_success "Fonts installed."
 }

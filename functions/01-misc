@@ -8,7 +8,7 @@ zshrc="${dir}/dotfiles/zshrc"
 zshdir="${HOME}/.zsh"
 function install_zsh {
   show_info "Installing zsh."
-  sudo pacman -S $(cat ${zsh})
+  check_installed $(cat ${zsh})
   check_fail
   show_success "zsh installed."
 
@@ -27,7 +27,7 @@ function install_zsh {
 grsec="${dir}/packages/grsec.list"
 function install_grsec {
   show_info "Installing grsecurity."
-  sudo pacman -S $(cat ${grsec})
+  check_installed $(cat ${grsec})
   check_fail
   show_success "Grsecurity-patched kernel installed."
   # need to set pax rules or enable learning mode
@@ -36,7 +36,7 @@ function install_grsec {
 utils="${dir}/packages/utils.list"
 function install_utils {
   show_info "Installing general utilities."
-  sudo pacman -S $(cat ${utils})
+  check_installed $(cat ${utils})
   check_fail
   show_success "Utilities installed."
 }
@@ -44,7 +44,7 @@ function install_utils {
 laptop="${dir}/packages/laptop.list"
 function install_laptop {
   show_info "Installing laptop utilities."
-  sudo pacman -S $(cat ${laptop})
+  check_installed $(cat ${laptop})
   check_fail
   show_success "Laptop utilities installed."
 
@@ -60,7 +60,7 @@ function install_laptop {
 android="${dir}/packages/android.list"
 function install_android {
   show_info "Installing tools for Android devices."
-  sudo pacman -S $(cat ${android})
+  check_installed $(cat ${android})
   check_fail
   show_success "Android tools installed."
 }

@@ -7,7 +7,7 @@ networking="${dir}/packages/network.list"
 nmconf="/etc/NetworkManager/NetworkManager.conf"
 function install_network {
   show_info "Set up networking."
-  sudo pacman -S $(cat ${networking})
+  check_installed $(cat ${networking})
   check_fail
   show_success "Networking applications installed."
 

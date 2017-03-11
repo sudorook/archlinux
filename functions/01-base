@@ -8,7 +8,7 @@ toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
 function install_base {
   show_info "Installing base packages."
-  sudo pacman -S $(cat ${base})
+  check_installed $(cat ${base})
   check_fail
   show_success "Base packages installed."
 
