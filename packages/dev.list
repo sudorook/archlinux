@@ -3,7 +3,7 @@ autopep8
 boost-libs
 bower
 clang
-clang-tools-exxtra
+clang-tools-extra
 cmake
 cppcheck
 cython
@@ -26,7 +26,7 @@ texlive-core
 mathjax
 nodejs
 npm
-posgresql
+postgresql
 powerline-fonts
 pypy
 pypy3
