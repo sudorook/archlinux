@@ -59,7 +59,7 @@ function install_kvm {
 kvmguest="${dir}/packages/kvm-guest.list"
 function install_kvm_guest {
   show_info "Installing tools for KVM guests."
-  sudo pacman -S $(cat ${kvm})
+  sudo pacman -S $(cat ${kvmguest})
   check_fail
   show_success "KVM installed."
 
