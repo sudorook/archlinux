@@ -102,7 +102,7 @@ function install_virtualbox {
   show_success "Done."
 
   show_info "Setting up custom services."
-  sudo ln -s /etc/modules-load.d/virtualbox-host-modules-arch.conf /dev/null
+  sudo ln -s /dev/null /etc/modules-load.d/virtualbox-host-modules-arch.conf
   sudo cp -f ${vboxservice} /etc/systemd/system
   sudo systemctl enable virtualbox-modprobe.service
   show_success "Done."
