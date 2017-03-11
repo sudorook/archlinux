@@ -49,6 +49,7 @@ function install_laptop {
   show_success "Laptop utilities installed."
 
   # Enable tlp on laptops.
+  show_info "Enabling and starting tlp systemd units."
   sudo systemctl enable tlp.service
   sudo systemctl start tlp.service
   sudo systemctl enable tlp-sleep.service
