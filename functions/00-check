@@ -26,6 +26,7 @@ function install_dependencies {
 }
 
 function check_network {
+  show_info "Checking network connection."
   wget -q --tries=10 --timeout=20 --spider https://google.com
   if ! [[ $? -eq 0 ]]; then
     show_error "Cannot start network connextion."
@@ -43,5 +44,7 @@ function check_network {
         exit 1
       fi
     fi
+  else
+    show_success "Network is working."
   fi
 }
