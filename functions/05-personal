@@ -7,6 +7,7 @@ dir="$(dirname "$0")"
 # Download scripts (submodule) and add to path
 
 function set_noto_fonts {
+  show_info "Configuring system fonts."
   if pacman -Qs noto-fonts > /dev/null; then
     if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
       # screensaver fonts
@@ -36,12 +37,14 @@ function set_noto_fonts {
 icontheme="Papirus-Dark"
 xdgdefaultconf="/etc/xdg/user-dirs.defaults"
 function set_icon_theme {
+  show_info "Setting desktop icon theme to Papirus-Dark."
   if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
     gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
   elif [ ${DESKTOP_SESSION} = "gnome" ]; then
     gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
   fi
 
+  show_info "Creating Projects/ and Sync/ and setting gvfs metadata."
   mkdir -p ${HOME}/Projects
   gvfs-set-attribute ${HOME}/Projects/ -t string \
     metadata::custom-icon-name folder-development
@@ -49,6 +52,7 @@ function set_icon_theme {
   gvfs-set-attribute ${HOME}/Sync/ -t string \
     metadata::custom-icon-name folder-cloud
 
+  show_info "Disabling Templates/ and Public/ folders."
   sudo sed -i "s/^TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
   sudo sed -i "s/^PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
   rm -rf ${HOME}/Templates
@@ -57,6 +61,7 @@ function set_icon_theme {
 
 gtktheme="Arc-Dark"
 function set_gtk_theme {
+  show_info "Setting desktop GTK theme to ${gtktheme}."
   if [ ${DESKTOP_SESSION} = "cinnamon" ]; then
     gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
     gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
@@ -70,6 +75,7 @@ function set_gtk_theme {
 }
 
 gtktheme="Arc-Dark"
+icontheme="Papirus-Dark"
 lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
   if pacman -Qs lighdm-gtk-greeter > /dev/null; then
