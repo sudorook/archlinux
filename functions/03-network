@@ -11,13 +11,15 @@ function install_network {
   check_fail
   show_success "Applications installed."
 
-  show_info "Setting up MAC address randomization."
-  echo "" >> ${nmconf}
-  echo "## Trying built-in MAC Address randomization" >> ${nmconf}
-  echo "[connection]" >> ${nmconf}
-  echo "wifi.cloned-mac-address=random" >> ${nmconf}
-  echo "ethernet.cloned-mac-address=random" >> ${nmconf}
-  sudo systemctl restart NetworkManager
+  show_info "Setting up MAC address randomization in Network Manager."
+  if ! test "$(grep "mac-address=random" ${nmconf})"; then
+    sudo sh -c "echo "" >> ${nmconf}"
+    sudo sh -c "echo "## Trying built-in MAC Address randomization" >> ${nmconf}"
+    sudo sh -c "echo "[connection]" >> ${nmconf}"
+    sudo sh -c "echo "wifi.cloned-mac-address=random" >> ${nmconf}"
+    sudo sh -c "echo "ethernet.cloned-mac-address=random" >> ${nmconf}"
+    sudo systemctl restart NetworkManager
+  fi
 
   show_info "Enabling ufw."
   sudo ufw enable
