@@ -107,3 +107,11 @@ function install_virtualbox {
   sudo systemctl enable virtualbox-modprobe.service
   show_success "Done."
 }
+
+virtualboxguest="${dir}/packages/virtualbox-guest.list"
+function install_virtualbox_guest {
+  show_info "Install packages for VirtualBox guests."
+  sudo pacman -S $(cat ${virtualboxguest})
+  check_fail
+  show_success "VirtualBox guest packages installed."
+}
