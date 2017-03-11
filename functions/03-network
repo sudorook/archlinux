@@ -5,6 +5,7 @@ dir="$(dirname "$0")"
 
 networking="${dir}/packages/network.list"
 nmconf="/etc/NetworkManager/NetworkManager.conf"
+nsconf="/etc/nsswitch.conf"
 function install_network {
   show_header "Setting up networking."
   check_installed $(cat ${networking})
@@ -32,7 +33,7 @@ function install_network {
   show_info "Enabling local hostname resolution in Avahi."
   oldhostsline="hosts: files mymachines resolve \[!UNAVAIL=return\] dns myhostname"
   newhostsline="hosts: files mymachines mdns_minimal \[NOTFOUND=return\] resolve \[!UNAVAIL=return\] dns myhostname"
-  sudo sed -i "/${oldhostsline}/s/${oldhostsline}/${newhostsline}/g" /etc/nsswitch.conf
+  sudo sed -i "/^${oldhostsline}/s/^${oldhostsline}/${newhostsline}/g" ${nsconf}
   sudo systemctl enable avahi-daemon.service
   sudo systemctl start avahi-daemon.service
 }
