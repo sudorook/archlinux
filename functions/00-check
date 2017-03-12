@@ -33,6 +33,7 @@ function check_installed {
     else
       show_listitem "Installing ${package}."
       sudo pacman -S ${package}
+      # sudo pacman -S --noconfirm ${package}
     fi
   done
 }
