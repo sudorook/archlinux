@@ -15,14 +15,17 @@ function check_fail {
 
 function check_installed {
   for package in "${@}"; do
+    installcount=$(pacman -Ss ${package} | grep -c "\[installed\]" || true)
+    metacount=$(pacman -Qs ${package} | grep -c "^local.*(${package})$" || true)
+
     # Check if package is installed.
     if pacman -Qi ${package} > /dev/null 2>&1; then
       show_listitem "${package} package already installed. Skipping."
 
     # pacman -Qi won't work with meta packages, so check if all meta package
     # members are installed instead.
-    elif [[ $(pacman -Ss ${package} | grep -c "\[installed\]") -eq \
-            $(pacman -Qs ${package} | grep -c "^local.*(${package})$") ]]; then
+    elif [[ (${installcount} -eq ${metacount}) \
+            && ! (${installcount} -eq 0) ]]; then
       show_listitem "${package} meta-package already installed. Skipping."
 
     # Runs if package is not installed or all members of meta-package are not
