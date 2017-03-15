@@ -84,10 +84,13 @@ function 04-themes {
   install_theme_deps
 
   show_question "Themes: what do you want to install?"
-  options=("All" "Arc (GTK)" "Adapta (GTK)" "Fonts" "Papirus (icons)" \
-           "Qt/GTK compatibility" "Back")
+  options=("Back" "All" "Arc (GTK)" "Adapta (GTK)" "Fonts" "Papirus (icons)" \
+           "Qt/GTK compatibility")
   select option in "${options[@]}"; do
     case $option in
+      "Back")
+        break
+        ;;
       "All")
         echo all themes
         echo install_arc_gtk
@@ -110,9 +113,6 @@ function 04-themes {
         ;;
       "Qt/GTK compatibility")
         echo set_qtcompat
-        ;;
-      "Back")
-        break
         ;;
       *)
         echo "Invalid option"

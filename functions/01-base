@@ -42,9 +42,12 @@ function update_packages {
 
 function 01-base {
   show_question "Base: what do you want to install?"
-  options=("All" "Base packages" "Updates" "Back")
+  options=("Back" "All" "Base packages" "Updates")
   select option in "${options[@]}"; do
     case $option in
+      "Back")
+        break
+        ;;
       "All")
         echo all base
         echo install_base
@@ -55,9 +58,6 @@ function 01-base {
         ;;
       "Updates")
         echo update_packages
-        ;;
-      "Back")
-        break
         ;;
       *)
         echo "Invalid option"

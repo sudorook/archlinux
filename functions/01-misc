@@ -67,10 +67,13 @@ function install_android {
 
 function 01-misc {
   show_question "Misc: what do you want to install?"
-  options=("All" "zsh" "Grsecurity" "Linux utilities" "Laptop tools" \
-           "Android tools" "Back")
+  options=("Back" "All" "zsh" "Grsecurity" "Linux utilities" "Laptop tools" \
+           "Android tools")
   select option in "${options[@]}"; do
     case $option in
+      "Back")
+        break
+        ;;
       "All")
         echo all misc
         echo install_zsh
@@ -93,9 +96,6 @@ function 01-misc {
         ;;
       "Android tools")
         echo install_android
-        ;;
-      "Back")
-        break
         ;;
       *)
         echo "Invalid option"

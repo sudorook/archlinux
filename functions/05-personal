@@ -156,12 +156,15 @@ function disable_pulseaudio_suspend {
 }
 function 05-personal {
   show_question "Personal: what do you want to set?"
-  options=("All" "Fonts" "Icon theme" "GTK theme" "LightDM theme" \
+  options=("Back" "All" "Fonts" "Icon theme" "GTK theme" "LightDM theme" \
            "Dark GTK setting" "Cinnamon dconf settings" "GNOME dconf settings" \
            "Application dconf settings" "Invert brightness" \
-           "Disable PulseAudio suspend" "Back")
+           "Disable PulseAudio suspend")
   select option in "${options[@]}"; do
     case $option in
+      "Back")
+        break
+        ;;
       "All")
         echo all packages
         echo set_noto_fonts
@@ -204,9 +207,6 @@ function 05-personal {
         ;;
       "Disable PulseAudio suspend")
         echo disable_pulseaudio_suspend
-        ;;
-      "Back")
-        break
         ;;
       *)
         echo "Invalid option"
