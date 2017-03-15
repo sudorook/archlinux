@@ -39,3 +39,29 @@ function update_packages {
   check_fail
   show_success "Packages updated."
 }
+
+function 01-base {
+  show_question "Base: what do you want to install?"
+  options=("All" "Base packages" "Updates" "Back")
+  select option in "${options[@]}"; do
+    case $option in
+      "All")
+        echo all base
+        echo install_base
+        echo update_packages
+        ;;
+      "Base packages")
+        echo install_base
+        ;;
+      "Updates")
+        echo update_packages
+        ;;
+      "Back")
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}

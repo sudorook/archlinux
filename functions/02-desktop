@@ -49,3 +49,7 @@ function install_desktop {
     esac
   done
 }
+
+function 02-desktop {
+  echo install_desktop
+}

@@ -58,12 +58,65 @@ show_header "header"
 
 
 #
+# Define main select wrapper
+#
+
+function main {
+  show_question "Select an option:"
+  show_info "  (Hit ENTER to see options again.)"
+  options=("Autopilot" "Base" "Miscellaneous" "Desktop environment" \
+           "Network tools" "Applications" "Themes" "Personalization" "Quit")
+  select option in "${options[@]}"; do
+    case $option in
+      "Autopilot")
+        show_warning "Let this script install everything? (y/N)"
+        show_info "TBD"
+        ;;
+      "Base")
+        01-base
+        ;;
+      "Miscellaneous")
+        01-misc
+        ;;
+      "Desktop environment")
+        02-desktop
+        ;;
+      "Network tools")
+        03-network
+        ;;
+      "Applications")
+        03-packages
+        ;;
+      "Themes")
+        04-themes
+        ;;
+      "Personalization")
+        05-personal
+        ;;
+      "Quit")
+        show_success "I hope this was as fun for you as it was for me."
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}
+
+#
 # Check if dependencies are installed and if network is working
 #
 
 install_dependencies
 check_network
 
+
+#
+# GO!!!
+#
+
+main
 
 #
 # Install base packages and miscellaneous extras

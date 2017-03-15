@@ -79,3 +79,44 @@ function set_qtcompat {
   cp -f ${qt5ctconf} ${HOME}/.config/qt5ct
   export QT_QPA_PLATFORMTHEME=qt5ct
 }
+function 04-themes {
+  show_info "Installing dependencies for building themes."
+  install_theme_deps
+
+  show_question "Themes: what do you want to install?"
+  options=("All" "Arc (GTK)" "Adapta (GTK)" "Fonts" "Papirus (icons)" \
+           "Qt/GTK compatibility" "Back")
+  select option in "${options[@]}"; do
+    case $option in
+      "All")
+        echo all themes
+        echo install_arc_gtk
+        echo install_adapta_gtk
+        echo install_fonts
+        echo install_papirus_icons
+        echo set_qtcompat
+        ;;
+      "Arc (GTK)")
+        echo install_arc_gtk
+        ;;
+      "Adapta (GTK)")
+        echo install_adapta_gtk
+        ;;
+      "Fonts")
+        echo install_fonts
+        ;;
+      "Papirus (icons)")
+        echo install_papirus_icons
+        ;;
+      "Qt/GTK compatibility")
+        echo set_qtcompat
+        ;;
+      "Back")
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}

@@ -110,3 +110,54 @@ function install_virtualbox_guest {
   check_fail
   show_success "VirtualBox guest packages installed."
 }
+
+function 03-packages {
+  show_question "Applications: what do you want to install?"
+  options=("All" "General" "Codecs" "Development" "Emulators" "KVM (host)" \
+           "KVM (guest)" "VirtualBox (host)" "VirtualBox (guest)" "Back")
+  select option in "${options[@]}"; do
+    case $option in
+      "All")
+        echo all packages
+        echo install_apps
+        echo install_codecs
+        echo install_dev
+        echo install_games
+        echo install_kvm
+        echo install_kvm_guest
+        echo install_virtualbox
+        echo install_virtualbox_guest
+        ;;
+      "General")
+        echo install_apps
+        ;;
+      "Codecs")
+        echo install_codecs
+        ;;
+      "Development")
+        echo install_dev
+        ;;
+      "Emulators")
+        echo install_games
+        ;;
+      "KVM (host)")
+        echo install_kvm
+        ;;
+      "KVM (guest)")
+        echo install_kvm_guest
+        ;;
+      "VirtualBox")
+        echo install_virtualbox
+        ;;
+      "VirtualBox (Guest)")
+        echo install_virtualbox_guest
+        ;;
+      "Back")
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}

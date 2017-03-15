@@ -38,3 +38,6 @@ function install_network {
   sudo systemctl start avahi-daemon.service
 }
 
+function 03-network {
+  echo install_network
+}

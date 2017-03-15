@@ -154,3 +154,63 @@ function disable_pulseaudio_suspend {
     show_warning "PuleAudio config file missing. Exiting."
   fi
 }
+function 05-personal {
+  show_question "Personal: what do you want to set?"
+  options=("All" "Fonts" "Icon theme" "GTK theme" "LightDM theme" \
+           "Dark GTK setting" "Cinnamon dconf settings" "GNOME dconf settings" \
+           "Application dconf settings" "Invert brightness" \
+           "Disable PulseAudio suspend" "Back")
+  select option in "${options[@]}"; do
+    case $option in
+      "All")
+        echo all packages
+        echo set_noto_fonts
+        echo set_icon_theme
+        echo set_gtk_theme
+        echo set_lightdm_theme
+        echo set_dark_gtk
+        echo import_cinnamon_dconf
+        echo import_gnome_dconf
+        echo import_apps_dconf
+        echo invert_brightness
+        echo disable_pulseaudio_suspend
+        ;;
+      "Fonts")
+        echo set_noto_fonts
+        ;;
+      "Icon theme")
+        echo set_icon_theme
+        ;;
+      "GTK theme")
+        echo set_gtk_theme
+        ;;
+      "LightDM")
+        echo set_lightdm_theme
+        ;;
+      "Dark GTK setting")
+        echo set_dark_gtk
+        ;;
+      "Cinnamon dconf settings")
+        echo import_cinnamon_dconf
+        ;;
+      "GNOME dconf settings")
+        echo import_gnome_dconf
+        ;;
+      "Application dconf settings")
+        echo import_apps_dconf
+        ;;
+      "Invert brightness")
+        echo invert_brightness
+        ;;
+      "Disable PulseAudio suspend")
+        echo disable_pulseaudio_suspend
+        ;;
+      "Back")
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}

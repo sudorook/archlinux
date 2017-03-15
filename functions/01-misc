@@ -64,3 +64,42 @@ function install_android {
   check_fail
   show_success "Android tools installed."
 }
+
+function 01-misc {
+  show_question "Misc: what do you want to install?"
+  options=("All" "zsh" "Grsecurity" "Linux utilities" "Laptop tools" \
+           "Android tools" "Back")
+  select option in "${options[@]}"; do
+    case $option in
+      "All")
+        echo all misc
+        echo install_zsh
+        echo install_grsecurity
+        echo install_utils
+        echo install_laptop
+        echo install_android
+        ;;
+      "zsh")
+        echo install_zsh
+        ;;
+      "Grsecurity")
+        echo install_grsecurity
+        ;;
+      "Linux utilities")
+        echo install_utils
+        ;;
+      "Laptop tools")
+        echo install_laptop
+        ;;
+      "Android tools")
+        echo install_android
+        ;;
+      "Back")
+        break
+        ;;
+      *)
+        echo "Invalid option"
+        ;;
+    esac
+  done
+}
