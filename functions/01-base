@@ -51,11 +51,11 @@ function 01-base {
         break
         ;;
       "Base packages")
-        echo install_base
+        install_base
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Updates")
-        echo update_packages
+        update_packages
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       *)

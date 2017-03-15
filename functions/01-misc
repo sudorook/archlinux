@@ -77,36 +77,35 @@ function 01-misc {
         break
         ;;
       "All")
-        echo all misc
-        echo install_zsh
-        echo install_grsecurity
-        echo install_utils
-        echo install_laptop
-        echo install_android
+        install_zsh
+        install_grsecurity
+        install_utils
+        install_laptop
+        install_android
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "zsh")
-        echo install_zsh
+        install_zsh
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Grsecurity")
-        echo install_grsecurity
+        install_grsecurity
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux utilities")
-        echo install_utils
+        install_utils
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Laptop tools")
-        echo install_laptop
+        install_laptop
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Android tools")
-        echo install_android
+        install_android
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)
-        echo "Invalid option"
+        "Invalid option"
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
     esac

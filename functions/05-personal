@@ -168,57 +168,56 @@ function 05-personal {
         break
         ;;
       "All")
-        echo all packages
-        echo set_noto_fonts
-        echo set_icon_theme
-        echo set_gtk_theme
-        echo set_lightdm_theme
-        echo set_dark_gtk
-        echo import_cinnamon_dconf
-        echo import_gnome_dconf
-        echo import_apps_dconf
-        echo invert_brightness
-        echo disable_pulseaudio_suspend
+        set_noto_fonts
+        set_icon_theme
+        set_gtk_theme
+        set_lightdm_theme
+        set_dark_gtk
+        import_cinnamon_dconf
+        import_gnome_dconf
+        import_apps_dconf
+        invert_brightness
+        disable_pulseaudio_suspend
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Fonts")
-        echo set_noto_fonts
+        set_noto_fonts
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Icon theme")
-        echo set_icon_theme
+        set_icon_theme
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "GTK theme")
-        echo set_gtk_theme
+        set_gtk_theme
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "LightDM theme")
-        echo set_lightdm_theme
+        set_lightdm_theme
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Dark GTK setting")
-        echo set_dark_gtk
+        set_dark_gtk
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Cinnamon dconf settings")
-        echo import_cinnamon_dconf
+        import_cinnamon_dconf
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "GNOME dconf settings")
-        echo import_gnome_dconf
+        import_gnome_dconf
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Application dconf settings")
-        echo import_apps_dconf
+        import_apps_dconf
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Invert brightness")
-        echo invert_brightness
+        invert_brightness
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Disable PulseAudio suspend")
-        echo disable_pulseaudio_suspend
+        disable_pulseaudio_suspend
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       *)

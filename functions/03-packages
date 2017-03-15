@@ -123,47 +123,46 @@ function 03-packages {
         break
         ;;
       "All")
-        echo all packages
-        echo install_apps
-        echo install_codecs
-        echo install_dev
-        echo install_games
-        echo install_kvm
-        echo install_kvm_guest
-        echo install_virtualbox
-        echo install_virtualbox_guest
+        install_apps
+        install_codecs
+        install_dev
+        install_games
+        install_kvm
+        install_kvm_guest
+        install_virtualbox
+        install_virtualbox_guest
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "General")
-        echo install_apps
+        install_apps
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Codecs")
-        echo install_codecs
+        install_codecs
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Development")
-        echo install_dev
+        install_dev
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Emulators")
-        echo install_games
+        install_games
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "KVM (host)")
-        echo install_kvm
+        install_kvm
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "KVM (guest)")
-        echo install_kvm_guest
+        install_kvm_guest
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "VirtualBox (host)")
-        echo install_virtualbox
+        install_virtualbox
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "VirtualBox (guest)")
-        echo install_virtualbox_guest
+        install_virtualbox_guest
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       *)

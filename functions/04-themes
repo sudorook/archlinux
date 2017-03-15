@@ -94,32 +94,31 @@ function 04-themes {
         break
         ;;
       "All")
-        echo all themes
-        echo install_arc_gtk
-        echo install_adapta_gtk
-        echo install_fonts
-        echo install_papirus_icons
-        echo set_qtcompat
+        install_arc_gtk
+        install_adapta_gtk
+        install_fonts
+        install_papirus_icons
+        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Arc (GTK)")
-        echo install_arc_gtk
+        install_arc_gtk
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Adapta (GTK)")
-        echo install_adapta_gtk
+        install_adapta_gtk
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Fonts")
-        echo install_fonts
+        install_fonts
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Papirus (icons)")
-        echo install_papirus_icons
+        install_papirus_icons
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Qt/GTK compatibility")
-        echo set_qtcompat
+        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       *)
