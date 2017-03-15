@@ -35,7 +35,7 @@ function install_base {
 
 function update_packages {
   show_header "Updating packages."
-  sudo pacman -Syu
+  sudo pacman -Syu --nocheck
   check_fail
   show_success "Packages updated."
 }
