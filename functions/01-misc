@@ -57,14 +57,6 @@ function install_laptop {
   show_success "tlp enabled."
 }
 
-android="${dir}/packages/android.list"
-function install_android {
-  show_header "Installing tools for Android devices."
-  check_installed $(cat ${android})
-  check_fail
-  show_success "Android tools installed."
-}
-
 function 01-misc {
   show_question "Misc: what do you want to install?"
   show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
@@ -98,10 +90,6 @@ function 01-misc {
         ;;
       "Laptop tools")
         install_laptop
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
-        ;;
-      "Android tools")
-        install_android
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)

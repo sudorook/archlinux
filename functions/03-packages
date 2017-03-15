@@ -3,6 +3,14 @@
 
 dir="$(dirname "$0")"
 
+android="${dir}/packages/android.list"
+function install_android {
+  show_header "Installing tools for Android devices."
+  check_installed $(cat ${android})
+  check_fail
+  show_success "Android tools installed."
+}
+
 apps="${dir}/packages/apps.list"
 mpvconfig="${dir}/configs/mpv.conf"
 function install_apps {
@@ -124,7 +132,8 @@ function 03-packages {
   show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
 
   options=("Back" "All" "General" "Codecs" "Development" "Emulators" \
-           "KVM (host)" "KVM (guest)" "VirtualBox (host)" "VirtualBox (guest)")
+           "KVM (host)" "KVM (guest)" "VirtualBox (host)" "VirtualBox (guest)"
+           "Android tools")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -172,6 +181,10 @@ function 03-packages {
       "VirtualBox (guest)")
         install_virtualbox_guest
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
+        ;;
+      "Android tools")
+        install_android
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)
         echo "Invalid option"
