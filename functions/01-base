@@ -32,3 +32,10 @@ function install_base {
     sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
   fi
 }
+
+function update_packages {
+  show_header "Updating packages."
+  sudo pacman -Syu
+  check_fail
+  show_success "Packages updated."
+}
