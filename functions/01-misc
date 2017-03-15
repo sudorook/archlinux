@@ -61,8 +61,7 @@ function 01-misc {
   show_question "Misc: what do you want to install?"
   show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "zsh" "Grsecurity" "Linux utilities" "Laptop tools" \
-           "Android tools")
+  options=("Back" "All" "zsh" "Grsecurity" "Linux utilities" "Laptop tools")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -73,7 +72,6 @@ function 01-misc {
         install_grsecurity
         install_utils
         install_laptop
-        install_android
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "zsh")

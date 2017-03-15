@@ -148,6 +148,7 @@ function 03-packages {
         install_kvm_guest
         install_virtualbox
         install_virtualbox_guest
+        install_android
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "General")
