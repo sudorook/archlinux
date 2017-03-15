@@ -188,7 +188,7 @@ function 03-packages {
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)
-        echo "Invalid option"
+        show_warning "Invalid option."
         ;;
     esac
   done

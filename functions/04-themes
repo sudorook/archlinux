@@ -122,7 +122,7 @@ function 04-themes {
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       *)
-        echo "Invalid option"
+        show_warning "Invalid option."
         ;;
     esac
   done

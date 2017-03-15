@@ -142,7 +142,7 @@ function main {
         show_info "Main (Hit ENTER to see options again.)"
         ;;
       *)
-        echo "Invalid option"
+        show_warning "Invalid option."
         ;;
     esac
   done

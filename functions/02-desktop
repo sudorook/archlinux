@@ -43,7 +43,7 @@ function install_desktop {
         break
         ;;
       *)
-        echo "invalid option"
+        show_warning "Invalid option."
         break
         ;;
     esac

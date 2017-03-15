@@ -221,7 +221,7 @@ function 05-personal {
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       *)
-        echo "Invalid option"
+        show_warning "Invalid option."
         ;;
     esac
   done

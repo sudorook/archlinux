@@ -63,7 +63,7 @@ function 01-base {
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       *)
-        echo "Invalid option"
+        show_warning "Invalid option."
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
     esac

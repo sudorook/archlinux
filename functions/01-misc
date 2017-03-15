@@ -91,7 +91,7 @@ function 01-misc {
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)
-        "Invalid option"
+        show_warning "Invalid option."
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
     esac
