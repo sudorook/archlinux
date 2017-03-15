@@ -39,5 +39,5 @@ function install_network {
 }
 
 function 03-network {
-  echo install_network
+  install_network
 }
