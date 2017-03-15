@@ -48,11 +48,6 @@ function 01-base {
       "Back")
         break
         ;;
-      "All")
-        echo all base
-        echo install_base
-        echo update_packages
-        ;;
       "Base packages")
         echo install_base
         ;;
