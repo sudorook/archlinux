@@ -75,6 +75,54 @@ function main {
       "Autopilot")
         show_warning "Let this script install everything? (y/N)"
         show_info "TBD"
+        
+        # # Install base packages
+        # install_base
+        # 
+        # # Install miscellaneous extras
+        # install_zsh
+        # install_grsec
+        # install_utils
+        # install_laptop
+        # install_android
+        # 
+        # # Install a desktop environment
+        # install_desktop
+        # 
+        # # Set up network configuration
+        # install_network
+        # 
+        # # Install useful packages
+        # install_apps
+        # install_codecs
+        # install_dev
+        # install_games
+        # install_kvm
+        # install_kvm_guest
+        # install_virtualbox
+        # install_virtualbox_guest
+        # 
+        # # Install themes
+        # install_theme_deps
+        # install_arc_gtk
+        # install_adapta_gtk
+        # install_fonts
+        # install_papirus_icons
+        # set_qtcompat
+        # 
+        # # Add my personal settings
+        # set_noto_fonts
+        # set_icon_theme
+        # set_gtk_theme
+        # set_lightdm_theme
+        # set_dark_gtk
+        # import_cinnamon_dconf
+        # import_gnome_dconf
+        # import_apps_dconf
+        # invert_brightness
+        # disable_pulseaudio_suspend
+
+        show_success "Everything installed."
         ;;
       "Base")
         01-base
@@ -118,65 +166,3 @@ check_network
 
 main
 
-#
-# Install base packages and miscellaneous extras
-#
-
-# install_base
-
-# install_zsh
-# install_grsec
-# install_utils
-# install_laptop
-# install_android
-
-
-#
-# Install a desktop environment
-#
-
-# install_desktop
-
-
-#
-# Install packages and set up network configuration
-#
-
-# install_apps
-# install_codecs
-# install_dev
-# install_games
-# install_kvm
-# install_kvm_guest
-# install_virtualbox
-# install_virtualbox_guest
-
-# install_network
-
-
-#
-# Install GTK themes
-#
-
-# install_theme_deps
-# install_arc_gtk
-# install_adapta_gtk
-# install_fonts
-# install_papirus_icons
-# set_qtcompat
-
-
-#
-# Add my personal settings
-#
-
-# set_noto_fonts
-# set_icon_theme
-# set_gtk_theme
-# set_lightdm_theme
-# set_dark_gtk
-# import_cinnamon_dconf
-# import_gnome_dconf
-# import_apps_dconf
-# invert_brightness
-# disable_pulseaudio_suspend
