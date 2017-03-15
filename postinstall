@@ -3,6 +3,7 @@ set -eu
 
 dir="$(dirname "$0")"
 
+
 #
 # Fancy color output
 #
@@ -42,19 +43,6 @@ show_listitem() {
 . $dir/functions/03-packages
 . $dir/functions/04-themes
 . $dir/functions/05-personal
-
-
-#
-# Just testing
-#
-
-show_question "question"
-show_error "error"
-show_warning "warning"
-show_success "success"
-show_info "info"
-show_listitem "listitem"
-show_header "header"
 
 
 #
@@ -160,6 +148,7 @@ function main {
   done
 }
 
+
 #
 # Check if dependencies are installed and if network is working
 #
@@ -173,4 +162,3 @@ check_network
 #
 
 main
-
