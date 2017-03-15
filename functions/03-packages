@@ -109,10 +109,14 @@ function install_virtualbox {
 
 virtualboxguest="${dir}/packages/virtualbox-guest.list"
 function install_virtualbox_guest {
-  show_header "Installing packages for VirtualBox guests."
-  check_installed $(cat ${virtualboxguest})
-  check_fail
-  show_success "VirtualBox guest packages installed."
+  if grep "^flags.*\ hypervisor" /proc/cpuinfo >/dev/null 2>&1; then
+    show_header "Installing packages for VirtualBox guests."
+    check_installed $(cat ${virtualboxguest})
+    check_fail
+    show_success "VirtualBox guest packages installed."
+  else
+    show_warning "Not running on a virtualized machine. Skipping."
+  fi
 }
 
 function 03-packages {
