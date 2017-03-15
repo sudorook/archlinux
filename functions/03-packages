@@ -4,11 +4,16 @@
 dir="$(dirname "$0")"
 
 apps="${dir}/packages/apps.list"
+mpvconfig="${dir}/configs/mpv.conf"
 function install_apps {
   show_header "Installing desktop applications."
   check_installed $(cat ${apps})
   check_fail
   show_success "Applications installed."
+
+  show_info "Copying mpv config."
+  mkdir -p ${HOME}/.config/mpv
+  cp -f ${mpvconfig} ${HOME}/.config/mpv
 }
 
 codecs="${dir}/packages/codecs.list"
