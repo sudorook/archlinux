@@ -31,6 +31,10 @@ function install_base {
   if ! test "$(grep ^ILoveCandy$ /etc/pacman.conf)"; then
     sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
   fi
+
+  # Use reflector to sort among fastest mirrors
+  show_info "Using reflector to have pacman use fastest https mirrors."
+  sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 }
 
 function update_packages {
