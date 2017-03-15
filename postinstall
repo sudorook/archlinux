@@ -63,7 +63,7 @@ show_header "header"
 
 function main {
   show_question "Select an option:"
-  show_info "  (Hit ENTER to see options again.)"
+  show_info "Main (Hit ENTER to see options again.)"
   options=("Quit" "Autopilot" "Base" "Miscellaneous" "Desktop environment" \
            "Network tools" "Applications" "Themes" "Personalization")
   select option in "${options[@]}"; do
@@ -123,27 +123,35 @@ function main {
         # disable_pulseaudio_suspend
 
         show_success "Everything installed."
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Base")
         01-base
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Miscellaneous")
         01-misc
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Desktop environment")
         02-desktop
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Network tools")
         03-network
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Applications")
         03-packages
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Themes")
         04-themes
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       "Personalization")
         05-personal
+        show_info "Main (Hit ENTER to see options again.)"
         ;;
       *)
         echo "Invalid option"

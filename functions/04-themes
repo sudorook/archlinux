@@ -84,6 +84,8 @@ function 04-themes {
   install_theme_deps
 
   show_question "Themes: what do you want to install?"
+  show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
+
   options=("Back" "All" "Arc (GTK)" "Adapta (GTK)" "Fonts" "Papirus (icons)" \
            "Qt/GTK compatibility")
   select option in "${options[@]}"; do
@@ -98,21 +100,27 @@ function 04-themes {
         echo install_fonts
         echo install_papirus_icons
         echo set_qtcompat
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Arc (GTK)")
         echo install_arc_gtk
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Adapta (GTK)")
         echo install_adapta_gtk
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Fonts")
         echo install_fonts
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Papirus (icons)")
         echo install_papirus_icons
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Qt/GTK compatibility")
         echo set_qtcompat
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       *)
         echo "Invalid option"

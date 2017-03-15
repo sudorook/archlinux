@@ -4,6 +4,18 @@
 dir="$(dirname "$0")"
 deps="${dir}/packages/deps.list"
 
+midbranch="\0342\0224\0234\0342\0224\0200\0342\0224\0200"
+endbranch="\0342\0224\0224\0342\0224\0200\0342\0224\0200"
+
+heirarchy="Main
+ ${midbranch} Base
+ ${midbranch} Miscellaneous
+ ${midbranch} Desktop environment
+ ${midbranch} Network tools
+ ${midbranch} Applications
+ ${midbranch} Themes
+ ${endbranch} Personalization"
+
 function check_fail {
   EXITSTATUS=${1:-}
   if [[ $EXITSTATUS -gt 0 ]]; then

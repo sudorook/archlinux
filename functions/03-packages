@@ -113,6 +113,8 @@ function install_virtualbox_guest {
 
 function 03-packages {
   show_question "Applications: what do you want to install?"
+  show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
+
   options=("Back" "All" "General" "Codecs" "Development" "Emulators" \
            "KVM (host)" "KVM (guest)" "VirtualBox (host)" "VirtualBox (guest)")
   select option in "${options[@]}"; do
@@ -130,30 +132,39 @@ function 03-packages {
         echo install_kvm_guest
         echo install_virtualbox
         echo install_virtualbox_guest
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "General")
         echo install_apps
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Codecs")
         echo install_codecs
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Development")
         echo install_dev
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Emulators")
         echo install_games
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "KVM (host)")
         echo install_kvm
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "KVM (guest)")
         echo install_kvm_guest
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "VirtualBox (host)")
         echo install_virtualbox
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "VirtualBox (guest)")
         echo install_virtualbox_guest
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       *)
         echo "Invalid option"

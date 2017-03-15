@@ -67,6 +67,8 @@ function install_android {
 
 function 01-misc {
   show_question "Misc: what do you want to install?"
+  show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+
   options=("Back" "All" "zsh" "Grsecurity" "Linux utilities" "Laptop tools" \
            "Android tools")
   select option in "${options[@]}"; do
@@ -81,24 +83,31 @@ function 01-misc {
         echo install_utils
         echo install_laptop
         echo install_android
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "zsh")
         echo install_zsh
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Grsecurity")
         echo install_grsecurity
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux utilities")
         echo install_utils
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Laptop tools")
         echo install_laptop
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Android tools")
         echo install_android
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)
         echo "Invalid option"
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
     esac
   done

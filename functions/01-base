@@ -42,7 +42,9 @@ function update_packages {
 
 function 01-base {
   show_question "Base: what do you want to install?"
-  options=("Back" "All" "Base packages" "Updates")
+  show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+
+  options=("Back" "Base packages" "Updates")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -50,12 +52,15 @@ function 01-base {
         ;;
       "Base packages")
         echo install_base
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Updates")
         echo update_packages
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       *)
         echo "Invalid option"
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
     esac
   done
