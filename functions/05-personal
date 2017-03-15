@@ -187,7 +187,7 @@ function 05-personal {
       "GTK theme")
         echo set_gtk_theme
         ;;
-      "LightDM")
+      "LightDM theme")
         echo set_lightdm_theme
         ;;
       "Dark GTK setting")

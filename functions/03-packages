@@ -149,10 +149,10 @@ function 03-packages {
       "KVM (guest)")
         echo install_kvm_guest
         ;;
-      "VirtualBox")
+      "VirtualBox (host)")
         echo install_virtualbox
         ;;
-      "VirtualBox (Guest)")
+      "VirtualBox (guest)")
         echo install_virtualbox_guest
         ;;
       *)
