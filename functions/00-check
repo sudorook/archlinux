@@ -65,12 +65,15 @@ function install_dependencies {
 
 function check_network {
   show_header "Checking network connection."
-  wget -q --tries=10 --timeout=20 --spider https://google.com
-  if ! [[ $? -eq 0 ]]; then
+  
+  if wget -q --tries=10 --timeout=20 --spider https://google.com >/dev/null; then
+    show_success "Network is working."
+  else
     show_error "Cannot start network connextion."
     show_info "Trying dhcpcd unit."
     if [[ $(systemctl is-active dncpcd) == "active" ]]; then
-      show_error "dhcpcd is already active. Exiting."
+      show_error "dhcpcd is already active."
+      show_error "You will need to troubleshoot your network connection yourself."
       exit 1
     else
       sudo systemctl start dhcpcd
@@ -82,7 +85,5 @@ function check_network {
         exit 1
       fi
     fi
-  else
-    show_success "Network is working."
   fi
 }
