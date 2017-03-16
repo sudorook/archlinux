@@ -14,8 +14,14 @@ function install_zsh {
 
   show_info "Downloading zsh extras."
   mkdir -p ${zshdir}
-  git clone https://github.com/zsh-users/zsh-history-substring-search ${zshdir}/zsh-history-substring-search
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${zshdir}/zsh-autosuggestions
+  if ! [ -d ${zshdir}/zsh-history-substring-search ]; then
+    git clone https://github.com/zsh-users/zsh-history-substring-search \
+      ${zshdir}/zsh-history-substring-search
+  fi
+  if ! [ -d ${zshdir}/zsh-autosuggestions ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+      ${zshdir}/zsh-autosuggestions
+  fi
 
   show_info "Copying zshrc."
   cp -f ${zshrc} ${HOME}/.zshrc
