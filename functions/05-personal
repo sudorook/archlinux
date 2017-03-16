@@ -151,7 +151,7 @@ pulseconfig="/etc/pulse/default.pa"
 function disable_pulseaudio_suspend {
   show_header "Disabling suspend on PulseAudio when sinks/sources idle."
   if [ -f ${pulseconfig} ]; then
-    sed -i "s/^load-module module-suspend-on-idle$/#load-module module-suspend-on-idle/g" ${pulseconfig}
+    sudo sed -i "s/^load-module module-suspend-on-idle$/#load-module module-suspend-on-idle/g" ${pulseconfig}
   else
     show_warning "PuleAudio config file missing. Exiting."
   fi
