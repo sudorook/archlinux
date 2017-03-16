@@ -11,6 +11,7 @@ function install_gnome {
   show_success "GNOME installed."
 
   show_info "Putting things into place."
+  export DESKTOP_SESSION="gnome"
   sudo systemctl enable gdm.service
   show_info "Done."
 }
@@ -23,6 +24,7 @@ function install_cinnamon {
   show_success "Cinnamon installed."
 
   show_info "Putting things into place."
+  export DESKTOP_SESSION="cinnamon"
   sudo systemctl enable lightdm.service
   show_info "Done."
 }
