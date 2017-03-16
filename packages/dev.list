@@ -45,6 +45,7 @@ python-statsmodels
 python-urllib3
 r
 ruby
+ruby-bundler
 rust
 sassc
 sqlite
