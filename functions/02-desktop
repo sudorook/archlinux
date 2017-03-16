@@ -12,6 +12,7 @@ function install_gnome {
 
   show_info "Putting things into place."
   export DESKTOP_SESSION="gnome"
+  xdg-user-dirs-update
   sudo systemctl enable gdm.service
   show_info "Done."
 }
@@ -25,6 +26,7 @@ function install_cinnamon {
 
   show_info "Putting things into place."
   export DESKTOP_SESSION="cinnamon"
+  xdg-user-dirs-update
   sudo systemctl enable lightdm.service
   show_info "Done."
 }
