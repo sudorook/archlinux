@@ -92,7 +92,7 @@ function set_lightdm_theme {
 gtksettings="${HOME}/.config/gtk-3.0/settings.ini"
 function set_dark_gtk {
   show_header "Setting global dark theme for gtk applications."
-  if test `grep ^gtk-application-prefer-dark-theme= ${gtksettings}`; then
+  if grep ^gtk-application-prefer-dark-theme= ${gtksettings} >/dev/null 2>&1; then
     isgtkdark=$(grep ^gtk-application-prefer-dark-theme= ${gtksettings} | cut -d"=" -f2)
     if test ${isgtkdark}; then
       show_info "Desktop is already set to use dark GTK variants."
@@ -100,8 +100,10 @@ function set_dark_gtk {
       sed -i "s/^gtk-application-prefer-dark-theme=${isgtkdark}$/gtk-application-prefer-dark-theme=1/g" ${gtksettings}
     fi
   else
-    if [ -e ${gtksettings} ]; then
+    if [ -f ${gtksettings} ]; then
       echo "" >> ${gtksettings}
+    else
+      touch ${gtksettings}
     fi
     echo "[Settings]" >> ${gtksettings}
     echo "gtk-application-prefer-dark-theme=1" >> ${gtksettings}
