@@ -29,7 +29,7 @@ powerline-fonts
 pypy
 pypy3
 python
-python2
+python-argparse
 python-beautifulsoup4
 python-biopython
 python-h5py
@@ -42,6 +42,7 @@ python-scikit-learn
 python-scipy
 python-sphinx
 python-statsmodels
+python-urllib3
 r
 ruby
 rust
