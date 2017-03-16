@@ -12,6 +12,9 @@ function install_network {
   check_fail
   show_success "Networking applications installed."
 
+  show_info "Enabling NetworkManager service"
+  sudo systemctl enable NetworkManager
+
   show_info "Setting up MAC address randomization in Network Manager."
   if ! test "$(grep "mac-address=random" ${nmconf})"; then
     sudo sh -c "echo "" >> ${nmconf}"
