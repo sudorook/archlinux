@@ -84,7 +84,7 @@ function install_kvm_guest {
       show_info "Virtio modules already specified in ${mkinitcpioconf}."
     else
       mkinitcpiomodules=$(sed -n "s/^MODULES=\"\(.*\)\"/\1 ${virtiomodules}/p" ${mkinitcpioconf} | sed -e "s/^[[:space:]]//g")
-      sed -i "s/^MODULES=\".*\"/MODULES=\"${mkinitcpiomodules}\"/" ${mkinitcpioconf}
+      sudo sed -i "s/^MODULES=\".*\"/MODULES=\"${mkinitcpiomodules}\"/" ${mkinitcpioconf}
       show_info "Rebuilding kernel(s)"
       sudo mkinitcpio -p linux
     fi
