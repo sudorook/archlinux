@@ -70,7 +70,8 @@ function set_qtcompat {
   wget https://aur.archlinux.org/cgit/aur.git/snapshot/qt5-styleplugins.tar.gz
   tar xf ${pkgbuilddir}/qt5-styleplugins.tar.gz
   cd qt5-styleplugins
-  makepkg -si
+  makepkg -s
+  sudo pacman -U --nocheck qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz
   show_success "qt5-styleplugins built and installed."
   cd ${curdir}
 
