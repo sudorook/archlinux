@@ -103,7 +103,7 @@ function set_dark_gtk {
     if [ -f ${gtksettings} ]; then
       echo "" >> ${gtksettings}
     else
-      touch ${gtksettings}
+      mkdir -p $(dirname ${gtksettings}) && touch ${gtksettings}
     fi
     echo "[Settings]" >> ${gtksettings}
     echo "gtk-application-prefer-dark-theme=1" >> ${gtksettings}
