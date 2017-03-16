@@ -21,8 +21,6 @@ ipython
 js
 julia
 jupyter
-rust
-texlive-core
 mathjax
 nodejs
 npm
@@ -46,8 +44,10 @@ python-sphinx
 python-statsmodels
 r
 ruby
+rust
 sassc
 sqlite
+texlive-core
 uncrustify
 vim
 vim-plugins
