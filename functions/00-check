@@ -27,8 +27,8 @@ function check_fail {
 
 function check_installed {
   for package in "${@}"; do
-    installcount=$(pacman -Ss ${package} | grep -c "\[installed\]" || true)
-    metacount=$(pacman -Qs ${package} | grep -c "^local.*(${package})$" || true)
+    metacount=$(pacman -Ss ${package} | grep -c "(.*${package}.*)" || true)
+    installcount=$(pacman -Qs ${package} | grep -c "^local.*(.*${package}.*)$" || true)
 
     # Check if package is installed.
     if pacman -Qi ${package} > /dev/null 2>&1; then
