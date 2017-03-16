@@ -67,11 +67,13 @@ function set_qtcompat {
   curdir=`pwd`
   mkdir -p ${pkgbuilddir}
   cd ${pkgbuilddir}
-  wget https://aur.archlinux.org/cgit/aur.git/snapshot/qt5-styleplugins.tar.gz
+  wget -N https://aur.archlinux.org/cgit/aur.git/snapshot/qt5-styleplugins.tar.gz
   tar xf ${pkgbuilddir}/qt5-styleplugins.tar.gz
   cd qt5-styleplugins
-  makepkg -s
-  sudo pacman -U --nocheck qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz
+  if ! [ -f qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz ]; then
+    makepkg -s
+    sudo pacman -U --nocheck qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz
+  fi
   show_success "qt5-styleplugins built and installed."
   cd ${curdir}
 
