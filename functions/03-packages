@@ -34,7 +34,6 @@ function install_codecs {
 
 dev="${dir}/packages/dev.list"
 npmrc="${dir}/dotfiles/npmrc"
-gitignore="${dir}/dotfiles/gitignore"
 function install_dev {
   show_header "Installing languages and editors for development."
   check_installed $(cat ${dev})
@@ -43,7 +42,6 @@ function install_dev {
 
   show_info "Installing dotfiles."
   cp -f ${npmrc} ${HOME}/.npmrc
-  cp -f ${gitignore} ${HOME}/.gitignore
   show_success "Dotfiles installed."
 }
 
