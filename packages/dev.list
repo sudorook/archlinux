@@ -48,6 +48,7 @@ ruby
 ruby-bundler
 rust
 sassc
+scrapy
 sqlite
 texlive-core
 uncrustify
