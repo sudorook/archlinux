@@ -25,7 +25,6 @@ mathjax
 nodejs
 npm
 postgresql
-powerline-fonts
 pypy
 pypy3
 python
@@ -53,6 +52,3 @@ scrapy
 sqlite
 texlive-core
 uncrustify
-vim
-vim-plugins
-vim-systemd

@@ -33,7 +33,6 @@ function install_codecs {
 }
 
 dev="${dir}/packages/dev.list"
-vimrc="${dir}/dotfiles/vimrc"
 npmrc="${dir}/dotfiles/npmrc"
 gitignore="${dir}/dotfiles/gitignore"
 function install_dev {
@@ -43,7 +42,6 @@ function install_dev {
   show_success "Languages and editors installed."
 
   show_info "Installing dotfiles."
-  cp -f ${vimrc} ${HOME}/.vimrc
   cp -f ${npmrc} ${HOME}/.npmrc
   cp -f ${gitignore} ${HOME}/.gitignore
   show_success "Dotfiles installed."
@@ -96,6 +94,19 @@ function install_kvm_guest {
   fi
 }
 
+vim="${dir}/packages/vim.list"
+vimrc="${dir}/dotfiles/vimrc"
+function install_vim {
+  show_header "Installing vim and vim plugins."
+  check_installed $(cat ${vim})
+  check_fail
+  show_success "Vim and vim plugins installed."
+
+  show_info "Installing vimrc."
+  cp -f ${vimrc} ${HOME}/.vimrc
+  show_success "vimrc installed."
+}
+
 virtualbox="${dir}/packages/virtualbox.list"
 vboxservice="${dir}/services/virtualbox-modprobe.service"
 function install_virtualbox {
@@ -132,8 +143,8 @@ function 03-packages {
   show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
 
   options=("Back" "All" "General" "Codecs" "Development" "Emulators" \
-           "KVM (host)" "KVM (guest)" "VirtualBox (host)" "VirtualBox (guest)"
-           "Android tools")
+           "KVM (host)" "KVM (guest)" "Vim" "VirtualBox (host)" \
+           "VirtualBox (guest)" "Android tools")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -146,6 +157,7 @@ function 03-packages {
         install_games
         install_kvm
         install_kvm_guest
+        install_vim
         install_virtualbox
         install_virtualbox_guest
         install_android
@@ -173,6 +185,10 @@ function 03-packages {
         ;;
       "KVM (guest)")
         install_kvm_guest
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
+        ;;
+      "Vim")
+        install_vim
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "VirtualBox (host)")
