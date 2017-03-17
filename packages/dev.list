@@ -37,6 +37,7 @@ python-matplotlib
 python-numpy
 python-pycurl
 python-pandas
+python-reportlab
 python-seaborn
 python-scikit-learn
 python-scipy
