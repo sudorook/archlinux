@@ -140,15 +140,16 @@ function 03-packages {
   show_question "Applications: what do you want to install?"
   show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "General" "Codecs" "Development" "Emulators" \
-           "KVM (host)" "KVM (guest)" "Vim" "VirtualBox (host)" \
-           "VirtualBox (guest)" "Android tools")
+  options=("Back" "All" "Android tools" "General" "Codecs" "Development" \
+           "Emulators" "KVM (host)" "KVM (guest)" "Vim" "VirtualBox (host)" \
+           "VirtualBox (guest)")
   select option in "${options[@]}"; do
     case $option in
       "Back")
         break
         ;;
       "All")
+        install_android
         install_apps
         install_codecs
         install_dev
@@ -158,8 +159,11 @@ function 03-packages {
         install_vim
         install_virtualbox
         install_virtualbox_guest
-        install_android
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
+        ;;
+      "Android tools")
+        install_android
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "General")
         install_apps
@@ -196,10 +200,6 @@ function 03-packages {
       "VirtualBox (guest)")
         install_virtualbox_guest
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
-        ;;
-      "Android tools")
-        install_android
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       *)
         show_warning "Invalid option."
