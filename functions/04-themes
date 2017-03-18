@@ -53,10 +53,11 @@ function install_fonts {
 
 function install_papirus_icons {
   show_header "Downloading and installing the Papirus icon theme."
-  git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme papirus-icon-theme
+  git clone https://github.com/PapirusDevelopmentTeam/papirus-icon-theme \
+    papirus-icon-theme
   cd papirus-icon-theme
   sudo make install
-  cd ../
+  cd ..
   rm -rf papirus-icon-theme
 }
 
@@ -82,6 +83,7 @@ function set_qtcompat {
   cp -f ${qt5ctconf} ${HOME}/.config/qt5ct
   export QT_QPA_PLATFORMTHEME=qt5ct
 }
+
 function 04-themes {
   show_info "Installing dependencies for building themes."
   install_theme_deps
