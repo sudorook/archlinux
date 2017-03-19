@@ -115,9 +115,10 @@ function install_virtualbox {
   check_fail
   show_success "VirtualBox installed."
 
-  show_info "Adding $(whoami) to vboxusers group."
-  sudo usermod -aG vboxusers $(whoami)
-  show_success "Done."
+  if getent group vboxusers; then
+    show_info "Adding $(whoami) to vboxusers group."
+    sudo usermod -aG vboxusers $(whoami)
+  fi
 
   show_info "Setting up custom services."
   sudo ln -sf /dev/null /etc/modules-load.d/virtualbox-host-modules-arch.conf
