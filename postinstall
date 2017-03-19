@@ -74,7 +74,8 @@ function main {
           install_android
 
           # Install a desktop environment
-          install_desktop
+          install_gnome
+          install_cinnamon
 
           # Set up network configuration
           install_network
