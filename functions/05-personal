@@ -144,8 +144,8 @@ function invert_brightness {
     sudo sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubconfig}
     sudo sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig} # backup
     show_success "Brightness inverted."
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
   fi
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 pulseconfig="/etc/pulse/default.pa"
