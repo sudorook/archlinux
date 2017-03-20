@@ -266,7 +266,6 @@ function select_desktop_theme {
         ;;
     esac
   done
-  echo "$gtktheme"
 }
 
 function 05-personal {
