@@ -156,8 +156,8 @@ function disable_pulseaudio_suspend {
 }
 
 function select_desktop_theme {
-  show_question "Pick a GTK theme:"
-  
+  show_question "Select a GTK theme:"
+
   options=("Back" "Adwaita" "Arc" "Arc-Darker" "Arc-Darker" "Adapta" \
            "Adapta-Eta" "Adapta-Nokto" "Adapta-Nokto-Eta")
   select option in "${options[@]}"; do
@@ -336,9 +336,9 @@ function 05-personal {
   show_question "Personal: what do you want to set?"
   show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Set Noto fonts" "Set icon theme" "Set desktop theme" \
-           "Set dark GTK" "Import Cinnamon dconf" "Import GNOME dconf" \
-           "Import dconf for apps" "Invert brightness" \
+  options=("Back" "All" "Set Noto fonts" "Select icon theme" \
+           "Select desktop theme" "Set dark GTK" "Import Cinnamon dconf" \
+           "Import GNOME dconf" "Import application dconf" "Invert brightness" \
            "Disable PulseAudio suspend")
   select option in "${options[@]}"; do
     case $option in
@@ -362,11 +362,11 @@ function 05-personal {
         set_noto_fonts
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
-      "Set icon theme")
-        set_icon_theme
+      "Select icon theme")
+        select_icon_theme
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
-      "Set desktop theme")
+      "Select desktop theme")
         select_desktop_theme
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
@@ -382,7 +382,7 @@ function 05-personal {
         import_gnome_dconf
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
-      "Import dconf for apps")
+      "Import application dconf")
         import_apps_dconf
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
