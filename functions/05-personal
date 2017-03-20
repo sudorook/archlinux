@@ -268,6 +268,70 @@ function select_desktop_theme {
   done
 }
 
+function select_icon_theme {
+  show_question "Select an icon theme:"
+
+  options=("Back" "Papirus" "ePapirus" "Papirus-Light" "Papirus-Dark")
+  select option in "${options[@]}"; do
+    case $option in
+      "Back")
+        break
+        ;;
+      "Papirus")
+        if [ -d /usr/share/icons/Papirus ] || \
+           [ -d ${HOME}/.icons/Papirus ]; then
+          icontheme="Papirus"
+          set_icon_theme
+          set_lightdm_theme
+        else
+          show_warning "${option} icons are not installed."
+          select_icon_theme
+        fi
+        break
+        ;;
+      "ePapirus")
+        if [ -d /usr/share/icons/ePapirus ] || \
+           [ -d ${HOME}/.icons/ePapirus ]; then
+          icontheme="ePapirus"
+          set_icon_theme
+          set_lightdm_theme
+        else
+          show_warning "${option} icons are not installed."
+          select_icon_theme
+        fi
+        break
+        ;;
+      "Papirus-Light")
+        if [ -d /usr/share/icons/Papirus-Light ] || \
+           [ -d ${HOME}/.icons/Papirus-Light ]; then
+          icontheme="Papirus-Light"
+          set_icon_theme
+          set_lightdm_theme
+        else
+          show_warning "${option} icons are not installed."
+          select_icon_theme
+        fi
+        break
+        ;;
+      "Papirus-Dark")
+        if [ -d /usr/share/icons/Papirus-Dark ] || \
+           [ -d ${HOME}/.icons/Papirus-Dark ]; then
+          icontheme="Papirus-Dark"
+          set_icon_theme
+          set_lightdm_theme
+        else
+          show_warning "${option} icons are not installed."
+          select_icon_theme
+        fi
+        break
+        ;;
+      *)
+        show_warning "Invalid option."
+        ;;
+    esac
+  done
+}
+
 function 05-personal {
   show_question "Personal: what do you want to set?"
   show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
