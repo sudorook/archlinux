@@ -155,7 +155,7 @@ function disable_pulseaudio_suspend {
   fi
 }
 
-function set_desktop_theme {
+function select_desktop_theme {
   show_question "Pick a GTK theme:"
   
   options=("Back" "Adwaita" "Arc" "Arc-Darker" "Arc-Darker" "Adapta" \
@@ -173,7 +173,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -185,7 +185,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -197,7 +197,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -209,7 +209,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -221,7 +221,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -233,7 +233,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -245,7 +245,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -257,7 +257,7 @@ function set_desktop_theme {
           set_lightdm_theme
         else
           show_warning "${option} theme is not installed."
-          set_desktop_theme
+          select_desktop_theme
         fi
         break
         ;;
@@ -304,7 +304,7 @@ function 05-personal {
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Set desktop theme")
-        set_desktop_theme
+        select_desktop_theme
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Set dark GTK")
