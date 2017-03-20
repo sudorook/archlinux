@@ -3,8 +3,9 @@
 
 dir="$(dirname "$0")"
 
-# Set dconf settings
-# Download scripts (submodule) and add to path
+# Globals
+gtktheme="Arc-Dark"
+icontheme="Papirus-Dark"
 
 function set_noto_fonts {
   show_header "Configuring system fonts."
@@ -34,7 +35,6 @@ function set_noto_fonts {
   fi
 }
 
-icontheme="Papirus-Dark"
 xdgdefaultconf="/etc/xdg/user-dirs.defaults"
 function set_icon_theme {
   show_header "Setting desktop icon theme to Papirus-Dark."
@@ -59,7 +59,6 @@ function set_icon_theme {
   rm -rf ${HOME}/Public
 }
 
-gtktheme="Arc-Dark"
 function set_gtk_theme {
   show_header "Setting desktop GTK theme to ${gtktheme}."
   if [[ ${DESKTOP_SESSION} =~ "cinnamon" ]]; then
@@ -74,8 +73,6 @@ function set_gtk_theme {
   fi
 }
 
-gtktheme="Arc-Dark"
-icontheme="Papirus-Dark"
 lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
   show_header "Setting LightDM login GTK theme to ${gtktheme}."
