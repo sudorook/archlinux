@@ -8,7 +8,6 @@ set hlsearch
 set smartcase
 set noerrorbells
 set novisualbell
-"set tabstop=3
 set softtabstop=2
 set shiftwidth=2
 set expandtab
@@ -54,7 +53,6 @@ let g:syntastic_check_on_wq=0
 
 "bash
 au FileType bash,zsh,fish,sh setlocal shiftwidth=2
-"au FileType bash,zsh,fish,sh setlocal tabstop=2
 au FileType bash,zsh,fish,sh setlocal softtabstop=2
 au FileType bash,zsh,fish,sh setlocal expandtab
 au FileType bash,zsh,fish,sh setlocal showmatch
@@ -69,7 +67,6 @@ au FileType bash,zsh,fish,sh setlocal smartindent
 
 "c/cpp
 au FileType h,c,hpp,cpp setlocal shiftwidth=2
-"au FileType h,c,hpp,cpp setlocal tabstop=2
 au FileType h,c,hpp,cpp setlocal softtabstop=2
 au FileType h,c,hpp,cpp setlocal expandtab
 au FileType h,c,hpp,cpp setlocal showmatch
@@ -91,7 +88,6 @@ au FileType h,c,hpp,cpp imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr
 
 "html
 au FileType html,css,scss,less setlocal shiftwidth=2
-"au FileType html,css,scss,less setlocal tabstop=2
 au FileType html,css,scss,less setlocal softtabstop=2
 au FileType html,css,scss,less setlocal expandtab
 
