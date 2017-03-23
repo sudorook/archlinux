@@ -37,16 +37,13 @@ export PATH=$PATH:~/.scripts/
 alias vi='vim '
 alias sudo='sudo '
 alias grep='grep --color=auto'
-alias superpacman='sudo bash -c "pacman -Syu && paccache -r && paccache -ruk0"'
 
 # list directory contents
 alias sl='ls'
-#alias l='ls -al'
 alias lsa='ls -lah'
 alias l='ls -lah'
 alias ll='ls -lh'
 alias la='ls -lAh'
-alias d='dirs -v | head -10'
 
 
 #
