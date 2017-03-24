@@ -11,7 +11,9 @@ function install_gnome {
   show_success "GNOME installed."
 
   show_info "Putting things into place."
-  export DESKTOP_SESSION="gnome"
+  if ${DESKTOP_SESSION}; then
+    export DESKTOP_SESSION="gnome"
+  fi
   xdg-user-dirs-update
   sudo systemctl enable gdm.service
   show_info "Done."
@@ -25,7 +27,9 @@ function install_cinnamon {
   show_success "Cinnamon installed."
 
   show_info "Putting things into place."
-  export DESKTOP_SESSION="cinnamon"
+  if ${DESKTOP_SESSION}; then
+    export DESKTOP_SESSION="cinnamon"
+  fi
   xdg-user-dirs-update
   sudo systemctl enable lightdm.service
   show_info "Done."
