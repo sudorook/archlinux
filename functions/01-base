@@ -16,13 +16,21 @@ function install_base {
   cp -f ${toprc} ${HOME}/.toprc
   show_success "Installed toprc."
 
+  # Use reflector to sort among fastest mirrors
+  show_info "Using reflector to have pacman use fastest https mirrors."
+  sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
+}
+
+function enable_bash_insults {
   # Customize sudo to:
   #  - insult incorrect password attempts
   show_info "Enabling sudo insults."
   sudo sh -c 'cat /etc/sudoers | \
               sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" | \
               (EDITOR="tee" visudo >/dev/null)'
+}
 
+function stylize_pacman {
   # Customize pacman to:
   #  - color pacman output
   #  - show pacman-game-style progress bare for pacman
@@ -31,10 +39,6 @@ function install_base {
   if ! test "$(grep ^ILoveCandy$ /etc/pacman.conf)"; then
     sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
   fi
-
-  # Use reflector to sort among fastest mirrors
-  show_info "Using reflector to have pacman use fastest https mirrors."
-  sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 }
 
 function update_packages {
@@ -48,7 +52,7 @@ function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
-  options=("Back" "Base packages" "Updates")
+  options=("Back" "Base packages" "Updates" "Sudo instults" "Pacman styling")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -60,6 +64,14 @@ function 01-base {
         ;;
       "Updates")
         update_packages
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Sudo insults")
+        enable_bash_insults
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Pacman styling")
+        stylize_pacman
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       *)
