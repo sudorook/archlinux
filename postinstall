@@ -65,7 +65,7 @@ function main {
         if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
           # Install base packages
           install_base
-          enable_bash_insults
+          enable_sudo_insults
           stylize_pacman
 
           # Install miscellaneous extras

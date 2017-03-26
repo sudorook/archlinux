@@ -21,7 +21,7 @@ function install_base {
   sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 }
 
-function enable_bash_insults {
+function enable_sudo_insults {
   # Customize sudo to:
   #  - insult incorrect password attempts
   show_info "Enabling sudo insults."
@@ -67,7 +67,7 @@ function 01-base {
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Sudo insults")
-        enable_bash_insults
+        enable_sudo_insults
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Pacman styling")
