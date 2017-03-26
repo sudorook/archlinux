@@ -9,32 +9,32 @@ icontheme="Papirus-Dark"
 
 function set_noto_fonts {
   show_header "Configuring system fonts."
-  if pacman -Qs noto-fonts > /dev/null 2>&1; then
-    if ! [[ -z ${DESKTOP_SESSION+x} ]]; then
-      if [[ ${DESKTOP_SESSION} =~ "cinnamon" ]]; then
-        # screensaver fonts
-        gsettings set org.cinnamon.desktop.screensaver font-message "'Noto Sans 14'"
-        gsettings set org.cinnamon.desktop.screensaver font-date "'Noto Sans 24'"
-        gsettings set org.cinnamon.desktop.screensaver font-time "'Noto Sans 64'"
+  if pacman -Qi noto-fonts > /dev/null 2>&1; then
+    if pacman -Qi cinnamon >/dev/null 2>&1; then
+      show_info "Setting fonts for cinnamon environment."
 
-        # desktop environment fonts
-        gsettings set org.cinnamon.desktop.interface font-name "'Noto Sans 9'"
-        # gsettings set org.nemo.desktop font "'Noto Sans 10'"
-        gsettings set org.gnome.desktop.interface document-font-name "'Noto Sans 10'"
-        gsettings set org.gnome.desktop.interface monospace-font-name "'Monospace 11'"
-        gsettings set org.cinnamon.desktop.wm.preferences titlebar-font "'Noto Sans Bold 10'"
-      elif [[ ${DESKTOP_SESSION} =~ "gnome" ]]; then
-        # desktop environment fonts
-        gsettings set org.gnome.desktop.wm.preferences titlebar-font "'Cantarell Bold 11'"
-        gsettings set org.gnome.desktop.interface document-font-name "'Cantarell 11'"
-        gsettings set org.gnome.desktop.interface font-name "'Sans 11'"
-        # gsettings set org.gnome.desktop.interface monospace-font-name "'Noto Mono 11'"
-        gsettings set org.gnome.desktop.interface monospace-font-name "'Monospace 11'"
-      else
-        show_error "Current desktop enviornment ${DESKTOP_SESSION} not supported."
-      fi
-    else
-      show_warning "DESKTOP_SESSION env variable is not set. Skipping."
+      # screensaver fonts
+      gsettings set org.cinnamon.desktop.screensaver font-message "'Noto Sans 14'"
+      gsettings set org.cinnamon.desktop.screensaver font-date "'Noto Sans 24'"
+      gsettings set org.cinnamon.desktop.screensaver font-time "'Noto Sans 64'"
+
+      # desktop environment fonts
+      gsettings set org.cinnamon.desktop.interface font-name "'Noto Sans 9'"
+      # gsettings set org.nemo.desktop font "'Noto Sans 10'"
+      gsettings set org.gnome.desktop.interface document-font-name "'Noto Sans 10'"
+      gsettings set org.gnome.desktop.interface monospace-font-name "'Monospace 11'"
+      gsettings set org.cinnamon.desktop.wm.preferences titlebar-font "'Noto Sans Bold 10'"
+    fi
+
+    if pacman -Qi gnome-shell >/dev/null 2>&1; then
+      show_info "Setting fonts for GNOME environment."
+
+      # desktop environment fonts
+      gsettings set org.gnome.desktop.wm.preferences titlebar-font "'Cantarell Bold 11'"
+      gsettings set org.gnome.desktop.interface document-font-name "'Cantarell 11'"
+      gsettings set org.gnome.desktop.interface font-name "'Sans 11'"
+      # gsettings set org.gnome.desktop.interface monospace-font-name "'Noto Mono 11'"
+      gsettings set org.gnome.desktop.interface monospace-font-name "'Monospace 11'"
     fi
   else
     show_warning "Noto fonts are not installed. Skipping."
@@ -43,40 +43,42 @@ function set_noto_fonts {
 
 xdgdefaultconf="/etc/xdg/user-dirs.defaults"
 function set_icon_theme {
-  show_header "Setting desktop icon theme."
+  show_header "Setting desktop icon theme to ${icontheme}."
 
-  if ! [[ -z ${DESKTOP_SESSION+x} ]]; then
-    if [[ ${DESKTOP_SESSION} =~ "cinnamon" ]]; then
-      gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
-    elif [[ ${DESKTOP_SESSION} =~ "gnome" ]]; then
-      gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
-    fi
-
-    show_info "Creating Projects/ and Sync/ and setting gvfs metadata."
-    mkdir -p ${HOME}/Projects
-    gvfs-set-attribute ${HOME}/Projects/ -t string \
-      metadata::custom-icon-name folder-development
-    mkdir -p ${HOME}/Sync
-    gvfs-set-attribute ${HOME}/Sync/ -t string \
-      metadata::custom-icon-name folder-cloud
-
-    show_info "Disabling Templates/ and Public/ folders."
-    sudo sed -i "s/^TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
-    sudo sed -i "s/^PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
-    rm -rf ${HOME}/Templates
-    rm -rf ${HOME}/Public
-  else
-    show_warning "DESKTOP_SESSION env variable is not set. Skipping."
+  if pacman -Qi cinnamon >/dev/null 2>&1; then
+    show_info "Setting cinnamon icon theme to ${icontheme}."
+    gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
   fi
+  if pacman -Qi gnome-shell >/dev/null 2>&1; then
+    show_info "Setting GNOME icon theme to ${icontheme}."
+    gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
+  fi
+
+  show_info "Creating Projects/ and Sync/ and setting gvfs metadata."
+  mkdir -p ${HOME}/Projects
+  gvfs-set-attribute ${HOME}/Projects/ -t string \
+    metadata::custom-icon-name folder-development
+  mkdir -p ${HOME}/Sync
+  gvfs-set-attribute ${HOME}/Sync/ -t string \
+    metadata::custom-icon-name folder-cloud
+
+  show_info "Disabling Templates/ and Public/ folders."
+  sudo sed -i "s/^TEMPLATES/#TEMPLATES/g" ${xdgdefaultconf}
+  sudo sed -i "s/^PUBLICSHARE/#PUBLICSHARE/g" ${xdgdefaultconf}
+  rm -rf ${HOME}/Templates
+  rm -rf ${HOME}/Public
 }
 
 function set_gtk_theme {
   show_header "Setting desktop GTK theme to ${gtktheme}."
-  if [[ ${DESKTOP_SESSION} =~ "cinnamon" ]]; then
+  if pacman -Qi cinnamon >/dev/null 2>&1; then
+    show_info "Setting cinnamon GTK theme to ${gtktheme}."
     gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
     gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
     gsettings set org.cinnamon.theme name "'${gtktheme}'"
-  elif [[ ${DESKTOP_SESSION} =~ "gnome" ]]; then
+  fi
+  if pacman -Qi gnome-shell >/dev/null 2>&1; then
+    show_info "Setting GNOME GTK theme to ${gtktheme}."
     gsettings set org.gnome.desktop.wm.preferences theme "'${gtktheme}'"
     gsettings set org.gnome.desktop.interface gtk-theme "'${gtktheme}'"
     gnome-shell-extension-tool -e "user-theme@gnome-shell-extensions.gcampax.github.com" || true
@@ -130,7 +132,7 @@ function import_cinnamon_dconf {
 
 gnomedconf="${dir}/dconf/gnome.dconf"
 function import_gnome_dconf {
-  show_header "Importing gnome dconf settings."
+  show_header "Importing GNOME dconf settings."
   dconf load / < ${gnomedconf}
   check_fail
   show_success "GNOME dconf settings imported."
