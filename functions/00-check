@@ -78,8 +78,9 @@ function check_network {
       sudo systemctl start dhcpcd
       show_info "Sleep a bit to wait for network interface to finish loading."
       sleep 10s
-      wget -q --tries=10 --timeout=20 --spider https://google.com
-      if ! [[ $? -eq 0 ]]; then
+      if wget -q --tries=10 --timeout=20 --spider https://archlinux.org >/dev/null; then
+        show_success "Network is working."
+      else
         show_error "Cannot start network connextion. Giving up."
         exit 1
       fi
