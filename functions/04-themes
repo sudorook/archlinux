@@ -73,7 +73,7 @@ function set_qtcompat {
   cd qt5-styleplugins
   if ! [ -f qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz ]; then
     makepkg -s
-    sudo pacman -U --nocheck qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz
+    sudo pacman -U --noconfirm qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz
   fi
   show_success "qt5-styleplugins built and installed."
   cd ${curdir}
