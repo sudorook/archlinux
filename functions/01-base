@@ -52,7 +52,7 @@ function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
-  options=("Back" "Base packages" "Updates" "Sudo instults" "Pacman styling")
+  options=("Back" "Base packages" "Updates" "Sudo insults" "Pacman styling")
   select option in "${options[@]}"; do
     case $option in
       "Back")
