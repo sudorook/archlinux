@@ -7,7 +7,7 @@ desktop environment.
 Order of installations: 
 
 0. script dependencies
-1. base, grsec, utils, zsh
+1. base, utils, zsh
 2. desktop environment (cinnamon, gnome)
 3. apps, codecs, dev, network, emulators, vms
 4. installing themes and fonts
