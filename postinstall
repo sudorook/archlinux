@@ -88,11 +88,11 @@ function main {
           install_dev
           install_extra
           install_games
-          install_kvm
-          install_kvm_guest
+          # install_kvm
+          # install_kvm_guest
           install_vim
-          install_virtualbox
-          install_virtualbox_guest
+          # install_virtualbox
+          # install_virtualbox_guest
 
           # Install themes
           install_theme_deps
