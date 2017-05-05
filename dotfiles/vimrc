@@ -121,3 +121,7 @@ augroup resCur
     \   exe "normal! g`\"" |
     \ endif
 augroup END
+
+"workarounds for garbage characters
+set t_u7=
+set t_RV=
