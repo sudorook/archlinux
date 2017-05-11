@@ -68,7 +68,6 @@ function 01-misc {
         ;;
       "All")
         install_zsh
-        install_grsec
         install_utils
         install_laptop
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
