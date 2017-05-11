@@ -92,7 +92,7 @@ function set_gtk_theme {
 
 lightdmconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
-  if pacman -Qi lightdm-gtk-greeter > /dev/null; then
+  if pacman -Qi lightdm-gtk-greeter > /dev/null 2>&1; then
     show_header "Setting LightDM login GTK theme to ${gtktheme}."
     sudo sed -i "s/^#theme-name=$/theme-name=${gtktheme}/g" ${lightdmconf}
     sudo sed -i "s/^#icon-theme=$/icon-theme=${icontheme}/g" ${lightdmconf}
