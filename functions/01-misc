@@ -32,6 +32,14 @@ function install_zsh {
   fi
 }
 
+hardened="${dir}/packages/hardened.list"
+function install_hardened {
+  show_header "Installing Arch hardened kernel."
+  check_installed $(cat ${utils})
+  check_fail
+  show_success "Hardened kernel installed."
+}
+
 utils="${dir}/packages/utils.list"
 function install_utils {
   show_header "Installing general utilities."
@@ -68,6 +76,7 @@ function 01-misc {
         ;;
       "All")
         install_zsh
+        install_hardened
         install_utils
         install_laptop
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"

@@ -70,6 +70,7 @@ function main {
 
           # Install miscellaneous extras
           install_zsh
+          install_hardened
           install_utils
           install_laptop
           install_android
