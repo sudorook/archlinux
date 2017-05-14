@@ -42,6 +42,7 @@ python-scikit-learn
 python-scipy
 python-sphinx
 python-statsmodels
+python-tensorflow
 python-urllib3
 r
 ruby
@@ -50,5 +51,6 @@ rust
 sassc
 scrapy
 sqlite
+tensorflow
 texlive-core
 uncrustify
