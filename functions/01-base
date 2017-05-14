@@ -21,6 +21,14 @@ function install_base {
   sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 }
 
+function enable_multilib {
+  show_info "Enable multilib pacman repository."
+  sudo sed -i "s/#\[multilib\]/\[multilib\]/g" ${pacmanconf}
+  sudo sed -i "/\[multilib\]/{n;s/#Include = /Include = /}" ${pacmanconf}
+  check_fail
+  show_success "Multilib enabled."
+}
+
 function enable_sudo_insults {
   # Customize sudo to:
   #  - insult incorrect password attempts
@@ -52,7 +60,8 @@ function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
-  options=("Back" "Base packages" "Updates" "Sudo insults" "Pacman styling")
+  options=("Back" "Base packages" "Updates" "Enable multilib" "Sudo insults"
+           "Pacman styling")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -64,6 +73,10 @@ function 01-base {
         ;;
       "Updates")
         update_packages
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Enable multilib")
+        enable_multilib
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Sudo insults")
