@@ -24,6 +24,7 @@ jupyter
 mathjax
 nodejs
 npm
+npm-check-updates
 postgresql
 pypy
 pypy3
