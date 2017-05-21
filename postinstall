@@ -82,6 +82,7 @@ function main {
 
           # Set up network configuration
           install_network
+          install_tor
 
           # Install useful packages
           install_apps

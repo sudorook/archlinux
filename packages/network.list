@@ -5,6 +5,4 @@ networkmanager-openvpn
 nss-mdns
 openssh
 samba
-tor
-torsocks
 ufw
