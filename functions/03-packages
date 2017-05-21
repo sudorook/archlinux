@@ -102,6 +102,31 @@ function install_kvm_guest {
   fi
 }
 
+torbrowser_path="~/.local/share/tor-browser"
+function install_torbrowser {
+  show_header "Installing tor browser."
+  gpg --keyserver pool.sks-keyservers.net --recv-keys 0x4E2C6E8793298290
+  
+  torbrowser_version=6.5.2
+  torbrowser_url=https://www.torproject.org/dist/torbrowser
+  arch=`uname -m`
+  if [ ${arch:-2} = "86" ]; then
+    torbrowser_package=tor-browser-linux32-${torbrowser_version}_en-US.tar.xz
+  elif [ ${arch:-2} = "64" ]; then
+    torbrowser_package=tor-browser-linux64-${torbrowser_version}_en-US.tar.xz
+  fi
+
+  wget ${torbrowser_url}/${torbrowser_version}/${torbrowser_package}
+  wget ${torbrowser_url}/${torbrowser_version}/${torbrowser_package}.asc
+  gpg --verify ${torbrowser_package}.asc ${torbrowser_package}
+  tar xf ${torbrowser_package}
+  mv tor-browser_en-US ${torbrowser_path}
+  cd ${torbrowser_path}
+  ./start-tor-browser.desktop --register-app
+  chmod -x ~/.local/share/applications/start-tor-browser.desktop
+  # sed -i "s/^Icon=.*/Icon=browser-tor/g" ~/.local/share/applications/start-tor-browser.desktop
+}
+
 vim="${dir}/packages/vim.list"
 vimrc="${dir}/dotfiles/vimrc"
 function install_vim {
@@ -146,7 +171,8 @@ function 03-packages {
 
   options=("Back" "All" "Android tools" "General applications" "Codecs" \
            "Development" "Extra applications" "Emulators" "KVM (host)" \
-           "KVM (guest)" "Vim" "VirtualBox (host)" "VirtualBox (guest)")
+           "KVM (guest)" "Install Tor browser" "Vim" "VirtualBox (host)" \
+           "VirtualBox (guest)")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -161,6 +187,7 @@ function 03-packages {
         install_games
         install_kvm
         install_kvm_guest
+        install_torbrowser
         install_vim
         install_virtualbox
         install_virtualbox_guest
@@ -196,6 +223,10 @@ function 03-packages {
         ;;
       "KVM (guest)")
         install_kvm_guest
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
+        ;;
+      "Install Tor browser")
+        install_torbrowser
         show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "Vim")
