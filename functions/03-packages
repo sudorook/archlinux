@@ -102,7 +102,7 @@ function install_kvm_guest {
   fi
 }
 
-torbrowser_path="~/.local/share/tor-browser"
+torbrowser_path="${HOME}/.local/share/tor-browser"
 function install_torbrowser {
   show_header "Installing tor browser."
   gpg --keyserver pool.sks-keyservers.net --recv-keys 0x4E2C6E8793298290
@@ -120,11 +120,15 @@ function install_torbrowser {
   wget ${torbrowser_url}/${torbrowser_version}/${torbrowser_package}.asc
   gpg --verify ${torbrowser_package}.asc ${torbrowser_package}
   tar xf ${torbrowser_package}
+
+  mkdir -p ${HOME}/.local/share/applications
   mv tor-browser_en-US ${torbrowser_path}
-  cd ${torbrowser_path}
-  ./start-tor-browser.desktop --register-app
-  chmod -x ~/.local/share/applications/start-tor-browser.desktop
-  # sed -i "s/^Icon=.*/Icon=browser-tor/g" ~/.local/share/applications/start-tor-browser.desktop
+  cp -f ${torbrowser_path}/start-tor-browser.desktop ${HOME}/.local/share/applications
+  chmod -x ${HOME}/.local/share/applications/start-tor-browser.desktop
+  # sed -i "s/^Icon=.*/Icon=browser-tor/g" ${HOME}/.local/share/applications/start-tor-browser.desktop
+
+  rm -f ${torbrowser_package}
+  rm -f ${torbrowser_package}.asc
 }
 
 vim="${dir}/packages/vim.list"
