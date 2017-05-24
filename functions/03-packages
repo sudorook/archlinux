@@ -110,9 +110,9 @@ function install_torbrowser {
   torbrowser_version=6.5.2
   torbrowser_url=https://www.torproject.org/dist/torbrowser
   arch=`uname -m`
-  if [ ${arch:-2} = "86" ]; then
+  if [ ${arch:(-2)} = "86" ]; then
     torbrowser_package=tor-browser-linux32-${torbrowser_version}_en-US.tar.xz
-  elif [ ${arch:-2} = "64" ]; then
+  elif [ ${arch:(-2)} = "64" ]; then
     torbrowser_package=tor-browser-linux64-${torbrowser_version}_en-US.tar.xz
   fi
 
