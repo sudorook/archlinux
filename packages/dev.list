@@ -8,6 +8,7 @@ cmake
 cppcheck
 cython
 doxygen
+flatpak
 gcc
 gdb
 gitg
