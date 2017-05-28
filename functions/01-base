@@ -22,11 +22,16 @@ function install_base {
 }
 
 function enable_multilib {
-  show_info "Enable multilib pacman repository."
-  sudo sed -i "s/#\[multilib\]/\[multilib\]/g" ${pacmanconf}
-  sudo sed -i "/\[multilib\]/{n;s/#Include = /Include = /}" ${pacmanconf}
-  check_fail
-  show_success "Multilib enabled."
+  if [[ $(uname -m) = "x86_64" ]]; then
+    show_info "Enabling multilib pacman repository."
+    sudo sed -i "s/#\[multilib\]/\[multilib\]/g" ${pacmanconf}
+    sudo sed -i "/\[multilib\]/{n;s/#Include = /Include = /}" ${pacmanconf}
+    check_fail
+    show_success "Multilib enabled."
+  else
+    show_warning "Multilib not applicable for 32-bit installations. Skipping."
+    show_warning "Arch discontinued 32-bit support in early 2017. Consider upgrading to a 64-bit."
+  fi
 }
 
 function enable_sudo_insults {
