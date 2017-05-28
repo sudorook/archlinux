@@ -120,7 +120,7 @@ function install_torbrowser {
   show_info "Downloading release tarball."
   wget ${torbrowser_url}/${torbrowser_version}/${torbrowser_package}
   wget ${torbrowser_url}/${torbrowser_version}/${torbrowser_package}.asc
-  show_ingo "Extracting..."
+  show_info "Extracting..."
   gpg --verify ${torbrowser_package}.asc ${torbrowser_package}
   tar xf ${torbrowser_package}
 
