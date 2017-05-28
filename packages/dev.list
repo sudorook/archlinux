@@ -34,6 +34,7 @@ python-argparse
 python-beautifulsoup4
 python-biopython
 python-h5py
+python-html2text
 python-matplotlib
 python-numpy
 python-pycurl
