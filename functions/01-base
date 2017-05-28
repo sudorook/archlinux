@@ -27,6 +27,7 @@ function enable_multilib {
     sudo sed -i "s/#\[multilib\]/\[multilib\]/g" ${pacmanconf}
     sudo sed -i "/\[multilib\]/{n;s/#Include = /Include = /}" ${pacmanconf}
     check_fail
+    sudo pacman -Sy --noconfirm
     show_success "Multilib enabled."
   else
     show_warning "Multilib not applicable for 32-bit installations. Skipping."
