@@ -1,4 +1,3 @@
 1. Consider splitting up dev list. It's getting long.
 2. When editing system files, use bak files and traps to make execution more
    failsafe.
-3. Fix the tor browser install. Seems to require an X server to be running.
