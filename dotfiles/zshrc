@@ -16,8 +16,10 @@ export GOPATH=~/.go
 export PATH="$PATH:$GOPATH/bin"
 
 # ruby
-export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+[[ -f /usr/bin/ruby ]] && \
+  export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+[[ -f /usr/bin/ruby ]] && \
+  export GEM_HOME=$(ruby -e 'print Gem.user_dir')
 
 # npm
 export PATH="$PATH:$HOME/.npm/bin"
