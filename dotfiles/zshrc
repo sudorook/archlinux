@@ -69,7 +69,7 @@ man() {
 }
 
 
-# 
+#
 # Manually set the fishy zsh theme.
 #
 
@@ -174,7 +174,7 @@ git_remote_status() {
     then
       git_remote_status="$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE"
       git_remote_status_detailed="$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE_COLOR$ZSH_THEME_GIT_PROMPT_AHEAD_REMOTE$((ahead))%{$reset_color%}"
-    elif [ $behind -gt 0 ] && [ $ahead -eq 0 ] 
+    elif [ $behind -gt 0 ] && [ $ahead -eq 0 ]
     then
       git_remote_status="$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE"
       git_remote_status_detailed="$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE_COLOR$ZSH_THEME_GIT_PROMPT_BEHIND_REMOTE$((behind))%{$reset_color%}"
@@ -407,7 +407,7 @@ function spectrum_bls() {
 function title {
   emulate -L zsh
   setopt prompt_subst
-  
+
   [[ "$EMACS" == *term* ]] && return
 
   # if $2 is unset use $1 as default
@@ -474,6 +474,8 @@ fi
 setopt prompt_subst
 
 # zsh theme emulating the Fish shell's default prompt.
+#
+
 _fishy_collapsed_wd() {
   echo $(pwd | perl -pe '
     BEGIN {
