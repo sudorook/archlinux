@@ -61,6 +61,28 @@ function install_papirus_icons {
   rm -rf papirus-icon-theme
 }
 
+function install_thunderbird_theme {
+  if ! [ -d ${HOME}/.thunderbird/*.default ]; then
+    show_warning "Thunderbird profile missing. Skipping."
+    return
+  fi
+
+  thunderbird="$(echo ~/.thunderbird/*.default)"
+  show_header "Installing Monterail theme for Thunderbird."
+  if [ -d ${thunderbird}/chrome ]; then
+    show_info "${thunderbird}/chrome already exists. Backing up and replacing."
+    mv ${thunderbird}/chrome ${thunderbird}/chrome.${RANDOM}.bak
+  else
+    mkdir -p ${thunderbird}/chrome
+  fi
+
+  git clone https://github.com/spymastermatt/thunderbird-monterail ${thunderbird}/chrome
+  sed -i 's,^/\* @import "icons/lightDarkIcons.css";,@import "icons/lightDarkIcons.css";,g' \
+    ${thunderbird}/chrome/userChrome.css
+  sed -i 's,/\*--default-font: var(--light-sans-font);,--default-font: var(--system-font);,g' \
+    ${thunderbird}/chrome/userChrome.css
+}
+
 qt5ctconf="${dir}/configs/qt5ct.conf"
 pkgbuilddir="${HOME}/.pkgbuild"
 function set_qtcompat {
@@ -89,7 +111,7 @@ function 04-themes {
   show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
 
   options=("Back" "All" "Arc (GTK)" "Adapta (GTK)" "Fonts" "Papirus (icons)" \
-           "Qt/GTK compatibility")
+           "Thunderbird theme" "Qt/GTK compatibility")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -101,6 +123,7 @@ function 04-themes {
         install_adapta_gtk
         install_fonts
         install_papirus_icons
+        install_thunderbird_theme
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
@@ -122,6 +145,10 @@ function 04-themes {
         ;;
       "Papirus (icons)")
         install_papirus_icons
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
+        ;;
+      "Thunderbird theme")
+        install_thunderbird_theme
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Qt/GTK compatibility")
