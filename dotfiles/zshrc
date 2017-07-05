@@ -543,7 +543,7 @@ function battery_level_gauge() {
     local empty=$(($gauge_slots - $half - $filled));
 
     if [[ $filled -gt $green_threshold ]]; then local gauge_color=$color_green;
-    elif [[ $filled -gt $yellow_threshold ]]; then local gauge_color=$color_yellow;
+    elif [[ $(($filled + $half)) -gt $yellow_threshold ]]; then local gauge_color=$color_yellow;
     else local gauge_color=$color_red;
     fi
   else
