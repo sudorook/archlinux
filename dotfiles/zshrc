@@ -533,7 +533,7 @@ function battery_level_gauge() {
   local empty_symbol=${BATTERY_GAUGE_EMPTY_SYMBOL:-'◇'};
   local charging_color=${BATTERY_CHARGING_COLOR:-$color_yellow};
   # local charging_symbol=${BATTERY_CHARGING_SYMBOL:-'⚡'};
-  local charging_symbol=${BATTERY_CHARGING_SYMBOL:-' '};
+  local charging_symbol=${BATTERY_CHARGING_SYMBOL:-'✱'};
 
   local battery_remaining_percentage=$(battery_pct);
 
@@ -554,13 +554,14 @@ function battery_level_gauge() {
     charging_symbol=${BATTERY_CHARGING_SYMBOL:-''};
   fi
 
-  local charging=' ' && battery_is_charging && charging=$charging_symbol;
+  local charging='' && battery_is_charging && charging=$charging_symbol;
 
-  printf ${charging_color//\%/\%\%}$charging${color_reset//\%/\%\%}${battery_prefix//\%/\%\%}${gauge_color//\%/\%\%}
+  printf ${battery_prefix//\%/\%\%}${gauge_color//\%/\%\%}
   printf ${filled_symbol//\%/\%\%}'%.0s' {1..$filled}
   [[ $half -eq 1 ]] && printf ${half_symbol//\%/\%\%}'%.0s' {1..$half}
   [[ $(( $filled + $half )) -lt $gauge_slots ]] && printf ${empty_symbol//\%/\%\%}'%.0s' {1..$empty}
   printf ${color_reset//\%/\%\%}${battery_suffix//\%/\%\%}${color_reset//\%/\%\%}
+  printf ${charging_color//\%/\%\%}$charging${color_reset//\%/\%\%}
 }
 
 
