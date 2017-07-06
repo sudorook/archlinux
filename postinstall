@@ -166,8 +166,8 @@ function main {
 #
 
 check_user
-install_dependencies
 check_network
+install_dependencies
 
 
 #
