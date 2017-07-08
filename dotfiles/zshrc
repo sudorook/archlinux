@@ -12,22 +12,27 @@ export VISUAL="$EDITOR"
 #
 
 # go
-export GOPATH=~/.go
-export PATH="$PATH:$GOPATH/bin"
+command -v go >/dev/null 2>&1 && {
+  export GOPATH=~/.go
+  export PATH="$PATH:$GOPATH/bin"
+}
 
 # ruby
-[[ -f /usr/bin/ruby ]] && \
+command -v ruby >/dev/null 2>&1 && {
   export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
-[[ -f /usr/bin/ruby ]] && \
   export GEM_HOME=$(ruby -e 'print Gem.user_dir')
+}
 
 # npm
-export PATH="$PATH:$HOME/.npm/bin"
-export NPM_CONFIG_PREFIX=$HOME/.npm
+command -v npm >/dev/null 2>&1 && {
+  export PATH="$PATH:$HOME/.npm/bin"
+  export NPM_CONFIG_PREFIX=$HOME/.npm
+}
 
 # R
-[[ -f /usr/bin/R ]] && \
+command -v R >/dev/null 2>&1 && {
   export R_LIBS_USER=$HOME/.R/$(R --version | sed -n "s/^R version \([0-9\.]*\) .*/\1/p")
+}
 
 # custom scripts
 export PATH=$PATH:~/.scripts/
@@ -600,7 +605,12 @@ zstyle ':completion:*' special-dirs true
 setopt no_auto_remove_slash
 
 # syntax highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+include () {
+  [[ -f "$1" ]] && source "$1"
+}
+
+include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+include ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+include ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 autoload -U compinit && compinit
