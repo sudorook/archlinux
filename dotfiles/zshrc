@@ -561,7 +561,7 @@ function battery_level_gauge() {
   local charging='' && battery_is_charging && charging=$charging_symbol;
 
   printf ' '${battery_prefix//\%/\%\%}${gauge_color//\%/\%\%}
-  printf ${filled_symbol//\%/\%\%}'%.0s' {1..$filled}
+  [[ $filled -ne 0 ]] && printf ${filled_symbol//\%/\%\%}'%.0s' {1..$filled}
   [[ $half -eq 1 ]] && printf ${half_symbol//\%/\%\%}'%.0s' {1..$half}
   [[ $(( $filled + $half )) -lt $gauge_slots ]] && printf ${empty_symbol//\%/\%\%}'%.0s' {1..$empty}
   printf ${color_reset//\%/\%\%}${battery_suffix//\%/\%\%}${color_reset//\%/\%\%}
