@@ -5,3 +5,4 @@
 4. Add function for upgrading qt5-styleplugins.
 5. Build a CI system to automatically test whether every function is working.
    Distro changes can sneak up on you.
+6. Add function to tunnel pacman over tor.
