@@ -3,6 +3,7 @@ lightdm
 lightdm-gtk-greeter
 nemo-share
 nemo-fileroller
+redshift
 xdg-utils
 xdg-user-dirs
 xdg-user-dirs-gtk
