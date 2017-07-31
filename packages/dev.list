@@ -18,6 +18,7 @@ graphviz
 grunt-cli
 gulp
 hdf5
+hugo
 ipython
 js
 julia
