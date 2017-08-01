@@ -9,4 +9,3 @@
 7. Set default share in Synthing to Sync/ folder.
 8. Add function to disable audio beep, especially when hitting backspace in the
    terminal.
-9. Add function for downloading and installing thunderbird theme.
