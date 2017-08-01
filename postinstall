@@ -68,6 +68,7 @@ function main {
           enable_multilib
           enable_sudo_insults
           stylize_pacman
+          blacklist_pcspkr
 
           # Install miscellaneous extras
           install_zsh

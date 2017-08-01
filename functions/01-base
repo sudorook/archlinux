@@ -62,12 +62,22 @@ function update_packages {
   show_success "Packages updated."
 }
 
+pcspkr_blacklist="/etc/modprobe.d/nobeep.conf"
+function blacklist_pcspkr {
+  show_header "Blacklisting pcspkr kernel module."
+  if ! find /etc/modprobe.d/ -type f 
+         -exec grep "blacklist pcspkr" {} + 2>&1 >/dev/null; then
+    sudo echo "blacklist pcspkr" >> ${pcspkr_blacklist}
+  fi
+  show_success "Blacklisted in ${pcspkr_blacklist}."
+}
+
 function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
   options=("Back" "Base packages" "Updates" "Enable multilib" "Sudo insults"
-           "Pacman styling")
+           "Pacman styling" "Blacklist pcspkr")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -91,6 +101,10 @@ function 01-base {
         ;;
       "Pacman styling")
         stylize_pacman
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Blacklist pcspkr")
+        blacklist_pcspkr
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       *)
