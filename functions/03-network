@@ -77,6 +77,7 @@ function 03-network {
         ;;
       "All")
         install_tor
+        tunnel_pacman_tor
         install_network
         show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
         ;;
