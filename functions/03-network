@@ -49,11 +49,27 @@ function install_tor {
   sudo systemctl start tor
 }
 
+pacmanconf="/etc/pacman.conf"
+function tunnel_pacman_tor {
+  show_header "Tunneling pacman through tor."
+  # if ! pacman -Qi tor > /dev/null 2>&1; then
+  #   show_warning "Tor not installed. Skipping."
+  # elif ! [[ $(systemctl is-active tor) == "active" ]]; then
+  #   show_warning "Tor systemd unit is not active. Skipping."
+  # else
+  #   sudo cp ${pacmanconf} ${pacmanconf}.${RANDOM}.bak
+  #   sudo sed -i "s,^#XferCommand = /usr/bin/curl .*,XferCommand = /usr/bin/curl --socks5-hostname localhost:9050 -C - -f %u > %o,g" ${pacmanconf}
+  #   sudo pacman -Syy
+  #   show_success "Done."
+  # fi
+  show_warning "Disabled. Pacman will time-out, causing upgrades to fail."
+}
+
 function 03-network {
   show_question "Network: what do you want to install?"
   show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Install tor" "Network tools")
+  options=("Back" "All" "Install tor" "Tunnel pacman over tor" "Network tools")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -66,6 +82,10 @@ function 03-network {
         ;;
       "Install tor")
         install_tor
+        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        ;;
+      "Tunnel pacman over tor")
+        tunnel_pacman_tor
         show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
         ;;
       "Network tools")
