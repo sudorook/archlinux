@@ -6,3 +6,4 @@
 5. Build a CI system to automatically test whether every function is working.
    Distro changes can sneak up on you.
 6. Set default share in Synthing to Sync/ folder.
+7. Fix Adapta compiling on Cinnamon (need to pass --disable-gnome).
