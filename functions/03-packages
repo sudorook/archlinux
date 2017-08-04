@@ -49,7 +49,7 @@ function install_dev {
   show_success "Dotfiles installed."
 }
 
-extra="${dir}/packages/apps.list"
+extra="${dir}/packages/extra.list"
 function install_extra {
   show_header "Installing extra desktop applications."
   check_installed $(cat ${extra})
