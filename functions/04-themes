@@ -97,22 +97,7 @@ function install_thunderbird_theme {
 }
 
 qt5ctconf="${dir}/configs/qt5ct.conf"
-pkgbuilddir="${HOME}/.pkgbuild"
 function set_qtcompat {
-  show_header "Building qt5-styleplugins."
-  curdir=`pwd`
-  mkdir -p ${pkgbuilddir}
-  cd ${pkgbuilddir}
-  wget -N https://aur.archlinux.org/cgit/aur.git/snapshot/qt5-styleplugins.tar.gz
-  tar xf ${pkgbuilddir}/qt5-styleplugins.tar.gz
-  cd qt5-styleplugins
-  if ! [ -f qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz ]; then
-    makepkg -s
-    sudo pacman -U --noconfirm qt5-styleplugins-[0-9\.-]*-x86_64.pkg.tar.xz
-  fi
-  show_success "qt5-styleplugins built and installed."
-  cd ${curdir}
-
   show_info "Copying qt5ct config."
   mkdir -p ${HOME}/.config/qt5ct
   cp -f ${qt5ctconf} ${HOME}/.config/qt5ct
@@ -124,7 +109,7 @@ function 04-themes {
   show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
 
   options=("Back" "All" "Arc (GTK)" "Adapta (GTK)" "Fonts" "Papirus (icons)" \
-           "Thunderbird theme" "Qt/GTK compatibility")
+           "Thunderbird theme")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -144,12 +129,14 @@ function 04-themes {
         show_info "Installing dependencies for building themes."
         install_theme_deps
         install_arc_gtk
+        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Adapta (GTK)")
         show_info "Installing dependencies for building themes."
         install_theme_deps
         install_adapta_gtk
+        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Fonts")
@@ -162,10 +149,6 @@ function 04-themes {
         ;;
       "Thunderbird theme")
         install_thunderbird_theme
-        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
-        ;;
-      "Qt/GTK compatibility")
-        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       *)
