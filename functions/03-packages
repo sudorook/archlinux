@@ -50,11 +50,15 @@ function install_dev {
 }
 
 extra="${dir}/packages/extra.list"
+libaoconf="/etc/libao.conf"
 function install_extra {
   show_header "Installing extra desktop applications."
   check_installed $(cat ${extra})
   check_fail
   show_success "Extra applications installed."
+
+  show_info "Configuring ${libaoconf} to use PulseAudio instead of ALSA."
+  sudo sh -c "echo 'default_driver=pulse' > ${libaoconf}"
 }
 
 games="${dir}/packages/games.list"
