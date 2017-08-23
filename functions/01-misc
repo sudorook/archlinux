@@ -35,7 +35,7 @@ function install_zsh {
 hardened="${dir}/packages/hardened.list"
 function install_hardened {
   show_header "Installing Arch hardened kernel."
-  check_installed $(cat ${utils})
+  check_installed $(cat ${hardened})
   check_fail
   show_success "Hardened kernel installed."
 }
