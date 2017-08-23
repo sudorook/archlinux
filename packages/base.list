@@ -3,4 +3,5 @@ intel-ucode
 linux-headers
 linux-tools
 lsb-release
+memtest86+
 reflector
