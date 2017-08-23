@@ -54,6 +54,7 @@ ruby-bundler
 sassc
 scrapy
 sqlite
+strace
 tensorflow
 texlive-bibtexextra
 texlive-core
@@ -61,4 +62,5 @@ texlive-fontsextra
 texlive-formatsextra
 texlive-latexextra
 texlive-science
+tk
 uncrustify
