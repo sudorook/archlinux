@@ -67,6 +67,7 @@ function install_games {
 }
 
 kvm="${dir}/packages/kvm.list"
+qemuconf="/etc/libvirt/qemu.conf"
 function install_kvm {
   show_header "Installing KVM."
   check_installed $(cat ${kvm})
@@ -78,6 +79,10 @@ function install_kvm {
 
   sudo systemctl enable libvirtd
   sudo systemctl start libvirtd
+
+  kvmgid=$(getent group | grep kvm | cut -d":" -f3)
+  sudo sed -i "s/^#dynamic_ownership/dynamic_ownership/g" ${qemuconf}
+  sudo sed -i "s/^group=\"[0-9]*\"/group=\"${kvmgid}\"/g" ${qemuconf}
 }
 
 kvmguest="${dir}/packages/kvm-guest.list"
