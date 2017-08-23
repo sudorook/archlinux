@@ -77,12 +77,12 @@ function install_kvm {
   show_info "Adding `whoami` to kvm and libvirt groups."
   sudo usermod -aG kvm,libvirt $(whoami)
 
-  sudo systemctl enable libvirtd
-  sudo systemctl start libvirtd
-
   kvmgid=$(getent group | grep kvm | cut -d":" -f3)
   sudo sed -i "s/^#dynamic_ownership/dynamic_ownership/g" ${qemuconf}
   sudo sed -i "s/^group=\"[0-9]*\"/group=\"${kvmgid}\"/g" ${qemuconf}
+
+  sudo systemctl enable libvirtd
+  sudo systemctl start libvirtd
 }
 
 kvmguest="${dir}/packages/kvm-guest.list"
