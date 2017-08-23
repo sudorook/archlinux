@@ -55,5 +55,10 @@ sassc
 scrapy
 sqlite
 tensorflow
+texlive-bibtexextra
 texlive-core
+texlive-fontsextra
+texlive-formatsextra
+texlive-latexextra
+texlive-science
 uncrustify
