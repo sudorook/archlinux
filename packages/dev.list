@@ -28,6 +28,7 @@ nodejs
 npm
 npm-check-updates
 postgresql
+pygmentize
 pypy
 pypy3
 python
