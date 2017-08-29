@@ -22,6 +22,10 @@ function install_zsh {
     git clone https://github.com/zsh-users/zsh-autosuggestions \
       ${zshdir}/zsh-autosuggestions
   fi
+  if ! [ -d ${zshdir}/zsh-themes ]; then
+    git clone https://github.com/pseudorook/zsh-themes \
+      ${zshdir}/zsh-themes
+  fi
 
   show_info "Copying zshrc."
   cp -f ${zshrc} ${HOME}/.zshrc
