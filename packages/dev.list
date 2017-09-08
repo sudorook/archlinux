@@ -9,6 +9,7 @@ cppcheck
 cython
 doxygen
 flatpak
+flatpak-builder
 gcc
 gdb
 gitg
