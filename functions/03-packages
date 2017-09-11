@@ -155,6 +155,7 @@ function install_torbrowser {
     
     show_info "Putting things into place..."
     mkdir -p ${local_applications}
+    rm -rf ${torbrowser_path}
     mv tor-browser_en-US ${torbrowser_path}
     cp -f ${torbrowser_path}/start-tor-browser.desktop ${local_applications}/
     chmod -x ${local_applications}/start-tor-browser.desktop
