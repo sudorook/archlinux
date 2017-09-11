@@ -91,14 +91,14 @@ function main {
           install_codecs
           install_dev
           install_extra
-          install_games
+          # install_games
           # install_kvm
           # install_kvm_guest
           install_torbrowser
           install_vim
           # install_virtualbox
           # install_virtualbox_guest
-          install_wine
+          # install_wine
 
           # Install themes
           install_theme_deps
