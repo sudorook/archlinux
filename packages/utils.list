@@ -4,7 +4,6 @@ dmidecode
 dosfstools
 encfs
 gnupg
-hfsprogs
 parallel
 net-tools
 nmap
