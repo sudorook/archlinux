@@ -12,6 +12,7 @@ function install_android {
 
 apps="${dir}/packages/apps.list"
 mpvconfig="${dir}/configs/mpv.conf"
+libaoconf="/etc/libao.conf"
 function install_apps {
   show_header "Installing desktop applications."
   check_installed $(cat ${apps})
@@ -21,6 +22,9 @@ function install_apps {
   show_info "Copying mpv config."
   mkdir -p ${HOME}/.config/mpv
   cp -f ${mpvconfig} ${HOME}/.config/mpv
+
+  show_info "Configuring ${libaoconf} to use PulseAudio instead of ALSA."
+  sudo sh -c "echo 'default_driver=pulse' > ${libaoconf}"
 }
 
 codecs="${dir}/packages/codecs.list"
@@ -46,15 +50,11 @@ function install_dev {
 }
 
 extra="${dir}/packages/extra.list"
-libaoconf="/etc/libao.conf"
 function install_extra {
   show_header "Installing extra desktop applications."
   check_installed $(cat ${extra})
   check_fail
   show_success "Extra applications installed."
-
-  show_info "Configuring ${libaoconf} to use PulseAudio instead of ALSA."
-  sudo sh -c "echo 'default_driver=pulse' > ${libaoconf}"
 }
 
 games="${dir}/packages/games.list"
