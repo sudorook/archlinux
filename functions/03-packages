@@ -133,7 +133,7 @@ function install_torbrowser {
       show_info "Downloading Tor developers' GPG key."
       gpg --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 0x4E2C6E8793298290
     fi
-    
+
     torbrowser_version=$(curl https://www.torproject.org/projects/torbrowser.html.en | \
                          grep '<th>GNU/Linux' | \
                          sed -n 's,.*(\([0-9\.]*\)).*,\1,p')
@@ -151,7 +151,7 @@ function install_torbrowser {
     show_info "Extracting..."
     gpg --verify ${torbrowser_package}.asc ${torbrowser_package}
     tar xf ${torbrowser_package}
-    
+
     show_info "Putting things into place..."
     mkdir -p ${local_applications}
     rm -rf ${torbrowser_path}
