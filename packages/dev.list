@@ -42,12 +42,12 @@ python-h5py
 python-html2text
 python-matplotlib
 python-numpy
-python-pycurl
 python-pandas
+python-pycurl
 python-reportlab
-python-seaborn
 python-scikit-learn
 python-scipy
+python-seaborn
 python-sphinx
 python-statsmodels
 python-tensorflow

@@ -1,7 +1,7 @@
 gnome
 gnome-tweak-tool
-xdg-utils
 xdg-user-dirs
+xdg-utils
 xorg
 xorg-apps
 xorg-drivers

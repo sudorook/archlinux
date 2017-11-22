@@ -4,11 +4,11 @@ dmidecode
 dosfstools
 encfs
 gnupg
-parallel
 net-tools
 nmap
 ntfs-3g
 p7zip
+parallel
 pigz
 pixz
 pv

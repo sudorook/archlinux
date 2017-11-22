@@ -2,12 +2,12 @@ cinnamon
 gnome-keyring
 lightdm
 lightdm-gtk-greeter
-nemo-share
 nemo-fileroller
+nemo-share
 redshift
-xdg-utils
 xdg-user-dirs
 xdg-user-dirs-gtk
+xdg-utils
 xorg
 xorg-apps
 xorg-drivers
