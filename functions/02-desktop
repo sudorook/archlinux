@@ -15,6 +15,19 @@ function install_gnome {
   fi
   xdg-user-dirs-update
   sudo systemctl enable gdm.service
+
+  show_info "Installing chrome-gnome-shell-git from AUR."
+  git clone https://aur.archlinux.org/chrome-gnome-shell-git.git
+  cd chrome-gnome-shell-git
+  makepkg -si
+  cd ../
+
+  show_info "Downloading 'No Topleft Hot Corner' GNOME extension."
+  extensiondir=${HOME}/.local/share/gnome-shell/extensions
+  mkdir -p ${extensiondir}
+  git clone https://github.com/HROMANO/nohotcorner/ \
+    ${HOME}/.local/share/gnome-shell/extensions/nohotcorner@azuri.free.fr
+
   show_info "Done."
 }
 
