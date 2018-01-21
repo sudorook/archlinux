@@ -23,13 +23,17 @@ for file in ${pkgdir}/*; do
     fi
   fi
 
+  missing=false
   for package in $(cat ${file}); do
     if pacman -Ss ^$(clean_pkgname "${package}")$ >/dev/null; then
       echo "✓ ${package}"
     else
+      missing=true
       echo "✗ ${package}"
     fi
   done
 
   echo
 done
+
+if $missing; then exit 1; fi
