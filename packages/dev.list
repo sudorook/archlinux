@@ -62,11 +62,5 @@ strace
 tensorflow
 tesseract
 tesseract-data-eng
-texlive-bibtexextra
-texlive-core
-texlive-fontsextra
-texlive-formatsextra
-texlive-latexextra
-texlive-science
 tk
 uncrustify
