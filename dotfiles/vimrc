@@ -125,3 +125,6 @@ augroup END
 "workarounds for garbage characters
 set t_u7=
 set t_RV=
+
+"gitgutter
+" let g:gitgutter_enabled=0
