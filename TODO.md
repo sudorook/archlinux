@@ -10,6 +10,5 @@
    vimdiff.
 7. Add test script to parse all source files for links and check if the links
    work.
-8. Update font size and text scaling for Cinnamon and GNOME dconf files.
-9. Some functions fail when no desktop environment is running.
-10. Setting the -e flag while using the check\_error function is redundant.
+8. Some functions fail when no desktop environment is running.
+9. Setting the -e flag while using the check\_error function is redundant.
