@@ -229,8 +229,9 @@ function install_virtualbox_guest {
 wine="${dir}/packages/wine.list"
 function install_wine {
   show_header "Installing wine."
-  if [[ $(uname -m) = "x86_64" ]]; then
-    show_info "Multilib needs to be enabled for 64-bit architectures."
+  if [[ $(uname -m) = "x86_64" ]] && \
+    ! grep "^\[multilib\]" /etc/pacman.conf >/dev/null; then
+    show_info "multilib repos need to be enabled for 64-bit architectures."
     enable_multilib
   fi
   check_installed $(cat ${wine})
