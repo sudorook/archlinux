@@ -41,6 +41,9 @@ function install_linux_hardened {
   check_installed $(cat ${hardened})
   check_fail
   show_success "Hardened kernel installed."
+
+  show_info "Regenerating grub.cfg"
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 lts="${dir}/packages/lts.list"
@@ -49,6 +52,9 @@ function install_linux_lts {
   check_installed $(cat ${lts})
   check_fail
   show_success "LTS kernel installed."
+
+  show_info "Regenerating grub.cfg"
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 zen="${dir}/packages/zen.list"
@@ -57,6 +63,9 @@ function install_linux_zen {
   check_installed $(cat ${zen})
   check_fail
   show_success "Zen kernel installed."
+
+  show_info "Regenerating grub.cfg"
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 utils="${dir}/packages/utils.list"
