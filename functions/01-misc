@@ -36,11 +36,27 @@ function install_zsh {
 }
 
 hardened="${dir}/packages/hardened.list"
-function install_hardened {
-  show_header "Installing Arch hardened kernel."
+function install_linux_hardened {
+  show_header "Installing linux-hardened kernel."
   check_installed $(cat ${hardened})
   check_fail
   show_success "Hardened kernel installed."
+}
+
+lts="${dir}/packages/lts.list"
+function install_linux_lts {
+  show_header "Installing linux-lts kernel."
+  check_installed $(cat ${lts})
+  check_fail
+  show_success "LTS kernel installed."
+}
+
+zen="${dir}/packages/zen.list"
+function install_linux_zen {
+  show_header "Installing linux-zen kernel."
+  check_installed $(cat ${zen})
+  check_fail
+  show_success "Zen kernel installed."
 }
 
 utils="${dir}/packages/utils.list"
@@ -71,8 +87,8 @@ function 01-misc {
   show_question "Misc: what do you want to install?"
   show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "zsh" "Hardened kernel" "Linux utilities"
-           "Laptop tools")
+  options=("Back" "All" "zsh" "Linux hardened kernel" "Linux LTS kernel" \
+           "Linux zen kernel" "Linux utilities" "Laptop tools")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -80,7 +96,9 @@ function 01-misc {
         ;;
       "All")
         install_zsh
-        install_hardened
+        install_linux_hardened
+        install_linux_lts
+        install_linux_zen
         install_utils
         install_laptop
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
@@ -89,8 +107,16 @@ function 01-misc {
         install_zsh
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
-      "Hardened kernel")
-        install_hardened
+      "Linux hardened kernel")
+        install_linux_hardened
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        ;;
+      "Linux LTS kernel")
+        install_linux_lts
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        ;;
+      "Linux zen kernel")
+        install_linux_zen
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux utilities")
