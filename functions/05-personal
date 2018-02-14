@@ -5,6 +5,7 @@ dir="$(dirname "$0")"
 # Globals
 gtktheme="Adapta-Nokto-Eta"
 icontheme="Papirus-Adapta-Nokto"
+kernel="linux"
 
 function set_noto_fonts {
   show_header "Configuring system fonts."
@@ -252,6 +253,14 @@ function install_scripts {
   #   > "${autostartdir}/Battery Watchdog.desktop"
 }
 
+grubdefault=/etc/default/grub
+grubcfg=/boot/grub/grub.cfg
+function set_default_kernel {
+  show_info "Setting default boot kernel to ${kernel}."
+  sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${kernel}'/g" ${grubdefault}
+  sudo grub-mkconfig -o ${grubcfg}
+}
+
 function select_desktop_theme {
   show_question "Select a GTK theme:"
 
@@ -462,6 +471,32 @@ function select_icon_theme {
   done
 }
 
+grubcfg=/boot/grub/grub.cfg
+function select_default_kernel {
+  # Find installed kernels in /boot/grub/grub.cfg and turn into a bash list.
+  kernellist=$(sudo grep "'Arch Linux, with Linux linux[-a-z]*'" ${grubcfg} | \
+               sed -n "s/.*Arch Linux, with Linux \([-a-z]*\).*/\1/p")
+  kernels=()
+  for kernel in ${kernellist[@]}; do
+    kernels+=("${kernel}")
+  done
+
+  show_question "Select a default kernel:"
+  select option in "${kernels[@]}"; do
+    case ${option} in
+      linux|linux-lts|linux-zen|linux-hardened)
+        kernel=${option}
+        set_default_kernel
+        break
+        ;;
+      *)
+        show_error "Invalid option."
+        break
+        ;;
+    esac
+  done
+}
+
 function 05-personal {
   show_question "Personal: what do you want to set?"
   show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
@@ -469,7 +504,8 @@ function 05-personal {
   options=("Back" "All" "Set Noto fonts" "Select icon theme" \
            "Select desktop theme" "Set dark GTK" "Import Cinnamon dconf" \
            "Import GNOME dconf" "Import application dconf" "Enable autologin" \
-           "Invert brightness" "Disable PulseAudio suspend" "Add scripts")
+           "Invert brightness" "Disable PulseAudio suspend" "Add scripts" \
+           "Select default kernel")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -488,6 +524,7 @@ function 05-personal {
         enable_autologin
         invert_brightness
         disable_pulseaudio_suspend
+        set_default_kernel
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Set Noto fonts")
@@ -532,6 +569,10 @@ function 05-personal {
         ;;
       "Add scripts")
         install_scripts
+        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        ;;
+      "Select default kernel")
+        select_default_kernel
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       *)
