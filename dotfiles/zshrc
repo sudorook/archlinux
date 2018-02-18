@@ -90,9 +90,9 @@ include() {
 }
 
 # custom fishy theme
-include ~/.zsh/zsh-themes/fishy.zsh
-include ~/.zsh/zsh-themes/battery-gauge.zsh
-include ~/.zsh/zsh-themes/git-prompt.zsh
+include ~/.zsh/fishy-lite/fishy.zsh
+include ~/.zsh/fishy-lite/battery-gauge.zsh
+include ~/.zsh/fishy-lite/git-prompt.zsh
 
 # syntax highlighting
 include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

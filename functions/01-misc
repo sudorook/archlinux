@@ -21,9 +21,9 @@ function install_zsh {
     git clone https://github.com/zsh-users/zsh-autosuggestions \
       ${zshdir}/zsh-autosuggestions
   fi
-  if ! [ -d ${zshdir}/zsh-themes ]; then
-    git clone https://github.com/pseudorook/zsh-themes \
-      ${zshdir}/zsh-themes
+  if ! [ -d ${zshdir}/fishy-lite ]; then
+    git clone https://github.com/pseudorook/fishy-lite \
+      ${zshdir}/fishy-lite
   fi
 
   show_info "Copying zshrc."
