@@ -29,7 +29,6 @@ nodejs
 npm
 npm-check-updates
 perl-image-exiftool
-phantomjs
 postgresql
 pygmentize
 pypy
