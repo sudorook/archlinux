@@ -3,6 +3,7 @@
 dir="$(dirname "$0")"
 
 base="${dir}/packages/base.list"
+bashrc="${dir}/dotfiles/bashrc"
 toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
 function install_base {
@@ -14,6 +15,10 @@ function install_base {
   show_info "Installing toprc."
   cp -f ${toprc} ${HOME}/.toprc
   show_success "Installed toprc."
+
+  show_info "Installing bashrc."
+  cp -f ${bashrc} ${HOME}/.bashrc
+  show_success "Installed bashrc."
 
   # Use reflector to sort among fastest mirrors
   show_info "Using reflector to have pacman use fastest https mirrors."
