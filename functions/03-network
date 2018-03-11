@@ -28,8 +28,8 @@ function install_network {
   sudo systemctl enable ufw.service
 
   show_info "Enabling local hostname resolution in Avahi."
-  oldhostsline="hosts: files mymachines resolve \[!UNAVAIL=return\] dns myhostname"
-  newhostsline="hosts: files mymachines mdns_minimal \[NOTFOUND=return\] resolve \[!UNAVAIL=return\] dns myhostname"
+  oldhostsline="hosts: files mymachines myhostname resolve \[!UNAVAIL=return\] dns"
+  newhostsline="hosts: files mymachines myhostname mdns_minimal \[NOTFOUND=return\] resolve \[!UNAVAIL=return\] dns"
   sudo sed -i "/^${oldhostsline}/s/^${oldhostsline}/${newhostsline}/g" ${nsconf}
   sudo systemctl enable avahi-daemon.service
   sudo systemctl start avahi-daemon.service
