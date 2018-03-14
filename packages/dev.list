@@ -25,7 +25,6 @@ julia
 jupyter
 jupyter-nbconvert
 mathjax
-mbedtls
 nodejs
 npm
 npm-check-updates
