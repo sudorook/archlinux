@@ -3,7 +3,6 @@ autopep8
 boost-libs
 bower
 clang
-clang-tools-extra
 cmake
 cppcheck
 cython
