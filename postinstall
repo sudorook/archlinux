@@ -68,7 +68,7 @@ function main {
           enable_multilib
           enable_sudo_insults
           stylize_pacman
-          blacklist_pcspkr
+          disable_beep
 
           # Install miscellaneous extras
           install_zsh
