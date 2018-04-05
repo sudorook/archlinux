@@ -207,21 +207,22 @@ function enable_autologin {
   show_success "Autologin enabled."
 }
 
-grubconfig="/etc/default/grub"
+grubdefault="/etc/default/grub"
+grubcfg="/boot/grub/grub.cfg"
 function invert_brightness {
-  oldline=$(cat ${grubconfig} | grep ^GRUB_CMDLINE_LINUX=)
+  oldline=$(cat ${grubdefault} | grep ^GRUB_CMDLINE_LINUX=)
   bootparams=$(echo ${oldline} | sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p")
   if [[ ${bootparams} =~ "i915.invert_brightness=1" ]]; then
     show_header "Brightness already inverted. Skipping."
   else
     if test "${bootparams}"; then
-      sudo sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubconfig}
+      sudo sed -i "s|${bootparams}|${bootparams} i915.invert_brightness=1|g" ${grubdefault}
     else
-      sudo sed -i "s|${oldline}|GRUB_CMDLINE_LINUX=\"i915.invert_brightness=1\"|g" ${grubconfig}
+      sudo sed -i "s|${oldline}|GRUB_CMDLINE_LINUX=\"i915.invert_brightness=1\"|g" ${grubdefault}
     fi
-    sudo sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubconfig} # backup
+    sudo sed -i "\|^GRUB_CMDLINE_LINUX=| a\#${oldline}" ${grubdefault} # backup
     show_success "Brightness inverted."
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    sudo grub-mkconfig -o ${grubcfg}
   fi
 }
 
@@ -253,8 +254,8 @@ function install_scripts {
   #   > "${autostartdir}/Battery Watchdog.desktop"
 }
 
-grubdefault=/etc/default/grub
-grubcfg=/boot/grub/grub.cfg
+grubdefault="/etc/default/grub"
+grubcfg="/boot/grub/grub.cfg"
 function set_default_kernel {
   show_info "Setting default boot kernel to ${kernel}."
   sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${kernel}'/g" ${grubdefault}
@@ -471,7 +472,7 @@ function select_icon_theme {
   done
 }
 
-grubcfg=/boot/grub/grub.cfg
+grubcfg="/boot/grub/grub.cfg"
 function select_default_kernel {
   # Find installed kernels in /boot/grub/grub.cfg and turn into a bash list.
   kernellist=$(sudo grep "'Arch Linux, with Linux linux[-a-z]*'" ${grubcfg} | \
