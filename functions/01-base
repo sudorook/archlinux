@@ -6,11 +6,15 @@ base="${dir}/packages/base.list"
 bashrc="${dir}/dotfiles/bashrc"
 toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
+grubcfg="/boot/grub/grub.cfg"
 function install_base {
   show_header "Installing base packages and their config files."
   check_installed $(cat ${base})
   check_fail
   show_success "Base packages installed."
+
+  show_info "Rebuilding grub.cfg to use Intel microcode updates."
+  sudo grub-mkconfig -o ${grubcfg}
 
   show_info "Installing toprc."
   cp -f ${toprc} ${HOME}/.toprc
