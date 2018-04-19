@@ -75,8 +75,10 @@ au FileType h,c,hpp,cpp setlocal showmatch
 au FileType h,c,hpp,cpp setlocal autoindent
 au FileType h,c,hpp,cpp setlocal cindent
 "au FileType h,c,hpp,cpp setlocal comments=sl:/*,mb:\ *,elx:\ */
-au FileType h,c,hpp,cpp map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
-au FileType h,c,hpp,cpp imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
+if filereadable( expand("/usr/share/clang/clang-format.py") )
+  au FileType h,c,hpp,cpp map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+  au FileType h,c,hpp,cpp imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
+endif
 
 "omnicppcomplete
 "set omnifunc=syntaxcomplete#Complete " override built-in C omnicomplete with C++ OmniCppComplete plugin
@@ -127,10 +129,6 @@ augroup END
 "workarounds for garbage characters
 set t_u7=
 set t_RV=
-
-"clang-format
-map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
-imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
 
 "gitgutter
 " let g:gitgutter_enabled=0
