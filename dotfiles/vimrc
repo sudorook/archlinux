@@ -2,17 +2,17 @@
 set nocompatible
 "set title
 "set titlestring=%t
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set smarttab
+set autoindent
+set smartindent
 set incsearch
 set hlsearch
 set smartcase
 set noerrorbells
 set novisualbell
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-set smarttab
-set autoindent
-set smartindent
 "set ruler
 set wildmenu
 set wildignore=*.o,*~,*.pyc,*.lo
@@ -94,10 +94,10 @@ au FileType html,css,scss,less setlocal softtabstop=2
 au FileType html,css,scss,less setlocal expandtab
 
 "vim-taglist
-let Tlist_Compact_Format=1
-let Tlist_GainFocus_On_ToggleOpen=1
-let Tlist_Close_On_Select=1
-nnoremap <c-l> :TlistToggle<cr>
+let Tlist_Compact_Format = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Close_On_Select = 1
+nnoremap <C-l> :TlistToggle<CR>
 
 "nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -127,6 +127,10 @@ augroup END
 "workarounds for garbage characters
 set t_u7=
 set t_RV=
+
+"clang-format
+map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
 
 "gitgutter
 " let g:gitgutter_enabled=0
