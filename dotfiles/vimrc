@@ -1,6 +1,5 @@
 "global settings
 set nocompatible
-set background=dark
 "set title
 "set titlestring=%t
 set incsearch
@@ -20,12 +19,6 @@ set wildignore=*.o,*~,*.pyc,*.lo
 filetype plugin indent on
 syntax on
 
-"encryption
-set cm=blowfish
-
-"pathogen
-"execute pathogen#infect()
-
 "airline
 set noshowmode
 set laststatus=2
@@ -33,7 +26,16 @@ set t_Co=256
 set guifont=Monospace\ Regular\ for\ Powerline\ 10 
 "let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
+
+"themes and appearance
+if (has("termguicolors"))
+  set termguicolors
+endif
+set background=dark
 let g:airline_theme="term"
+
+"encryption
+set cm=blowfish
 
 "syntastic
 set statusline+=%#warningmsg#
