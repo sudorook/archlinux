@@ -19,7 +19,6 @@ grunt-cli
 gulp
 hdf5
 hugo
-js
 julia
 jupyter
 jupyter-nbconvert
