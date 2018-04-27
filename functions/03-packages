@@ -98,11 +98,11 @@ function install_kvm_guest {
 
     show_info "Adding virtio modules to initramfs."
     virtiomodules="virtio virtio_pci virtio_blk virtio_net virtio_ring"
-    if test "$(grep "^MODULES=.*${virtiomodules}.*" ${mkinitcpioconf})"; then
+    if test "$(grep "^MODULES=(.*${virtiomodules}.*)" ${mkinitcpioconf})"; then
       show_info "Virtio modules already specified in ${mkinitcpioconf}."
     else
-      mkinitcpiomodules=$(sed -n "s/^MODULES=\"\(.*\)\"/\1 ${virtiomodules}/p" ${mkinitcpioconf} | sed -e "s/^[[:space:]]//g")
-      sudo sed -i "s/^MODULES=\".*\"/MODULES=\"${mkinitcpiomodules}\"/" ${mkinitcpioconf}
+      mkinitcpiomodules=$(sed -n "s/^MODULES=(\(.*\))/\1 ${virtiomodules}/p" ${mkinitcpioconf} | sed -e "s/^[[:space:]]//g")
+      sudo sed -i "s/^MODULES=(.*)/MODULES=(${mkinitcpiomodules})/" ${mkinitcpioconf}
       show_info "Rebuilding kernel(s)"
       sudo mkinitcpio -p linux
     fi
