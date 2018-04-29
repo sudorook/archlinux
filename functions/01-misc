@@ -22,7 +22,7 @@ function install_zsh {
       ${zshdir}/zsh-autosuggestions
   fi
   if ! [ -d ${zshdir}/fishy-lite ]; then
-    git clone https://github.com/pseudorook/fishy-lite \
+    git clone https://github.com/sudorook/fishy-lite \
       ${zshdir}/fishy-lite
   fi
 
