@@ -103,6 +103,8 @@ function install_thunderbird_theme {
   fi
 
   git clone https://github.com/spymastermatt/thunderbird-monterail ${thunderbird}/chrome
+  sed -i 's,^/\* @import "tweaks/square-tabs.css";,@import "tweaks/square-tabs.css";,g' \
+    ${thunderbird}/chrome/userChrome.css
   sed -i 's,^/\* @import "icons/lightDarkIcons.css";,@import "icons/lightDarkIcons.css";,g' \
     ${thunderbird}/chrome/userChrome.css
   sed -i 's,/\*--default-font: var(--light-sans-font);,--default-font: var(--system-font);,g' \
