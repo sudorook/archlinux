@@ -31,9 +31,13 @@ let g:airline_powerline_fonts=1
 if (has("termguicolors"))
   set termguicolors
 endif
-colorscheme default
+if filereadable( expand("$HOME/.vim/colors/colorific.vim") )
+  colorscheme colorific
+  if filereadable( expand("$HOME/.vim/autoload/airline/themes/colorific.vim") )
+    let g:airline_theme='colorific'
+  endif
+endif
 set background=dark
-let g:airline_theme="term"
 
 "encryption
 set cm=blowfish
