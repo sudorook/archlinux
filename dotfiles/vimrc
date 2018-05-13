@@ -97,8 +97,8 @@ endif
 "let OmniCpp_SelectFirstItem     = 1 "select first item in pop-up
 "set completeopt=menuone,menu,longest
 
-"text/latex
-au BufRead *.tex,*.txt,*.md setlocal spell
+"markdown/tex/text
+au FileType bib,markdown,mkd,tex,text,textile setlocal spell
 
 "html
 au FileType html,css,scss,less setlocal shiftwidth=2
