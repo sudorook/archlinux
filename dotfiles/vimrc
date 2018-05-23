@@ -25,7 +25,7 @@ syntax on
 set noshowmode
 set laststatus=2
 set t_Co=256
-set guifont=Monospace\ Regular\ for\ Powerline\ 10 
+set guifont=Monospace\ Regular\ for\ Powerline\ 10
 "let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 
@@ -55,9 +55,9 @@ let g:syntastic_enable_signs=1
 let g:syntastic_check_on_wq=0
 "let g:syntastic_c_remove_include_errors=1
 "let g:syntastic_cpp_include_dirs=[
-"  \ \"/usr/include/qt", 
-"  \ \"/usr/include/qt/QtGui", 
-"  \ \"/usr/include/qt/QtCore", 
+"  \ \"/usr/include/qt",
+"  \ \"/usr/include/qt/QtGui",
+"  \ \"/usr/include/qt/QtCore",
 "  \ \"/usr/include/qt/QtWidgets"]
 
 "bash
@@ -128,7 +128,7 @@ let g:NERDDefaultAlign='left'
 let g:NERDCommentEmptyLines=1
 
 "allow per-directory vimrc
-set exrc 
+set exrc
 set secure
 
 "save cursor position
