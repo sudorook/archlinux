@@ -1,7 +1,6 @@
 "global settings
 set nocompatible
-"set title
-"set titlestring=%t
+set title
 set shiftwidth=2
 set softtabstop=2
 set expandtab
