@@ -96,7 +96,7 @@ include ~/.zsh/fishy-lite/git-prompt.zsh
 
 # syntax highlighting
 include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-include ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
-include ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+include /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+include /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 autoload -U compinit && compinit

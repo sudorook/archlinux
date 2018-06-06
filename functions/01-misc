@@ -13,14 +13,6 @@ function install_zsh {
 
   show_info "Downloading zsh extras."
   mkdir -p ${zshdir}
-  if ! [ -d ${zshdir}/zsh-history-substring-search ]; then
-    git clone https://github.com/zsh-users/zsh-history-substring-search \
-      ${zshdir}/zsh-history-substring-search
-  fi
-  if ! [ -d ${zshdir}/zsh-autosuggestions ]; then
-    git clone https://github.com/zsh-users/zsh-autosuggestions \
-      ${zshdir}/zsh-autosuggestions
-  fi
   if ! [ -d ${zshdir}/fishy-lite ]; then
     git clone https://github.com/sudorook/fishy-lite \
       ${zshdir}/fishy-lite
