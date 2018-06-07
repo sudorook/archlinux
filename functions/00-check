@@ -74,7 +74,7 @@ function check_network {
   if wget -q --tries=10 --timeout=20 --spider https://archlinux.org >/dev/null; then
     show_success "Network is working."
   else
-    show_error "Cannot start network connextion."
+    show_error "Cannot start network connection."
     show_info "Trying dhcpcd unit."
     if [[ $(systemctl is-active dhcpcd) == "active" ]]; then
       show_error "dhcpcd is already active."
@@ -87,7 +87,7 @@ function check_network {
       if wget -q --tries=10 --timeout=20 --spider https://archlinux.org >/dev/null; then
         show_success "Network is working."
       else
-        show_error "Cannot start network connextion. Giving up."
+        show_error "Cannot start network connection. Giving up."
         exit 1
       fi
     fi
