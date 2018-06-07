@@ -4,4 +4,5 @@ ebtables
 libvirt
 openbsd-netcat
 qemu
+qemu-block-gluster
 virt-manager
