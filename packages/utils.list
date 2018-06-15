@@ -1,6 +1,7 @@
 acpi
 ddrescue
 dmidecode
+dos2unix
 dosfstools
 encfs
 gnupg
