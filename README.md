@@ -16,9 +16,9 @@ connection is active. The rest should be self explanatory.
 
 ## Options
 ```
-1) Quit			4) Miscellaneous	7) Applications
-2) Autopilot		5) Desktop environment	8) Themes
-3) Base			6) Network tools	9) Personalization
+1) Quit                 4) Miscellaneous        7) Applications
+2) Autopilot            5) Desktop environment  8) Themes
+3) Base                 6) Network tools        9) Personalization
 ```
 
 ### 2) Autopilot
@@ -27,9 +27,9 @@ Automatically install (without prompting) packages and configs.
 
 ### 3) Base
 ```
-1) Back			4) Enable multilib	7) Disable system beep
-2) Base packages	5) Sudo insults
-3) Updates		6) Pacman styling
+1) Back                 4) Enable multilib      7) Disable system beep
+2) Base packages        5) Sudo insults
+3) Updates              6) Pacman styling
 ```
 
 2) Installs [base.list](packages/base.list).
@@ -47,8 +47,8 @@ Automatically install (without prompting) packages and configs.
 
 ### 4) Miscellaneous
 ```
-1) Back			  4) Linux LTS kernel	    7) Laptop tools
-2) All			  5) Linux zen kernel	    8) zsh
+1) Back                   4) Linux LTS kernel       7) Laptop tools
+2) All                    5) Linux zen kernel       8) zsh
 3) Linux hardened kernel  6) Linux utilities
 ```
 
@@ -80,8 +80,8 @@ Automatically install (without prompting) packages and configs.
 
 ### 6) Network tools
 ```
-1) Back			   4) Tunnel pacman over tor
-2) All			   5) Network tools
+1) Back                    4) Tunnel pacman over tor
+2) All                     5) Network tools
 3) Install tor
 ```
 
@@ -96,12 +96,12 @@ Automatically install (without prompting) packages and configs.
 
 ### 7) Applications
 ```
-1) Back			   7) Extra applications    13) Tor browser
-2) All			   8) Emulators		    14) Vim
-3) Android tools	   9) KVM (host)	    15) VirtualBox (host)
-4) General applications	  10) KVM (guest)	    16) VirtualBox (guest)
-5) Codecs		  11) Music		    17) Wine
-6) Development		  12) TeX Live
+1) Back                    7) Extra applications    13) Tor browser
+2) All                     8) Emulators             14) Vim
+3) Android tools           9) KVM (host)            15) VirtualBox (host)
+4) General applications   10) KVM (guest)           16) VirtualBox (guest)
+5) Codecs                 11) Music                 17) Wine
+6) Development            12) TeX Live
 ```
 
 3) Install packages in [android.list](packages/android.list) for accessing
@@ -141,9 +141,9 @@ Automatically install (without prompting) packages and configs.
 
 ### 8) Themes
 ```
-1) Back		      4) Adapta (GTK)	    7) Vim theme
-2) All		      5) Fonts		    8) Thunderbird theme
-3) Arc (GTK)	      6) Papirus (icons)
+1) Back               4) Adapta (GTK)       7) Vim theme
+2) All                5) Fonts              8) Thunderbird theme
+3) Arc (GTK)          6) Papirus (icons)
 ```
 
 3) Download, compile, and install a [fork](https://github.com/sudorook/arc-theme)
@@ -163,13 +163,13 @@ Automatically install (without prompting) packages and configs.
 
 ### 9) Personalization
 ```
-1) Back				     9) Import application dconf
-2) All				    10) Import GNOME terminal profiles
-3) Set Noto fonts		    11) Enable autologin
-4) Select icon theme		    12) Invert brightness
-5) Select desktop theme		    13) Disable PulseAudio suspend
-6) Set dark GTK			    14) Add scripts
-7) Import Cinnamon dconf	    15) Select default kernel
+1) Back                              9) Import application dconf
+2) All                              10) Import GNOME terminal profiles
+3) Set Noto fonts                   11) Enable autologin
+4) Select icon theme                12) Invert brightness
+5) Select desktop theme             13) Disable PulseAudio suspend
+6) Set dark GTK                     14) Add scripts
+7) Import Cinnamon dconf            15) Select default kernel
 8) Import GNOME dconf
 ```
 
