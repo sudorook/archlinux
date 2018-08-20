@@ -30,6 +30,7 @@ mathjax
 nodejs
 npm
 npm-check-updates
+openblas
 perl-image-exiftool
 postgresql
 prettier
