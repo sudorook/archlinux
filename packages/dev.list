@@ -8,6 +8,7 @@ cppcheck
 cython
 doxygen
 eslint
+flake8
 flatpak
 flatpak-builder
 flawfinder
@@ -19,7 +20,6 @@ go
 graphviz
 grunt-cli
 gulp
-flake8
 hdf5
 hugo
 jq
