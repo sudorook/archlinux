@@ -1,6 +1,8 @@
+curl
 gtk-engine-murrine
 gulp
 inkscape
+jq
 nodejs
 npm
 parallel
