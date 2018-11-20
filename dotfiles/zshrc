@@ -49,7 +49,7 @@ alias scp="noglob scp"
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias happymake="make -j`nproc` && sudo make install"
-alias superupgrade="sudo sh -c 'sudo pacman -Syu && sudo paccache -r && sudo paccache -ruk0'"
+alias superupgrade="sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'"
 
 # list directory contents
 alias sl='ls'
