@@ -168,7 +168,7 @@ Automatically install (without prompting) packages and configs.
 ```
 1) Back                              9) Import application dconf
 2) All                              10) Import GNOME terminal profiles
-3) Set Noto fonts                   11) Enable autologin
+3) Select system font               11) Enable autologin
 4) Select icon theme                12) Invert brightness
 5) Select desktop theme             13) Disable PulseAudio suspend
 6) Set dark GTK                     14) Add scripts
@@ -176,7 +176,7 @@ Automatically install (without prompting) packages and configs.
 8) Import GNOME dconf
 ```
 
-3) Set default system fonts to Noto.
+3) Select the system font. (Noto or Roboto)
 
 4) Select the system icon theme.
 
