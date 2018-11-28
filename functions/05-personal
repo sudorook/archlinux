@@ -73,7 +73,7 @@ function set_icon_theme {
 function set_gtk_theme {
   show_header "Setting desktop GTK theme to ${gtktheme}."
   if pacman -Qi cinnamon >/dev/null 2>&1; then
-    show_info "Setting cinnamon GTK theme to ${gtktheme}."
+    show_info "Setting Cinnamon GTK theme to ${gtktheme}."
     gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
     gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
     if [[ "$gtktheme" =~ "-Eta" ]]; then
@@ -151,7 +151,7 @@ function set_dark_gtk {
 
 cinnamondconf="${dir}/dconf/cinnamon.dconf"
 function import_cinnamon_dconf {
-  show_header "Importing cinnamon dconf settings."
+  show_header "Importing Cinnamon dconf settings."
   dconf load / < ${cinnamondconf}
   check_fail
   show_success "Cinnamon dconf settings imported."
