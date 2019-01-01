@@ -5,7 +5,6 @@
 export BROWSER="firefox"
 export EDITOR="vim"
 export VISUAL="$EDITOR"
-export QT_QPA_PLATFORMTHEME=qt5ct
 
 
 #
