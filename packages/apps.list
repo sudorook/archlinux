@@ -4,8 +4,11 @@ eog
 evince
 ffmpeg
 firefox
+firefox-decentraleyes
 firefox-extension-https-everywhere
 firefox-extension-privacybadger
+firefox-ublock-origin
+firefox-umatrix
 gifsicle
 gnome-calculator
 gnome-disk-utility
