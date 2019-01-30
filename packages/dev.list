@@ -25,12 +25,12 @@ hugo
 jq
 julia
 jupyter
-jupyter-nbconvert
 mathjax
 nodejs
 npm
 npm-check-updates
 openblas
+pandoc
 perl-image-exiftool
 postgresql
 prettier
