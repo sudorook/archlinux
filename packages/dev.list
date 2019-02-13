@@ -28,7 +28,6 @@ jupyter
 mathjax
 nodejs
 npm
-npm-check-updates
 openblas
 pandoc
 perl-image-exiftool
