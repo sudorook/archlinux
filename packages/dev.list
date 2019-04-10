@@ -22,7 +22,6 @@ grunt-cli
 gulp
 hdf5
 hugo
-jq
 julia
 jupyter
 mathjax
@@ -34,8 +33,6 @@ perl-image-exiftool
 postgresql
 prettier
 pygmentize
-pypy
-pypy3
 python
 python-argparse
 python-beautifulsoup4
