@@ -15,6 +15,7 @@ flawfinder
 gcc
 gdb
 gitg
+glpk
 gnuplot
 go
 graphviz
