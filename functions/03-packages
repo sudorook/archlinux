@@ -344,7 +344,7 @@ function 03-packages {
 
   options=("Back" "All" "Android tools" "General applications" "Codecs" \
            "Development" "Extra applications" "Emulators" "KVM (host)" \
-           "KVM (guest)" "Music" "TeX Live" "Tor browser" "Vim" \
+           "KVM (guest)" "Messaging" "Music" "TeX Live" "Tor browser" "Vim" \
            "VirtualBox (host)" "VirtualBox (guest)" "Wine")
   select option in "${options[@]}"; do
     case $option in
