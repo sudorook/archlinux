@@ -114,7 +114,7 @@ function set_icon_theme {
   show_header "Setting desktop icon theme to ${icontheme}."
 
   if pacman -Qi cinnamon >/dev/null 2>&1; then
-    show_info "Setting cinnamon icon theme to ${icontheme}."
+    show_info "Setting Cinnamon icon theme to ${icontheme}."
     gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
   fi
   if pacman -Qi gnome-shell >/dev/null 2>&1; then
