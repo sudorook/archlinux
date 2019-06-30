@@ -4,6 +4,7 @@ dmidecode
 dos2unix
 dosfstools
 encfs
+ethtool
 gnupg
 net-tools
 nmap
@@ -15,6 +16,7 @@ pixz
 pv
 rsync
 screen
+smartmontools
 squashfs-tools
 unrar
 zip
