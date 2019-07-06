@@ -45,11 +45,11 @@ function install_adapta_gtk {
     --enable-parallel
   make -j`nproc`
   sudo make install
+  if [ -d /usr/share/gtksourceview-4/styles/ ]; then
+    sudo cp -f extra/gedit/adapta.xml /usr/share/gtksourceview-4/styles/
+  fi
   if [ -d /usr/share/gtksourceview-3.0/styles/ ]; then
     sudo cp -f extra/gedit/adapta.xml /usr/share/gtksourceview-3.0/styles/
-  fi
-  if [ -d /usr/share/gtksourceview-2.0/styles/ ]; then
-    sudo cp -f extra/gedit/adapta.xml /usr/share/gtksourceview-2.0/styles/
   fi
   cd ..
   rm -rf adapta-gtk-theme
@@ -75,15 +75,15 @@ function install_plata_gtk {
     --enable-parallel
   make -j`nproc`
   sudo make install
+  if [ -d /usr/share/gtksourceview-4/styles/ ]; then
+    sudo cp -f src/extra/gtksourceview/plata-light.xml \
+      src/extra/gtksourceview/plata-dark.xml \
+      /usr/share/gtksourceview-4/styles/
+  fi
   if [ -d /usr/share/gtksourceview-3.0/styles/ ]; then
     sudo cp -f src/extra/gtksourceview/plata-light.xml \
       src/extra/gtksourceview/plata-dark.xml \
       /usr/share/gtksourceview-3.0/styles/
-  fi
-  if [ -d /usr/share/gtksourceview-2.0/styles/ ]; then
-    sudo cp -f src/extra/gtksourceview/plata-light.xml \
-      src/extra/gtksourceview/plata-dark.xml \
-      /usr/share/gtksourceview-2.0/styles/
   fi
   cd ..
   rm -rf plata-theme
