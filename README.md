@@ -172,12 +172,12 @@ Automatically install (without prompting) packages and configs.
 ```
 1) Back                              9) Import application dconf
 2) All                              10) Import GNOME terminal profiles
-3) Select system font               11) Enable autologin
+3) Select system fonts              11) Enable autologin
 4) Select icon theme                12) Invert brightness
 5) Select desktop theme             13) Disable PulseAudio suspend
-6) Set dark GTK                     14) Add scripts
-7) Import Cinnamon dconf            15) Select default kernel
-8) Import GNOME dconf
+6) Set dark GTK                     14) Disable 802.11n
+7) Import Cinnamon dconf            15) Add scripts
+8) Import GNOME dconf               16) Select default kernel
 ```
 
 3) Select the system font. (Noto or Roboto)
@@ -202,6 +202,9 @@ Automatically install (without prompting) packages and configs.
 
 13) Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
 
-14) Download and install [general utility scripts](https://github.com/sudorook/misc-scripts).
+14) Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
+    connections.
 
-15) Select the default boot kernel from the currently installed ones.
+15) Download and install [general utility scripts](https://github.com/sudorook/misc-scripts).
+
+16) Select the default boot kernel from the currently installed ones.
