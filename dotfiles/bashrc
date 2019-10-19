@@ -42,6 +42,7 @@ command -v npm >/dev/null 2>&1 && {
 # R
 command -v R >/dev/null 2>&1 && {
   export R_LIBS_USER=$HOME/.R/$(R --version | sed -n "s/^R version \([0-9\.]*\) .*/\1/p")
+  alias R='R --no-save '
 }
 
 # custom scripts
@@ -58,8 +59,10 @@ export PATH=$PATH:${HOME}/.local/bin
 alias vi='vim '
 alias sudo='sudo '
 alias grep='grep --color=auto'
+alias diff='diff --color=auto'
 alias happymake="make -j`nproc` && sudo make install"
-alias superupgrade="sudo sh -c 'sudo pacman -Syu && sudo paccache -r && sudo paccache -ruk0'"
+alias superupgrade="sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'"
+alias megapurge="sudo sh -c 'yes | pacman -Scc' && sudo journalctl --vacuum-time=1day && sudo pacdiff && sudo pacman -Rs $(pacman -Qdtq)"
 
 # list directory contents
 alias sl='ls'
