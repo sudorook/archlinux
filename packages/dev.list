@@ -50,6 +50,7 @@ python-sphinx
 python-statsmodels
 python-tensorflow
 python-urllib3
+python-wheel
 r
 ruby
 ruby-bundler
