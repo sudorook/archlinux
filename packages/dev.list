@@ -1,5 +1,4 @@
 automake
-autopep8
 boost-libs
 clang
 cmake
@@ -7,7 +6,6 @@ cppcheck
 cython
 doxygen
 eslint
-flake8
 flatpak
 flatpak-builder
 flawfinder
@@ -36,12 +34,14 @@ python
 python-argparse
 python-beautifulsoup4
 python-biopython
+python-black
 python-h5py
 python-html2text
 python-matplotlib
 python-numpy
 python-pandas
 python-pycurl
+python-pylint
 python-reportlab
 python-scikit-learn
 python-scipy
