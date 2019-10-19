@@ -56,7 +56,7 @@ function check_installed {
 
 function install_dependencies {
   show_header "Checking dependencies."
-  for package in $(cat $deps); do
+  for package in $(cat ${deps}); do
     if ! pacman -Qi ${package} > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
       sudo pacman -S ${package}
