@@ -1,7 +1,6 @@
 automake
 autopep8
 boost-libs
-bower
 clang
 cmake
 cppcheck
