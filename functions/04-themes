@@ -2,12 +2,18 @@
 
 dir="$(dirname "$0")"
 
+npmrc="${dir}/dotfiles/npmrc"
 themes="${dir}/packages/themes.list"
 function install_theme_deps {
   show_header "Installing theme dependencies."
   check_installed $(cat ${themes})
   check_fail
   show_success "Theme dependencies installed."
+
+  if ! [ -f ${npmrc} ]; then
+    show_info "Installing npmrc."
+    cp -f ${npmrc} ${HOME}/.npmrc
+  fi
 }
 
 function install_arc_gtk {
