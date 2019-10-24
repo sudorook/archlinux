@@ -129,10 +129,6 @@ let g:NERDCompactSexyComs=1
 let g:NERDDefaultAlign='left'
 let g:NERDCommentEmptyLines=1
 
-"allow per-directory vimrc
-set exrc
-set secure
-
 "save cursor position
 augroup resCur
   autocmd!
