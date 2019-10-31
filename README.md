@@ -96,12 +96,12 @@ Automatically install (without prompting) packages and configs.
 
 ### 7) Applications
 ```
-1) Back                    7) Extra applications    13) Tor browser
-2) All                     8) Emulators             14) Vim
-3) Android tools           9) KVM (host)            15) VirtualBox (host)
-4) General applications   10) KVM (guest)           16) VirtualBox (guest)
-5) Codecs                 11) Music                 17) Wine
-6) Development            12) TeX Live
+1) Back                    7) Extra applications    13) TeX Live
+2) All                     8) Emulators             14) Tor browser
+3) Android tools           9) KVM (host)            15) Vim
+4) General applications   10) KVM (guest)           16) VirtualBox (host)
+5) Codecs                 11) Messaging             17) VirtualBox (guest)
+6) Development            12) Music                 18) Wine
 ```
 
 3) Install packages in [android.list](packages/android.list) for accessing
@@ -125,18 +125,20 @@ Automatically install (without prompting) packages and configs.
 11) Install applications for playing music (`mpd`, `ncmcpp`, `clementine`),
     computing replaygain (`bs1770gain`), and using Pandora (`pianobar`).
 
-12) Install TeX libraries and Font Awesome icons.
+12) Install IRC, email, and other messaging clients.
 
-13) Download and install the Tor browser. Edits the application launcher icon
+13) Install TeX libraries and Font Awesome icons.
+
+14) Download and install the Tor browser. Edits the application launcher icon
     to look for "browser-tor".
 
-14) Install `vim` and `vim-plugins` and then set the user vimrc.
+15) Install `vim` and `vim-plugins` and then set the user vimrc.
 
-15) Install VirtualBox and kernel modules (dkms) for running it (host).
+16) Install VirtualBox and kernel modules (dkms) for running it (host).
 
-16) Install kernel modules (dkms) and tools for VirtualBox guests.
+17) Install kernel modules (dkms) and tools for VirtualBox guests.
 
-17) Install Wine not-emulator, along with the Mono and browser and some audio
+18) Install Wine not-emulator, along with the Mono and browser and some audio
     libraries.
 
 ### 8) Themes

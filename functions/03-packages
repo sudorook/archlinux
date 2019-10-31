@@ -157,7 +157,7 @@ function install_messaging {
     git clone https://github.com/wee-slack/wee-slack/ "${weechatdir}/wee-slack"
     ln -sf "${weechatdir}/wee-slack/wee_slack.py" "${weechatdir}/python/autoload/"
   fi
-  show_success "WeeChat plugin installed."
+  show_success "wee-slack plugin installed."
 }
 
 music="${dir}/packages/music.list"
