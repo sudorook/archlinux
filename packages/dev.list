@@ -56,6 +56,7 @@ ruby
 ruby-bundler
 sassc
 scrapy
+sparsehash
 sqlite
 strace
 tensorflow
