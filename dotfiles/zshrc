@@ -53,7 +53,7 @@ alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias happymake="make -j`nproc` && sudo make install"
 alias superupgrade="sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'"
-alias megapurge="sudo sh -c 'yes | pacman -Scc' && sudo journalctl --vacuum-time=1day && sudo pacdiff && sudo pacman -Rs $(pacman -Qdtq)"
+alias megapurge="sudo sh -c 'yes | pacman -Scc' && sudo journalctl --vacuum-time=1day && sudo pacdiff && sudo pacman -Rs '$(pacman -Qdtq)'"
 
 # list directory contents
 alias sl='ls'
