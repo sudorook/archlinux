@@ -85,8 +85,8 @@ au FileType h,c,hpp,cpp setlocal autoindent
 au FileType h,c,hpp,cpp setlocal cindent
 "au FileType h,c,hpp,cpp setlocal comments=sl:/*,mb:\ *,elx:\ */
 if filereadable( expand("/usr/share/clang/clang-format.py") )
-  au FileType h,c,hpp,cpp map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
-  au FileType h,c,hpp,cpp imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
+  au FileType h,c,hpp,cpp map <C-K> :py3f /usr/share/clang/clang-format.py<cr>
+  au FileType h,c,hpp,cpp imap <C-K> <c-o>:py3f /usr/share/clang/clang-format.py<cr>
 endif
 
 "omnicppcomplete
