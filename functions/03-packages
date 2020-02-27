@@ -66,7 +66,8 @@ function install_dev {
 
   if [[ -f ${vimpack}/julia-vim ]]; then
     show_info "Installing julia-vim for syntax highlighting."
-    git clone https://github.com/JuliaEditorSupport/julia-vim.git ${vimpack}/julia-vim
+    git clone https://github.com/JuliaEditorSupport/julia-vim.git \
+      ${vimpack}/julia-vim
   fi
 
   if [[ -f ${vimpack}/Nvim-R ]]; then
