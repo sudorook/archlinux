@@ -101,7 +101,7 @@ include() {
 
 # custom fishy theme
 include ~/.zsh/fishy-lite/fishy.zsh
-include ~/.zsh/fishy-lite/battery-gauge.zsh
+include ~/.zsh/fishy-lite/battery/percent.zsh
 include ~/.zsh/fishy-lite/git-prompt.zsh
 
 # syntax highlighting
