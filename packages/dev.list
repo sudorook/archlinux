@@ -57,7 +57,9 @@ ruby-bundler
 ruby-rake
 sassc
 scrapy
+shfmt
 sparsehash
+shellcheck
 sqlite
 strace
 tensorflow
