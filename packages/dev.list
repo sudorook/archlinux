@@ -31,6 +31,7 @@ postgresql
 prettier
 pygmentize
 python
+python-memory-profiler
 python-argparse
 python-beautifulsoup4
 python-biopython
