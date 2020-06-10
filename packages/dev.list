@@ -31,7 +31,6 @@ postgresql
 prettier
 pygmentize
 python
-python-memory-profiler
 python-argparse
 python-beautifulsoup4
 python-biopython
@@ -39,6 +38,7 @@ python-black
 python-h5py
 python-html2text
 python-matplotlib
+python-memory-profiler
 python-numpy
 python-pandas
 python-pycurl
@@ -58,9 +58,9 @@ ruby-bundler
 ruby-rake
 sassc
 scrapy
+shellcheck
 shfmt
 sparsehash
-shellcheck
 sqlite
 strace
 tensorflow
