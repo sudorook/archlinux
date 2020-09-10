@@ -63,6 +63,7 @@ shfmt
 sparsehash
 sqlite
 strace
+superlu
 tensorflow
 tesseract
 tesseract-data-eng
