@@ -132,7 +132,7 @@ function install_kvm_guest {
       mkinitcpiomodules=$(sed -n "s/^MODULES=(\(.*\))/\1 ${virtiomodules}/p" ${mkinitcpioconf} | sed -e "s/^[[:space:]]//g")
       sudo sed -i "s/^MODULES=(.*)/MODULES=(${mkinitcpiomodules})/" ${mkinitcpioconf}
       show_info "Rebuilding kernel(s)"
-      sudo mkinitcpio -p linux
+      sudo mkinitcpio -P
     fi
 
     sudo systemctl enable qemu-ga.service
