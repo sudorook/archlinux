@@ -38,8 +38,22 @@ function install_cinnamon {
   if ! test ${DESKTOP_SESSION+x}; then
     export DESKTOP_SESSION="cinnamon"
   fi
-  mkdir -p ${HOME}/.config/
-  cp -f ${redshiftconf} ${HOME}/.config/
+
+  # Get latitude and longitude using GeoClue2 for Redshift.
+  show_info "Generating Redshift config."
+  mkdir -p "${HOME}/.config/"
+  local tmp
+  local lat
+  local lon
+  tmp="$(/usr/lib/geoclue-2.0/demos/where-am-i -t 20)"
+  lat="$(echo "$tmp" | \
+         sed -n "s/^Latitude: \+\([-0-9\.]\+\)°$/\1/p" | head -n 1)"
+  lon="$(echo "$tmp" | \
+         sed -n "s/^Longitude: \+\([-0-9\.]\+\)°$/\1/p" | head -n 1)"
+  cat "${redshiftconf}" | \
+    sed -e "s,@latitude@,$lat,g" | \
+    sed -e "s,@longitude@,$lon,g" > "${HOME}/.config/redshift.conf"
+
   xdg-user-dirs-update
   sudo sed -i "s/^#greeter-hide-users=false/greeter-hide-users=false/g" ${lightdmconf}
   sudo sed -i "s/^#greeter-session=.*/greeter-session=lightdm-gtk-greeter/g" ${lightdmconf}
