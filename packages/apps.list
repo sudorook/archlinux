@@ -10,8 +10,6 @@ firefox-extension-https-everywhere
 firefox-extension-privacybadger
 firefox-ublock-origin
 firefox-umatrix
-gifsicle
-gnome-calculator
 gnome-disk-utility
 gnome-power-manager
 gnome-screenshot
@@ -23,4 +21,3 @@ libreoffice-fresh
 mpv
 syncthing-gtk
 transmission-gtk
-youtube-dl

@@ -1,6 +1,8 @@
 baobab
 calibre
+gifsicle
 gimp
+gnome-calculator
 gnome-clocks
 gnome-logs
 gnome-system-monitor
@@ -11,3 +13,4 @@ recordmydesktop
 subtitleeditor
 vlc
 wireshark-qt
+youtube-dl
