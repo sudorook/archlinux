@@ -27,7 +27,6 @@ npm
 openblas
 pandoc
 perl-image-exiftool
-postgresql
 prettier
 pygmentize
 python
