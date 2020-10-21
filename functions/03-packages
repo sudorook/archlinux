@@ -30,6 +30,15 @@ function install_apps {
   sudo sh -c "echo 'default_driver=pulse' > ${libaoconf}"
 }
 
+aur="${dir}/packages/aur.list"
+pkgbuilddir=${HOME}/.pkgbuild
+function install_aur {
+  show_header "Installing AUR applications."
+  check_aur_installed $(cat ${aur})
+  check_fail
+  show_success "Done!"
+}
+
 codecs="${dir}/packages/codecs.list"
 function install_codecs {
   show_header "Installing codecs."
@@ -342,10 +351,11 @@ function 03-packages {
   show_question "Applications: what do you want to install?"
   show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Android tools" "General applications" "Codecs" \
-           "Development" "Extra applications" "Emulators" "KVM (host)" \
-           "KVM (guest)" "Messaging" "Music" "TeX Live" "Tor browser" "Vim" \
-           "VirtualBox (host)" "VirtualBox (guest)" "Wine")
+  options=("Back" "All" "Android tools" "General applications" \
+           "AUR applications" "Codecs" "Development" "Extra applications" \
+           "Emulators" "KVM (host)" "KVM (guest)" "Messaging" "Music" \
+           "TeX Live" "Tor browser" "Vim" "VirtualBox (host)" \
+           "VirtualBox (guest)" "Wine")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -354,6 +364,7 @@ function 03-packages {
       "All")
         install_android
         install_apps
+        install_aur
         install_codecs
         install_dev
         install_extra
@@ -373,6 +384,10 @@ function 03-packages {
       "Android tools")
         install_android
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        ;;
+      "AUR applications")
+        install_aur
+        show_info "Main\n ${endbranch} Apps (Hit ENTER to see options again.)"
         ;;
       "General applications")
         install_apps

@@ -95,6 +95,7 @@ function main {
 
           # Install useful packages
           install_apps
+          install_aur
           install_codecs
           install_dev
           install_extra

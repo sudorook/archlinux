@@ -54,6 +54,38 @@ function check_installed {
   done
 }
 
+function check_aur_installed {
+  local pkgbuilddir="${HOME}/.pkgbuild"
+  local aurprefix="https://aur.archlinux.org"
+  local curdir="$(pwd)"
+
+  mkdir -p "${pkgbuilddir}"
+  for package in "${@}"; do
+    local metacount=$(pacman -Ss ${package} | grep -c "(.*${package}.*)" || true)
+    local installcount=$(pacman -Qs ${package} | grep -c "^local.*(.*${package}.*)$" || true)
+
+    # Check if package is installed.
+    if pacman -Qi ${package} > /dev/null 2>&1; then
+      show_listitem "${package} package already installed. Skipping."
+
+    # Runs if package is not installed or all members of meta-package are not
+    # installed.
+    else
+      show_listitem "Installing ${package}."
+      if ! [ -d ${pkgbuilddir}/${package} ]; then
+        git clone "${aurprefix}/${package}" "${pkgbuilddir}/${package}"
+      else
+        git -C "${pkgbuilddir}/${package}" pull origin master
+      fi
+      cd "${pkgbuilddir}/${package}"
+      makepkg --noconfirm -s
+      sudo pacman --noconfirm -U "${package}"*.tar.xz
+      git clean -xdf
+    fi
+  done
+  cd "${curdir}"
+}
+
 function install_dependencies {
   show_header "Checking dependencies."
   for package in $(cat ${deps}); do
