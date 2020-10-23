@@ -73,15 +73,15 @@ function install_dev {
   show_info "Installing vim packages."
   mkdir -p "${vimpack}"
 
-  if [[ -f ${vimpack}/julia-vim ]]; then
+  if ! [[ -f ${vimpack}/julia-vim ]]; then
     show_info "Installing julia-vim for syntax highlighting."
     git clone https://github.com/JuliaEditorSupport/julia-vim.git \
-      ${vimpack}/julia-vim
+      "${vimpack}/julia-vim"
   fi
 
-  if [[ -f ${vimpack}/Nvim-R ]]; then
+  if ! [[ -f ${vimpack}/Nvim-R ]]; then
     show_info "Installing Nvim-R."
-    git clone https://github.com/jalvesaq/Nvim-R ${vimpack}/Nvim-R
+    git clone https://github.com/jalvesaq/Nvim-R "${vimpack}/Nvim-R"
   fi
 }
 
