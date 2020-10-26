@@ -6,6 +6,7 @@ dosfstools
 encfs
 ethtool
 gnupg
+mtools
 net-tools
 nmap
 ntfs-3g
