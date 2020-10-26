@@ -7,26 +7,22 @@ bashrc="${dir}/dotfiles/bashrc"
 bashprofile="${dir}/dotfiles/bash_profile"
 toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
-grubcfg="/boot/grub/grub.cfg"
 function install_base {
   show_header "Installing base packages and their config files."
   check_installed $(cat ${base})
   check_fail
   show_success "Base packages installed."
 
-  show_info "Rebuilding grub.cfg to use Intel microcode updates."
-  sudo grub-mkconfig -o ${grubcfg}
-
   show_info "Installing toprc."
-  cp -f ${toprc} ${HOME}/.toprc
+  cp -f "${toprc}" "${HOME}/.toprc"
   show_success "Installed toprc."
 
   show_info "Installing bash_profile."
-  cp -f ${bashprofile} ${HOME}/.bash_profile
+  cp -f "${bashprofile}" "${HOME}/.bash_profile"
   show_success "Installed bash_profile."
 
   show_info "Installing bashrc."
-  cp -f ${bashrc} ${HOME}/.bashrc
+  cp -f "${bashrc}" "${HOME}/.bashrc"
   show_success "Installed bashrc."
 
   # Use reflector to sort among fastest mirrors
