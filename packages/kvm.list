@@ -1,6 +1,8 @@
 bridge-utils
 dnsmasq
 ebtables
+edk2-ovmf
+edk2-shell
 libiscsi
 libvirt
 openbsd-netcat
