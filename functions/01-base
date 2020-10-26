@@ -44,6 +44,29 @@ function enable_multilib {
   fi
 }
 
+firmware="${dir}/packages/firmware.list"
+grubcfg="/boot/grub/grub.cfg"
+function install_firmware {
+  show_header "Installing firmware and microcode."
+  check_installed $(cat ${firmware})
+  check_fail
+
+  local vendor
+  vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
+  if [[ "$vendor" =~ "AMD" ]]; then
+    check_installed "amd-ucode"
+  elif [[ "$vendor" =~ "Intel" ]]; then
+    check_installed "intel-ucode"
+  fi
+  show_success "Firmware packages installed."
+
+  # If booting with GRUB.
+  if command -v grub-mkconfig >/dev/null; then
+    show_info "Rebuilding grub.cfg to use microcode updates."
+    sudo grub-mkconfig -o ${grubcfg}
+  fi
+}
+
 function enable_sudo_insults {
   # Customize sudo to:
   #  - insult incorrect password attempts
@@ -123,15 +146,31 @@ function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
-  options=("Back" "Base packages" "Updates" "Enable multilib" "Sudo insults"
-           "Pacman styling" "Disable system beep")
+  options=("Back" "All" "Base packages" "Firmware" "Updates" \
+           "Enable multilib" "Sudo insults" "Pacman styling" \
+           "Disable system beep")
   select option in "${options[@]}"; do
     case $option in
       "Back")
         break
         ;;
+      "All")
+        update_packages
+        install_base
+        install_firmware
+        enable_multilib
+        enable_sudo_insults
+        stylize_pacman
+        disable_beep
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        break
+        ;;
       "Base packages")
         install_base
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Firmware")
+        install_firmware
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Updates")
