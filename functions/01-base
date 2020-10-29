@@ -51,15 +51,6 @@ function install_firmware {
   check_installed $(cat ${firmware})
   check_fail
 
-  local vendor
-  vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-  if [[ "$vendor" =~ "AMD" ]]; then
-    check_installed "amd-ucode"
-  elif [[ "$vendor" =~ "Intel" ]]; then
-    check_installed "intel-ucode"
-  fi
-  show_success "Firmware packages installed."
-
   # If booting with GRUB.
   if command -v grub-mkconfig >/dev/null; then
     show_info "Rebuilding grub.cfg to use microcode updates."
