@@ -2,6 +2,8 @@ bash-completion
 linux-headers
 linux-tools
 lsb-release
-pacman-contrib
+man-db
+man-pages
 memtest86+
+pacman-contrib
 reflector
