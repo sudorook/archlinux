@@ -87,8 +87,7 @@ function check_aur_installed {
         git -C "${pkgbuilddir}/${package}" pull origin master
       fi
       cd "${pkgbuilddir}/${package}" || exit
-      makepkg --noconfirm -s
-      sudo pacman --noconfirm -U "${package}"*.tar.xz
+      makepkg --noconfirm -si
       git clean -xdf
     fi
   done
