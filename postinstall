@@ -90,6 +90,7 @@ function main {
 
           # Set up network configuration
           install_network
+          install_firewall
           install_tor
           # tunnel_pacman_tor
 

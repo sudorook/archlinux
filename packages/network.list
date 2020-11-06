@@ -1,9 +1,3 @@
-avahi
-gvfs-smb
 networkmanager
 networkmanager-openvpn
-nss-mdns
 openssh
-samba
-ufw
-ufw-extras

@@ -4,28 +4,32 @@ dir="$(dirname "$0")"
 
 networking="${dir}/packages/network.list"
 nmconf="/etc/NetworkManager/NetworkManager.conf"
-nsconf="/etc/nsswitch.conf"
 function install_network {
   show_header "Setting up networking."
   check_installed $(cat ${networking})
   check_fail
   show_success "Networking applications installed."
 
-  show_info "Enabling NetworkManager service"
-  sudo systemctl enable NetworkManager
-
   show_info "Setting up MAC address randomization in Network Manager."
   if ! test "$(grep "mac-address=random" ${nmconf})"; then
     sudo sh -c "echo "" >> ${nmconf}"
     sudo sh -c "echo '## Enabling built-in MAC Address randomization' >> ${nmconf}"
-    sudo sh -c "echo "[connection-mac-randomization]" >> ${nmconf}"
-    sudo sh -c "echo "wifi.cloned-mac-address=random" >> ${nmconf}"
-    sudo sh -c "echo "ethernet.cloned-mac-address=random" >> ${nmconf}"
+    sudo sh -c "echo '[connection-mac-randomization]' >> ${nmconf}"
+    sudo sh -c "echo 'wifi.cloned-mac-address=random' >> ${nmconf}"
+    sudo sh -c "echo 'ethernet.cloned-mac-address=random' >> ${nmconf}"
   fi
 
-  show_info "Enabling ufw."
-  sudo ufw enable
-  sudo systemctl enable ufw.service
+  show_info "Enabling NetworkManager service"
+  sudo systemctl enable --now NetworkManager
+}
+
+discovery="${dir}/packages/discover.list"
+nsconf="/etc/nsswitch.conf"
+function install_discovery {
+  show_header "Setting up local network discovery."
+  check_installed $(cat ${discovery})
+  check_fail
+  show_success "Discovery applications installed."
 
   show_info "Enabling local hostname resolution in Avahi."
   oldhostsline="hosts: files mymachines myhostname resolve \[!UNAVAIL=return\] dns"
@@ -33,6 +37,22 @@ function install_network {
   sudo sed -i "/^${oldhostsline}/s/^${oldhostsline}/${newhostsline}/g" ${nsconf}
   sudo systemctl enable avahi-daemon.service
   sudo systemctl start avahi-daemon.service
+}
+
+firewall="${dir}/packages/firewall.list"
+function install_firewall {
+  show_header "Setting up firewall."
+  check_installed $(cat ${firewall})
+  check_fail
+  show_success "Firewall packages installed."
+
+  show_info "Enabling ufw."
+  sudo ufw default deny
+  sudo ufw allow Transmission
+  sudo ufw allow syncthing
+  sudo ufw allow syncthing-gtk
+  sudo ufw enable
+  sudo systemctl enable ufw
 }
 
 tor="${dir}/packages/tor.list"
@@ -67,16 +87,31 @@ function 03-network {
   show_question "Network: what do you want to install?"
   show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Install tor" "Tunnel pacman over tor" "Network tools")
+  options=("Back" "All" "Networking" "Local discovery" "Firewall" "Install tor" \
+           "Tunnel pacman over tor")
   select option in "${options[@]}"; do
     case $option in
       "Back")
         break
         ;;
       "All")
+        install_network
+        install_discovery
+        install_firewall
         install_tor
         tunnel_pacman_tor
+        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        ;;
+      "Networking")
         install_network
+        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        ;;
+      "Discovery")
+        install_discovery
+        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        ;;
+      "Firewall")
+        install_firewall
         show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
         ;;
       "Install tor")
@@ -85,10 +120,6 @@ function 03-network {
         ;;
       "Tunnel pacman over tor")
         tunnel_pacman_tor
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
-        ;;
-      "Network tools")
-        install_network
         show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
         ;;
       *)
