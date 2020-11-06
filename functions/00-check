@@ -32,11 +32,15 @@ function check_fail {
 
 function check_installed {
   for package in "${@}"; do
-    metacount=$(pacman -Ss ${package} | grep -c "(.*${package}.*)" || true)
-    installcount=$(pacman -Qs ${package} | grep -c "^local.*(.*${package}.*)$" || true)
+    local metacount
+    local installcount
+    metacount=$(pacman -Ss "${package}" | \
+                grep -c "(.*${package}.*)" || true)
+    installcount=$(pacman -Qs "${package}" | \
+                   grep -c "^local.*(.*${package}.*)$" || true)
 
     # Check if package is installed.
-    if pacman -Qi ${package} > /dev/null 2>&1; then
+    if pacman -Qi "${package}" >/dev/null 2>&1; then
       show_listitem "${package} package already installed. Skipping."
 
     # pacman -Qi won't work with meta packages, so check if all meta package
@@ -49,7 +53,7 @@ function check_installed {
     # installed.
     else
       show_listitem "Installing ${package}."
-      sudo pacman -S --noconfirm ${package}
+      sudo pacman -S --noconfirm "${package}"
     fi
   done
 }
@@ -57,41 +61,46 @@ function check_installed {
 function check_aur_installed {
   local pkgbuilddir="${HOME}/.pkgbuild"
   local aurprefix="https://aur.archlinux.org"
-  local curdir="$(pwd)"
+  local curdir
+  curdir="$(pwd)"
 
   mkdir -p "${pkgbuilddir}"
   for package in "${@}"; do
-    local metacount=$(pacman -Ss ${package} | grep -c "(.*${package}.*)" || true)
-    local installcount=$(pacman -Qs ${package} | grep -c "^local.*(.*${package}.*)$" || true)
+    local metacount
+    local installcount
+    metacount=$(pacman -Ss "${package}" | \
+                grep -c "(.*${package}.*)" || true)
+    installcount=$(pacman -Qs "${package}" | \
+                   grep -c "^local.*(.*${package}.*)$" || true)
 
     # Check if package is installed.
-    if pacman -Qi ${package} > /dev/null 2>&1; then
+    if pacman -Qi "${package}" >/dev/null 2>&1; then
       show_listitem "${package} package already installed. Skipping."
 
     # Runs if package is not installed or all members of meta-package are not
     # installed.
     else
       show_listitem "Installing ${package}."
-      if ! [ -d ${pkgbuilddir}/${package} ]; then
+      if ! [ -d "${pkgbuilddir}/${package}" ]; then
         git clone "${aurprefix}/${package}" "${pkgbuilddir}/${package}"
       else
         git -C "${pkgbuilddir}/${package}" pull origin master
       fi
-      cd "${pkgbuilddir}/${package}"
+      cd "${pkgbuilddir}/${package}" || exit
       makepkg --noconfirm -s
       sudo pacman --noconfirm -U "${package}"*.tar.xz
       git clean -xdf
     fi
   done
-  cd "${curdir}"
+  cd "${curdir}" || exit
 }
 
 function install_dependencies {
   show_header "Checking dependencies."
   for package in $(cat ${deps}); do
-    if ! pacman -Qi ${package} > /dev/null 2>&1; then
+    if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
-      sudo pacman -S ${package}
+      sudo pacman -S "${package}"
       check_fail
       show_success "${package} now installed."
     else
