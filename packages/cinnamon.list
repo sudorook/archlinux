@@ -1,9 +1,11 @@
 cinnamon
 gnome-keyring
+gnome-terminal
 lightdm
 lightdm-gtk-greeter
 nemo-fileroller
 nemo-share
+networkmanager
 python-xdg
 redshift
 xdg-user-dirs
