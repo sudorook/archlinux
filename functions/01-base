@@ -5,17 +5,12 @@ dir="$(dirname "$0")"
 base="${dir}/packages/base.list"
 bashrc="${dir}/dotfiles/bashrc"
 bashprofile="${dir}/dotfiles/bash_profile"
-toprc="${dir}/dotfiles/toprc"
 pacmanconf="/etc/pacman.conf"
 function install_base {
   show_header "Installing base packages and their config files."
   check_installed $(cat ${base})
   check_fail
   show_success "Base packages installed."
-
-  show_info "Installing toprc."
-  cp -f "${toprc}" "${HOME}/.toprc"
-  show_success "Installed toprc."
 
   show_info "Installing bash_profile."
   cp -f "${bashprofile}" "${HOME}/.bash_profile"
