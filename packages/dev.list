@@ -6,6 +6,7 @@ cmake
 cppcheck
 cython
 doxygen
+eigen
 eslint
 flatpak
 flatpak-builder
