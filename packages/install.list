@@ -1,5 +1,6 @@
-archlinux-contrib
+arch-install-scripts
+git
 iwd
 pacman
-pacman-contrib
 pacman-mirrorlist
+wget
