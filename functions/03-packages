@@ -30,7 +30,7 @@ function install_apps {
   if command -v ufw >/dev/null; then
     show_info "Enabling Syncthing firewall rules."
     sudo ufw allow syncthing
-    sudo ufw allow syncthing-gtk
+    sudo ufw allow syncthing-gui
   fi
 
   show_info "Configuring ${libaoconf} to use PulseAudio instead of ALSA."
