@@ -19,10 +19,6 @@ function install_base {
   show_info "Installing bashrc."
   cp -f "${bashrc}" "${HOME}/.bashrc"
   show_success "Installed bashrc."
-
-  # Use reflector to sort among fastest mirrors
-  show_info "Using reflector to have pacman use fastest https mirrors."
-  sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 }
 
 function enable_multilib {
@@ -37,6 +33,18 @@ function enable_multilib {
     show_warning "Multilib not applicable for 32-bit installations. Skipping."
     show_warning "Arch discontinued 32-bit support in early 2017. Consider upgrading to a 64-bit."
   fi
+}
+
+mirrors="${dir}/packages/mirrors.list"
+function update_mirrorlist {
+  show_header "Installing packages for configuring Arch mirrorlists."
+  check_installed $(cat ${mirrors})
+  check_fail
+  show_success "Mirrorlsit packages installed."
+
+  # Use reflector to sort among fastest mirrors
+  show_info "Using reflector to find the fastest https mirrors."
+  sudo reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
 }
 
 firmware="${dir}/packages/firmware.list"
@@ -132,7 +140,7 @@ function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Base packages" "Firmware" "Updates" \
+  options=("Back" "All" "Base packages" "Mirrorlist" "Firmware" "Updates" \
            "Enable multilib" "Sudo insults" "Pacman styling" \
            "Disable system beep")
   select option in "${options[@]}"; do
@@ -143,6 +151,7 @@ function 01-base {
       "All")
         update_packages
         install_base
+        update_mirrorlist
         install_firmware
         enable_multilib
         enable_sudo_insults
@@ -153,6 +162,10 @@ function 01-base {
         ;;
       "Base packages")
         install_base
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Mirrorlist")
+        update_mirrorlist
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Firmware")

@@ -69,6 +69,7 @@ function main {
         if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
           # Install base packages
           install_base
+          update_mirrorlist
           enable_multilib
           enable_sudo_insults
           stylize_pacman
