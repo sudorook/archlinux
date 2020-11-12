@@ -70,7 +70,8 @@ function main {
           # Install base packages
           install_base
           update_mirrorlist
-          enable_multilib
+          install_firmware
+          # enable_multilib
           enable_sudo_insults
           stylize_pacman
           disable_beep
