@@ -12,6 +12,7 @@ flatpak
 flatpak-builder
 flawfinder
 gcc
+gcc-fortran
 gdb
 glpk
 gnuplot
