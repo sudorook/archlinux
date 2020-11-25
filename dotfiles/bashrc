@@ -65,6 +65,7 @@ alias superupgrade="sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'"
 alias megapurge="sudo sh -c 'yes | pacman -Scc' && sudo journalctl --vacuum-time=1day && sudo pacdiff && sudo sh -c 'yes | pacman -Rs $(pacman -Qdtq | tr '\n' ' ')'"
 
 # list directory contents
+alias ls='ls --color=auto'
 alias sl='ls'
 alias lsa='ls -lah'
 alias l='ls -lah'
