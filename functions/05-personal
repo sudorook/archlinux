@@ -271,7 +271,7 @@ function enable_autologin {
   if pacman -Qi gdm > /dev/null 2>&1; then
     show_info "Log in as ${USER} via GDM."
     ! [ -f ${gdmconf} ] && sudo touch ${gdmconf} || true
-    if ! test "$(grep ^AutomaticLogin="${USER}" ${gdmconf})"; then
+    if ! test "$(grep ^AutomaticLogin=${USER} ${gdmconf})"; then
       ! [ $(grep '^\[daemon\]' "${gdmconf}") ] && \
         sudo sh -c 'echo "[daemon]" >> /etc/gdm/custom.conf' || true
       sudo sed -i "/^\[daemon\]$/a AutomaticLogin=${USER}" ${gdmconf}
