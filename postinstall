@@ -78,7 +78,7 @@ function main {
 
           # Install miscellaneous extras
           install_zsh
-          install_linux_hardened && kernel=linux-hardened
+          # install_linux_hardened && kernel=linux-hardened
           # install_linux_lts
           # install_linux_zen
           set_default_kernel
