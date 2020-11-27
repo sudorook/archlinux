@@ -6,12 +6,14 @@ dosfstools
 encfs
 ethtool
 gnupg
+gptfdisk
 mtools
 net-tools
 nmap
 ntfs-3g
 p7zip
 parallel
+parted
 pigz
 pixz
 pv
