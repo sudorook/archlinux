@@ -1,6 +1,8 @@
 arch-install-scripts
 git
+gptfdisk
 iwd
 pacman
 pacman-mirrorlist
+parted
 wget
