@@ -2,6 +2,11 @@
 
 dir="$(dirname "$0")"
 
+VG=vg
+LV=lvm
+export VG
+export LV
+
 function is_size_nonzero {
   if [[ "${1}" != "0" ]] && \
      [[ "${1}" != "0G" ]] && \
@@ -206,28 +211,28 @@ function format_partitions {
       else
         cryptsetup luksFormat "${CRYPT_PARTITION}"
       fi
-      cryptsetup luksOpen "${CRYPT_PARTITION}" lvm
+      cryptsetup luksOpen "${CRYPT_PARTITION}" ${LV}
 
-      pvcreate /dev/mapper/lvm
-      vgcreate vg /dev/mapper/lvm
+      pvcreate /dev/mapper/${LV}
+      vgcreate ${VG} /dev/mapper/${LV}
       if is_size_nonzero "${PARTITIONS["swap"]}"; then
-        lvcreate -L "${PARTITIONS["swap"]}" vg -n swap
-        SWAP_PARTITION=/dev/mapper/vg-swap
+        lvcreate -L "${PARTITIONS["swap"]}" ${VG} -n swap
+        SWAP_PARTITION=/dev/mapper/${VG}-swap
       fi
       if is_size_nonzero "${PARTITIONS["root"]}"; then
         if [[ "${PARTITIONS["root"]}" = "fill" ]]; then
-          lvcreate -l +100%FREE vg -n root
-          ROOT_PARTITION=/dev/mapper/vg-root
+          lvcreate -l +100%FREE ${VG} -n root
+          ROOT_PARTITION=/dev/mapper/${VG}-root
         else
-          lvcreate -L "${PARTITIONS["root"]}" vg -n root
-          ROOT_PARTITION=/dev/mapper/vg-root
+          lvcreate -L "${PARTITIONS["root"]}" ${VG} -n root
+          ROOT_PARTITION=/dev/mapper/${VG}-root
           if is_size_nonzero "${PARTITIONS["home"]}"; then
             if [[ "${PARTITIONS["home"]}" = "fill" ]]; then
-              lvcreate -l +100%FREE vg -n home
-              HOME_PARTITION=/dev/mapper/vg-home
+              lvcreate -l +100%FREE ${VG} -n home
+              HOME_PARTITION=/dev/mapper/${VG}-home
             else
-              lvcreate -L "${PARTITIONS["home"]}" vg -n home
-              HOME_PARTITION=/dev/mapper/vg-home
+              lvcreate -L "${PARTITIONS["home"]}" ${VG} -n home
+              HOME_PARTITION=/dev/mapper/${VG}-home
             fi
           fi
         fi
@@ -235,25 +240,25 @@ function format_partitions {
       ;;
     "LVM")
       pvcreate "${ROOT_PARTITION}"
-      vgcreate vg "${ROOT_PARTITION}"
+      vgcreate ${VG} "${ROOT_PARTITION}"
       if is_size_nonzero "${PARTITIONS["swap"]}"; then
-        lvcreate -L "${PARTITIONS["swap"]}" vg -n swap
-        SWAP_PARTITION=/dev/mapper/vg-swap
+        lvcreate -L "${PARTITIONS["swap"]}" ${VG} -n swap
+        SWAP_PARTITION=/dev/mapper/${VG}-swap
       fi
       if is_size_nonzero "${PARTITIONS["root"]}"; then
         if [[ "${PARTITIONS["root"]}" = "fill" ]]; then
-          lvcreate -l +100%FREE vg -n root
-          ROOT_PARTITION=/dev/mapper/vg-root
+          lvcreate -l +100%FREE ${VG} -n root
+          ROOT_PARTITION=/dev/mapper/${VG}-root
         else
-          lvcreate -L "${PARTITIONS["root"]}" vg -n root
-          ROOT_PARTITION=/dev/mapper/vg-root
+          lvcreate -L "${PARTITIONS["root"]}" ${VG} -n root
+          ROOT_PARTITION=/dev/mapper/${VG}-root
           if is_size_nonzero "${PARTITIONS["home"]}"; then
             if [[ "${PARTITIONS["home"]}" = "fill" ]]; then
-              lvcreate -l +100%FREE vg -n home
-              HOME_PARTITION=/dev/mapper/vg-home
+              lvcreate -l +100%FREE ${VG} -n home
+              HOME_PARTITION=/dev/mapper/${VG}-home
             else
-              lvcreate -L "${PARTITIONS["home"]}" vg -n home
-              HOME_PARTITION=/dev/mapper/vg-home
+              lvcreate -L "${PARTITIONS["home"]}" ${VG} -n home
+              HOME_PARTITION=/dev/mapper/${VG}-home
             fi
           fi
         fi
@@ -436,18 +441,18 @@ function install_gummiboot {
     crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
     if [ -n "${crypto_uuid}" ]; then
-      cmdline="rd.luks.name=${crypto_uuid}=lvm rd.luks.options=discard"
-      if [ -e /dev/mapper/vg-root ]; then
-        cmdline="${cmdline} root=/dev/mapper/vg-root"
+      cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
+      if [ -e /dev/mapper/${VG}-root ]; then
+        cmdline="${cmdline} root=/dev/mapper/${VG}-root"
       fi
-      if [ -e /dev/mapper/vg-home ]; then
-        cmdline="${cmdline} home=/dev/mapper/vg-home"
+      if [ -e /dev/mapper/${VG}-home ]; then
+        cmdline="${cmdline} home=/dev/mapper/${VG}-home"
       fi
-      if [ -e /dev/mapper/vg-swap ]; then
-        cmdline="${cmdline} resume=/dev/mapper/vg-swap"
+      if [ -e /dev/mapper/${VG}-swap ]; then
+        cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
       fi
     elif [ -n "${root_uuid}" ]; then
-      cmdline="root=${root_uuid}=lvm"
+      cmdline="root=/dev/mapper/${VG}-root"
     else
       echo "ERROR: Missing root ${root_uuid}."
       exit 3
@@ -493,23 +498,22 @@ function install_grub {
   crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
   if [ -n "${crypto_uuid}" ]; then
-    cmdline="rd.luks.name=${crypto_uuid}=lvm rd.luks.options=discard"
-    if [ -e /dev/mapper/vg-root ]; then
-      cmdline="${cmdline} root=/dev/mapper/vg-root"
+    cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
+    if [ -e /dev/mapper/${VG}-root ]; then
+      cmdline="${cmdline} root=/dev/mapper/${VG}-root"
     fi
-    if [ -e /dev/mapper/vg-home ]; then
-      cmdline="${cmdline} home=/dev/mapper/vg-home"
+    if [ -e /dev/mapper/${VG}-home ]; then
+      cmdline="${cmdline} home=/dev/mapper/${VG}-home"
     fi
-    if [ -e /dev/mapper/vg-swap ]; then
-      cmdline="${cmdline} resume=/dev/mapper/vg-swap"
+    if [ -e /dev/mapper/${VG}-swap ]; then
+      cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
     fi
   elif [ -n "${root_uuid}" ]; then
-    cmdline="root=UUID=${root_uuid}"
+    cmdline="root=/dev/mapper/${VG}-root"
   else
     echo "ERROR: Missing root ${root_uuid}."
     exit 3
   fi
-  cmdline="${cmdline} quiet splash"
 
   sed -i "s|^GRUB_CMDLINE_LINUX=[\"\"]*|GRUB_CMDLINE_LINUX=\"${cmdline}\"|g" /etc/default/grub
   sed -i "s/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/g" /etc/default/grub
