@@ -460,7 +460,7 @@ function install_gummiboot {
     
     vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
 
-    bootctl esp-path=/efi install
+    bootctl --esp-path=/efi install
     cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
     {
       echo "default	linux.conf";
