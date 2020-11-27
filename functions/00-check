@@ -105,7 +105,7 @@ function check_aur_installed {
 }
 
 function install_post_dependencies {
-  show_header "Checking post-install dependencies."
+  show_header "Checking post-installation dependencies."
   for package in $(cat ${deps}); do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
