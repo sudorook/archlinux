@@ -665,7 +665,7 @@ function 05-personal {
            "Select desktop theme" "Set dark GTK" "Import Cinnamon dconf" \
            "Import GNOME dconf" "Import application dconf" \
            "Import GNOME terminal profiles" "Enable autologin" \
-           "Invert brightness (i915)" "Enable Intel IOMMU" \
+           "Invert brightness (i915)" "Enable IOMMU (i915)" \
            "Disable PulseAudio suspend" "Disable 802.11n" "Add scripts" \
            "Select default kernel")
   select option in "${options[@]}"; do
@@ -686,6 +686,7 @@ function 05-personal {
         import_terminal_dconf
         enable_autologin
         invert_brightness
+        enable_intel_iommu
         disable_pulseaudio_suspend
         disable_11n
         install_scripts
@@ -732,7 +733,7 @@ function 05-personal {
         invert_brightness
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
-      "Enable Intel IOMMU")
+      "Enable IOMMU (i915)")
         enable_intel_iommu
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
