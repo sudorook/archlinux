@@ -433,6 +433,8 @@ export -f install_ucode
 
 function install_gummiboot {
   if command -v bootctl >/dev/null 2>&1; then
+    pacman -S --noconfirm efibootmgr
+
     local root_uuid
     local crypto_uuid
     local cmdline
