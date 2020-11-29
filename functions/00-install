@@ -552,7 +552,7 @@ function make_luks_key {
   mkinitcpio -P
   chmod -R 700 /boot
 
-  if command -v grub-mkconfig >/dev/null 2>&1; then
+  if [ -f /etc/default/grub ]; then
     echo "Updating GRUB configuration..."
     old_cmdline=$(sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p" /etc/default/grub)
     if [ -n "${old_cmdline}" ]; then
