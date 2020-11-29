@@ -83,12 +83,24 @@ function main {
     cp -f \
       "${dir}/hooks/999-add-linux.hook" \
       "${dir}/hooks/999-remove-linux.hook" \
-      "${dir}/hooks/999-update-amd-ucode.hook" \
-      "${dir}/hooks/999-update-intel-ucode.hook" \
-      "${dir}/hooks/999-remove-amd-ucode.hook" \
-      "${dir}/hooks/999-remove-intel-ucode.hook" \
+      "${dir}/hooks/999-update-linux.hook" \
       "${dir}/hooks/999-update-systemd-boot.hook" \
       /mnt/etc/pacman.d/hooks/
+    local vendor
+    vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
+    if [[ "${vendor}" =~ "AMD" ]]; then
+      cp -f \
+        "${dir}/hooks/999-add-amd-ucode.hook" \
+        "${dir}/hooks/999-update-amd-ucode.hook" \
+        "${dir}/hooks/999-remove-amd-ucode.hook" \
+        /mnt/etc/pacman.d/hooks/
+    elif [[ "${vendor}" =~ "Intel" ]]; then
+      cp -f \
+        "${dir}/hooks/999-add-intel-ucode.hook" \
+        "${dir}/hooks/999-update-intel-ucode.hook" \
+        "${dir}/hooks/999-remove-intel-ucode.hook" \
+        /mnt/etc/pacman.d/hooks/
+    fi
     cp -f "${dir}/utils/sdboot-mkconfig" /mnt/usr/local/sbin/
     chmod +x /mnt/usr/local/sbin/sdboot-mkconfig
 
