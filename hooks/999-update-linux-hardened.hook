@@ -1,0 +1,9 @@
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = linux-hardened
+
+[Action]
+Description = Updating Linux Hardened on EFI system path
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux-hardened /boot/initramfs-linux-hardened-fallback.img /boot/initramfs-linux-hardened.img -t /efi'

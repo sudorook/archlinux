@@ -1,0 +1,9 @@
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = linux-zen
+
+[Action]
+Description = Updating Linux Zen on EFI system path
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux-zen /boot/initramfs-linux-zen-fallback.img /boot/initramfs-linux-zen.img -t /efi'

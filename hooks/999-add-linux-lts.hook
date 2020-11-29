@@ -1,10 +1,9 @@
 [Trigger]
 Type = Package
-Operation = Upgrade
 Operation = Install
 Target = linux-lts
 
 [Action]
-Description = Copying Linux LTS to EFI system path
+Description = Installing Linux LTS to EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux-lts /boot/initramfs-linux-lts-fallback.img /boot/initramfs-linux-lts.img -t /efi'
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux-lts /boot/initramfs-linux-lts-fallback.img /boot/initramfs-linux-lts.img -t /efi && [ -f /usr/local/sbin/sdboot-mkconfig ] && /usr/local/sbin/sdboot-mkconfig linux-lts'
