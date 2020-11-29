@@ -86,6 +86,8 @@ function main {
       hooks/100-intel-ucode.hook \
       hooks/100-systemd-boot.hook \
       /mnt/etc/pacman.d/hooks/
+    cp -f utils/sdboot-mkconfig /mnt/usr/local/sbin/
+    chmod +x /mnt/usr/local/sbin/sdboot-mkconfig
 
     DEVICE="${DEVICE}" arch-chroot /mnt /bin/bash -c "install_gummiboot"
   elif [[ "${BOOTMODE}" = "EFISTUB" ]]; then
