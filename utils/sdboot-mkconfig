@@ -5,20 +5,19 @@ if ! [ "$#" -eq 1 ]; then
   exit 2
 fi
 
-if ! [[ "${1}" =~ ^linux ]]; then
-  if ! [[ "${1}" = all ]]; then
-    exit 3
-  fi
-fi
-
 function get_cmdline {
   local default
   local cmdline
-  if [ -f "${EFIDIR}/loader/loader.conf" ]; then
-    default=$(sed -n "s/^default\s\+\(.*\)/\1/p" "${EFIDIR}/loader/loader.conf")
-    if [ -f "${EFIDIR}/loader/entries/${default}" ]; then
-      cmdline=$(sed -n "s/^options\s\+\(.*\)/\1/p" "${EFIDIR}/loader/entries/${default}")
+  if [ "$#" -eq 0 ] || [[ "${1}" = "default" ]]; then
+    if [ -f "${EFIDIR}/loader/loader.conf" ]; then
+      default=$(sed -n "s/^default\s\+\(.*\)/\1/p" "${EFIDIR}/loader/loader.conf")
     fi
+  elif [ "$#" -eq 1 ]; then
+    default=$(basename "${1}")
+  fi
+
+  if [ -f "${EFIDIR}/loader/entries/${default}" ]; then
+    cmdline=$(sed -n "s/^options\s\+\(.*\)/\1/p" "${EFIDIR}/loader/entries/${default}")
   fi
   echo "${cmdline}"
 }
@@ -51,45 +50,111 @@ options	${CMDLINE}
 EOF
 }
 
-function add_ucode {
+function print_entries {
+  local outfile
+  outfile="${KERNEL}.conf"
+  fallback="${KERNEL}-fallback.conf"
+
+  cat << EOF
+title	Arch Linux, ${KERNEL}
+linux	/vmlinuz-${KERNEL}
+initrd	/initramfs-${KERNEL}.img
+options	${CMDLINE}
+EOF
+
+  cat << EOF
+title	Arch Linux, ${KERNEL} (fallback)
+linux	/vmlinuz-${KERNEL}
+initrd	/initramfs-${KERNEL}-fallback.img
+options	${CMDLINE}
+EOF
+}
+
+function update_ucode {
   vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
   if [[ "$vendor" =~ "AMD" ]]; then
     if [ -f "${EFIDIR}/amd-ucode.img" ]; then
-      sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
-        "${EFIDIR}/loader/entries/${KERNEL}.conf"
-      sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
+      if ! grep "^initrd\s\+\/amd-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}.conf" >/dev/null 2>&1; then
+        sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
+          "${EFIDIR}/loader/entries/${KERNEL}.conf"
+      fi
+      if ! grep "^initrd\s\+\/amd-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf" >/dev/null 2>&1; then
+        sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
+          "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
+      fi
+    else
+      sed -i "/^initrd\s\+\/amd-ucode.img/d" \
+        "${EFIDIR}/loader/entries/${KERNEL}.conf" \
         "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
     fi
   elif [[ "$vendor" =~ "Intel" ]]; then
     if [ -f "${EFIDIR}/intel-ucode.img" ]; then
-      sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
-        "${EFIDIR}/loader/entries/${KERNEL}.conf"
-      sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
+      if ! grep "^initrd\s\+\/intel-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}.conf" >/dev/null 2>&1; then
+        sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
+          "${EFIDIR}/loader/entries/${KERNEL}.conf"
+      fi
+      if ! grep "^initrd\s\+\/intel-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf" >/dev/null 2>&1; then
+        sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
+          "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
+      fi
+    else
+      sed -i "/^initrd\s\+\/intel-ucode.img/d" \
+        "${EFIDIR}/loader/entries/${KERNEL}.conf" \
         "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
     fi
   fi
 }
 
-function remove_ucode {
-  sed -i "/^initrd\s\+\/\(amd\|intel\)-ucode.img/d" \
-    "${EFIDIR}/loader/entries/${KERNEL}.conf" \
-    "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
-}
-
-KERNEL="${1}"
+MODE="${1}"
 EFIDIR="$(bootctl -p)"
-CMDLINE="$(get_cmdline)"
 
-if [[ "${KERNEL}" = all ]]; then
-  for vmlinuz in /boot/vmlinuz-*; do
-    tmp="$(basename "${vmlinuz}")"
-    KERNEL="${tmp/vmlinuz-/}"
-    copy_images
-    make_entries
-    add_ucode
-  done
-else
-  copy_images
-  make_entries
-  add_ucode
-fi
+case "${MODE}" in
+  all|init)
+    CMDLINE="$(get_cmdline)"
+    for vmlinuz in /boot/vmlinuz-*; do
+      tmp="$(basename "${vmlinuz}")"
+      KERNEL="${tmp/vmlinuz-/}"
+      copy_images
+      make_entries
+      update_ucode
+    done
+    ;;
+  update)
+    for entry in ${EFIDIR}/loader/entries/*.conf; do
+      if ! [[ "${entry}" =~ fallback ]]; then
+        tmp="$(basename "${entry}")"
+        CMDLINE="$(get_cmdline "${entry}")"
+        get_cmdline "${entry}"
+        KERNEL="${tmp/\.conf/}"
+        # print_entries
+        make_entries
+        update_ucode
+      fi
+    done
+    ;;
+  ucode)
+    for entry in ${EFIDIR}/loader/entries/*.conf; do
+      if ! [[ "${entry}" =~ fallback ]]; then
+        tmp="$(basename "${entry}")"
+        KERNEL="${tmp/\.conf/}"
+        update_ucode
+      fi
+    done
+    ;;
+  *)
+    if [[ "${1}" =~ ^linux ]]; then
+      KERNEL="${1}"
+      CMDLINE="$(get_cmdline)"
+      # print_entries
+      copy_images
+      make_entries
+      update_ucode
+    else
+      exit 3
+    fi
+    ;;
+esac
