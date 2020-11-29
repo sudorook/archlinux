@@ -1,0 +1,9 @@
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = linux-hardened
+
+[Action]
+Description = Copying Linux to EFI directory
+When = PostTransaction
+Exec = /usr/bin/cp -a /boot/vmlinux-linux-hardened /boot/initramfs-hardened-fallback.img /boot/initramfs-hardened.img -t /efi

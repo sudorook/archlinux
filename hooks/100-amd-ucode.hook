@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = amd-ucode
+
+[Action]
+Description = Copying AMD microcode updates to EFI directory
+When = PostTransaction
+Exec = /usr/bin/cp -a /boot/amd-ucode.img /efi

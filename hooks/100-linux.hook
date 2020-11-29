@@ -1,0 +1,9 @@
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = linux
+
+[Action]
+Description = Copying Linux to EFI directory
+When = PostTransaction
+Exec = /usr/bin/cp -a /boot/vmlinux-linux /boot/initramfs-fallback.img /boot/initramfs.img -t /efi
