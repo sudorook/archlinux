@@ -79,6 +79,14 @@ function main {
       CRYPT_PARTITION="${CRYPT_PARTITION}" arch-chroot /mnt /bin/bash -c "make_luks_key"
     fi
   elif [[ "${BOOTMODE}" = "systemd-boot" ]]; then
+    mkdir -p /mnt/etc/pacman.d/hooks/
+    cp -f \
+      hooks/100-linux.hook \
+      hooks/100-amd-ucode.hook \
+      hooks/100-intel-ucode.hook \
+      hooks/100-systemd-boot.hook \
+      /mnt/etc/pacman.d/hooks/
+
     DEVICE="${DEVICE}" arch-chroot /mnt /bin/bash -c "install_gummiboot"
   elif [[ "${BOOTMODE}" = "EFISTUB" ]]; then
     show_warning "Not supported yet..."
