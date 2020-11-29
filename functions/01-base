@@ -66,8 +66,10 @@ function install_firmware {
     # Copy pacman hooks for microcode updates.
     mkdir -p /etc/pacman.d/hooks/
     cp -af \
-      "${dir}/hooks/100-amd-ucode.hook" \
-      "${dir}/hooks/100-intel-ucode.hook" \
+      "${dir}/hooks/999-update-amd-ucode.hook" \
+      "${dir}/hooks/999-remove-amd-ucode.hook" \
+      "${dir}/hooks/999-update-intel-ucode.hook" \
+      "${dir}/hooks/999-remove-intel-ucode.hook" \
       /etc/pacman.d/hooks/
 
     local vendor
