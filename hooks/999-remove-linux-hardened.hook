@@ -1,0 +1,9 @@
+[Trigger]
+Type = Package
+Operation = Remove
+Target = linux-hardened
+
+[Action]
+Description = Removing Linux Hardened from EFI system path
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/rm -f /efi/initramfs-linux-hardened-fallback.img /efi/initramfs-linux-hardened.img /efi/vmlinuz-linux-hardened /efi/loader/entries/linux-hardened.conf /efi/loader/entries/linux-hardened-fallback.conf'

@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = amd-ucode
+
+[Action]
+Description = Copying AMD microcode to EFI system path
+When = PostTransaction
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/amd-ucode.img /efi'

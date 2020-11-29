@@ -1,9 +1,0 @@
-[Trigger]
-Type = Package
-Operation = Upgrade
-Target = intel-ucode
-
-[Action]
-Description = Copying Intel microcode updates to EFI directory
-When = PostTransaction
-Exec = /usr/bin/cp -a /boot/intel-ucode.img /efi
