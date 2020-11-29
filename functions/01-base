@@ -55,7 +55,7 @@ function install_firmware {
   check_fail
 
   # If booting with GRUB.
-  if command -v grub-mkconfig >/dev/null; then
+  if command -v grub-mkconfig >/dev/null 2>&1; then
     show_info "Rebuilding grub.cfg to use microcode updates."
     sudo grub-mkconfig -o ${grubcfg}
   fi
