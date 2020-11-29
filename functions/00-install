@@ -478,11 +478,13 @@ function install_gummiboot {
       echo "options	${cmdline}";
     }> /efi/loader/entries/linux.conf
 
-    if [[ "$vendor" =~ "AMD" ]]; then
-      sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
+    if [[ "$vendor" =~ "AMD" ]] && [ -f /boot/amd-ucode.img ]; then
+      cp -af /boot/amd-ucode.img /efi
+      sed -i "/^linux\s+\/vmlinuz/a initrd	\/amd-ucode.img" \
         /efi/loader/entries/linux.conf
-    elif [[ "$vendor" =~ "Intel" ]]; then
-      sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
+    elif [[ "$vendor" =~ "Intel" ]] && [ -f /boot/intel-ucode.img ]; then
+      cp -af /boot/intel-ucode.img /efi
+      sed -i "/^linux\s+\/vmlinuz/a initrd	\/intel-ucode.img" \
         /efi/loader/entries/linux.conf
     fi
   fi
