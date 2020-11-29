@@ -1,0 +1,90 @@
+#!/bin/bash
+set -eu
+
+if ! [ "$#" -eq 1 ]; then
+  exit 2
+fi
+
+if ! [[ "${1}" =~ ^linux ]]; then
+  if ! [[ "${1}" = all ]]; then
+    exit 3
+  fi
+fi
+
+function get_cmdline {
+  local default
+  local cmdline
+  if [ -f "${EFIDIR}/loader/loader.conf" ]; then
+    default=$(sed -n "s/^default\s\+\(.*\)/\1/p" "${EFIDIR}/loader/loader.conf")
+    if [ -f "${EFIDIR}/loader/entries/${default}" ]; then
+      cmdline=$(sed -n "s/^options\s\+\(.*\)/\1/p" "${EFIDIR}/loader/entries/${default}")
+    fi
+  fi
+  echo "${cmdline}"
+}
+
+function copy_images {
+  cp -af \
+    "/boot/vmlinuz-${KERNEL}" \
+    "/boot/initramfs-${KERNEL}.img" \
+    "/boot/initramfs-${KERNEL}-fallback.img" \
+    "${EFIDIR}"
+}
+
+function make_entries {
+  local outfile
+  outfile="${KERNEL}.conf"
+  fallback="${KERNEL}-fallback.conf"
+
+  cat > "${EFIDIR}/loader/entries/${outfile}" << EOF
+title	Arch Linux, ${KERNEL}
+linux	/vmlinuz-${KERNEL}
+initrd	/initramfs-${KERNEL}.img
+options	${CMDLINE}
+EOF
+
+  cat > "${EFIDIR}/loader/entries/${fallback}" << EOF
+title	Arch Linux, ${KERNEL} (fallback)
+linux	/vmlinuz-${KERNEL}
+initrd	/initramfs-${KERNEL}-fallback.img
+options	${CMDLINE}
+EOF
+}
+
+function add_ucode {
+  vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
+  if [[ "$vendor" =~ "AMD" ]]; then
+    if [ -f "${EFIDIR}/amd-ucode.img" ]; then
+      sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}.conf"
+      sed -i "/^linux	\/vmlinuz/a initrd	\/amd-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
+    fi
+  elif [[ "$vendor" =~ "Intel" ]]; then
+    if [ -f "${EFIDIR}/intel-ucode.img" ]; then
+      sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}.conf"
+      sed -i "/^linux	\/vmlinuz/a initrd	\/intel-ucode.img" \
+        "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
+    fi
+  fi
+}
+
+
+KERNEL="${1}"
+EFIDIR="$(bootctl -p)"
+CMDLINE="$(get_cmdline)"
+
+if [[ "${KERNEL}" = all ]]; then
+  for vmlinuz in /boot/vmlinuz-*; do
+    tmp="$(basename "${vmlinuz}")"
+    KERNEL="${tmp/vmlinuz-/}"
+    copy_images
+    make_entries
+    add_ucode
+  done
+else
+  copy_images
+  make_entries
+  add_ucode
+fi
