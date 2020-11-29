@@ -418,10 +418,23 @@ function install_scripts {
 
 grubdefault="/etc/default/grub"
 grubcfg="/boot/grub/grub.cfg"
+mksdbootcfg="${dir}/utils/sdboot-mkconfig"
 function set_default_kernel {
   show_info "Setting default boot kernel to ${kernel}."
-  sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${kernel}'/g" ${grubdefault}
-  sudo grub-mkconfig -o ${grubcfg}
+
+  if [ -f "${grubdefault}" ]; then
+    sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${kernel}'/g" ${grubdefault}
+    sudo grub-mkconfig -o ${grubcfg}
+  fi
+
+  if [[ "$(bootctl is-installed)" = yes ]]; then
+    local sdbootcfg
+    sdbootcfg="$(bootctl -p)/loader/loader.conf"
+    if ! [ -f "$(bootctl -p)/loader/entries/${kernel}.conf" ]; then
+      sudo "${mksdbootcfg}" "${kernel}"
+    fi
+    sudo sed -i "s/^default\(\s\+\)\(.*\)/default\1${kernel}.conf/g" "${sdbootcfg}"
+  fi
 }
 
 function select_desktop_theme {
