@@ -78,14 +78,14 @@ function install_firmware {
     efidir="$(bootctl -p)"
     if [[ "${vendor}" =~ "AMD" ]]; then
       cp -af /boot/amd-ucode.img "${efidir}"
-      for conf in ${efidir}/loader/entries/*.conf; do
+      for conf in "${efidir}"/loader/entries/*.conf; do
         if ! grep "^initrd\s\+/amd-ucode.img" "${conf}" >/dev/null 2>&1; then
           sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
         fi
       done
     elif [[ "${vendor}" =~ "Intel" ]]; then
       cp -af /boot/intel-ucode.img "${efidir}"
-      for conf in ${efidir}/loader/entries/*.conf; do
+      for conf in "${efidir}"/loader/entries/*.conf; do
         if ! grep "^initrd\s\+/intel-ucode.img" "${conf}" >/dev/null 2>&1; then
           sed -i "/^initrd\s\+\/initramfs/i initrd	\/intel-ucode.img" "${conf}"
         fi
