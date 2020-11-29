@@ -124,7 +124,7 @@ case "${MODE}" in
     done
     ;;
   update)
-    for entry in ${EFIDIR}/loader/entries/*.conf; do
+    for entry in "${EFIDIR}"/loader/entries/*.conf; do
       if ! [[ "${entry}" =~ fallback ]]; then
         tmp="$(basename "${entry}")"
         CMDLINE="$(get_cmdline "${entry}")"
@@ -137,7 +137,7 @@ case "${MODE}" in
     done
     ;;
   ucode)
-    for entry in ${EFIDIR}/loader/entries/*.conf; do
+    for entry in "${EFIDIR}"/loader/entries/*.conf; do
       if ! [[ "${entry}" =~ fallback ]]; then
         tmp="$(basename "${entry}")"
         KERNEL="${tmp/\.conf/}"
