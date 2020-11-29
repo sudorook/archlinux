@@ -35,19 +35,23 @@ function make_entries {
   outfile="${KERNEL}.conf"
   fallback="${KERNEL}-fallback.conf"
 
-  cat > "${EFIDIR}/loader/entries/${outfile}" << EOF
+  if [ -f "${EFIDIR}/initramfs-${KERNEL}.img" ]; then
+    cat > "${EFIDIR}/loader/entries/${outfile}" << EOF
 title	Arch Linux, ${KERNEL}
 linux	/vmlinuz-${KERNEL}
 initrd	/initramfs-${KERNEL}.img
 options	${CMDLINE}
 EOF
+  fi
 
-  cat > "${EFIDIR}/loader/entries/${fallback}" << EOF
+  if [ -f "${EFIDIR}/initramfs-${KERNEL}-fallback.img" ]; then
+    cat > "${EFIDIR}/loader/entries/${fallback}" << EOF
 title	Arch Linux, ${KERNEL} (fallback)
 linux	/vmlinuz-${KERNEL}
 initrd	/initramfs-${KERNEL}-fallback.img
 options	${CMDLINE}
 EOF
+  fi
 }
 
 function print_entries {
