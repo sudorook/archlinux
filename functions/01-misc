@@ -2,6 +2,8 @@
 
 dir="$(dirname "$0")"
 
+mksdbootconf="${dir}/utils/sdboot-mkconfig"
+
 zsh="${dir}/packages/zsh.list"
 zshrc="${dir}/dotfiles/zshrc"
 zshdir="${HOME}/.zsh"
@@ -38,6 +40,10 @@ function install_linux_hardened {
     show_info "Regenerating grub.cfg"
     sudo grub-mkconfig -o /boot/grub/grub.cfg
   fi
+
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
+    sudo "${mksdbootconf}" linux-hardened
+  fi
 }
 
 lts="${dir}/packages/lts.list"
@@ -51,6 +57,10 @@ function install_linux_lts {
     show_info "Regenerating grub.cfg"
     sudo grub-mkconfig -o /boot/grub/grub.cfg
   fi
+
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
+    sudo "${mksdbootconf}" linux-lts
+  fi
 }
 
 zen="${dir}/packages/zen.list"
@@ -63,6 +73,10 @@ function install_linux_zen {
   if command -v grub-mkconfig >/dev/null 2>&1; then
     show_info "Regenerating grub.cfg"
     sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
+    sudo "${mksdbootconf}" linux-zen
   fi
 }
 
