@@ -70,6 +70,11 @@ function add_ucode {
   fi
 }
 
+function remove_ucode {
+  sed -i "/^initrd\s\+\/\(amd\|intel\)-ucode.img/d" \
+    "${EFIDIR}/loader/entries/${KERNEL}.conf" \
+    "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
+}
 
 KERNEL="${1}"
 EFIDIR="$(bootctl -p)"
