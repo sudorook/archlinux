@@ -317,7 +317,7 @@ function invert_brightness {
       sudo grub-mkconfig -o ${grubcfg}
     fi
   fi
-  if [[ "$(bootctl is-installed)" = yes ]]; then
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
     local cmdline
     for entry in "$(bootctl -p)"/loader/entries/*.conf; do
       cmdline=$(sed -n "s/^options\s\+\(.*\)/\1/p" "${entry}")
@@ -355,7 +355,7 @@ function enable_intel_iommu {
       sudo grub-mkconfig -o ${grubcfg}
     fi
   fi
-  if [[ "$(bootctl is-installed)" = yes ]]; then
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
     local cmdline
     for entry in "$(bootctl -p)"/loader/entries/*.conf; do
       cmdline=$(sed -n "s/^options\s\+\(.*\)/\1/p" "${entry}")
@@ -427,7 +427,7 @@ function set_default_kernel {
     sudo grub-mkconfig -o ${grubcfg}
   fi
 
-  if [[ "$(bootctl is-installed)" = yes ]]; then
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
     local sdbootcfg
     sdbootcfg="$(bootctl -p)/loader/loader.conf"
     if ! [ -f "$(bootctl -p)/loader/entries/${kernel}.conf" ]; then
