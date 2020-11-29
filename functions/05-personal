@@ -684,17 +684,20 @@ function select_icon_theme {
 
 grubcfg="/boot/grub/grub.cfg"
 function select_default_kernel {
-  # Find installed kernels in /boot/grub/grub.cfg and turn into a bash list.
-  kernellist=$(sudo grep "'Arch Linux, with Linux linux[-a-z]*'" ${grubcfg} | \
-               sed -n "s/.*Arch Linux, with Linux \([-a-z]*\).*/\1/p")
-  kernels=()
-  for kernel in ${kernellist[@]}; do
+  kernellist=($(find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
+                xargs -0 -I _ basename _ | \
+                sed -e "s/^vmlinuz-//g"))
+  kernels=("Back")
+  for kernel in "${kernellist[@]}"; do
     kernels+=("${kernel}")
   done
 
   show_question "Select a default kernel:"
   select option in "${kernels[@]}"; do
     case ${option} in
+      Back)
+        break
+        ;;
       linux|linux-lts|linux-zen|linux-hardened)
         kernel=${option}
         set_default_kernel
