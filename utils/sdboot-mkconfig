@@ -19,6 +19,11 @@ function get_cmdline {
   if [ -f "${EFIDIR}/loader/entries/${default}" ]; then
     cmdline=$(sed -n "s/^options\s\+\(.*\)/\1/p" "${EFIDIR}/loader/entries/${default}")
   fi
+
+  if [[ -z "${cmdline}" ]]; then
+    exit 4
+  fi
+
   echo "${cmdline}"
 }
 
