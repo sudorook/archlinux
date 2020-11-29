@@ -552,15 +552,17 @@ function make_luks_key {
   mkinitcpio -P
   chmod -R 700 /boot
 
-  echo "Updating GRUB configuration..."
-  old_cmdline=$(sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p" /etc/default/grub)
-  if [ -n "${old_cmdline}" ]; then
-    new_cmdline="${old_cmdline} rd.luks.key=${crypt_key}"
-  else
-    new_cmdline="rd.luks.key=${crypt_key}"
+  if command -v grub-mkconfig >/dev/null 2>&1; then
+    echo "Updating GRUB configuration..."
+    old_cmdline=$(sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p" /etc/default/grub)
+    if [ -n "${old_cmdline}" ]; then
+      new_cmdline="${old_cmdline} rd.luks.key=${crypt_key}"
+    else
+      new_cmdline="rd.luks.key=${crypt_key}"
+    fi
+    sed -i "s|^GRUB_CMDLINE_LINUX=\"${old_cmdline}\"|GRUB_CMDLINE_LINUX=\"${new_cmdline}\"|g" /etc/default/grub
+    grub-mkconfig -o /boot/grub/grub.cfg
   fi
-  sed -i "s|^GRUB_CMDLINE_LINUX=\"${old_cmdline}\"|GRUB_CMDLINE_LINUX=\"${new_cmdline}\"|g" /etc/default/grub
-  grub-mkconfig -o /boot/grub/grub.cfg
 }
 export -f make_luks_key
 
