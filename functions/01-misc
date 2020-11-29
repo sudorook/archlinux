@@ -34,8 +34,10 @@ function install_linux_hardened {
   check_fail
   show_success "Hardened kernel installed."
 
-  show_info "Regenerating grub.cfg"
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  if command -v grub-mkconfig >/dev/null 2>&1; then
+    show_info "Regenerating grub.cfg"
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
 }
 
 lts="${dir}/packages/lts.list"
@@ -45,8 +47,10 @@ function install_linux_lts {
   check_fail
   show_success "LTS kernel installed."
 
-  show_info "Regenerating grub.cfg"
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  if command -v grub-mkconfig >/dev/null 2>&1; then
+    show_info "Regenerating grub.cfg"
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
 }
 
 zen="${dir}/packages/zen.list"
@@ -56,8 +60,10 @@ function install_linux_zen {
   check_fail
   show_success "Zen kernel installed."
 
-  show_info "Regenerating grub.cfg"
-  sudo grub-mkconfig -o /boot/grub/grub.cfg
+  if command -v grub-mkconfig >/dev/null 2>&1; then
+    show_info "Regenerating grub.cfg"
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
 }
 
 utils="${dir}/packages/utils.list"
