@@ -81,12 +81,12 @@ function main {
   elif [[ "${BOOTMODE}" = "systemd-boot" ]]; then
     mkdir -p /mnt/etc/pacman.d/hooks/
     cp -f \
-      hooks/100-linux.hook \
-      hooks/100-amd-ucode.hook \
-      hooks/100-intel-ucode.hook \
-      hooks/100-systemd-boot.hook \
+      "${dir}/hooks/100-linux.hook" \
+      "${dir}/hooks/100-amd-ucode.hook" \
+      "${dir}/hooks/100-intel-ucode.hook" \
+      "${dir}/hooks/100-systemd-boot.hook" \
       /mnt/etc/pacman.d/hooks/
-    cp -f utils/sdboot-mkconfig /mnt/usr/local/sbin/
+    cp -f "${dir}/utils/sdboot-mkconfig" /mnt/usr/local/sbin/
     chmod +x /mnt/usr/local/sbin/sdboot-mkconfig
 
     DEVICE="${DEVICE}" arch-chroot /mnt /bin/bash -c "install_gummiboot"
