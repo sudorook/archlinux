@@ -38,7 +38,6 @@ function install_apps {
 }
 
 aur="${dir}/packages/aur.list"
-pkgbuilddir=${HOME}/.pkgbuild
 function install_aur {
   show_header "Installing AUR applications."
   check_aur_installed $(cat ${aur})

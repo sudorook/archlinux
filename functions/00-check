@@ -110,7 +110,7 @@ function install_post_dependencies {
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
       sudo pacman -S "${package}"
-      check_fail
+      check_fail $?
       show_success "${package} now installed."
     else
       show_success "${package} is already installed."
@@ -124,7 +124,7 @@ function install_dependencies {
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
       sudo pacman -S "${package}"
-      check_fail
+      check_fail $?
       show_success "${package} now installed."
     else
       show_success "${package} is already installed."

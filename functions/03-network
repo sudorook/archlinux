@@ -65,7 +65,7 @@ function install_tor {
   sudo systemctl start tor
 }
 
-pacmanconf="/etc/pacman.conf"
+# pacmanconf="/etc/pacman.conf"
 function tunnel_pacman_tor {
   show_header "Tunneling pacman through tor."
   # if ! pacman -Qi tor > /dev/null 2>&1; then

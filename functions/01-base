@@ -8,7 +8,7 @@ bashprofile="${dir}/dotfiles/bash_profile"
 pacmanconf="/etc/pacman.conf"
 function install_base {
   show_header "Installing base packages and their config files."
-  check_installed $(cat ${base})
+  check_installed $(cat "${base}")
   check_fail
   show_success "Base packages installed."
 
@@ -40,7 +40,7 @@ function enable_multilib {
 mirrors="${dir}/packages/mirrors.list"
 function update_mirrorlist {
   show_header "Installing packages for configuring Arch mirrorlists."
-  check_installed $(cat ${mirrors})
+  check_installed $(cat "${mirrors}")
   check_fail
   show_success "Mirrorlsit packages installed."
 
@@ -53,7 +53,7 @@ firmware="${dir}/packages/firmware.list"
 grubcfg="/boot/grub/grub.cfg"
 function install_firmware {
   show_header "Installing firmware and microcode."
-  check_installed $(cat ${firmware})
+  check_installed $(cat "${firmware}")
   check_fail
 
   # If booting with GRUB.
@@ -109,9 +109,9 @@ function enable_sudo_insults {
   # Customize sudo to insult incorrect password attempts
   if ! sudo grep "^Defaults\s\+insults" /etc/sudoers >/dev/null 2>&1; then
     show_info "Enabling sudo insults."
-    sudo sh -c 'cat /etc/sudoers | \
-                sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" | \
-                (EDITOR="tee" visudo >/dev/null)'
+    sudo sh -c \
+      'sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" /etc/sudoers | \
+       (EDITOR="tee" visudo >/dev/null)'
   else
     show_info "Insults already enabled, you masochist."
   fi
@@ -164,7 +164,7 @@ function disable_beep {
       echo "gtk-error-bell=0" >> "${gtk2conf}"
     fi
   else
-    mkdir -p "$(dirname ${gtk2conf})"
+    mkdir -p "$(dirname "${gtk2conf}")"
     echo "gtk-error-bell=0" >> "${gtk2conf}"
   fi
   if [ -f "${gtk3conf}" ]; then
@@ -177,7 +177,7 @@ function disable_beep {
       echo "gtk-error-bell=0" >> "${gtk3conf}"
     fi
   else
-    mkdir -p "$(dirname ${gtk3conf})"
+    mkdir -p "$(dirname "${gtk3conf}")"
     echo "[Settings]" > "${gtk3conf}"
     echo "gtk-error-bell=0" >> "${gtk3conf}"
   fi
