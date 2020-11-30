@@ -84,7 +84,6 @@ function main {
           set_default_kernel
           install_utils
           # install_laptop
-          # install_android
 
           # Install a desktop environment
           # install_gnome
@@ -97,6 +96,7 @@ function main {
           # tunnel_pacman_tor
 
           # Install useful packages
+          # install_android
           install_apps
           install_aur
           install_codecs
