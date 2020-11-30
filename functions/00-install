@@ -459,8 +459,7 @@ function install_gummiboot {
       echo "ERROR: Missing root ${root_uuid}."
       exit 3
     fi
-    
-    vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
+    cmdline="${cmdline} rw"
 
     bootctl --esp-path=/efi install
     cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
@@ -478,6 +477,7 @@ function install_gummiboot {
       echo "options	${cmdline}";
     }> /efi/loader/entries/linux.conf
 
+    vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
     if [[ "$vendor" =~ "AMD" ]] && [ -f /boot/amd-ucode.img ]; then
       cp -af /boot/amd-ucode.img /efi
       sed -i "/^linux\s+\/vmlinuz/a initrd	\/amd-ucode.img" \
