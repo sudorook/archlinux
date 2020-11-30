@@ -35,11 +35,11 @@ function install_adapta_gtk {
   show_header "Downloading, building, and installing the Adapta GTK theme."
   autotools_options=""
   if ! pacman -Qi gnome-shell > /dev/null 2>&1; then
-    autotools_options=${autotools_options}"--disable-gnome "
+    autotools_options="${autotools_options} --disable-gnome"
   elif ! pacman -Qi cinnamon > /dev/null 2>&1; then
-    autotools_options=${autotools_options}"--disable-cinnamon "
+    autotools_options="${autotools_options} --disable-cinnamon"
   elif ! pacman -Qi marco > /dev/null 2>&1; then
-    autotools_options=${autotools_options}"--disable-mate "
+    autotools_options="${autotools_options} --disable-mate"
   fi
   rm -rf adapta-gtk-theme
   git clone -b tweak --depth 1 \
@@ -69,9 +69,9 @@ function install_plata_gtk {
   show_header "Downloading, building, and installing the Plata GTK theme."
   autotools_options=""
   if ! pacman -Qi gnome-shell > /dev/null 2>&1; then
-    autotools_options=${autotools_options}"--disable-gnome --disable-mate "
+    autotools_options="${autotools_options} --disable-gnome --disable-mate"
   elif ! pacman -Qi cinnamon > /dev/null 2>&1; then
-    autotools_options=${autotools_options}"--disable-cinnamon --disable-mate "
+    autotools_options="${autotools_options} --disable-cinnamon --disable-mate"
   fi
   rm -rf plata-theme
   git clone -b tweak --depth 1 \
