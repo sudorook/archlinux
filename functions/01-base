@@ -70,11 +70,11 @@ function install_firmware {
     vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
     efidir="$(bootctl -p)"
     if [[ "${vendor}" =~ "AMD" ]]; then
-      cp -af /boot/amd-ucode.img "${efidir}"
+      sudo cp -af /boot/amd-ucode.img "${efidir}"
 
       # Copy pacman hooks for microcode updates.
       mkdir -p /etc/pacman.d/hooks/
-      cp -af \
+      sudo cp -af \
         "${dir}/hooks/999-add-amd-ucode.hook" \
         "${dir}/hooks/999-remove-amd-ucode.hook" \
         "${dir}/hooks/999-update-amd-ucode.hook" \
@@ -82,15 +82,15 @@ function install_firmware {
 
       for conf in "${efidir}"/loader/entries/*.conf; do
         if ! grep "^initrd\s\+/amd-ucode.img" "${conf}" >/dev/null 2>&1; then
-          sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
+          sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
         fi
       done
     elif [[ "${vendor}" =~ "Intel" ]]; then
-      cp -af /boot/intel-ucode.img "${efidir}"
+      sudo cp -af /boot/intel-ucode.img "${efidir}"
 
       # Copy pacman hooks for microcode updates.
       mkdir -p /etc/pacman.d/hooks/
-      cp -af \
+      sudo cp -af \
         "${dir}/hooks/999-add-intel-ucode.hook" \
         "${dir}/hooks/999-remove-intel-ucode.hook" \
         "${dir}/hooks/999-update-intel-ucode.hook" \
@@ -98,7 +98,7 @@ function install_firmware {
 
       for conf in "${efidir}"/loader/entries/*.conf; do
         if ! grep "^initrd\s\+/intel-ucode.img" "${conf}" >/dev/null 2>&1; then
-          sed -i "/^initrd\s\+\/initramfs/i initrd	\/intel-ucode.img" "${conf}"
+          sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/intel-ucode.img" "${conf}"
         fi
       done
     fi
