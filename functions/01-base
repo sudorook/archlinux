@@ -12,9 +12,11 @@ function install_base {
   check_fail
   show_success "Base packages installed."
 
-  show_info "Installing bash_profile."
-  cp -f "${bashprofile}" "${HOME}/.bash_profile"
-  show_success "Installed bash_profile."
+  if ! [ -f "${HOME}/.bash_profile" ]; then
+    show_info "Installing bash_profile."
+    cp -f "${bashprofile}" "${HOME}/.bash_profile"
+    show_success "Installed bash_profile."
+  fi
 
   show_info "Installing bashrc."
   cp -f "${bashrc}" "${HOME}/.bashrc"
