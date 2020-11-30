@@ -483,6 +483,7 @@ function install_gummiboot {
 
     bootctl --esp-path=/efi install
     cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
+    mkdir -p /efi/loader/entries
     {
       echo "default	linux.conf";
       echo "timeout	1";
@@ -497,15 +498,24 @@ function install_gummiboot {
       echo "options	${cmdline}";
     }> /efi/loader/entries/linux.conf
 
+    {
+      echo "title	Arch Linux, linux (fallback)";
+      echo "linux	/vmlinuz-linux";
+      echo "initrd	/initramfs-linux-fallback.img";
+      echo "options	${cmdline}";
+    }> /efi/loader/entries/linux-fallback.conf
+
     vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-    if [[ "$vendor" =~ "AMD" ]] && [ -f /boot/amd-ucode.img ]; then
+    if [[ "$vendor" =~ AMD ]] && [ -f /boot/amd-ucode.img ]; then
       cp -af /boot/amd-ucode.img /efi
       sed -i "/^linux\s+\/vmlinuz/a initrd	\/amd-ucode.img" \
-        /efi/loader/entries/linux.conf
-    elif [[ "$vendor" =~ "Intel" ]] && [ -f /boot/intel-ucode.img ]; then
+        /efi/loader/entries/linux.conf \
+        /efi/loader/entries/linux-fallback.conf
+    elif [[ "$vendor" =~ Intel ]] && [ -f /boot/intel-ucode.img ]; then
       cp -af /boot/intel-ucode.img /efi
       sed -i "/^linux\s+\/vmlinuz/a initrd	\/intel-ucode.img" \
-        /efi/loader/entries/linux.conf
+        /efi/loader/entries/linux.conf \
+        /efi/loader/entries/linux-fallback.conf
     fi
   fi
 }
