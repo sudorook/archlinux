@@ -112,7 +112,7 @@ function ask_partition_sizes {
   if [[ -n "${root}" ]]; then
     PARTITIONS["root"]="${root}"
   fi
-    
+
   if [[ "${PARTITIONS["root"]}" != "fill" ]]; then
     home=$(ask_question "Home (default: fill)")
     if [[ -n "${home}" ]]; then
@@ -146,14 +146,14 @@ function set_partitions {
   sgdisk_opts="${sgdisk_opts} --new=2:0:+512MiB --typecode=2:ef00"
 
   EFI_PARTITION="/dev/${DEVICE}2"
-  
+
   local part_count=3
   if is_size_nonzero "${PARTITIONS["share"]}"; then
     sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:+${PARTITIONS["share"]} --typecode=${part_count}:8300"
     SHARE_PARTITION="/dev/${DEVICE}${part_count}"
     part_count=$(( part_count + 1 ))
   fi
-  
+
   case "${SCHEME}" in
     "LVM on LUKS")
       sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:0 --typecode=${part_count}:8309"
@@ -459,7 +459,7 @@ function install_gummiboot {
     local root_uuid
     local crypto_uuid
     local cmdline
-    
+
     root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
     crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
@@ -518,7 +518,7 @@ function install_grub {
   local root_uuid
   local crypto_uuid
   local cmdline
-  
+
   root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
   crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
