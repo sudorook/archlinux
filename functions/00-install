@@ -522,7 +522,7 @@ function install_gummiboot {
 export -f install_gummiboot
 
 function install_grub {
-  pacman -S --noconfirm grub os-prober
+  pacman -S --noconfirm grub os-prober efibootmgr
 
   local root_uuid
   local crypto_uuid
