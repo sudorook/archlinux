@@ -97,35 +97,214 @@ function ask_bootmode {
   else
     show_info "EFI support not detected. Defaulting to GRUB."
     BOOTMODE="GRUB"
+    result="$(ask_question "Create EFI partition? (y/N)")"
+    if ! [[ "${result}" =~ ^[Yy]$|[Yy][Ee][Ss] ]]; then
+      MAKE_EFI_PARTITION=no
+    fi
   fi
+}
+
+function sanitize_size_input {
+  local value
+  local suffix
+  value="$(echo "${1}" | sed -n 's/^\([0-9\.]\+\)\ *[A-Za-z]*/\1/p')"
+  suffix="$(echo "${1}" | sed -n 's/^[0-9\.]\+\ *\([A-Za-z]\+\)/\1/p')"
+
+  # if using base 10 units
+  if [[ "${1}" = "fill" ]]; then
+    value="${1}"
+
+  elif [[ "${suffix}" =~ ^[Pp]etabyte|^[Pp][Bb]s?$ ]]; then
+    value="$(echo "${value} * 1000^5 / 1024" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Tt]erabyte|^[Tt][Bb]s?$ ]]; then
+    value="$(echo "${value} * 1000^4 / 1024" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Gg]igabyte|^[Gg][Bb]s?$ ]]; then
+    value="$(echo "${value} * 1000^3 / 1024" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Mm]egabyte|^[Mm][Bb]s?$ ]]; then
+    value="$(echo "${value} * 1000^2 / 1024" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Kk]ilobyte|^[Kk][Bb]s?$ ]]; then
+    value="$(echo "${value} * 1000^1 / 1024" | bc -l)"
+    value="${value%.*}k"
+
+  elif [[ "${suffix}" =~ ^[Pp]ebibyte|^[Pp]i[Bb]s?$|^[Pp]$ ]]; then
+    value="$(echo "${value} * 1024^4" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Tt]ebibyte|^[Tt]i[Bb]s?$|^[Tt]$ ]]; then
+    value="$(echo "${value} * 1024^3" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Gg]ibibyte|^[Gg]i[Bb]s?$|^[Gg]$ ]]; then
+    value="$(echo "${value} * 1024^2" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Mm]ebibyte|^[Mm]i[Bb]s?$|^[Mm]$ ]]; then
+    value="$(echo "${value} * 1024^1" | bc -l)"
+    value="${value%.*}k"
+  elif [[ "${suffix}" =~ ^[Ki]ibibyte|^[Kk]i[Bb]s?$|^[Kk]$ ]]; then
+    value="${value}k"
+  else
+    value="${value}${suffix}"
+  fi
+
+  echo "${value}" # output in kibibytes
+}
+
+function subtract {
+  local input1="${1}"
+  local input2="${2}"
+
+  if [[ "${input1}" =~ P$ ]]; then
+    input1=${input1/P/}
+    input1=$(echo "${input1} * 1024^5" | bc -l)
+  elif [[ "${input1}" =~ T$ ]]; then
+    input1=${input1/T/}
+    input1=$(echo "${input1} * 1024^4" | bc -l)
+  elif [[ "${input1}" =~ G$ ]]; then
+    input1=${input1/G/}
+    input1=$(echo "${input1} * 1024^3" | bc -l)
+  elif [[ "${input1}" =~ M$ ]]; then
+    input1=${input1/M/}
+    input1=$(echo "${input1} * 1024^2" | bc -l)
+  elif [[ "${input1}" =~ k$ ]]; then
+    input1=${input1/k/}
+    input1=$(echo "${input1} * 1024" | bc -l)
+  # else
+  #   input1=$(echo "${input1}" | bc -l)
+  fi
+
+  if [[ "${input2}" =~ P$ ]]; then
+    input2=${input2/P/}
+    input2=$(echo "${input2} * 1024^5" | bc -l)
+  elif [[ "${input2}" =~ T$ ]]; then
+    input2=${input2/T/}
+    input2=$(echo "${input2} * 1024^4" | bc -l)
+  elif [[ "${input2}" =~ G$ ]]; then
+    input2=${input2/G/}
+    input2=$(echo "${input2} * 1024^3" | bc -l)
+  elif [[ "${input2}" =~ M$ ]]; then
+    input2=${input2/M/}
+    input2=$(echo "${input2} * 1024^2" | bc -l)
+  elif [[ "${input2}" =~ k$ ]]; then
+    input2=${input2/k/}
+    input2=$(echo "${input2} * 1024" | bc -l)
+  # else
+  #   input2=$(echo "${input2}" | bc -l)
+  fi
+
+  if [ "$(echo "${input1} >= ${input2}" | bc -l)" = 1 ]; then
+    output="$(echo "${input1} - ${input2}" | bc -l)"
+  else
+    echo "ERROR: not enough (remaining) space."
+    exit 3
+  fi
+  echo "${output%.*}"
+}
+
+function get_base2 {
+  local value="${1}"
+  local suffix=""
+  local exp=0
+
+  while [ "$(echo "1024^${exp} > ${value}" | bc)" = 0 ]; do
+    exp=$((exp + 1))
+  done
+  exp=$((exp - 1))
+  value="$(echo "${value} / 1024^${exp}" | bc)"
+
+  case "${exp}" in
+    1) suffix="KiB";;
+    2) suffix="MiB";;
+    3) suffix="GiB";;
+    4) suffix="TiB";;
+    5) suffix="PiB";;
+    6) echo "${exp} --- huh?" && exit 3;;
+  esac
+
+  echo "${value}${suffix}"
+}
+
+function get_base10 {
+  local value="${1}"
+  local suffix=""
+  local exp=0
+  while [ "$(echo "1000^${exp} > ${value}" | bc)" = 0 ]; do
+    exp=$((exp + 1))
+  done
+  exp=$((exp - 1))
+  value="$(echo "${value} / 1000^${exp}" | bc)"
+
+  case "${exp}" in
+    1) suffix="k";;
+    2) suffix="M";;
+    3) suffix="G";;
+    4) suffix="T";;
+    5) suffix="P";;
+    6) echo "${exp} --- huh?" && exit 3;;
+  esac
+
+  echo "${value}${suffix}"
 }
 
 declare -A PARTITIONS
 PARTITIONS=([root]="20G" [swap]="4G" [home]="fill" [share]="0G")
 function ask_partition_sizes {
-  show_header "Set partitiion sizes. (leave blank to use defaults)"
-  swap=$(ask_question "Swap (default: 4G)")
+  local free_size
+  local swap
+  local home
+  local root
+  local share
+
+  free_size="$(lsblk -b -dno SIZE "/dev/${DEVICE}")"
+
+  show_header "Specify partitiion sizes. $(get_base10 "${free_size}") ($(get_base2 "${free_size}")) available:"
+  swap=$(ask_question "Swap (default=4GiB):")
+  swap=$(sanitize_size_input "${swap}")
   if [[ -n "${swap}" ]]; then
     PARTITIONS["swap"]="${swap}"
+    free_size="$(subtract "${free_size}" "${swap}")"
+    show_info "$(get_base10 "${free_size}") ($(get_base2 "${free_size}")) available"
   fi
 
-  root=$(ask_question "Root (default: 20G)")
+  share=$(ask_question "Share (default=0GiB):")
+  share=$(sanitize_size_input "${share}")
+  if [[ -n "${share}" ]]; then
+    PARTITIONS["share"]="${share}"
+    if [[ "${share}" = "fill" ]]; then
+      free_size="0G"
+    else
+      free_size="$(subtract "${free_size}" "${share}")"
+      show_info "$(get_base10 "${free_size}") ($(get_base2 "${free_size}")) available"
+    fi
+  fi
+
+  root=$(ask_question "Root (default=20GiB):")
+  root=$(sanitize_size_input "${root}")
   if [[ -n "${root}" ]]; then
     PARTITIONS["root"]="${root}"
+    if [[ "${root}" = "fill" ]]; then
+      free_size="0G"
+    else
+      free_size="$(subtract "${free_size}" "${root}")"
+      show_info "$(get_base10 "${free_size}") ($(get_base2 "${free_size}")) available"
+    fi
   fi
 
   if [[ "${PARTITIONS["root"]}" != "fill" ]]; then
-    home=$(ask_question "Home (default: fill)")
+    home=$(ask_question "Home (default=fill):")
+    home=$(sanitize_size_input "${home}")
     if [[ -n "${home}" ]]; then
       PARTITIONS["home"]="${home}"
+      if [[ "${home}" = "fill" ]]; then
+        free_size="0G"
+      else
+        free_size="$(subtract "${free_size}" "${home}")"
+        show_info "$(get_base10 "${free_size}") ($(get_base2 "${free_size}")) available"
+      fi
     fi
   else
     PARTITIONS["home"]=0
-  fi
-
-  share=$(ask_question "Share: (default: 0G)")
-  if [[ -n "${share}" ]]; then
-    PARTITIONS["share"]="${share}"
   fi
 }
 
@@ -470,24 +649,28 @@ function install_gummiboot {
     root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
     crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
-    if [ -n "${crypto_uuid}" ]; then
-      cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
-      if [ -e /dev/mapper/${VG}-root ]; then
-        cmdline="${cmdline} root=/dev/mapper/${VG}-root"
+    if [[ "${SCHEME}" =~ LVM ]]; then
+      if [ -n "${crypto_uuid}" ]; then
+        cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
+        if [ -e /dev/mapper/${VG}-root ]; then
+          cmdline="${cmdline} root=/dev/mapper/${VG}-root"
+        fi
+        if [ -e /dev/mapper/${VG}-home ]; then
+          cmdline="${cmdline} home=/dev/mapper/${VG}-home"
+        fi
+        if [ -e /dev/mapper/${VG}-swap ]; then
+          cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
+        fi
+      elif [ -n "${root_uuid}" ]; then
+        cmdline="root=/dev/mapper/${VG}-root"
+      else
+        echo "ERROR: Missing root ${root_uuid}."
+        exit 3
       fi
-      if [ -e /dev/mapper/${VG}-home ]; then
-        cmdline="${cmdline} home=/dev/mapper/${VG}-home"
-      fi
-      if [ -e /dev/mapper/${VG}-swap ]; then
-        cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
-      fi
-    elif [ -n "${root_uuid}" ]; then
-      cmdline="root=/dev/mapper/${VG}-root"
+      cmdline="${cmdline} rw"
     else
-      echo "ERROR: Missing root ${root_uuid}."
-      exit 3
+      cmdline="rw"
     fi
-    cmdline="${cmdline} rw"
 
     bootctl --esp-path=/efi install
     cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
@@ -539,26 +722,31 @@ function install_grub {
   root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
   crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
-  if [ -n "${crypto_uuid}" ]; then
-    cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
-    if [ -e /dev/mapper/${VG}-root ]; then
-      cmdline="${cmdline} root=/dev/mapper/${VG}-root"
+  if [[ "${SCHEME}" =~ LVM ]]; then
+    if [ -n "${crypto_uuid}" ]; then
+      cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
+      if [ -e /dev/mapper/${VG}-root ]; then
+        cmdline="${cmdline} root=/dev/mapper/${VG}-root"
+      fi
+      if [ -e /dev/mapper/${VG}-home ]; then
+        cmdline="${cmdline} home=/dev/mapper/${VG}-home"
+      fi
+      if [ -e /dev/mapper/${VG}-swap ]; then
+        cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
+      fi
+    elif [ -n "${root_uuid}" ]; then
+      cmdline="root=/dev/mapper/${VG}-root"
+    else
+      echo "ERROR: Missing root ${root_uuid}."
+      exit 3
     fi
-    if [ -e /dev/mapper/${VG}-home ]; then
-      cmdline="${cmdline} home=/dev/mapper/${VG}-home"
-    fi
-    if [ -e /dev/mapper/${VG}-swap ]; then
-      cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
-    fi
-  elif [ -n "${root_uuid}" ]; then
-    cmdline="root=/dev/mapper/${VG}-root"
-  else
-    echo "ERROR: Missing root ${root_uuid}."
-    exit 3
+    sed -i "s|^GRUB_CMDLINE_LINUX=[\"\"]*|GRUB_CMDLINE_LINUX=\"${cmdline}\"|g" /etc/default/grub
   fi
 
-  sed -i "s|^GRUB_CMDLINE_LINUX=[\"\"]*|GRUB_CMDLINE_LINUX=\"${cmdline}\"|g" /etc/default/grub
-  sed -i "s/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/g" /etc/default/grub
+  if [ -n "${crypto_uuid}" ]; then
+    sed -i "s/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/g" /etc/default/grub
+  fi
+
   if [ -e /sys/firmware/efi ]; then
     grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
   fi
