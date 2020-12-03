@@ -67,6 +67,7 @@ function ask_partition_scheme {
 }
 
 BOOTMODE=
+MAKE_EFI_PARTITION=yes
 function ask_bootmode {
   show_header "Boot system:"
   if [ -e /sys/firmware/efi ]; then
@@ -135,19 +136,22 @@ HOME_PARTITION=
 SWAP_PARTITION=
 SHARE_PARTITION=
 function set_partitions {
-  show_header "Setting up parititons on ${DEVICE}."
+  show_header "Writing parititons to ${DEVICE}..."
   sgdisk -Z "/dev/${DEVICE}"
-
   partprobe "/dev/${DEVICE}"
 
   local sgdisk_opts
+  local part_count
   sgdisk_opts="--clear"
   sgdisk_opts="${sgdisk_opts} --new=1:0:+1MiB --typecode=1:ef02"
-  sgdisk_opts="${sgdisk_opts} --new=2:0:+512MiB --typecode=2:ef00"
+  part_count=2
 
-  EFI_PARTITION="/dev/${DEVICE}2"
+  if [[ "${MAKE_EFI_PARTITION}" = "yes" ]]; then
+    sgdisk_opts="${sgdisk_opts} --new=2:0:+512MiB --typecode=${part_count}:ef00"
+    EFI_PARTITION="/dev/${DEVICE}${part_count}"
+    part_count=$(( part_count + 1 ))
+  fi
 
-  local part_count=3
   if is_size_nonzero "${PARTITIONS["share"]}"; then
     sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:+${PARTITIONS["share"]} --typecode=${part_count}:8300"
     SHARE_PARTITION="/dev/${DEVICE}${part_count}"
@@ -275,7 +279,9 @@ function format_partitions {
     #   ;;
   esac
 
-  mkfs.vfat -F32 "${EFI_PARTITION}"
+  if [ -b "${EFI_PARTITION}" ]; then
+    mkfs.vfat -F32 "${EFI_PARTITION}"
+  fi
   if [ -e "${SWAP_PARTITION}" ]; then
     mkswap -L swap "${SWAP_PARTITION}"
     swapon "${SWAP_PARTITION}"
@@ -290,8 +296,10 @@ function format_partitions {
 
 function mount_install {
   mount "${ROOT_PARTITION}" /mnt
-  mkdir -p /mnt/efi
-  mount "${EFI_PARTITION}" /mnt/efi
+  if [ -b "${EFI_PARTITION}" ]; then
+    mkdir -p /mnt/efi
+    mount "${EFI_PARTITION}" /mnt/efi
+  fi
   if [ -e "${HOME_PARTITION}" ]; then
     mkdir -p /mnt/home
     mount "${HOME_PARTITION}" /mnt/home
