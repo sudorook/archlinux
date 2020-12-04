@@ -1,7 +1,9 @@
 arch-install-scripts
 bc
+cryptsetup
 git
 gptfdisk
+lvm2
 pacman
 pacman-mirrorlist
 parted
