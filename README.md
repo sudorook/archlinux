@@ -81,8 +81,9 @@ The script will also prompt for:
 1. Host name
 2. User name
 3. User password
-4. Locale (e.g. `en_US.UTF-8`)
-5. Time zone (e.g. `America/Toronto`)
+4. (Optional) LUKS password
+5. Locale (e.g. `en_US.UTF-8`)
+6. Time zone (e.g. `America/Toronto`)
 
 The script will then mount the partitions, set up chroot, download and install
 all the `base` and `base-devel` packages via `pacstrap`, set up the specified
@@ -122,7 +123,7 @@ Automatically install (without prompting) packages and configs.
 
 3) Installs [base.list](packages/base.list).
 
-4) User `reflector` to select the fastest https mirrors.
+4) Use `reflector` to select the fastest https mirrors.
 
 5) Install firmware and CPU microcode.
 
