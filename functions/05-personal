@@ -286,7 +286,7 @@ function enable_autologin {
     if ! getent group | grep -q autologin; then
       sudo groupadd -r autologin
     fi
-    ! [[ $(getent group) =~ "autologin" ]] && \
+    ! [[ $(groups) =~ "autologin" ]] && \
       sudo gpasswd -a "${USER}" autologin || true
     sudo sed -i "s/^#autologin-user=/autologin-user=/g" ${lightdmconf}
     sudo sed -i "s/^#autologin-user-timeout=/autologin-user-timeout=/g" ${lightdmconf}
