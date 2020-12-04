@@ -25,14 +25,18 @@ Windows / MacOS for USB drive installations.
 
 The rough partition scheme is:
 ```
-1. BIOS compatibility parition, empty if GRUB not used (1 Mb)
-2. EFI partition (500 Mb)
+1. BIOS compatibility parition, empty if GRUB not used (1 MiB)
+2. EFI partition (500 MiB)
 3. Share partition (optional)
 4. Arch Linux system (Plain / LVM / LUKS-encrypted partitions or volumes)
    - swap
    - root
    - home (optional)
 ```
+
+**Note:** The script uses `sgdisk` for partitioning, which uses binary (base 2)
+units for specifying partition sizes. For example, 500M corresponds to 500
+mebibytes, not 500 megabytes.
 
 To run, (need to be root):
 ```
