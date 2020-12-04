@@ -643,15 +643,15 @@ function install_gummiboot {
     pacman -S --noconfirm efibootmgr
 
     local root_uuid
-    local crypto_uuid
+    local crypt_uuid
     local cmdline
 
     root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
-    crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
+    crypt_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
     if [[ "${SCHEME}" =~ LVM ]]; then
-      if [ -n "${crypto_uuid}" ]; then
-        cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
+      if [ -n "${crypt_uuid}" ]; then
+        cmdline="rd.luks.name=${crypt_uuid}=${LV} rd.luks.options=discard"
         if [ -e /dev/mapper/${VG}-root ]; then
           cmdline="${cmdline} root=/dev/mapper/${VG}-root"
         fi
@@ -716,15 +716,15 @@ function install_grub {
   pacman -S --noconfirm grub os-prober efibootmgr
 
   local root_uuid
-  local crypto_uuid
+  local crypt_uuid
   local cmdline
 
   root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
-  crypto_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
+  crypt_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
 
   if [[ "${SCHEME}" =~ LVM ]]; then
-    if [ -n "${crypto_uuid}" ]; then
-      cmdline="rd.luks.name=${crypto_uuid}=${LV} rd.luks.options=discard"
+    if [ -n "${crypt_uuid}" ]; then
+      cmdline="rd.luks.name=${crypt_uuid}=${LV} rd.luks.options=discard"
       if [ -e /dev/mapper/${VG}-root ]; then
         cmdline="${cmdline} root=/dev/mapper/${VG}-root"
       fi
@@ -743,7 +743,7 @@ function install_grub {
     sed -i "s|^GRUB_CMDLINE_LINUX=[\"\"]*|GRUB_CMDLINE_LINUX=\"${cmdline}\"|g" /etc/default/grub
   fi
 
-  if [ -n "${crypto_uuid}" ]; then
+  if [ -n "${crypt_uuid}" ]; then
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/g" /etc/default/grub
   fi
 
