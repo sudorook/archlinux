@@ -1,7 +1,7 @@
 arch-install-scripts
+bc
 git
 gptfdisk
 pacman
 pacman-mirrorlist
 parted
-wget
