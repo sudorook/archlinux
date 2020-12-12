@@ -41,7 +41,7 @@ function check_fail {
 }
 
 function check_installed {
-  for package in "${@}"; do
+  while read -r package; do
     local metacount
     local installcount
     metacount=$(pacman -Ss "${package}" | \
@@ -65,7 +65,7 @@ function check_installed {
       show_listitem "Installing ${package}."
       sudo pacman -S --noconfirm "${package}"
     fi
-  done
+  done < "${1}"
 }
 
 function check_aur_installed {
@@ -75,7 +75,7 @@ function check_aur_installed {
   curdir="$(pwd)"
 
   mkdir -p "${pkgbuilddir}"
-  for package in "${@}"; do
+  while read -r package; do
     local metacount
     local installcount
     metacount=$(pacman -Ss "${package}" | \
@@ -94,19 +94,21 @@ function check_aur_installed {
       if ! [ -d "${pkgbuilddir}/${package}" ]; then
         git clone "${aurprefix}/${package}" "${pkgbuilddir}/${package}"
       else
+        git -C "${pkgbuilddir}/${package}" clean -xdf
+        git -C "${pkgbuilddir}/${package}" reset --hard
         git -C "${pkgbuilddir}/${package}" pull origin master
       fi
       cd "${pkgbuilddir}/${package}" || exit
       makepkg --noconfirm -si
       git clean -xdf
     fi
-  done
+  done < "${1}"
   cd "${curdir}" || exit
 }
 
 function install_post_dependencies {
   show_header "Checking post-installation dependencies."
-  for package in $(cat ${deps}); do
+  while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
       sudo pacman -S "${package}"
@@ -115,12 +117,12 @@ function install_post_dependencies {
     else
       show_success "${package} is already installed."
     fi
-  done
+  done < "${deps}"
 }
 
 function install_dependencies {
   show_header "Checking installation dependencies."
-  for package in $(cat ${install}); do
+  while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
       sudo pacman -S "${package}"
@@ -129,7 +131,7 @@ function install_dependencies {
     else
       show_success "${package} is already installed."
     fi
-  done
+  done < "${install}"
 }
 
 function check_network {

@@ -9,7 +9,7 @@ zshrc="${dir}/dotfiles/zshrc"
 zshdir="${HOME}/.zsh"
 function install_zsh {
   show_header "Installing zsh."
-  check_installed $(cat ${zsh})
+  check_installed "${zsh}"
   check_fail
   show_success "zsh installed."
 
@@ -36,7 +36,7 @@ hardenedsdupdate="${dir}/hooks/999-add-linux-hardened.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_hardened {
   show_header "Installing linux-hardened kernel."
-  check_installed $(cat ${hardened})
+  check_installed "${hardened}"
   check_fail
   show_success "Hardened kernel installed."
 
@@ -60,7 +60,7 @@ ltssdupdate="${dir}/hooks/999-add-linux-lts.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_lts {
   show_header "Installing linux-lts kernel."
-  check_installed $(cat ${lts})
+  check_installed "${lts}"
   check_fail
   show_success "LTS kernel installed."
 
@@ -84,7 +84,7 @@ zensdupdate="${dir}/hooks/999-add-linux-zen.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_zen {
   show_header "Installing linux-zen kernel."
-  check_installed $(cat ${zen})
+  check_installed "${zen}"
   check_fail
   show_success "Zen kernel installed."
 
@@ -104,7 +104,7 @@ function install_linux_zen {
 utils="${dir}/packages/utils.list"
 function install_utils {
   show_header "Installing general utilities."
-  check_installed $(cat ${utils})
+  check_installed "${utils}"
   check_fail
   show_success "Utilities installed."
 }
@@ -112,7 +112,7 @@ function install_utils {
 laptop="${dir}/packages/laptop.list"
 function install_laptop {
   show_header "Installing laptop utilities."
-  check_installed $(cat ${laptop})
+  check_installed "${laptop}"
   check_fail
   show_success "Laptop utilities installed."
 
