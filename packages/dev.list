@@ -25,6 +25,7 @@ hugo
 intltool
 julia
 jupyter
+libgit2
 mathjax
 nodejs
 npm
