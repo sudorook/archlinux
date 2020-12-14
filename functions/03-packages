@@ -70,6 +70,15 @@ function install_dev {
   show_info "Installing Rprofile."
   cp -f "${rprofile}" "${HOME}/.Rprofile"
 
+  show_info "Installing R packages."
+  if ! [[ -v R_LIBS_USER ]]; then
+    R_LIBS_USER="${HOME}/.R/$(R --version | \
+                              sed -n "s/^R version \([0-9\.]*\) .*/\1/p")"
+  fi
+  mkdir -p "${R_LIBS_USER}"
+  Rscript -e \
+    "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
+
   show_info "Installing tmux config."
   cp -f "${tmuxconfig}" "${HOME}/.tmux.conf"
 
