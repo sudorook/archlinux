@@ -22,6 +22,7 @@ grunt-cli
 gulp
 hdf5
 hugo
+intltool
 julia
 jupyter
 mathjax
