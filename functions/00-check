@@ -111,7 +111,7 @@ function install_post_dependencies {
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
-      sudo pacman -S "${package}"
+      sudo pacman -S --noconfirm "${package}"
       check_fail $?
       show_success "${package} now installed."
     else
@@ -125,7 +125,7 @@ function install_dependencies {
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
-      sudo pacman -S "${package}"
+      sudo pacman -S --noconfirm "${package}"
       check_fail $?
       show_success "${package} now installed."
     else
