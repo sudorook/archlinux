@@ -27,6 +27,7 @@ julia
 jupyter
 libgit2
 mathjax
+mkvtoolnix-cli
 nodejs
 npm
 openblas
