@@ -8,7 +8,6 @@ encfs
 ethtool
 gnupg
 gptfdisk
-lshw
 mtools
 net-tools
 nmap
