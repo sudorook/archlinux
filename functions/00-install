@@ -816,7 +816,7 @@ export -f make_luks_key
 
 function update_mirrorlist {
   pacman -Sy --noconfirm reflector
-  reflector --verbose -l 10 -p https --sort rate --save /etc/pacman.d/mirrorlist
+  reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
   pacman -Sy
 }
 export -f update_mirrorlist
