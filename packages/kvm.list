@@ -3,9 +3,9 @@ dnsmasq
 ebtables
 edk2-ovmf
 edk2-shell
+libguestfs
 libiscsi
 libvirt
-libguestfs
 openbsd-netcat
 qemu
 virt-manager
