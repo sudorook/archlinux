@@ -618,7 +618,7 @@ function set_mkinitcpio {
   old_hooks="$(sed -n "s/^HOOKS=(\(.*\))$/\1/p" /etc/mkinitcpio.conf)"
   new_hooks="$(echo "${old_hooks}" | \
                sed -e 's/udev/systemd/g' \
-                   -e 's/block/block sd-encrypt sd-lvm2/g' \
+                   -e 's/block/block sd-encrypt lvm2/g' \
                    -e 's/keyboard/keyboard sd-vconsole/g')"
   sed -i "s/${old_hooks}/${new_hooks}/g" /etc/mkinitcpio.conf
 
