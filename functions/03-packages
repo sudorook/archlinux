@@ -93,6 +93,7 @@ function install_dev {
   if ! [[ -v R_LIBS_USER ]]; then
     R_LIBS_USER="${HOME}/.R/$(R --version | \
                               sed -n "s/^R version \([0-9\.]*\) .*/\1/p")"
+    export R_LIBS_USER
   fi
   mkdir -p "${R_LIBS_USER}"
   Rscript -e \
