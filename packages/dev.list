@@ -20,7 +20,7 @@ go
 graphviz
 grunt-cli
 gulp
-hdf5
+hdf5-openmpi
 hugo
 intltool
 julia
@@ -41,7 +41,7 @@ python-beautifulsoup4
 python-biopython
 python-black
 python-certifi
-python-h5py
+python-h5py-openmpi
 python-html2text
 python-matplotlib
 python-memory-profiler
