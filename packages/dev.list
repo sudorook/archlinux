@@ -58,6 +58,7 @@ python-statsmodels
 python-tensorflow
 python-urllib3
 python-wheel
+qwt
 r
 ruby
 ruby-bundler
