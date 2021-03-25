@@ -29,7 +29,7 @@ kernel="linux"
 function select_system_font {
   show_question "Select a font family:"
 
-  options=("Back" "Noto" "Roboto")
+  local options=("Back" "Noto" "Roboto")
   select option in "${options[@]}"; do
     case ${option} in
       "Back")
@@ -232,6 +232,7 @@ function set_gdm_theme {
 gtksettings="${HOME}/.config/gtk-3.0/settings.ini"
 function set_dark_gtk {
   show_header "Setting global dark theme for gtk applications."
+  local isgtkdark
   if grep ^gtk-application-prefer-dark-theme= "${gtksettings}" >/dev/null 2>&1; then
     isgtkdark=$(grep ^gtk-application-prefer-dark-theme= "${gtksettings}" | cut -d"=" -f2)
     if test "${isgtkdark}"; then
@@ -465,10 +466,22 @@ function set_default_kernel {
 function select_desktop_theme {
   show_question "Select a GTK theme:"
 
-  options=("Back" "Adwaita" "Arc" "Arc-Darker" "Arc-Dark" "Adapta" \
-           "Adapta-Eta" "Adapta-Nokto" "Adapta-Nokto-Eta" "Plata" \
-           "Plata-Compact" "Plata-Lumine" "Plata-Lumine-Compact" "Plata-Noir" \
-           "Plata-Noir-Compact")
+  local options=(
+    "Back"
+    "Adwaita"
+    "Arc"
+    "Arc-Darker"
+    "Arc-Dark"
+    "Adapta"
+    "Adapta-Eta"
+    "Adapta-Nokto"
+    "Adapta-Nokto-Eta"
+    "Plata"
+    "Plata-Compact"
+    "Plata-Lumine"
+    "Plata-Lumine-Compact"
+    "Plata-Noir"
+    "Plata-Noir-Compact")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -629,8 +642,14 @@ function select_desktop_theme {
 function select_icon_theme {
   show_question "Select an icon theme:"
 
-  options=("Back" "Papirus" "ePapirus" "Papirus-Light" "Papirus-Dark" \
-           "Papirus-Adapta" "Papirus-Adapta-Nokto")
+  local options=(
+    "Back"
+    "Papirus"
+    "ePapirus"
+    "Papirus-Light"
+    "Papirus-Dark"
+    "Papirus-Adapta"
+    "Papirus-Adapta-Nokto")
   select option in "${options[@]}"; do
     case $option in
       "Back")
@@ -709,6 +728,8 @@ function select_icon_theme {
 
 grubcfg="/boot/grub/grub.cfg"
 function select_default_kernel {
+  local kernellist
+  local kernels
   kernellist=($(find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
                 xargs -0 -I _ basename _ | \
                 sed -e "s/^vmlinuz-//g"))
@@ -740,13 +761,24 @@ function 05-personal {
   show_question "Personal: what do you want to set?"
   show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Select system fonts" "Select icon theme" \
-           "Select desktop theme" "Set dark GTK" "Import Cinnamon dconf" \
-           "Import GNOME dconf" "Import application dconf" \
-           "Import GNOME terminal profiles" "Enable autologin" \
-           "Invert brightness (i915)" "Enable IOMMU (Intel)" \
-           "Disable PulseAudio suspend" "Disable 802.11n" "Add scripts" \
-           "Select default kernel")
+  local options=(
+    "Back"
+    "All"
+    "Select system fonts"
+    "Select icon theme"
+    "Select desktop theme"
+    "Set dark GTK"
+    "Import Cinnamon dconf"
+    "Import GNOME dconf"
+    "Import application dconf"
+    "Import GNOME terminal profiles"
+    "Enable autologin"
+    "Invert brightness (i915)"
+    "Enable IOMMU (Intel)"
+    "Disable PulseAudio suspend"
+    "Disable 802.11n"
+    "Add scripts"
+    "Select default kernel")
   select option in "${options[@]}"; do
     case $option in
       "Back")

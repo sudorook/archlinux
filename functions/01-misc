@@ -145,8 +145,15 @@ function 01-misc {
   show_question "Misc: what do you want to install?"
   show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Linux hardened kernel" "Linux LTS kernel" \
-           "Linux zen kernel" "Linux utilities" "Laptop tools" "zsh")
+  local options=(
+    "Back"
+    "All"
+    "Linux hardened kernel"
+    "Linux LTS kernel"
+    "Linux zen kernel"
+    "Linux utilities"
+    "Laptop tools"
+    "zsh")
   select option in "${options[@]}"; do
     case $option in
       "Back")

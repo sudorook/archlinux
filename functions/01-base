@@ -205,9 +205,17 @@ function 01-base {
   show_question "Base: what do you want to install?"
   show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
 
-  options=("Back" "All" "Base packages" "Mirrorlist" "Firmware" "Updates" \
-           "Enable multilib" "Sudo insults" "Pacman styling" \
-           "Disable system beep")
+  local options=(
+    "Back"
+    "All"
+    "Base packages"
+    "Mirrorlist"
+    "Firmware"
+    "Updates"
+    "Enable multilib"
+    "Sudo insults"
+    "Pacman styling"
+    "Disable system beep")
   select option in "${options[@]}"; do
     case $option in
       "Back")
