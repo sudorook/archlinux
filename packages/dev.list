@@ -64,6 +64,7 @@ ruby
 ruby-bundler
 ruby-rake
 sassc
+scour
 scrapy
 shellcheck
 shfmt
