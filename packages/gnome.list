@@ -10,6 +10,7 @@ gnome-terminal
 gnome-themes-extra
 gnome-tweaks
 nautilus
+nautilus-share
 networkmanager
 xdg-user-dirs
 xdg-user-dirs-gtk
