@@ -3,6 +3,7 @@ curl
 gtk-engine-murrine
 gulp
 inkscape
+meson
 nodejs
 npm
 parallel
