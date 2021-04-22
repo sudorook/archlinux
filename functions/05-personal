@@ -230,28 +230,22 @@ function set_gdm_theme {
     if [[ -d "/usr/share/themes/${gtktheme}" ]]; then
       show_header "Setting GDM login theme to ${gtktheme}."
       sudo cp -r "/usr/share/gnome-shell" "/usr/share/gnome-shell-$(date +%Y%m%d)"
-      case "${gtktheme}" in
-        "Adapta"|"Plata")
-          sudo cp -rf \
-            /usr/share/themes/${gtktheme}/gnome-shell/* \
-            /usr/share/gnome-shell/
-          sudo cp -f \
-            /usr/share/themes/${gtktheme}/gnome-shell/extensions/window-list/classic.css \
-            /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
-          sudo cp -f \
-            /usr/share/themes/${gtktheme}/gnome-shell/extensions/window-list/stylesheet.css \
-            /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
-          ;;
-        "Materia")
-          sudo glib-compile-resources \
-            --target="/usr/share/gnome-shell/gnome-shell-theme.gresource" \
-            --sourcedir="/usr/share/themes/${gtktheme}/gnome-shell" \
-            "/usr/share/themes/${gtktheme}/gnome-shell/gnome-shell-theme.gresource.xml"
-          ;;
-        *)
-          show_warning "GDM override not supported for ${gtktheme}. Skipping."
-          ;;
-      esac
+      if [[ "${gtktheme}" =~ Adapta ]] || [[ "${gtktheme}" =~ Plata ]]; then
+        sudo cp -rf \
+          /usr/share/themes/${gtktheme}/gnome-shell/* \
+          /usr/share/gnome-shell/
+        sudo cp -f \
+          /usr/share/themes/${gtktheme}/gnome-shell/extensions/window-list/classic.css \
+          /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
+        sudo cp -f \
+          /usr/share/themes/${gtktheme}/gnome-shell/extensions/window-list/stylesheet.css \
+          /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
+      elif [[ "${gtktheme}" =~ Materia ]]; then
+        sudo glib-compile-resources \
+          --target="/usr/share/gnome-shell/gnome-shell-theme.gresource" \
+          --sourcedir="/usr/share/themes/${gtktheme}/gnome-shell" \
+          "/usr/share/themes/${gtktheme}/gnome-shell/gnome-shell-theme.gresource.xml"
+      fi
     else
       show_warning "GTK theme ${gtktheme} not found. Skipping."
     fi
