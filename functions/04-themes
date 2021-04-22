@@ -127,16 +127,6 @@ function install_plata_gtk {
 
 function install_materia_gtk {
   show_header "Downloading, building, and installing the Materia GTK theme."
-  local autotools_options
-  if ! pacman -Qi gnome-shell > /dev/null 2>&1; then
-    autotools_options="${autotools_options} --disable-gnome "
-  fi
-  if ! pacman -Qi cinnamon > /dev/null 2>&1; then
-    autotools_options="${autotools_options} --disable-cinnamon "
-  fi
-  if ! pacman -Qi marco > /dev/null 2>&1; then
-    autotools_options="${autotools_options} --disable-mate "
-  fi
   rm -rf materia-theme
   git clone -b tweak --depth 1 \
     https://github.com/sudorook/materia-theme materia-theme
