@@ -55,6 +55,7 @@ set statusline+=%*
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_wq=0
+let g:syntastic_sh_shellcheck_args="-x"
 "let g:syntastic_c_remove_include_errors=1
 "let g:syntastic_cpp_include_dirs=[
 "  \ \"/usr/include/qt",
