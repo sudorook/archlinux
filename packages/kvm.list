@@ -1,6 +1,6 @@
 bridge-utils
 dnsmasq
-ebtables
+iptables-nft
 edk2-ovmf
 edk2-shell
 libguestfs
