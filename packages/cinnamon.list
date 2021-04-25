@@ -1,6 +1,7 @@
 cinnamon
 gnome-keyring
 gnome-terminal
+gvfs-smb
 lightdm
 lightdm-gtk-greeter
 nemo-fileroller
