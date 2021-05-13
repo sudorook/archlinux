@@ -3,6 +3,13 @@ Type = Package
 Operation = Upgrade
 Target = linux-hardened
 
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/lib/modules/*hardened/vmlinuz
+Target = usr/lib/initcpio/*
+
 [Action]
 Description = Updating Linux Hardened on EFI system path
 When = PostTransaction

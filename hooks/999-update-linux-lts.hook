@@ -3,6 +3,13 @@ Type = Package
 Operation = Upgrade
 Target = linux-lts
 
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/lib/modules/*lts*/vmlinuz
+Target = usr/lib/initcpio/*
+
 [Action]
 Description = Updating Linux LTS on EFI system path
 When = PostTransaction
