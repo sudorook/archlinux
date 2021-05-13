@@ -6,4 +6,4 @@ Target = linux-lts
 [Action]
 Description = Updating Linux LTS on EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux-lts /boot/initramfs-linux-lts-fallback.img /boot/initramfs-linux-lts.img -t /efi'
+Exec = /bin/sh -c '( pacman -Qi linux-lts && /usr/bin/bootctl is-installed && EFI=$(/usr/bin/bootctl -p) && /usr/bin/cp -af /boot/vmlinuz-linux-lts /boot/initramfs-linux-lts{-fallback,}.img -t $EFI ) >/dev/null 2>&1'

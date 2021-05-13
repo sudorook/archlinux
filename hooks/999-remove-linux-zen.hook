@@ -6,4 +6,4 @@ Target = linux-zen
 [Action]
 Description = Removing Linux Zen from EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/rm -f /efi/initramfs-linux-zen-fallback.img /efi/initramfs-linux-zen.img /efi/vmlinuz-linux-zen /efi/loader/entries/linux-zen.conf /efi/loader/entries/linux-zen-fallback.conf'
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/rm -f $EFI/initramfs-linux-zen{-fallback,}.img $EFI/vmlinuz-linux-zen $EFI/loader/entries/linux-zen{-fallback,}.conf'

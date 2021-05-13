@@ -6,4 +6,4 @@ Target = linux-lts
 [Action]
 Description = Removing Linux LTS from EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/rm -f /efi/initramfs-linux-lts-fallback.img /efi/initramfs-linux-lts.img /efi/vmlinuz-linux-lts /efi/loader/entries/linux-lts.conf /efi/loader/entries/linux-lts-fallback.conf'
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/rm -f $EFI/initramfs-linux-lts{-fallback,}.img $EFI/vmlinuz-linux-lts $EFI/loader/entries/linux-lts{-fallback,}.conf'

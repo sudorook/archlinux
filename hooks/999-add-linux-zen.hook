@@ -6,4 +6,4 @@ Target = linux-zen
 [Action]
 Description = Installing Linux Zen to EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux-zen /boot/initramfs-linux-zen-fallback.img /boot/initramfs-linux-zen.img -t /efi && [ -f /usr/local/sbin/sdboot-mkconfig ] && /usr/local/sbin/sdboot-mkconfig linux-zen'
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/cp -af /boot/vmlinuz-linux-zen /boot/initramfs-linux-zen{-fallback,}.img -t $EFI && [ -f /usr/local/sbin/sdboot-mkconfig ] && /usr/local/sbin/sdboot-mkconfig linux-zen'

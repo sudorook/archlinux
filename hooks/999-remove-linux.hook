@@ -6,4 +6,4 @@ Target = linux
 [Action]
 Description = Removing Linux from EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/rm -f /efi/initramfs-linux-fallback.img /efi/initramfs-linux.img /efi/vmlinuz-linux /efi/loader/entries/linux.conf /efi/loader/entries/linux-fallback.conf'
+Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/rm -f $EFI/initramfs-linux{-fallback,}.img $EFI/vmlinuz-linux $EFI/loader/entries/linux{-fallback,}.conf'

@@ -6,4 +6,4 @@ Target = linux
 [Action]
 Description = Updating Linux on EFI system path
 When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && /usr/bin/cp -af /boot/vmlinuz-linux /boot/initramfs-linux-fallback.img /boot/initramfs-linux.img -t /efi && [ -f /usr/local/sbin/sdboot-mkconfig ] && /usr/local/sbin/sdboot-mkconfig linux'
+Exec = /bin/sh -c '( pacman -Qi linux && /usr/bin/bootctl is-installed && EFI=$(/usr/bin/bootctl -p) && /usr/bin/cp -af /boot/vmlinuz-linux /boot/initramfs-linux{-fallback,}.img -t $EFI ) >/dev/null 2>&1'
