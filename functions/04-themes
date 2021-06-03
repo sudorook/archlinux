@@ -55,6 +55,9 @@ function install_adapta_gtk {
   if ! pacman -Qi gnome-shell > /dev/null 2>&1; then
     autotools_options="${autotools_options} --disable-gnome "
   fi
+  if ! pacman -Qi gnome-flashback > /dev/null 2>&1; then
+    autotools_options="${autotools_options} --disable-flashback "
+  fi
   if ! pacman -Qi cinnamon > /dev/null 2>&1; then
     autotools_options="${autotools_options} --disable-cinnamon "
   fi
@@ -90,6 +93,9 @@ function install_plata_gtk {
   local autotools_options
   if ! pacman -Qi gnome-shell > /dev/null 2>&1; then
     autotools_options="${autotools_options} --disable-gnome "
+  fi
+  if ! pacman -Qi gnome-flashback > /dev/null 2>&1; then
+    autotools_options="${autotools_options} --disable-flashback "
   fi
   if ! pacman -Qi cinnamon > /dev/null 2>&1; then
     autotools_options="${autotools_options} --disable-cinnamon "
