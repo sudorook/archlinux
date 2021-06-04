@@ -139,9 +139,9 @@ function stylize_pacman {
   # Customize pacman to:
   #  - color pacman output
   #  - show pacman-the-game-styled progress bars for pacman
-  show_info "Enabling color and Pacman animation for pacman."
+  show_info "Enabling color and Pac-man animation for pacman."
   sudo sed -i "s/^#Color$/Color/" ${pacmanconf}
-  if ! test "$(grep ^ILoveCandy$ /etc/pacman.conf)"; then
+  if ! test "$(grep ^ILoveCandy$ "${pacmanconf}")"; then
     sudo sed -i "/^CheckSpace$/a ILoveCandy" ${pacmanconf}
   fi
 }
