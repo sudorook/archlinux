@@ -101,6 +101,7 @@ function main {
           # enable_multilib
           enable_sudo_insults
           stylize_pacman
+          parallelize_pacman
           disable_beep
 
           # Install miscellaneous extras

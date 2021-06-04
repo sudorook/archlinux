@@ -146,6 +146,13 @@ function stylize_pacman {
   fi
 }
 
+function parallelize_pacman {
+  # Customize pacman to:
+  #  - parallelize downloads
+  show_info "Enabling parallel pacman downloads."
+  sudo sed -i "s/^#ParallelDownloads = \([0-9]\+\)$/ParallelDownload = \1/g" ${pacmanconf}
+}
+
 function update_packages {
   show_header "Updating packages."
   sudo pacman -Syu --noconfirm
@@ -215,6 +222,7 @@ function 01-base {
     "Enable multilib"
     "Sudo insults"
     "Pacman styling"
+    "Pacman parallel"
     "Disable system beep")
   select option in "${options[@]}"; do
     case $option in
@@ -229,6 +237,7 @@ function 01-base {
         enable_multilib
         enable_sudo_insults
         stylize_pacman
+        parallelize_pacman
         disable_beep
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         break
@@ -259,6 +268,10 @@ function 01-base {
         ;;
       "Pacman styling")
         stylize_pacman
+        show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
+        ;;
+      "Pacman parallel")
+        parallelize_pacman
         show_info "Main\n ${endbranch} Base (Hit ENTER to see options again.)"
         ;;
       "Disable system beep")
