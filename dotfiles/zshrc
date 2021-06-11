@@ -60,8 +60,23 @@ alias scp="noglob scp"
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
 alias happymake="make -j$(nproc) && sudo make install"
-alias superupgrade="sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'"
-alias megapurge="sudo sh -c 'yes | pacman -Scc' && sudo journalctl --vacuum-time=1day && sudo pacdiff && sudo sh -c 'yes | pacman -Rs $(pacman -Qdtq | tr '\n' ' ')'"
+
+function superupgrade {
+  sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'
+}
+
+function megapurge {
+  sudo sh -c 'yes | pacman -Scc' && \
+    sudo journalctl --rotate && \
+    sudo journalctl --vacuum-time=1s && \
+    sudo pacdiff
+
+  local pkg
+  pkg=$(pacman -Qtdq | tr '\n' ' ') || true
+  if [[ -n "${pkg}" ]]; then
+    sudo sh -c "yes | pacman -Rs ${pkg}"
+  fi
+}
 
 # list directory contents
 alias sl='ls'
