@@ -1,4 +1,5 @@
 automake
+blosc
 boost
 boost-libs
 clang
