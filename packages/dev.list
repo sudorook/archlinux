@@ -25,6 +25,8 @@ hugo
 intltool
 julia
 jupyter
+lapack
+lapacke
 libgit2
 mathjax
 mkvtoolnix-cli
