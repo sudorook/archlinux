@@ -1,5 +1,4 @@
 acpi
-signify
 bcprov
 cpio
 ddrescue
@@ -26,6 +25,7 @@ pv
 reiserfsprogs
 rsync
 screen
+signify
 squashfs-tools
 s-tui
 time
