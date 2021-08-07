@@ -11,6 +11,7 @@ exfat-utils
 gnupg
 gptfdisk
 java-commons-lang
+lm_sensors
 mtools
 net-tools
 nmap
