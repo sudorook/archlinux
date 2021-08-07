@@ -24,6 +24,7 @@ pigz
 pixz
 pv
 reiserfsprogs
+rkhunter
 rsync
 screen
 signify
@@ -31,6 +32,7 @@ squashfs-tools
 s-tui
 time
 tmux
+unhide
 unrar
 zip
 zstd
