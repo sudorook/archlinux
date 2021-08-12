@@ -75,7 +75,6 @@ dev="${dir}/packages/dev.list"
 r="${dir}/packages/r.list"
 npmrc="${dir}/dotfiles/npmrc"
 rprofile="${dir}/dotfiles/Rprofile"
-tmuxconfig="${dir}/dotfiles/tmux.conf"
 vimpack="${HOME}/.vim/pack/dist/start"
 function install_dev {
   show_header "Installing languages, libraries, and tools for development."
@@ -98,9 +97,6 @@ function install_dev {
   mkdir -p "${R_LIBS_USER}"
   Rscript -e \
     "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
-
-  show_info "Installing tmux config."
-  cp -f "${tmuxconfig}" "${HOME}/.tmux.conf"
 
   show_info "Setting default clang-format style."
   clang-format -style=mozilla -dump-config > "${HOME}/.clang-format"
