@@ -150,7 +150,7 @@ function parallelize_pacman {
   # Customize pacman to:
   #  - parallelize downloads
   show_info "Enabling parallel pacman downloads."
-  sudo sed -i "s/^#ParallelDownloads = \([0-9]\+\)$/ParallelDownload = \1/g" ${pacmanconf}
+  sudo sed -i "s/^#ParallelDownloads = \([0-9]\+\)$/ParallelDownloads = \1/g" ${pacmanconf}
 }
 
 function update_packages {
