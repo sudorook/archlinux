@@ -39,6 +39,12 @@ function install_network {
 
   show_info "Enabling NetworkManager service"
   sudo systemctl enable --now NetworkManager
+
+  show_info "Disabling SSH root login and forcing SSH v2."
+  sudo sed -i \
+    -e "/^#PermitRootLogin prohibit-password$/a PermitRootLogin no" \
+    -e "/^#Port 22$/i Protocol 2" \
+    /etc/ssh/sshd_config
 }
 
 discovery="${dir}/packages/discover.list"
