@@ -1,3 +1,4 @@
+assertthat
 bipartite
 data.table
 devtools
@@ -19,6 +20,9 @@ RcppEigen
 reshape2
 rvest
 stringr
+testthat
 tibble
 tidyr
 vegan
+viridis
+viridisLite
