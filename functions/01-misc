@@ -121,6 +121,7 @@ function install_linux_zen {
 
 utils="${dir}/packages/utils.list"
 tmuxconfig="${dir}/dotfiles/tmux.conf"
+rkhunterconfig="/etc/rkhunter.conf"
 function install_utils {
   show_header "Installing general utilities."
   check_installed "${utils}"
@@ -129,6 +130,14 @@ function install_utils {
 
   show_info "Installing tmux config."
   cp -f "${tmuxconfig}" "${HOME}/.tmux.conf"
+
+  show_info "Whitelisting files in /etc/rkhunter.conf"
+  sudo sed -i \
+    -e "/^#SCRIPTWHITELIST=\/usr\/bin\/groups$/a SCRIPTWHITELIST=\/usr\/bin\/egrep" \
+    -e "/^#SCRIPTWHITELIST=\/usr\/bin\/groups$/a SCRIPTWHITELIST=\/usr\/bin\/fgrep" \
+    -e "/^#SCRIPTWHITELIST=\/usr\/bin\/groups$/a SCRIPTWHITELIST=\/usr\/bin\/ldd" \
+    -e "/^#SCRIPTWHITELIST=\/usr\/bin\/groups$/a SCRIPTWHITELIST=\/usr\/bin\/vendor_perl\/GET" \
+    "${rkhunterconfig}"
 }
 
 laptop="${dir}/packages/laptop.list"
