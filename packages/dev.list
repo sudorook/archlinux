@@ -46,6 +46,7 @@ python-black
 python-certifi
 python-h5py-openmpi
 python-html2text
+python-isort
 python-matplotlib
 python-mccabe
 python-memory-profiler
