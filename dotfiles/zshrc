@@ -83,6 +83,12 @@ function megapurge {
   fi
 }
 
+command -v eog >/dev/null 2>&1 && {
+  function eog {
+    nohup /usr/bin/eog "${1}" >/dev/null 2>&1
+  }
+}
+
 # list directory contents
 alias sl='ls'
 alias lsa='ls -lah'
