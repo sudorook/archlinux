@@ -75,6 +75,7 @@ function main {
   ask_locale
   ask_hostname
   ask_username
+  ask_password
   # ask_lukspass
 
   set_partitions
