@@ -90,6 +90,7 @@ command -v eog >/dev/null 2>&1 && {
 }
 
 # list directory contents
+alias ls='ls --color=auto'
 alias sl='ls'
 alias lsa='ls -lah'
 alias l='ls -lah'
@@ -102,7 +103,7 @@ alias la='ls -lAh'
 #
 
 # color ls output based on filetype
-eval $(dircolors -b)
+eval "$(dircolors -b)"
 
 # color the man pages
 man() {
