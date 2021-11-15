@@ -85,7 +85,7 @@ function main {
   pacstrap /mnt base
   genfstab -U /mnt >> /mnt/etc/fstab
   TIMEZONE="${TIMEZONE}" arch-chroot /mnt /bin/bash -c "set_timezone"
-  LOCALE="${LOCALE}" arch-chroot /mnt /bin/bash -c "set_locale"
+  LOCALE="${LOCALE}" CHARSET="${CHARSET}" arch-chroot /mnt /bin/bash -c "set_locale"
 
   arch-chroot /mnt /bin/bash -c "update_mirrorlist"
   arch-chroot /mnt /bin/bash -c "install_packages"

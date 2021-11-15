@@ -1,6 +1,7 @@
 arch-install-scripts
 bc
 cryptsetup
+fzf
 git
 gptfdisk
 lvm2
