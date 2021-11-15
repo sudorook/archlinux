@@ -821,9 +821,11 @@ grubcfg="/boot/grub/grub.cfg"
 function select_default_kernel {
   local kernellist
   local kernels
-  kernellist=($(find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
-                xargs -0 -I _ basename _ | \
-                sed -e "s/^vmlinuz-//g"))
+
+  mapfile -t kernellist < \
+    <(find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
+      xargs -0 -I _ basename _ | \
+      sed -e "s/^vmlinuz-//g")
   kernels=("Back")
   for kernel in "${kernellist[@]}"; do
     kernels+=("${kernel}")
