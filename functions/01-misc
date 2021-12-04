@@ -38,6 +38,8 @@ function install_zsh {
       "${zshdir}/fishy-lite"
   fi
 
+  mkdir -p "${HOME}/.local/share/zsh/site-functions"
+
   show_info "Copying zshrc."
   cp -f "${zshrc}" "${HOME}/.zshrc"
 
