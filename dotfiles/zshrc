@@ -99,6 +99,7 @@ function alias_bg {
 
 alias_bg eog
 alias_bg evince
+alias_bg gitk
 
 unset -f alias_bg
 
