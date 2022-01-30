@@ -494,6 +494,7 @@ function select_desktop_theme {
   local options=(
     "Back"
     "Adwaita"
+    "Adwaita-dark"
     "Arc"
     "Arc-Darker"
     "Arc-Dark"
@@ -521,9 +522,17 @@ function select_desktop_theme {
         break
         ;;
       "Adwaita")
-        if [ -d /usr/share/themes/Adwaita ] || \
-           [ -d "${HOME}/.themes/Adwaita" ]; then
+        if [ -d /usr/share/themes/Adwaita ]; then
           gtktheme="Adwaita"
+        else
+          show_warning "${option} theme is not installed."
+          select_desktop_theme
+        fi
+        break
+        ;;
+      "Adwaita-dark")
+        if [ -d /usr/share/themes/Adwaita-dark ]; then
+          gtktheme="Adwaita-dark"
         else
           show_warning "${option} theme is not installed."
           select_desktop_theme
