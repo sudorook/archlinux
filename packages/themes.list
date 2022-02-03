@@ -1,11 +1,9 @@
 automake
 curl
+dart-sass
 gtk-engine-murrine
-gulp
 inkscape
 meson
-nodejs
-npm
 parallel
 qt5ct
 sassc
