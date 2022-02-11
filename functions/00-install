@@ -624,7 +624,7 @@ function add_user {
   usermod -aG wheel,"${USER_NAME}" "${USER_NAME}"
   echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
 
-  sed -e "s/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/g" /etc/sudoers | \
+  sed -e "s/^# \(%wheel ALL=(ALL:\?\(ALL\)\?) ALL\)$/\1/g" /etc/sudoers | \
     EDITOR=tee visudo >/dev/null
 
   # disable root account
