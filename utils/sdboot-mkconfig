@@ -55,6 +55,7 @@ function copy_images {
 
 function make_entries {
   local outfile
+  local fallback
   outfile="${KERNEL}.conf"
   fallback="${KERNEL}-fallback.conf"
 
@@ -79,6 +80,7 @@ EOF
 
 function print_entries {
   local outfile
+  local fallback
   outfile="${KERNEL}.conf"
   fallback="${KERNEL}-fallback.conf"
 
@@ -99,7 +101,7 @@ EOF
 
 function update_ucode {
   vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-  if [[ "$vendor" =~ "AMD" ]]; then
+  if [[ "${vendor}" =~ "AMD" ]]; then
     if [ -f "${EFIDIR}/amd-ucode.img" ]; then
       if ! grep "^initrd\s\+\/amd-ucode.img" \
         "${EFIDIR}/loader/entries/${KERNEL}.conf" >/dev/null 2>&1; then
@@ -116,7 +118,7 @@ function update_ucode {
         "${EFIDIR}/loader/entries/${KERNEL}.conf" \
         "${EFIDIR}/loader/entries/${KERNEL}-fallback.conf"
     fi
-  elif [[ "$vendor" =~ "Intel" ]]; then
+  elif [[ "${vendor}" =~ "Intel" ]]; then
     if [ -f "${EFIDIR}/intel-ucode.img" ]; then
       if ! grep "^initrd\s\+\/intel-ucode.img" \
         "${EFIDIR}/loader/entries/${KERNEL}.conf" >/dev/null 2>&1; then
@@ -142,21 +144,21 @@ EFIDIR="$(bootctl -p)"
 case "${MODE}" in
   all|init)
     CMDLINE="$(get_cmdline)"
-    for vmlinuz in /boot/vmlinuz-*; do
-      tmp="$(basename "${vmlinuz}")"
-      KERNEL="${tmp/vmlinuz-/}"
+    for VMLINUZ in /boot/vmlinuz-*; do
+      TMP="$(basename "${VMLINUZ}")"
+      KERNEL="${TMP/vmlinuz-/}"
       copy_images
       make_entries
       update_ucode
     done
     ;;
   update)
-    for entry in "${EFIDIR}"/loader/entries/*.conf; do
-      if ! [[ "${entry}" =~ fallback ]]; then
-        tmp="$(basename "${entry}")"
-        CMDLINE="$(get_cmdline "${entry}")"
-        get_cmdline "${entry}"
-        KERNEL="${tmp/\.conf/}"
+    for ENTRY in "${EFIDIR}"/loader/entries/*.conf; do
+      if ! [[ "${ENTRY}" =~ fallback ]]; then
+        TMP="$(basename "${ENTRY}")"
+        CMDLINE="$(get_cmdline "${ENTRY}")"
+        get_cmdline "${ENTRY}"
+        KERNEL="${TMP/\.conf/}"
         # print_entries
         make_entries
         update_ucode
@@ -164,10 +166,10 @@ case "${MODE}" in
     done
     ;;
   ucode)
-    for entry in "${EFIDIR}"/loader/entries/*.conf; do
-      if ! [[ "${entry}" =~ fallback ]]; then
-        tmp="$(basename "${entry}")"
-        KERNEL="${tmp/\.conf/}"
+    for ENTRY in "${EFIDIR}"/loader/entries/*.conf; do
+      if ! [[ "${ENTRY}" =~ fallback ]]; then
+        TMP="$(basename "${ENTRY}")"
+        KERNEL="${TMP/\.conf/}"
         update_ucode
       fi
     done
