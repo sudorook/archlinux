@@ -632,11 +632,13 @@ function add_user {
 
   sed -e "s/^# \(%wheel ALL=(ALL:\?\(ALL\)\?) ALL\)$/\1/g" /etc/sudoers | \
     EDITOR=tee visudo >/dev/null
-
-  # disable root account
-  passwd -l root
 }
 export -f add_user
+
+function disable_root {
+  passwd -l root
+}
+export -f disable_root
 
 function set_mkinitcpio {
   local old_hooks
