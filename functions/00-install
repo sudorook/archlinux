@@ -713,7 +713,7 @@ function install_gummiboot {
       elif [ -n "${root_uuid}" ]; then
         cmdline="root=/dev/mapper/${VG}-root"
       else
-        echo "ERROR: Missing root ${root_uuid}."
+        show_error "ERROR: Missing root ${root_uuid}."
         exit 3
       fi
       cmdline="${cmdline} rw"
@@ -786,7 +786,7 @@ function install_grub {
     elif [ -n "${root_uuid}" ]; then
       cmdline="root=/dev/mapper/${VG}-root"
     else
-      echo "ERROR: Missing root ${root_uuid}."
+      show_error "ERROR: Missing root ${root_uuid}."
       exit 3
     fi
     sed -i "s|^GRUB_CMDLINE_LINUX=[\"\"]*|GRUB_CMDLINE_LINUX=\"${cmdline}\"|g" /etc/default/grub
@@ -811,14 +811,14 @@ function make_luks_key {
   local old_cmdline
   local new_cmdline
 
-  echo "Adding LUKS decryption key file..."
+  show_header "Adding LUKS decryption key file..."
   crypt_key="/etc/crypto_keyfile.bin"
   dd bs=512 count=4 if=/dev/random of=${crypt_key}
   chmod 400 ${crypt_key}
   echo -n "${CRYPT_PASSWORD}" | \
     cryptsetup luksAddKey "${CRYPT_PARTITION}" --key-file=- --batch-mode "${crypt_key}" --key-slot 1
 
-  echo "Rebuilding kernel(s)..."
+  show_info "Rebuilding kernel(s)..."
   old_files=$(sed -n "s/^FILES=(\(.*\))/\1/p" /etc/mkinitcpio.conf)
   if [ -n "${old_files}" ]; then
     new_files="${old_files} ${crypt_key}"
@@ -831,7 +831,7 @@ function make_luks_key {
   chmod -R 700 /boot
 
   if [ -f /etc/default/grub ]; then
-    echo "Updating GRUB configuration..."
+    show_info "Updating GRUB configuration..."
     old_cmdline=$(sed -n "s/^GRUB_CMDLINE_LINUX=\"\(.*\)\"/\1/p" /etc/default/grub)
     if [ -n "${old_cmdline}" ]; then
       new_cmdline="${old_cmdline} rd.luks.key=${crypt_key}"
