@@ -87,7 +87,8 @@ function main {
   pacstrap /mnt base
   genfstab -U /mnt >> /mnt/etc/fstab
   TIMEZONE="${TIMEZONE}" arch-chroot /mnt /bin/bash -c "set_timezone"
-  LOCALE="${LOCALE}" CHARSET="${CHARSET}" arch-chroot /mnt /bin/bash -c "set_locale"
+  LOCALE="${LOCALE}" CHARSET="${CHARSET}" \
+    arch-chroot /mnt /bin/bash -c "set_locale"
 
   arch-chroot /mnt /bin/bash -c "update_mirrorlist"
   arch-chroot /mnt /bin/bash -c "install_packages"
@@ -97,7 +98,8 @@ function main {
   arch-chroot /mnt /bin/bash -c "disable_root"
   arch-chroot /mnt /bin/bash -c "set_mkinitcpio"
   if [[ "${BOOTMODE}" = "GRUB" ]]; then
-    SCHEME="${SCHEME}" DEVICE="${DEVICE}" arch-chroot /mnt /bin/bash -c "install_grub"
+    SCHEME="${SCHEME}" DEVICE="${DEVICE}" \
+      arch-chroot /mnt /bin/bash -c "install_grub"
     if [[ "${SCHEME}" = "LVM on LUKS" ]]; then
       CRYPT_PASSWORD="${CRYPT_PASSWORD}" CRYPT_PARTITION="${CRYPT_PARTITION}" \
         arch-chroot /mnt /bin/bash -c "make_luks_key"
@@ -128,7 +130,8 @@ function main {
     cp -f "${dir}/utils/sdboot-mkconfig" /mnt/usr/local/sbin/
     chmod +x /mnt/usr/local/sbin/sdboot-mkconfig
 
-    SCHEME="${SCHEME}" DEVICE="${DEVICE}" arch-chroot /mnt /bin/bash -c "install_gummiboot"
+    SCHEME="${SCHEME}" DEVICE="${DEVICE}" \
+      arch-chroot /mnt /bin/bash -c "install_gummiboot"
   elif [[ "${BOOTMODE}" = "EFISTUB" ]]; then
     show_warning "Not supported yet..."
   fi
