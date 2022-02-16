@@ -59,9 +59,10 @@ function check_fail {
 }
 
 function check_installed {
+  local metacount
+  local installcount
+  local package
   while read -r package; do
-    local metacount
-    local installcount
     metacount=$(pacman -Ss "${package}" | \
                 grep -c "(.*${package}.*)" || true)
     installcount=$(pacman -Qs "${package}" | \
@@ -90,12 +91,13 @@ function check_aur_installed {
   local pkgbuilddir="${HOME}/.pkgbuild"
   local aurprefix="https://aur.archlinux.org"
   local curdir
+  local metacount
+  local installcount
+  local package
   curdir="$(pwd)"
 
   mkdir -p "${pkgbuilddir}"
   while read -r package; do
-    local metacount
-    local installcount
     metacount=$(pacman -Ss "${package}" | \
                 grep -c "(.*${package}.*)" || true)
     installcount=$(pacman -Qs "${package}" | \
@@ -126,6 +128,7 @@ function check_aur_installed {
 
 function install_post_dependencies {
   show_header "Checking post-installation dependencies."
+  local package
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
