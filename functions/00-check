@@ -128,6 +128,7 @@ function check_aur_installed {
 
 function install_post_dependencies {
   show_header "Checking post-installation dependencies."
+  sudo pacman -Sy
   local package
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
@@ -143,10 +144,22 @@ function install_post_dependencies {
 
 function install_dependencies {
   show_header "Checking installation dependencies."
+
+  local state=true
+  local exe
+  while read -r exe; do
+    if ! command -v "${exe}" >/dev/null; then
+      state=false
+    fi
+  done < "${install}"
+  if "${state}"; then return; fi
+
+  sudo pacman -Sy
+  local package
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
       show_info "${package} is needed for this script."
-      sudo pacman -S --noconfirm "${package}"
+      pacman -S --noconfirm "${package}"
       check_fail $?
       show_success "${package} now installed."
     else
