@@ -126,9 +126,17 @@ function check_aur_installed {
   cd "${curdir}" || exit
 }
 
+function sync_repos {
+  show_header "Synchronizing repos."
+  if [ ${EUID} -eq 0 ]; then
+    pacman -Sy
+  else
+    sudo pacman -Sy
+  fi
+}
+
 function install_post_dependencies {
   show_header "Checking post-installation dependencies."
-  sudo pacman -Sy
   local package
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
@@ -154,7 +162,6 @@ function install_dependencies {
   done < "${install}"
   if "${state}"; then return; fi
 
-  sudo pacman -Sy
   local package
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then

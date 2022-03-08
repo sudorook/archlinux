@@ -228,9 +228,10 @@ function main {
 # Check if dependencies are installed and if network is working
 #
 
-install_post_dependencies
 check_user
 check_network
+sync_repos
+install_post_dependencies
 
 
 #
