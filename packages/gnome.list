@@ -1,6 +1,8 @@
+gammastep
 gdm
 gnome-backgrounds
 gnome-control-center
+gnome-desktop
 gnome-session
 gnome-settings-daemon
 gnome-shell
@@ -11,6 +13,7 @@ gnome-tweaks
 nautilus
 nautilus-share
 networkmanager
+xdg-desktop-portal-gnome
 xdg-user-dirs
 xdg-user-dirs-gtk
 xdg-utils
