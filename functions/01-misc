@@ -24,24 +24,20 @@ mksdbootconf="${dir}/utils/sdboot-mkconfig"
 
 zsh="${dir}/packages/zsh.list"
 zshrc="${dir}/dotfiles/zshrc"
-zshdir="${HOME}/.zsh"
+p10krc="${dir}/dotfiles/p10k"
 function install_zsh {
   show_header "Installing zsh."
   check_installed "${zsh}"
   check_fail
   show_success "zsh installed."
 
-  show_info "Downloading zsh extras."
-  mkdir -p "${zshdir}"
-  if ! [ -d "${zshdir}/fishy-lite" ]; then
-    git clone https://github.com/sudorook/fishy-lite \
-      "${zshdir}/fishy-lite"
-  fi
-
   mkdir -p "${HOME}/.local/share/zsh/site-functions"
 
   show_info "Copying zshrc."
   cp -f "${zshrc}" "${HOME}/.zshrc"
+
+  show_info "Copying powerlevel10k config."
+  cp -f "${p10krc}" "${HOME}/.p10k.zsh"
 
   if ! test "$(getent passwd "$(whoami)" | grep "zsh")"; then
     show_info "Changing login shell to zsh. Provide your password."

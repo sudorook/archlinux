@@ -152,10 +152,9 @@ include() {
   [[ -f "$1" ]] && source "$1"
 }
 
-# custom fishy theme
-include ${HOME}/.zsh/fishy-lite/fishy.zsh
-include ${HOME}/.zsh/fishy-lite/battery/percent.zsh
-include ${HOME}/.zsh/fishy-lite/git-prompt.zsh
+# powerlevel10k
+include /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+include ${HOME}/.p10k.zsh
 
 # syntax highlighting
 include /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
