@@ -28,7 +28,7 @@ RcppArmadillo
 RcppEigen
 readr
 reshape2
-rglpk
+Rglpk
 rmarkdown
 rvest
 stringr
