@@ -35,6 +35,7 @@ stringr
 testthat
 tibble
 tidyr
+tidyverse
 vegan
 viridis
 viridisLite
