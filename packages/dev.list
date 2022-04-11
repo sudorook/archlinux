@@ -39,7 +39,6 @@ perl-image-exiftool
 prettier
 pygmentize
 python
-python-argparse
 python-beautifulsoup4
 python-biopython
 python-black
