@@ -57,10 +57,10 @@ function install_cinnamon {
     export DESKTOP_SESSION="cinnamon"
   fi
 
-  # Get latitude and longitude using GeoClue2 for Redshift.
+  # Get latitude and longitude using GeoClue2 for Gammastep.
   if [ -e /usr/lib/geoclue-2.0/demos/where-am-i ]; then
-    show_info "Generating Redshift config."
-    mkdir -p "${HOME}/.config/"
+    show_info "Generating Gammastep config."
+    mkdir -p "${HOME}/.config/gammastep"
     local tmp
     local lat
     local lon
@@ -71,9 +71,9 @@ function install_cinnamon {
       lon="$(echo "$tmp" | \
              sed -n "s/^Longitude: \+\([-0-9\.]\+\)°$/\1/p" | head -n 1)"
       sed -e "s,^lat=.*,lat=${lat},g" -e "s,^lon=.*,lon=${lon},g" \
-        "${gammastepini}" > "${HOME}/.config/gammastep/gammastep.conf"
+        "${gammastepini}" > "${HOME}/.config/gammastep/config.ini"
     else
-      cp "${gammastepini}" "${HOME}/.config/gammastep/gammastep.conf"
+      cp "${gammastepini}" "${HOME}/.config/gammastep/config.ini"
     fi
   fi
 
