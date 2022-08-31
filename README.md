@@ -170,7 +170,7 @@ Automatically install (without prompting) packages and configs.
 
 3) Install GNOME desktop environment (with GDM for login).
 
-4) Install Cinnamon desktop environment and Redshift (with LightDM for login).
+4) Install Cinnamon desktop environment and Gammastep (with LightDM for login).
 
 #### 6) Network tools
 ```
