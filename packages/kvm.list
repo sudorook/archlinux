@@ -2,7 +2,6 @@ bridge-utils
 dnsmasq
 edk2-ovmf
 edk2-shell
-iptables-nft
 libguestfs
 libiscsi
 libvirt
