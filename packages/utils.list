@@ -8,7 +8,7 @@ dos2unix
 dosfstools
 encfs
 ethtool
-exfat-utils
+exfatprogs
 gnupg
 gptfdisk
 java-commons-lang
