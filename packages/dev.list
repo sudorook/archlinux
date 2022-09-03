@@ -31,6 +31,7 @@ lapack
 lapacke
 libgit2
 mathjax
+meson
 mkvtoolnix-cli
 nodejs
 npm
