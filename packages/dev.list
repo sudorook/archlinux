@@ -53,6 +53,7 @@ python-mccabe
 python-memory-profiler
 python-numpy
 python-pandas
+python-pip
 python-pycurl
 python-pylint
 python-reportlab
