@@ -25,6 +25,7 @@ gulp
 hdf5-openmpi
 hugo
 intltool
+jq
 julia
 jupyter
 lapack
