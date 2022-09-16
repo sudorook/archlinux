@@ -82,7 +82,7 @@ function check_installed {
     # installed.
     else
       show_listitem "Installing ${package}."
-      sudo pacman -S --noconfirm "${package}"
+      sudo pacman -S --ask 4 --noconfirm "${package}"
     fi
   done < "${1}"
 }
