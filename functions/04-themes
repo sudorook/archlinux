@@ -199,9 +199,14 @@ function install_fonts {
   check_fail
   show_success "Fonts installed."
 
-  sudo ln -s \
-    /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf \
-    /etc/fonts/conf.d/
+  show_info "Setting nerd font config."
+  if ! [ -d /etc/fonts/conf.d ]; then
+    show_warning "'/etc/fonts/conf.d' for fontconfig is missing. Skipping."
+  elif ! [ -e /etc/fonts/conf.d/10-nerd-font-symbols.conf ]; then
+    sudo ln -s \
+      /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf \
+      /etc/fonts/conf.d/
+  fi
 }
 
 function install_papirus_icons {
