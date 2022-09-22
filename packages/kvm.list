@@ -1,4 +1,5 @@
 bridge-utils
+iptables-nft
 dnsmasq
 edk2-ovmf
 edk2-shell
