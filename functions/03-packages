@@ -220,7 +220,6 @@ function install_kvm_guest {
       sudo mkinitcpio -P
     fi
 
-    sudo systemctl enable qemu-guest-agent.service
     sudo systemctl enable spice-vdagentd.service
   else
     show_warning "Not running on a virtualized machine. Skipping."
