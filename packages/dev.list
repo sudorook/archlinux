@@ -27,7 +27,7 @@ hugo
 intltool
 jq
 julia
-jupyter
+jupyter-notebook
 lapack
 lapacke
 libgit2
