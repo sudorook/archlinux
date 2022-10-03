@@ -162,6 +162,8 @@ function install_dependencies {
   done < "${install}"
   if "${state}"; then return; fi
 
+  pacman -Sy --noconfirm archlinux-keyring
+
   local package
   while read -r package; do
     if ! pacman -Qi "${package}" > /dev/null 2>&1; then
