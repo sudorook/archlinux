@@ -1,6 +1,7 @@
 arch-install-scripts
 bc
 cryptsetup
+dosfstools
 fzf
 git
 gptfdisk
