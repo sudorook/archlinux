@@ -277,7 +277,7 @@ function set_qtcompat {
   cp -f "${qt5ctconf}" "${HOME}/.config/qt5ct"
   cp -f "${qt6ctconf}" "${HOME}/.config/qt6ct"
   export QT_QPA_PLATFORMTHEME=qt5ct
-  echo "export QT_QPA_PLATFORMTHEME=\"qt5ct\"" >> "${HOME}/.xprofile"
+  set_config_key_value "${HOME}/.xprofile" "export QT_QPA_PLATFORMTHEME" "qt5ct"
 }
 
 function 04-themes {
