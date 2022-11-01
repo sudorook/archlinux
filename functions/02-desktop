@@ -58,8 +58,8 @@ function install_cinnamon {
   fi
 
   # Get latitude and longitude using GeoClue2 for Gammastep.
+  show_info "Setting Gammastep config."
   if [ -e /usr/lib/geoclue-2.0/demos/where-am-i ]; then
-    show_info "Generating Gammastep config."
     mkdir -p "${HOME}/.config/gammastep"
     local tmp
     local lat
@@ -73,8 +73,12 @@ function install_cinnamon {
       sed -e "s,^lat=.*,lat=${lat},g" -e "s,^lon=.*,lon=${lon},g" \
         "${gammastepini}" > "${HOME}/.config/gammastep/config.ini"
     else
+      show_warning "Parsing latitude/longitude failed. Defaulting to NYC."
       cp "${gammastepini}" "${HOME}/.config/gammastep/config.ini"
     fi
+  else
+    show_warning "Geoclue 'where-am-i' demo not found. Default to NYC."
+    cp "${gammastepini}" "${HOME}/.config/gammastep/config.ini"
   fi
 
   xdg-user-dirs-update
