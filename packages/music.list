@@ -6,5 +6,6 @@ mpd
 ncmpcpp
 pianobar
 python-mpd2
+python-mutagen
 python-pylast
 python-requests
