@@ -26,11 +26,11 @@ set -eu
 PKGDIR=../packages
 MISSING=false
 
-for file in "${PKGDIR}"/*; do
-  basename "${file}"
+for FILE in "${PKGDIR}"/*; do
+  basename "${FILE}"
 
   # Skip the wine list if multilib is not enabled.
-  if [[ "${file}" = "../packages/wine.list" ]]; then
+  if [[ "${FILE}" = "../packages/wine.list" ]]; then
     if ! pacman -Sl multilib >/dev/null 2>&1; then
       echo "[multilib] not enabled. Skipping."
       echo
@@ -38,14 +38,14 @@ for file in "${PKGDIR}"/*; do
     fi
   fi
 
-  while read -r package; do
-    if pacman -Ss ^"${package//+/\\\+}"$ >/dev/null; then
-      echo -e "\033[1;35m✓\033[0m" "${package}"
+  while read -r PACKAGE; do
+    if pacman -Ss ^"${PACKAGE//+/\\\+}"$ >/dev/null; then
+      echo -e "\033[1;35m✓\033[0m" "${PACKAGE}"
     else
       MISSING=true
-      echo -e "\033[1;31m✗ ${package}\033[m"
+      echo -e "\033[1;31m✗ ${PACKAGE}\033[m"
     fi
-  done < "${file}"
+  done < "${FILE}"
 
   echo
 done
