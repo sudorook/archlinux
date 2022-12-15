@@ -2,8 +2,9 @@ cinnamon
 cinnamon-desktop
 gammastep
 gnome-keyring
-gnome-terminal
 gvfs-smb
+kitty
+kitty-terminfo
 lightdm
 lightdm-gtk-greeter
 nemo-fileroller

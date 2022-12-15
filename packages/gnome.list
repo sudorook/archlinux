@@ -8,9 +8,10 @@ gnome-session
 gnome-settings-daemon
 gnome-shell
 gnome-shell-extensions
-gnome-terminal
 gnome-themes-extra
 gnome-tweaks
+kitty
+kitty-terminfo
 nautilus
 nautilus-share
 networkmanager
