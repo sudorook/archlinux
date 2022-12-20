@@ -85,6 +85,7 @@ function install_firmware {
 
     local vendor
     local efidir
+    local conf
     vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
     efidir="$(bootctl -p)"
     if [[ "${vendor}" =~ "AMD" ]]; then
@@ -224,6 +225,7 @@ function 01-base {
     "Pacman styling"
     "Pacman parallel"
     "Disable system beep")
+  local option
   select option in "${options[@]}"; do
     case $option in
       "Back")

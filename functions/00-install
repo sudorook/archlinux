@@ -44,6 +44,7 @@ DEVICE=
 function ask_device {
   show_header "Device for installation:"
   local disks
+  local disk
   local result
   disks=($(lsblk | grep disk | cut -d' ' -f1 | tr '\n' ' '))
   select disk in "${disks[@]}"; do
@@ -63,6 +64,7 @@ SCHEME=
 function ask_partition_scheme {
   show_header "Parition scheme:"
   local options=("Back" "LVM on LUKS" "LVM" "Plain")
+  local option
   select option in "${options[@]}"; do
     case "${option}" in
       "Back")
@@ -94,6 +96,7 @@ function ask_bootmode {
   show_header "Boot system:"
   if [ -e /sys/firmware/efi ]; then
     local options=("Back" "GRUB" "systemd-boot" "EFISTUB")
+    local option
     select option in "${options[@]}"; do
       case "${option}" in
         "Back")
