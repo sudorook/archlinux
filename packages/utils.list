@@ -30,6 +30,7 @@ rsync
 screen
 signify
 squashfs-tools
+stress
 s-tui
 time
 tmux
