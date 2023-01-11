@@ -8,4 +8,5 @@ libiscsi
 libvirt
 openbsd-netcat
 qemu
+qemu-base
 virt-manager
