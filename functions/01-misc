@@ -126,6 +126,55 @@ function install_linux_zen {
   fi
 }
 
+rt="${dir}/packages/rt.list"
+rtsdadd="${dir}/hooks/999-add-linux-rt.hook"
+rtsdremove="${dir}/hooks/999-remove-linux-rt.hook"
+rtsdupdate="${dir}/hooks/999-add-linux-rt.hook"
+pacmanhookdir="/etc/pacman.d/hooks"
+function install_linux_rt {
+  show_header "Installing linux-rt kernel."
+  check_installed "${rt}"
+  check_fail
+  show_success "Zen kernel installed."
+  show_success "Real-time kernel installed."
+
+  if command -v grub-mkconfig >/dev/null 2>&1; then
+    show_info "Regenerating grub.cfg"
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
+    sudo cp -af "${rtsdadd}" "${pacmanhookdir}"
+    sudo cp -af "${rtsdremove}" "${pacmanhookdir}"
+    sudo cp -af "${rtsdupdate}" "${pacmanhookdir}"
+    sudo "${mksdbootconf}" linux-rt
+  fi
+}
+
+rtlts="${dir}/packages/rt-lts.list"
+rtltssdadd="${dir}/hooks/999-add-linux-rt-lts.hook"
+rtltssdremove="${dir}/hooks/999-remove-linux-rt-lts.hook"
+rtltssdupdate="${dir}/hooks/999-add-linux-rt-lts.hook"
+pacmanhookdir="/etc/pacman.d/hooks"
+function install_linux_rt_lts {
+  show_header "Installing linux-rt-lts kernel."
+  check_installed "${rtlts}"
+  check_fail
+  show_success "Real-time LTS kernel installed."
+
+  if command -v grub-mkconfig >/dev/null 2>&1; then
+    show_info "Regenerating grub.cfg"
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
+  fi
+
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
+    sudo cp -af "${rtltssdadd}" "${pacmanhookdir}"
+    sudo cp -af "${rtltssdremove}" "${pacmanhookdir}"
+    sudo cp -af "${rtltssdupdate}" "${pacmanhookdir}"
+    sudo "${mksdbootconf}" linux-rt-lts
+  fi
+}
+
 utils="${dir}/packages/utils.list"
 tmuxconfig="${dir}/dotfiles/tmux.conf"
 rkhunterconfig="/etc/rkhunter.conf"
@@ -170,6 +219,8 @@ function 01-misc {
     "All"
     "Linux hardened kernel"
     "Linux LTS kernel"
+    "Linux RT kernel"
+    "Linux RT LTS kernel"
     "Linux zen kernel"
     "Linux utilities"
     "Laptop tools"
@@ -183,6 +234,8 @@ function 01-misc {
       "All")
         install_linux_hardened
         install_linux_lts
+        install_linux_rt
+        install_linux_rt_lts
         install_linux_zen
         install_utils
         install_laptop
@@ -195,6 +248,14 @@ function 01-misc {
         ;;
       "Linux LTS kernel")
         install_linux_lts
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        ;;
+      "Linux RT kernel")
+        install_linux_rt
+        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        ;;
+      "Linux RT LTS kernel")
+        install_linux_rt_lts
         show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux zen kernel")

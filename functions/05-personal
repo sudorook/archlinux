@@ -955,7 +955,7 @@ function select_default_kernel {
       Back)
         break
         ;;
-      linux|linux-lts|linux-zen|linux-hardened)
+      linux|linux-lts|linux-zen|linux-hardened|linux-rt|linux-rt-lts)
         kernel=${option}
         set_default_kernel
         break

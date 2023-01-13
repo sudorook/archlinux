@@ -141,24 +141,29 @@ Automatically install (without prompting) packages and configs.
 
 #### 4) Miscellaneous
 ```
-1) Back                   4) Linux LTS kernel       7) Laptop tools
-2) All                    5) Linux zen kernel       8) zsh
-3) Linux hardened kernel  6) Linux utilities
+1) Back                     5) Linux RT kernel         9) Laptop tools
+2) All                      6) Linux RT LTS kernel    10) zsh
+3) Linux hardened kernel    7) Linux zen kernel
+4) Linux LTS kernel         8) Linux utilities
 ```
 
 3) Install the `linux-hardened` kernel (with headers).
 
 4) Install the `linux-lts` kernel (plus headers).
 
-5) Install the `linux-zen` kernel (plus headers).
+5) Install the `linux-rt` kernel (plus headers).
 
-6) Install general command line utilities in [utils.list](packages/utils.list).
+6) Install the `linux-rt-lts` kernel (plus headers).
 
-7) Install `tlp` for power management and `xorg-xbacklight` for screen
+7) Install the `linux-zen` kernel (plus headers).
+
+8) Install general command line utilities in [utils.list](packages/utils.list).
+
+9) Install `tlp` for power management and `xorg-xbacklight` for screen
    brightness.
 
-8) Install `zsh`, [fishy-lite](https://github.com/sudorook/fishy-lite), and
-   change default shell to `zsh`.
+10) Install `zsh`, [fishy-lite](https://github.com/sudorook/fishy-lite), and
+    change default shell to `zsh`.
 
 #### 5) Desktop environment
 ```

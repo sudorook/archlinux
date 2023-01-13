@@ -1,0 +1,16 @@
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = linux-rt-lts
+
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/lib/modules/*realtime*rt-lts/vmlinuz
+Target = usr/lib/initcpio/*
+
+[Action]
+Description = Updating Linux RT LTS on EFI system path
+When = PostTransaction
+Exec = /bin/sh -c '( pacman -Qi linux-rt-lts && /usr/bin/bootctl is-installed && EFI=$(/usr/bin/bootctl -p) && /usr/bin/cp -af /boot/vmlinuz-linux-rt-lts /boot/initramfs-linux-rt-lts{-fallback,}.img -t $EFI ) >/dev/null 2>&1'
