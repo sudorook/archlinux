@@ -7,7 +7,7 @@ Target = linux-lts
 Type = Path
 Operation = Install
 Operation = Upgrade
-Target = usr/lib/modules/*lts*/vmlinuz
+Target = usr/lib/modules/*[0-9]-lts/vmlinuz
 Target = usr/lib/initcpio/*
 
 [Action]

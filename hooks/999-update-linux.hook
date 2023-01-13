@@ -7,7 +7,7 @@ Target = linux
 Type = Path
 Operation = Install
 Operation = Upgrade
-Target = usr/lib/modules/*arch*/vmlinuz
+Target = usr/lib/modules/[0-9]*-arch[0-9]*/vmlinuz
 Target = usr/lib/initcpio/*
 
 [Action]
