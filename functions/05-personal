@@ -940,10 +940,18 @@ function select_default_kernel {
   local kernels
   local option
 
-  mapfile -t kernellist < \
-    <(find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
-      xargs -0 -I _ basename _ | \
-      sed -e "s/^vmlinuz-//g")
+  if [ "$(stat -c "%u" /boot)" -eq 0 ]; then
+    show_info "'/boot' owned by root. Searching as root:"
+    mapfile -t kernellist < \
+      <(sudo find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
+        xargs -0 -I _ basename _ | \
+        sed -e "s/^vmlinuz-//g")
+  else
+    mapfile -t kernellist < \
+      <(find /boot -maxdepth 1 -name 'vmlinuz-*' -type f -print0 | \
+        xargs -0 -I _ basename _ | \
+        sed -e "s/^vmlinuz-//g")
+  fi
   kernels=("Back")
   for kernel in "${kernellist[@]}"; do
     kernels+=("${kernel}")
