@@ -1,89 +1,79 @@
 [org/cinnamon]
 alttab-minimized-aware=true
-enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:left:1:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:1:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:removable-drives@cinnamon.org:7', 'panel1:right:7:network@cinnamon.org:9', 'panel1:right:8:sound@cinnamon.org:10', 'panel1:right:9:power@cinnamon.org:11', 'panel1:right:10:calendar@cinnamon.org:12', 'panel1:right:5:on-screen-keyboard@cinnamon.org:14', 'panel1:right:11:workspace-switcher@cinnamon.org:15', 'panel1:right:6:user@cinnamon.org:16']
-next-applet-id=18
-panel-zone-icon-sizes='[{"panelId": 1, "left": 0, "center": 0, "right": 16}]'
-favorite-apps=['firefox.desktop', 'thunderbird.desktop', 'kitty.desktop', 'nemo.desktop', 'cinnamon-settings.desktop']
+enabled-applets=['panel1:left:0:menu@cinnamon.org:0', 'panel1:left:2:grouped-window-list@cinnamon.org:2', 'panel1:right:1:systray@cinnamon.org:3', 'panel1:right:2:xapp-status@cinnamon.org:4', 'panel1:right:3:notifications@cinnamon.org:5', 'panel1:right:4:printers@cinnamon.org:6', 'panel1:right:5:removable-drives@cinnamon.org:7', 'panel1:right:9:network@cinnamon.org:10', 'panel1:right:10:sound@cinnamon.org:11', 'panel1:right:11:power@cinnamon.org:12', 'panel1:right:12:calendar@cinnamon.org:13', 'panel1:right:7:on-screen-keyboard@cinnamon.org:14', 'panel1:right:8:user@cinnamon.org:15', 'panel1:right:13:workspace-switcher@cinnamon.org:16']
+favorite-apps=['firefox.desktop', 'thunderbird.desktop', 'kitty.desktop', 'cinnamon-settings.desktop', 'nemo.desktop']
+next-applet-id=17
 panels-autohide=['1:intel']
 workspace-expo-view-as-grid=true
+
+[org/cinnamon/cinnamon-session]
+quit-delay-toggle=true
 
 [org/cinnamon/desktop/a11y/applications]
 screen-keyboard-enabled=true
 
 [org/cinnamon/desktop/a11y/keyboard]
-togglekeys-enable-osd=true
 togglekeys-enable-beep=true
+togglekeys-enable-osd=true
 
-[org/cinnamon/keyboard]
-keyboard-position='bottom'
-keyboard-type='touch'
-
-[org/cinnamon/settings-daemon/plugins/power]
-sleep-inactive-battery-timeout=1800
-lock-on-suspend=true
-lid-close-ac-action='suspend'
-idle-dim-battery=false
-sleep-display-battery=900
-sleep-display-ac=1800
-lid-close-battery-action='suspend'
-sleep-inactive-ac-timeout=0
-
-[org/cinnamon/settings-daemon/peripherals/touchpad]
-horizontal-scrolling=true
-
-[org/cinnamon/settings-daemon/peripherals/mouse]
-locate-pointer=true
-
-[org/cinnamon/muffin]
-placement-mode='automatic'
-workspace-cycle=true
-
-[org/cinnamon/desktop/screensaver]
-lock-delay=uint32 30
-
-[org/cinnamon/desktop/media-handling]
-automount-open=false
-automount=false
-autorun-never=true
-
-[org/cinnamon/desktop/notifications]
-fade-on-mouseover=false
+[org/cinnamon/desktop/applications/terminal]
+exec='kitty'
 
 [org/cinnamon/desktop/interface]
 clock-use-24h=false
+gtk-overlay-scrollbars=true
 
-[org/cinnamon/desktop/privacy]
-recent-files-max-age=-1
-remember-recent-files=true
+[org/cinnamon/desktop/media-handling]
+automount=false
+automount-open=false
+autorun-never=true
 
-[org/cinnamon/cinnamon-session]
-quit-delay-toggle=true
+[org/cinnamon/desktop/peripherals/mouse]
+locate-pointer=true
 
-[org/cinnamon/sounds]
-notification-file='/usr/share/sounds/freedesktop/stereo/message.oga'
-notification-enabled=true
-plug-file='/usr/share/sounds/freedesktop/stereo/device-added.oga'
-plug-enabled=true
-unplug-file='/usr/share/sounds/freedesktop/stereo/device-removed.oga'
-unplug-enabled=true
+[org/cinnamon/desktop/peripherals/touchpad]
+tap-to-click=true
 
 [org/cinnamon/desktop/sound]
-volume-sound-file='/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga'
 volume-sound-enabled=true
+volume-sound-file='/usr/share/sounds/freedesktop/stereo/audio-volume-change.oga'
 
-[org/gnome/desktop/wm/preferences]
-audible-bell=false
+[org/cinnamon/desktop/wm/preferences]
+button-layout=':minimize,maximize,close'
+
+[org/cinnamon/keyboard]
+keyboard-position='bottom'
+keyboard-type='fullscale'
+
+[org/cinnamon/muffin]
+attach-modal-dialogs=true
+workspace-cycle=true
+
+[org/cinnamon/settings-daemon/plugins/power]
+idle-dim-battery=false
+lid-close-ac-action='suspend'
+lid-close-battery-action='suspend'
+lock-on-suspend=true
+sleep-display-ac=1800
+sleep-display-battery=900
+sleep-inactive-ac-timeout=0
+sleep-inactive-battery-timeout=0
+
+[org/cinnamon/sounds]
+notification-enabled=true
+notification-file='/usr/share/sounds/freedesktop/stereo/message.oga'
+plug-enabled=true
+plug-file='/usr/share/sounds/freedesktop/stereo/device-added.oga'
+unplug-enabled=true
+unplug-file='/usr/share/sounds/freedesktop/stereo/device-removed.oga'
 
 [org/nemo/preferences]
 confirm-trash=false
-quick-renames-with-pause-in-between=true
-show-new-folder-icon-toolbar=true
-show-up-icon-toolbar=false
-show-open-in-terminal-toolbar=true
-thumbnail-limit=uint64 10485760
-show-reload-icon-toolbar=true
 disable-menu-warning=true
-ignore-view-metadata=true
+show-new-folder-icon-toolbar=true
+show-open-in-terminal-toolbar=true
+show-reload-icon-toolbar=true
+show-up-icon-toolbar=false
 
 [org/nemo/window-state]
 start-with-menu-bar=false
