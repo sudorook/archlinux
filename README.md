@@ -162,8 +162,7 @@ Automatically install (without prompting) packages and configs.
 9) Install `tlp` for power management and `xorg-xbacklight` for screen
    brightness.
 
-10) Install `zsh`, [fishy-lite](https://github.com/sudorook/fishy-lite), and
-    change default shell to `zsh`.
+10) Install `zsh`, fish-like plugins, and powerlevel10k theme.
 
 #### 5) Desktop environment
 ```
