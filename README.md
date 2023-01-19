@@ -162,7 +162,7 @@ Automatically install (without prompting) packages and configs.
 9) Install `tlp` for power management and `xorg-xbacklight` for screen
    brightness.
 
-10) Install `zsh`, fish-like plugins, and powerlevel10k theme.
+10) Install `zsh`, fish-like plugins, nerd fonts, and powerlevel10k theme.
 
 #### 5) Desktop environment
 ```
