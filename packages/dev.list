@@ -72,6 +72,7 @@ qwt
 r
 ruby
 ruby-bundler
+ruby-cucumber
 ruby-rake
 sassc
 scour
