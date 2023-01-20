@@ -6,6 +6,7 @@ boost-libs
 clang
 cmake
 cppcheck
+crystal
 cython
 doxygen
 eigen
@@ -77,6 +78,7 @@ ruby-rake
 sassc
 scour
 scrapy
+shards
 shellcheck
 shfmt
 sparsehash
