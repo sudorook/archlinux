@@ -64,7 +64,12 @@ function update_mirrorlist {
 
   # Use reflector to sort among fastest mirrors
   show_info "Using reflector to find the fastest https mirrors."
-  sudo reflector --verbose --latest 10 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+  sudo reflector \
+    --verbose \
+    --latest 10 \
+    --protocol https \
+    --sort rate \
+    --save /etc/pacman.d/mirrorlist
 }
 
 firmware="${dir}/packages/firmware.list"
