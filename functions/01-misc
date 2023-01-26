@@ -52,7 +52,7 @@ function install_zsh {
 hardened="${dir}/packages/hardened.list"
 hardenedsdadd="${dir}/hooks/999-add-linux-hardened.hook"
 hardenedsdremove="${dir}/hooks/999-remove-linux-hardened.hook"
-hardenedsdupdate="${dir}/hooks/999-add-linux-hardened.hook"
+hardenedsdupdate="${dir}/hooks/999-update-linux-hardened.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_hardened {
   show_header "Installing linux-hardened kernel."
@@ -76,7 +76,7 @@ function install_linux_hardened {
 lts="${dir}/packages/lts.list"
 ltssdadd="${dir}/hooks/999-add-linux-lts.hook"
 ltssdremove="${dir}/hooks/999-remove-linux-lts.hook"
-ltssdupdate="${dir}/hooks/999-add-linux-lts.hook"
+ltssdupdate="${dir}/hooks/999-update-linux-lts.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_lts {
   show_header "Installing linux-lts kernel."
@@ -100,7 +100,7 @@ function install_linux_lts {
 zen="${dir}/packages/zen.list"
 zensdadd="${dir}/hooks/999-add-linux-zen.hook"
 zensdremove="${dir}/hooks/999-remove-linux-zen.hook"
-zensdupdate="${dir}/hooks/999-add-linux-zen.hook"
+zensdupdate="${dir}/hooks/999-update-linux-zen.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_zen {
   show_header "Installing linux-zen kernel."
@@ -124,7 +124,7 @@ function install_linux_zen {
 rt="${dir}/packages/rt.list"
 rtsdadd="${dir}/hooks/999-add-linux-rt.hook"
 rtsdremove="${dir}/hooks/999-remove-linux-rt.hook"
-rtsdupdate="${dir}/hooks/999-add-linux-rt.hook"
+rtsdupdate="${dir}/hooks/999-update-linux-rt.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_rt {
   show_header "Installing linux-rt kernel."
@@ -149,7 +149,7 @@ function install_linux_rt {
 rtlts="${dir}/packages/rt-lts.list"
 rtltssdadd="${dir}/hooks/999-add-linux-rt-lts.hook"
 rtltssdremove="${dir}/hooks/999-remove-linux-rt-lts.hook"
-rtltssdupdate="${dir}/hooks/999-add-linux-rt-lts.hook"
+rtltssdupdate="${dir}/hooks/999-update-linux-rt-lts.hook"
 pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_rt_lts {
   show_header "Installing linux-rt-lts kernel."
