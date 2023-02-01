@@ -1,5 +1,4 @@
 acpi
-inotify-tools
 bc
 bcprov
 cpio
@@ -11,6 +10,7 @@ ethtool
 exfatprogs
 gnupg
 gptfdisk
+inotify-tools
 java-commons-lang
 lm_sensors
 mtools
