@@ -40,6 +40,7 @@ musl
 nodejs
 npm
 openblas
+openmp
 pandoc
 perl-image-exiftool
 prettier
