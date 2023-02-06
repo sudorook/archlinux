@@ -101,6 +101,18 @@ function set_system_font {
           show_warning "Ubuntu font family missing..."
         fi
       fi
+
+      if pacman -Qi plasma-desktop >/dev/null 2>&1; then
+        kwriteconfig5 --file kdeglobals --group "General" --key "font" "Roboto,10,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "General" --key "menuFont" "Roboto,10,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "General" --key "smallestReadableFont" "Roboto,8,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "General" --key "toolBarFont" "Roboto,10,-1,5,50,0,0,0,0,0"
+        if pacman -Qi ttf-ubuntu-font-family > /dev/null 2>&1; then
+          kwriteconfig5 --file kdeglobals --group "General" --key "fixed" "Ubuntu Mono,11,-1,5,50,0,0,0,0,0"
+        else
+          show_warning "Ubuntu font family missing..."
+        fi
+      fi
       ;;
     "Noto")
       if pacman -Qi cinnamon >/dev/null 2>&1; then
@@ -136,6 +148,18 @@ function set_system_font {
           show_warning "Ubuntu font family missing..."
         fi
       fi
+
+      if pacman -Qi plasma-shell >/dev/null 2>&1; then
+        kwriteconfig5 --file kdeglobals --group "General" --key "font" "Noto Sans,10,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "General" --key "menuFont" "Noto Sans,10,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "General" --key "smallestReadableFont" "Noto Sans,8,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "General" --key "toolBarFont" "Noto Sans,10,-1,5,50,0,0,0,0,0"
+        if pacman -Qi ttf-ubuntu-font-family > /dev/null 2>&1; then
+          kwriteconfig5 --file kdeglobals --group "General" --key "fixed" "Ubuntu Mono,11,-1,5,50,0,0,0,0,0"
+        else
+          show_warning "Ubuntu font family missing..."
+        fi
+      fi
       ;;
     *)
       show_error "Font ${font} not supported."
@@ -154,6 +178,9 @@ function set_icon_theme {
   if pacman -Qi gnome-shell >/dev/null 2>&1; then
     show_info "Setting GNOME icon theme to ${icontheme}."
     gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
+  fi
+  if [ -e /usr/lib/plasma-changeicons ]; then
+    /usr/lib/plasma-changeicons "${icontheme}"
   fi
 }
 
@@ -377,6 +404,161 @@ function import_gnome_dconf {
   dconf load / < "${gnomedconf}"
   check_fail
   show_success "GNOME dconf settings imported."
+}
+
+function import_kde_settings {
+  show_header "Setting default Plasma behavior."
+
+  show_info "Adding Cinnamon-like desktop shortcuts."
+  kwriteconfig5 --file kglobalshortcutsrc --group "kwin" --key "Overview" "Ctrl+Alt+Up,Meta+W,Toggle Overview"
+  kwriteconfig5 --file kglobalshortcutsrc --group "kwin" --key "ShowDesktopGrid" "Ctrl+Alt+Down	Meta+F8,Meta+F8,Show Desktop Grid"
+  kwriteconfig5 --file kglobalshortcutsrc --group "kwin" --key "Switch to Next Desktop" "Ctrl+Alt+Right,,Switch to Next Desktop"
+  kwriteconfig5 --file kglobalshortcutsrc --group "kwin" --key "Switch to Previous Desktop" "Ctrl+Alt+Left,,Switch to Previous Desktop"
+  kwriteconfig5 --file kglobalshortcutsrc --group "kwin" --key "Window to Next Desktop" "Ctrl+Alt+Shift+Right,,Window to Next Desktop"
+  kwriteconfig5 --file kglobalshortcutsrc --group "kwin" --key "Window to Previous Desktop" "Ctrl+Alt+Shift+Left,,Window to Previous Desktop"
+
+  # Use 'Automatic' virtual destkop layout for overview, and display desktop name labels.
+  kwriteconfig5 --file kwinrc --group "Effect-desktopgrid" --key "DesktopLayoutMode" "1"     # automatic
+  kwriteconfig5 --file kwinrc --group "Effect-desktopgrid" --key "DesktopNameAlignment" "68"  # desktop names at bottom
+
+  # Dim unfocused windows.
+  kwriteconfig5 --file kwinrc --group "Effect-diminactive" --key "Strength" "10"
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "diminactiveEnabled" "true"
+
+  # Dim screen when in administer mode.
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "kwin4_effect_dimscreenEnabled" "true"
+
+  # Change desktop viewer animations.
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "kwin4_effect_eyeonscreenEnabled" "true"
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "kwin4_effect_windowapertureEnabled" "false"
+
+  # Don't focus alt-tab windows.
+  kwriteconfig5 --file kwinrc --group "TabBox" --key "HighlightWindows" "false"
+
+  # Increase delay for showing the alt-tab OSD.
+  kwriteconfig5 --file kwinrc --group "TabBox" --key "DelayTime" "180"  # ?
+
+  # Disable auto-mount login service.
+  kwriteconfig5 --file kded5rc --group "Module-device_automounter" --key "autoload" "false"
+
+  # Show workspace switcher OSD and adjust default settings.
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "desktopchangeosdEnabled" "true"
+  kwriteconfig5 --file kwinrc --group "Windows" --key "RollOverDesktops" "true"
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "kwin4_effect_fadedesktopEnabled" "true"
+  kwriteconfig5 --file kwinrc --group "Plugins" --key "slideEnabled" "false"
+  kwriteconfig5 --file kwinrc --group "Script-desktopchangeosd" --key "PopupHideDelay" "300"  # speed up switcher OSD
+  kwriteconfig5 --file kwinrc --group "Script-desktopchangeosd" --key "TextOnly" "true"
+
+  # Disable software (Discover) search in krunner.
+  kwriteconfig5 --file krunnerrc --group "Plugins" --key "appstreamEnabled" "false"
+
+  # Use 'smart' new window placement.
+  kwriteconfig5 --file kwinrc --group "Windows" --key "Placement" "Smart"
+
+  # Reduce window shadows in breeze theme.
+  kwriteconfig5 --file breezerc --group "Common" --key "ShadowSize" "ShadowSmall"
+  kwriteconfig5 --file breezerc --group "Common" --key "ShadowStrength" "64"
+
+  # Make cursor waiting animation static.
+  kwriteconfig5 --file klaunchrc --group "BusyCursorSettings" --key "Bouncing" "false"
+
+  # Enable 'Night Color' to reduce blue light at night.
+  kwriteconfig5 --file kwinrc --group "NightColor" --key "Active" "true"
+  kwriteconfig5 --file kwinrc --group "NightColor" --key "DayTemperature" "5700"
+  kwriteconfig5 --file kwinrc --group "NightColor" --key "NightTemperature" "2500"
+
+  # Double-click to open.
+  kwriteconfig5 --file kdeglobals --group "KDE" --key "SingleClick" "false"
+
+  # Speed up global animations.
+  kwriteconfig5 --file kdeglobals --group "KDE" --key "AnimationDurationFactor" "0.5"
+
+  # Disable Baloo indexing of file contents.
+  kwriteconfig5 --file baloofilerc --group "General" --key "only basic indexing" "true"
+
+  # Disable plasma software update notifications.
+  kwriteconfig5 --file PlasmaDiscoverUpdates --group "Global" --key "RequiredNotificationInterval" "1"  # need to convert to -1
+  sed -i "s/^RequiredNotificationInterval=1$/RequiredNotificationInterval=-1/g" "${HOME}/.config/PlasmaDiscoverUpdates"
+
+  # Disable top-left corner effect.
+  kwriteconfig5 --file kwinrc --group "Effect-windowview" --key "BorderActivateAll" "9"
+
+  # Remove desktop scrolling behavior.
+  kwriteconfig5 --file plasma-org.kde.plasma.desktop-appletsrc --group "ActionPlugins" --group "0" --key "wheel:Vertical;NoModifier" --delete
+
+  # List desktop shortcuts top-to-bottom.
+  kwriteconfig5 --file plasma-org.kde.plasma.desktop-appletsrc --group "Containments" --group "1" --group "General" --key "arrangement" "1"
+
+  # Disable folder preview in Desktop
+  kwriteconfig5 --file plasma-org.kde.plasma.desktop-appletsrc --group "Containments" --group "1" --group "General" --key "previewPlugins" "appimagethumbnail,audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mltpreview,mobithumbnail,opendocumentthumbnail,gsthumbnail,quithumbnail,rawthumbnail,svgthumbnail,ffmpegthumbs"
+
+  # Disable screen dimming on idle.
+  kwriteconfig5 --file powermanagementprofilesrc --group "AC" --group "DimDisplay" --key "idleTime" --delete
+  kwriteconfig5 --file powermanagementprofilesrc --group "Battery" --group "DimDisplay" --key "idleTime" --delete
+  kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "DimDisplay" --key "idleTime" --delete
+  kwriteconfig5 --file powermanagementprofilesrc --group "LowBattery" --group "BrightnessControl" --key "value" --delete
+
+  # Change power notification settings.
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/criticalbattery" --key "Execute" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/criticalbattery" --key "Logfile" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/criticalbattery" --key "TTS" ""
+
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/fullbattery" --key "Action" "Popup"
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/fullbattery" --key "Execute" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/fullbattery" --key "Logfile" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/fullbattery" --key "TTS" ""
+
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowbattery" --key "Action" "Popup"
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowbattery" --key "Execute" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowbattery" --key "Logfile" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowbattery" --key "TTS" ""
+
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowperipheralbattery" --key "Action" "Popup"
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowperipheralbattery" --key "Execute" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowperipheralbattery" --key "Logfile" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/lowperipheralbattery" --key "TTS" ""
+
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/pluggedin" --key "Action" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/pluggedin" --key "Execute" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/pluggedin" --key "Logfile" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/pluggedin" --key "TTS" ""
+
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/unplugged" --key "Action" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/unplugged" --key "Execute" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/unplugged" --key "Logfile" ""
+  kwriteconfig5 --file powerdevil.notifyrc --group "Event/unplugged" --key "TTS" ""
+
+  # Do not prompt to clear clipboard.
+  kwriteconfig5 --file plasmashellrc --group "Notification Messages" --key "klipperClearHistoryAskAgain" "false"
+
+  # Dolphin settings.
+  kwriteconfig5 --file dolphinrc --group "General" --key "GlobalViewProps" "false"  # enable per-directory view style (e.g. sort by name, date modified, etc.)
+  kwriteconfig5 --file kdeglobals --group "KDE" --key "ShowDeleteCommand" "true"  # show delete command in menu
+  kwriteconfig5 --file kservicemenurc --group "Show" --key "runInKonsole" "false" # disable 'run in konsole' option in dolphin
+  kwriteconfig5 --file kiorc --group "Confirmations" --key "ConfirmDelete" "false"
+  kwriteconfig5 --file kiorc --group "Confirmations" --key "ConfirmEmptyTrash" "false"
+  kwriteconfig5 --file dolphinrc --group "General" --key "ConfirmClosingMultipleTabs" "false"
+  kwriteconfig5 --file dolphinrc --group "PreviewSettings" --key "Plugins" "appimagethumbnail,audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mltpreview,mobithumbnail,opendocumentthumbnail,gsthumbnail,quithumbnail,rawthumbnail,svgthumbnail,ffmpegthumbs"  # disable folder image previews
+  kwriteconfig5 --file dolphinrc --group "KFileDialog Settings" --key "Places Icons Auto-resize" "true"  # auto-resize the icons
+  kwriteconfig5 --file dolphinrc --group "PlacesPanel" --key "IconSize" "1"  # change to -1 later
+  sed -i "s/^IconSize=1$/IconSize=-1/g" "${HOME}/.config/dolphinrc"
+  kwriteconfig5 --file dolphinrc --group "MainWindow" --group "Toolbar mainToolBar" --key "ToolButtonStyle" "IconOnly"  # icon-only menus in toolbar
+
+  # Stop notification sound whem emptying trash.
+  kwriteconfig5 --file plasma_workspace.notifyrc --group "Event/Trash: emptied" --key "Action" ""
+  kwriteconfig5 --file plasma_workspace.notifyrc --group "Event/Trash: emptied" --key "Execute" ""
+  kwriteconfig5 --file plasma_workspace.notifyrc --group "Event/Trash: emptied" --key "Logfile" ""
+  kwriteconfig5 --file plasma_workspace.notifyrc --group "Event/Trash: emptied" --key "TTS" ""
+
+  show_info "Adjusting Okular default settings."
+  kwriteconfig5 --file okularrc --group "MainWindow" --group "Toolbar mainToolBar" --key "ToolButtonStyle" "IconOnly" # icons-only menus
+  kwriteconfig5 --file okularrc --group "MainWindow" --key "MenuBar" "Disabled"
+  kwriteconfig5 --file okularpartrc --group "PageView" --key "SmoothScrolling" "false"
+
+  show_info "Adjusting gwenview default settings."
+  kwriteconfig5 --file gwenviewrc --group "ImageView" --key "AnimationMethod" "DocumentView::NoAnimation"
+
+  show_success "Done! Reload Plasma to update settings."
 }
 
 appsdconf="${dir}/dconf/apps.dconf"
@@ -1050,6 +1232,7 @@ function 05-personal {
     "Select login shell"
     "Import Cinnamon dconf"
     "Import GNOME dconf"
+    "Import KDE settings"
     "Import application dconf"
     "Import GNOME terminal profiles"
     "Enable autologin"
@@ -1075,6 +1258,7 @@ function 05-personal {
         set_login_shell
         import_cinnamon_dconf
         import_gnome_dconf
+        import_kde_settings
         import_apps_dconf
         import_terminal_dconf
         enable_autologin
@@ -1108,6 +1292,10 @@ function 05-personal {
         ;;
       "Import Cinnamon dconf")
         import_cinnamon_dconf
+        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        ;;
+      "Import KDE settings")
+        import_kde_settings
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Import GNOME dconf")

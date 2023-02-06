@@ -180,6 +180,7 @@ function main {
           set_zsh_shell
           import_cinnamon_dconf
           # import_gnome_dconf
+          # import_kde_settings
           import_apps_dconf
           import_terminal_dconf
           enable_autologin
