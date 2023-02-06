@@ -1,0 +1,12 @@
+aspell
+aspell-en
+dolphin
+dolphin-plugins
+gsettings-qt
+kitty
+kitty-terminfo
+plasma
+plasma-wayland-protocols
+plasma-wayland-session
+xdg-desktop-portal
+xdg-desktop-portal-gtk
