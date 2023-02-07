@@ -82,6 +82,19 @@ function install_arc_gtk {
   show_success "Arc theme installed."
 }
 
+function install_arc_kde {
+  show_header "Downloading, building, and installing the Arc KDE theme."
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  git clone -b tweak --depth 1 \
+    https://github.com/sudorook/arc-kde.git "${tmpdir}"
+  pushd "${tmpdir}" >/dev/null
+  sudo make install
+  popd >/dev/null
+  rm -rf "${tmpdir}"
+  show_success "Arc KDE theme installed."
+}
+
 function install_adapta_gtk {
   show_header "Downloading, building, and installing the Adapta GTK theme."
   local autotools_options=
@@ -196,6 +209,19 @@ function install_materia_gtk {
   show_success "Materia theme installed."
 }
 
+function install_materia_kde {
+  local tmpdir
+  show_header "Downloading, building, and installing the Materia KDE theme."
+  tmpdir="$(mktemp -d)"
+  git clone -b tweak --depth 1 \
+    https://github.com/sudorook/materia-kde.git "${tmpdir}"
+  pushd "${tmpdir}" >/dev/null
+  sudo make install
+  popd >/dev/null
+  rm -rf "${tmpdir}"
+  show_success "Materia KDE theme installed."
+}
+
 fonts="${dir}/packages/fonts.list"
 function install_fonts {
   show_header "Installing fonts."
@@ -300,9 +326,11 @@ function 04-themes {
     "Back"
     "All"
     "Arc (GTK)"
+    "Arc (KDE)"
     "Adapta (GTK)"
     "Plata (GTK)"
     "Materia (GTK)"
+    "Materia (KDE)"
     "Fonts"
     "Papirus (icons)"
     "Colorific themes"
@@ -317,9 +345,11 @@ function 04-themes {
       "All")
         install_theme_deps
         install_arc_gtk
+        install_arc_kde
         install_adapta_gtk
         install_plata_gtk
         install_materia_gtk
+        install_materia_kde
         install_fonts
         install_papirus_icons
         install_colorific_themes
@@ -332,6 +362,13 @@ function 04-themes {
         show_info "Installing dependencies for building themes."
         install_theme_deps
         install_arc_gtk
+        set_qtcompat
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
+        ;;
+      "Arc (KDE)")
+        show_info "Installing dependencies for building themes."
+        install_theme_deps
+        install_arc_kde
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
@@ -353,6 +390,13 @@ function 04-themes {
         show_info "Installing dependencies for building themes."
         install_theme_deps
         install_materia_gtk
+        set_qtcompat
+        show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
+        ;;
+      "Materia (KDE)")
+        show_info "Installing dependencies for building themes."
+        install_theme_deps
+        install_materia_kde
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
