@@ -82,14 +82,6 @@ function install_apps {
   mkdir -p "${HOME}/.config/keepassxc"
   cp -f "${keepassxcini}" "${HOME}/.config/keepassxc/"
 
-  # Should always pass because gufw is in the app list.
-  if command -v ufw >/dev/null; then
-    show_info "Enabling firewall rules for Syncthing and Transmission."
-    sudo ufw allow syncthing
-    sudo ufw allow syncthing-gui
-    sudo ufw allow Transmission
-  fi
-
   show_info "Configuring ${libaoconf} to use PulseAudio instead of ALSA."
   sudo sh -c "echo 'default_driver=pulse' > ${libaoconf}"
 }
@@ -134,14 +126,6 @@ function install_apps_kde {
   show_info "Copying keepassxc config."
   mkdir -p "${HOME}/.config/keepassxc"
   cp -f "${keepassxcini}" "${HOME}/.config/keepassxc/"
-
-  if command -v ufw >/dev/null; then
-    show_info "Enabling firewall rules for Syncthing, Transmission, and KDE Connect."
-    sudo ufw allow syncthing
-    sudo ufw allow syncthing-gui
-    sudo ufw allow 'KDE Connect'
-    sudo ufw allow Transmission
-  fi
 }
 
 aur="${dir}/packages/aur.list"
