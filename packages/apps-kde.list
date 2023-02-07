@@ -9,6 +9,8 @@ geoip
 geoip-database-extra
 gwenview
 kdeconnect
+tesseract
+tesseract-data-eng
 kde-utilities
 keepassxc
 kimageformats
