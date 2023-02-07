@@ -579,6 +579,7 @@ function import_terminal_dconf {
 
 gdmconf="/etc/gdm/custom.conf"
 lightdmconf="/etc/lightdm/lightdm.conf"
+sddmconf="/etc/sddm.conf.d/kde_settings.conf"
 function enable_autologin {
   show_header "Enabling automatic login for ${USER}."
   if pacman -Qi gdm > /dev/null 2>&1; then
@@ -605,6 +606,17 @@ function enable_autologin {
     sudo sed -i "s/^#autologin-user=/autologin-user=/g" ${lightdmconf}
     sudo sed -i "s/^#autologin-user-timeout=/autologin-user-timeout=/g" ${lightdmconf}
     sudo sed -i "s/^autologin-user=.*$/autologin-user=${USER}/g" ${lightdmconf}
+  fi
+  if pacman -Qi sddm > /dev/null 2>&1; then
+    show_info "Log in as ${USER} via SDDM."
+    if [ -f "${sddmconf}" ]; then
+      sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key Session plasmawayland
+      # sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key Session plasma  # X11
+      sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key User "${USER}"
+    else
+      show_error "SDDM config ${sddmconf} missing. Skipping."
+      return
+    fi
   fi
   show_success "Autologin enabled."
 }
