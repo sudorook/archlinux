@@ -554,6 +554,8 @@ function import_kde_settings {
   kwriteconfig5 --file okularrc --group "MainWindow" --group "Toolbar mainToolBar" --key "ToolButtonStyle" "IconOnly" # icons-only menus
   kwriteconfig5 --file okularrc --group "MainWindow" --key "MenuBar" "Disabled"
   kwriteconfig5 --file okularpartrc --group "PageView" --key "SmoothScrolling" "false"
+  kwriteconfig5 --file okularpartrc --group "PageView" --key "TrimMargins" "true"
+  kwriteconfig5 --file okularpartrc --group "Core Performance" --key "MemoryLevel" "Aggressive"
 
   show_info "Adjusting gwenview default settings."
   kwriteconfig5 --file gwenviewrc --group "ImageView" --key "AnimationMethod" "DocumentView::NoAnimation"
