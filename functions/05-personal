@@ -313,6 +313,8 @@ function set_bash_shell {
         "${HOME}/.bashrc_$(date +%Y%m%d-%k%M%S).bak"
     fi
     cp "${bashrc}" "${HOME}/.bashrc"
+  else
+    show_info "Default shell already set to bash."
   fi
 }
 
@@ -340,6 +342,8 @@ function set_zsh_shell {
         "${HOME}/.p10k.zsh_$(date +%Y%m%d-%k%M%S).bak"
     fi
     cp "${p10krc}" "${HOME}/.p10k.zsh"
+  else
+    show_info "Default shell already set to zsh."
   fi
 }
 
@@ -351,7 +355,7 @@ function set_login_shell {
   )
   local option
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Back")
         return
         break
