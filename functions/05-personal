@@ -614,15 +614,10 @@ function enable_autologin {
     sudo sed -i "s/^autologin-user=.*$/autologin-user=${USER}/g" ${lightdmconf}
   fi
   if pacman -Qi sddm > /dev/null 2>&1; then
-    show_info "Log in as ${USER} via SDDM."
-    if [ -f "${sddmconf}" ]; then
-      sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key Session plasmawayland
-      # sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key Session plasma  # X11
-      sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key User "${USER}"
-    else
-      show_error "SDDM config ${sddmconf} missing. Skipping."
-      return
-    fi
+    show_info "Log in as ${USER@Q} via SDDM."
+    sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key Relogin "false"
+    sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key Session "${DESKTOP_SESSION:-plasmawayland}"
+    sudo kwriteconfig5 --file "${sddmconf}" --group Autologin --key User "${USER}"
   fi
   show_success "Autologin enabled."
 }
