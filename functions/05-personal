@@ -535,6 +535,9 @@ function import_kde_settings {
   kwriteconfig5 --file powerdevil.notifyrc --group "Event/unplugged" --key "Logfile" ""
   kwriteconfig5 --file powerdevil.notifyrc --group "Event/unplugged" --key "TTS" ""
 
+  # Remove file size limit for Trash
+  kwriteconfig5 --file ktrashrc --group "${HOME}/.local/share/Trash" --key "UseSizeLimit" "false"
+
   # Do not prompt to clear clipboard.
   kwriteconfig5 --file plasmashellrc --group "Notification Messages" --key "klipperClearHistoryAskAgain" "false"
 
