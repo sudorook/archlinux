@@ -538,6 +538,9 @@ function import_kde_settings {
   # Do not prompt to clear clipboard.
   kwriteconfig5 --file plasmashellrc --group "Notification Messages" --key "klipperClearHistoryAskAgain" "false"
 
+  # Do not save non-text to clipboard.
+  kwriteconfig5 --file klipperrc --group "General" --key "SelectionTextOnly" "false"
+
   # Dolphin settings.
   kwriteconfig5 --file dolphinrc --group "General" --key "GlobalViewProps" "false"  # enable per-directory view style (e.g. sort by name, date modified, etc.)
   kwriteconfig5 --file kdeglobals --group "KDE" --key "ShowDeleteCommand" "true"  # show delete command in menu
