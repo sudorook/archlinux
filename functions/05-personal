@@ -456,6 +456,9 @@ function import_kde_settings {
   # Disable software (Discover) search in krunner.
   kwriteconfig5 --file krunnerrc --group "Plugins" --key "appstreamEnabled" "false"
 
+  # Increase notification time.
+  kwriteconfig5 --file plasmanotifyrc --group "Notifications" --key "PopupTimeout" "10000"
+
   # Use 'smart' new window placement.
   kwriteconfig5 --file kwinrc --group "Windows" --key "Placement" "Smart"
 
