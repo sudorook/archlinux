@@ -149,6 +149,7 @@ function main {
           install_messaging
           # install_mingw
           install_music
+          install_pipewire
           install_printing
           install_texlive
           # install_torbrowser
@@ -189,7 +190,7 @@ function main {
           enable_autologin
           # invert_brightness
           # enable_intel_iommu
-          disable_pulseaudio_suspend
+          # disable_pulseaudio_suspend
           disable_11n
           install_scripts
 
