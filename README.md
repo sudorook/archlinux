@@ -117,8 +117,8 @@ Automatically install (without prompting) packages and configs.
 #### 3) Base
 ```
 1) Back                   5) Firmware              9) Pacman styling
-2) All                    6) Updates              10) Disable system beep
-3) Base packages          7) Enable multilib
+2) All                    6) Updates              10) Pacman parallel
+3) Base packages          7) Enable multilib      11) Disable system beep
 4) Mirrorlist             8) Sudo insults
 ```
 
@@ -137,7 +137,9 @@ Automatically install (without prompting) packages and configs.
 
 9) Enable Color and ILoveCandy in `/etc/pacman.conf`.
 
-10) Blacklist `pcskpr` and `snd_pcsp` kernel modules.
+10) Enable `ParallelDownloads` in `/etc/pacman.conf`.
+
+11) Blacklist `pcskpr` and `snd_pcsp` kernel modules.
 
 #### 4) Miscellaneous
 ```
