@@ -5,8 +5,10 @@ dolphin-plugins
 gsettings-qt
 kitty
 kitty-terminfo
+konsole
 plasma
 plasma-wayland-protocols
 plasma-wayland-session
 xdg-desktop-portal
 xdg-desktop-portal-gtk
+yakuake
