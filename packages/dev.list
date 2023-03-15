@@ -17,6 +17,7 @@ flawfinder
 gcc
 gcc-fortran
 gdb
+git
 glpk
 gnuplot
 go
