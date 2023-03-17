@@ -439,6 +439,9 @@ function import_kde_settings {
   # Don't focus alt-tab windows.
   kwriteconfig5 --file kwinrc --group "TabBox" --key "HighlightWindows" "false"
 
+  # Move minimized windows to end of alt-tab list.
+  kwriteconfig5 --file kwinrc --group "TabBox" --key "OrderMinimizedMode" "1"
+
   # Use thumbnail-grid for alt-tab switcher.
   kwriteconfig5 --file kwinrc --group "TabBox" --key "LayoutName" "thumbnail_grid"   # thumbnail grid
 
