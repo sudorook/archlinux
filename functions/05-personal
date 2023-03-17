@@ -439,6 +439,9 @@ function import_kde_settings {
   # Don't focus alt-tab windows.
   kwriteconfig5 --file kwinrc --group "TabBox" --key "HighlightWindows" "false"
 
+  # Use thumbnail-grid for alt-tab switcher.
+  kwriteconfig5 --file kwinrc --group "TabBox" --key "LayoutName" "thumbnail_grid"   # thumbnail grid
+
   # Increase delay for showing the alt-tab OSD.
   kwriteconfig5 --file kwinrc --group "TabBox" --key "DelayTime" "180"  # ?
 
