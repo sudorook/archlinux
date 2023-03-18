@@ -63,6 +63,8 @@ function check_installed {
   local installcount
   local package
   while read -r package; do
+    [ -z "${package}" ] && continue
+
     metacount=$(pacman -Ss "${package}" | \
                 grep -c "(.*${package}.*)" || true)
     installcount=$(pacman -Qs "${package}" | \
@@ -98,6 +100,8 @@ function check_aur_installed {
 
   mkdir -p "${pkgbuilddir}"
   while read -r package; do
+    [ -z "${package}" ] && continue
+
     metacount=$(pacman -Ss "${package}" | \
                 grep -c "(.*${package}.*)" || true)
     installcount=$(pacman -Qs "${package}" | \
