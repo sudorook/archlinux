@@ -32,10 +32,9 @@ function select_system_font {
   local options=("Back" "Noto" "Roboto")
   local option
   select option in "${options[@]}"; do
-    case ${option} in
+    case "${option}" in
       "Back")
         return
-        break
         ;;
       "Noto")
         if pacman -Qi noto-fonts > /dev/null 2>&1; then
@@ -49,7 +48,7 @@ function select_system_font {
         if pacman -Qi ttf-roboto > /dev/null 2>&1; then
           font="Roboto"
         else
-          show_warning "Font family ${option} not found. Skipping."
+          show_warning "Font family ${option@Q} not found. Skipping."
         fi
         break
         ;;
@@ -64,7 +63,7 @@ function select_system_font {
 }
 
 function set_system_font {
-  show_header "Setting system font to ${font}."
+  show_header "Setting system font to ${font@Q}."
 
   case "${font}" in
     "Roboto")
@@ -98,7 +97,7 @@ function set_system_font {
         if pacman -Qi ttf-ubuntu-font-family > /dev/null 2>&1; then
           gsettings set org.gnome.desktop.interface monospace-font-name "'Ubuntu Mono 12.7'"
         else
-          show_warning "Ubuntu font family missing..."
+          show_warning "Ubuntu font family missing. Skipping monospace font."
         fi
       fi
 
@@ -169,25 +168,29 @@ function set_system_font {
 }
 
 function set_icon_theme {
-  show_header "Setting desktop icon theme to ${icontheme}."
+  show_header "Setting desktop icon theme to ${icontheme@Q}."
 
   if pacman -Qi cinnamon >/dev/null 2>&1; then
-    show_info "Setting Cinnamon icon theme to ${icontheme}."
+    show_info "Setting Cinnamon icon theme to ${icontheme@Q}."
     gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
   fi
+
   if pacman -Qi gnome-shell >/dev/null 2>&1; then
-    show_info "Setting GNOME icon theme to ${icontheme}."
+    show_info "Setting GNOME icon theme to ${icontheme@Q}."
     gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
   fi
+
   if [ -e /usr/lib/plasma-changeicons ]; then
+    show_info "Setting Plasma icon theme to ${icontheme@Q}."
     /usr/lib/plasma-changeicons "${icontheme}"
   fi
 }
 
 function set_gtk_theme {
-  show_header "Setting desktop GTK theme to ${gtktheme}."
+  show_header "Setting desktop GTK theme to ${gtktheme@Q}."
+
   if pacman -Qi cinnamon >/dev/null 2>&1; then
-    show_info "Setting Cinnamon GTK theme to ${gtktheme}."
+    show_info "Setting Cinnamon GTK theme to ${gtktheme@Q}."
     gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
     if [[ "${gtktheme}" =~ -Eta$ ]]; then
       gsettings set org.cinnamon.theme name "'${gtktheme%-*}'"
@@ -201,8 +204,9 @@ function set_gtk_theme {
       gsettings set org.cinnamon.theme name "'${gtktheme}'"
     fi
   fi
+
   if pacman -Qi gnome-shell >/dev/null 2>&1; then
-    show_info "Setting GNOME GTK theme to ${gtktheme}."
+    show_info "Setting GNOME GTK theme to ${gtktheme@Q}."
     gsettings set org.gnome.desktop.wm.preferences theme "'${gtktheme}'"
     gsettings set org.gnome.desktop.interface gtk-theme "'${gtktheme}'"
     gnome-extensions enable "user-theme@gnome-shell-extensions.gcampax.github.com" || true
@@ -216,7 +220,7 @@ function set_gtk_theme {
 lightdmgtkconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
   if pacman -Qi lightdm-gtk-greeter > /dev/null 2>&1; then
-    show_header "Setting LightDM login GTK theme to ${gtktheme}."
+    show_header "Setting LightDM login GTK theme to ${gtktheme@Q}."
     sudo sed -i "s/^#theme-name=$/theme-name=/g" ${lightdmgtkconf}
     sudo sed -i "s/^theme-name=.*/theme-name=${gtktheme}/g" ${lightdmgtkconf}
     sudo sed -i "s/^#icon-theme-name=$/icon-theme-name=/g" ${lightdmgtkconf}
@@ -258,13 +262,13 @@ function set_gdm_theme {
     sudo cp -r "/usr/share/gnome-shell" "/usr/share/gnome-shell-$(date +%Y%m%d-%H%M%S)"
     if [[ "${gtktheme}" =~ ^Adapta ]] || [[ "${gtktheme}" =~ ^Plata ]]; then
       sudo cp -rf \
-        ${gtkthemedir}/gnome-shell/* \
+        "${gtkthemedir}"/gnome-shell/* \
         /usr/share/gnome-shell/
       sudo cp -f \
-        ${gtkthemedir}/gnome-shell/extensions/window-list/classic.css \
+        "${gtkthemedir}"/gnome-shell/extensions/window-list/classic.css \
         /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
       sudo cp -f \
-        ${gtkthemedir}/gnome-shell/extensions/window-list/stylesheet.css \
+        "${gtkthemedir}"/gnome-shell/extensions/window-list/stylesheet.css \
         /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
     elif [[ "${gtktheme}" =~ ^Materia ]]; then
       sudo glib-compile-resources \
@@ -358,7 +362,6 @@ function set_login_shell {
     case "${option}" in
       "Back")
         return
-        break
         ;;
       "bash")
         set_bash_shell
@@ -626,20 +629,20 @@ sddmconf="/etc/sddm.conf.d/kde_settings.conf"
 function enable_autologin {
   show_header "Enabling automatic login for ${USER}."
   if pacman -Qi gdm > /dev/null 2>&1; then
-    show_info "Log in as ${USER} via GDM."
+    show_info "Log in as ${USER@Q} via GDM."
     ! [ -f ${gdmconf} ] && sudo touch ${gdmconf}
     if ! grep -q "^AutomaticLogin=${USER}" ${gdmconf}; then
       ! grep -q '^\[daemon\]' "${gdmconf}" && \
         sudo sh -c "echo '[daemon]' >> ${gdmconf}"
-      sudo sed -i "/^\[daemon\]$/a AutomaticLogin=${USER}" ${gdmconf}
-      sudo sed -i "/^AutomaticLogin=/a AutomaticLoginEnable=true" ${gdmconf}
+      sudo sed -i "/^\[daemon\]$/a AutomaticLogin=${USER}" "${gdmconf}"
+      sudo sed -i "/^AutomaticLogin=/a AutomaticLoginEnable=true" "${gdmconf}"
     else
       sudo sed -i "s/^AutomaticLogin=.*$/AutomaticLogin=${USER}/g" ${gdmconf}
       sudo sed -i "s/^AutomaticLoginEnable=.*$/AutomaticLoginEnable=true/g" ${gdmconf}
     fi
   fi
   if pacman -Qi lightdm > /dev/null 2>&1; then
-    show_info "Log in as ${USER} via LightDM."
+    show_info "Log in as ${USER@Q} via LightDM."
     if ! getent group | grep -q autologin; then
       sudo groupadd -r autologin
     fi
@@ -750,7 +753,7 @@ function disable_pulseaudio_suspend {
   if [ -f ${pulseconfig} ]; then
     sudo sed -i "s/^load-module module-suspend-on-idle$/#load-module module-suspend-on-idle/g" ${pulseconfig}
   else
-    show_warning "PulseAudio config file missing. Exiting."
+    show_warning "PulseAudio config file missing. Skipping."
   fi
 }
 
@@ -839,10 +842,9 @@ function select_desktop_theme {
     "Plata-Noir-Compact")
   local option
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Back")
         return
-        break
         ;;
       "Adwaita")
         if [ -d /usr/share/themes/Adwaita ]; then
@@ -1103,7 +1105,7 @@ function select_desktop_theme {
         break
         ;;
       *)
-        show_warning "Invalid option."
+        show_warning "Invalid option ${option@Q}."
         ;;
     esac
   done
@@ -1127,7 +1129,7 @@ function select_icon_theme {
     "Papirus-Adapta-Nokto")
   local option
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Back")
         return
         break
@@ -1139,7 +1141,7 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/Papirus" ]; then
           icontheme="Papirus"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
@@ -1151,7 +1153,7 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/ePapirus" ]; then
           icontheme="ePapirus"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
@@ -1163,7 +1165,7 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/ePapirus-Dark" ]; then
           icontheme="ePapirus-Dark"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
@@ -1175,7 +1177,7 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/Papirus-Light" ]; then
           icontheme="Papirus-Light"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
@@ -1187,7 +1189,7 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/Papirus-Dark" ]; then
           icontheme="Papirus-Dark"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
@@ -1199,7 +1201,7 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/Papirus-Adapta" ]; then
           icontheme="Papirus-Adapta"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
@@ -1211,13 +1213,13 @@ function select_icon_theme {
            [ -d "${HOME}/.icons/Papirus-Adapta-Nokto" ]; then
           icontheme="Papirus-Adapta-Nokto"
         else
-          show_warning "${option} icons are not installed."
+          show_warning "${option@Q} icons are not installed."
           select_icon_theme
         fi
         break
         ;;
       *)
-        show_warning "Invalid option."
+        show_warning "Invalid option ${option@Q}."
         ;;
     esac
   done
@@ -1251,17 +1253,17 @@ function select_default_kernel {
 
   show_question "Select a default kernel:"
   select option in "${kernels[@]}"; do
-    case ${option} in
+    case "${option}" in
       Back)
         break
         ;;
       linux|linux-lts|linux-zen|linux-hardened|linux-rt|linux-rt-lts)
-        kernel=${option}
+        kernel="${option}"
         set_default_kernel
         break
         ;;
       *)
-        show_error "Invalid option."
+        show_error "Invalid option ${option@Q}."
         break
         ;;
     esac
@@ -1294,7 +1296,7 @@ function 05-personal {
     "Select default kernel")
   local option
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Back")
         break
         ;;
@@ -1389,7 +1391,7 @@ function 05-personal {
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       *)
-        show_warning "Invalid option."
+        show_warning "Invalid option ${option@Q}."
         ;;
     esac
   done

@@ -137,7 +137,7 @@ function 03-network {
     "Tunnel pacman over Tor")
   local option
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Back")
         break
         ;;

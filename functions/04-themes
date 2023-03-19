@@ -310,10 +310,10 @@ function install_timed_backgrounds {
 qt5ctconf="${dir}/configs/qt5ct.conf"
 qt6ctconf="${dir}/configs/qt5ct.conf"  # re-use qt5ct config for qt6ct
 function set_qtcompat {
-  show_info "Copying qt5ct config."
+  show_info "Copying qt5ct and qt6ct configs."
   mkdir -p "${HOME}/.config/qt5ct" "${HOME}/.config/qt6ct"
-  cp -f "${qt5ctconf}" "${HOME}/.config/qt5ct"
-  cp -f "${qt6ctconf}" "${HOME}/.config/qt6ct"
+  cp -f "${qt5ctconf}" "${HOME}/.config/qt5ct/"
+  cp -f "${qt6ctconf}" "${HOME}/.config/qt6ct/"
   export QT_QPA_PLATFORMTHEME=qt5ct
   set_config_key_value "${HOME}/.xprofile" "export QT_QPA_PLATFORMTHEME" "qt5ct"
 }
@@ -338,7 +338,7 @@ function 04-themes {
     "Timed backgrounds")
   local option
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Back")
         break
         ;;
