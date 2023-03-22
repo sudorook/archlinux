@@ -22,7 +22,7 @@ dir="$(dirname "$0")"
 
 npmrc="${dir}/dotfiles/npmrc"
 themes="${dir}/packages/themes.list"
-function install_theme_deps {
+function install_theme_deps_gtk {
   show_header "Installing theme dependencies."
   check_installed "${themes}"
   check_fail
@@ -32,6 +32,14 @@ function install_theme_deps {
     show_info "Installing npmrc."
     cp -f "${npmrc}" "${HOME}/.npmrc"
   fi
+}
+
+themeskde="${dir}/packages/themes-kde.list"
+function install_theme_deps_kde {
+  show_header "Installing KDE theme dependencies."
+  check_installed "${themeskde}"
+  check_fail
+  show_success "Theme dependencies installed."
 }
 
 function install_arc_gtk {
@@ -343,7 +351,8 @@ function 04-themes {
         break
         ;;
       "All")
-        install_theme_deps
+        install_theme_deps_gtk
+        install_theme_deps_kde
         install_arc_gtk
         install_arc_kde
         install_adapta_gtk
@@ -359,45 +368,37 @@ function 04-themes {
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Arc (GTK)")
-        show_info "Installing dependencies for building themes."
-        install_theme_deps
+        install_theme_deps_gtk
         install_arc_gtk
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Arc (KDE)")
-        show_info "Installing dependencies for building themes."
-        install_theme_deps
+        install_theme_deps_kde
         install_arc_kde
-        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Adapta (GTK)")
-        show_info "Installing dependencies for building themes."
-        install_theme_deps
+        install_theme_deps_gtk
         install_adapta_gtk
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Plata (GTK)")
-        show_info "Installing dependencies for building themes."
-        install_theme_deps
+        install_theme_deps_gtk
         install_plata_gtk
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Materia (GTK)")
-        show_info "Installing dependencies for building themes."
-        install_theme_deps
+        install_theme_deps_gtk
         install_materia_gtk
         set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Materia (KDE)")
-        show_info "Installing dependencies for building themes."
-        install_theme_deps
+        install_theme_deps_kde
         install_materia_kde
-        set_qtcompat
         show_info "Main\n ${endbranch} Themes (Hit ENTER to see options again.)"
         ;;
       "Fonts")

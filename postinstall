@@ -160,7 +160,8 @@ function main {
           # install_wine
 
           # Install themes
-          install_theme_deps
+          install_theme_deps_gtk
+          # install_theme_deps_kde
           install_arc_gtk
           # install_arc_kde
           # install_adapta_gtk
