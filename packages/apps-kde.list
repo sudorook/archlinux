@@ -29,8 +29,10 @@ libreoffice-fresh
 mpv
 okular
 partitionmanager
+plasma-browser-integration
 print-manager
 qt5-imageformats
+qt6-imageformats
 spectacle
 svgpart
 sweeper
