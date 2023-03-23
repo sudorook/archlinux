@@ -94,7 +94,7 @@ function main {
     "Themes"
     "Personalization")
   select option in "${options[@]}"; do
-    case $option in
+    case "${option}" in
       "Quit")
         show_success "I hope this was as fun for you as it was for me."
         break
@@ -180,7 +180,8 @@ function main {
           set_icon_theme
           set_gtk_theme
           set_lightdm_theme
-          set_gdm_theme
+          # set_gdm_theme
+          # set_sddm_theme
           set_dark_gtk
           # set_bash_shell
           set_zsh_shell
