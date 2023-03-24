@@ -106,6 +106,7 @@ function set_system_font {
         kwriteconfig5 --file kdeglobals --group "General" --key "menuFont" "Roboto,10,-1,5,50,0,0,0,0,0"
         kwriteconfig5 --file kdeglobals --group "General" --key "smallestReadableFont" "Roboto,8,-1,5,50,0,0,0,0,0"
         kwriteconfig5 --file kdeglobals --group "General" --key "toolBarFont" "Roboto,10,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "WM" --key "activeFont" "Roboto,10,-1,5,50,0,0,0,0,0"
         if pacman -Qi ttf-ubuntu-font-family > /dev/null 2>&1; then
           kwriteconfig5 --file kdeglobals --group "General" --key "fixed" "Ubuntu Mono,11,-1,5,50,0,0,0,0,0"
         else
@@ -153,6 +154,7 @@ function set_system_font {
         kwriteconfig5 --file kdeglobals --group "General" --key "menuFont" "Noto Sans,10,-1,5,50,0,0,0,0,0"
         kwriteconfig5 --file kdeglobals --group "General" --key "smallestReadableFont" "Noto Sans,8,-1,5,50,0,0,0,0,0"
         kwriteconfig5 --file kdeglobals --group "General" --key "toolBarFont" "Noto Sans,10,-1,5,50,0,0,0,0,0"
+        kwriteconfig5 --file kdeglobals --group "WM" --key "activeFont" "Noto Sans,10,-1,5,50,0,0,0,0,0"
         if pacman -Qi ttf-ubuntu-font-family > /dev/null 2>&1; then
           kwriteconfig5 --file kdeglobals --group "General" --key "fixed" "Ubuntu Mono,11,-1,5,50,0,0,0,0,0"
         else
