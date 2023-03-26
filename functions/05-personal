@@ -221,6 +221,14 @@ function set_gtk_theme {
     gnome-extensions enable "user-theme@gnome-shell-extensions.gcampax.github.com" || true
     gsettings set org.gnome.shell.extensions.user-theme name "'${gtktheme}'"
   fi
+
+  if pacman -Qi plasma-desktop >/dev/null 2>&1; then
+    show_info "Setting Plasma GTK theme to ${gtktheme@Q}."
+    if qdbus org.kde.GtkConfig >/dev/null; then
+      qdbus org.kde.GtkConfig /GtkConfig org.kde.GtkConfig.setGtkTheme "${gtktheme}"
+    fi
+  fi
+
   set_config_key_value "${HOME}/.xprofile" "export GTK_THEME" "${gtktheme}"
   set_config_key_value \
     "${HOME}/.config/environment.d/envvars.conf" "GTK_THEME" "${gtktheme}"
@@ -1345,6 +1353,7 @@ function select_plasma_theme {
   done
 
   set_plasma_theme
+  set_gtk_theme
   set_sddm_theme
 }
 
