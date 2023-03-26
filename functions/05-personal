@@ -436,10 +436,6 @@ function import_kde_settings {
   kwriteconfig5 --file kwinrc --group "Effect-desktopgrid" --key "DesktopLayoutMode" "1"     # automatic
   kwriteconfig5 --file kwinrc --group "Effect-desktopgrid" --key "DesktopNameAlignment" "68"  # desktop names at bottom
 
-  # Dim unfocused windows.
-  kwriteconfig5 --file kwinrc --group "Effect-diminactive" --key "Strength" "10"
-  kwriteconfig5 --file kwinrc --group "Plugins" --key "diminactiveEnabled" "true"
-
   # Dim screen when in administer mode.
   kwriteconfig5 --file kwinrc --group "Plugins" --key "kwin4_effect_dimscreenEnabled" "true"
 
