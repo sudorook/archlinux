@@ -1362,6 +1362,8 @@ function select_icon_theme {
 
   local options=(
     "Back"
+    "Breeze"
+    "Breeze-Dark"
     "Papirus"
     "ePapirus"
     "ePapirus-Dark"
@@ -1374,7 +1376,22 @@ function select_icon_theme {
     case "${option}" in
       "Back")
         return
-        break
+        ;;
+      "Breeze")
+        if [ -d /usr/share/icons/breeze ]; then
+          icontheme="breeze"
+          break
+        else
+          show_warning "${option@Q} icons are not installed."
+        fi
+        ;;
+      "Breeze-Dark")
+        if [ -d /usr/share/icons/breeze-dark ]; then
+          icontheme="breeze-dark"
+          break
+        else
+          show_warning "${option@Q} icons are not installed."
+        fi
         ;;
       "Papirus")
         if [ -d /usr/share/icons/Papirus ] || \
