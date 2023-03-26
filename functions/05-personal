@@ -559,6 +559,7 @@ function import_kde_settings {
 
   # Dolphin settings.
   kwriteconfig5 --file dolphinrc --group "General" --key "GlobalViewProps" "false"  # enable per-directory view style (e.g. sort by name, date modified, etc.)
+  kwriteconfig5 --file dolphinrc --group "General" --key "BrowseThroughArchives" "true"  # open archives as folders
   kwriteconfig5 --file kdeglobals --group "KDE" --key "ShowDeleteCommand" "true"  # show delete command in menu
   kwriteconfig5 --file kservicemenurc --group "Show" --key "runInKonsole" "false" # disable 'run in konsole' option in dolphin
   kwriteconfig5 --file kiorc --group "Confirmations" --key "ConfirmDelete" "false"
