@@ -172,11 +172,14 @@ Automatically install (without prompting) packages and configs.
 2) All
 3) GNOME
 4) Cinnamon
+5) KDE
 ```
 
 3) Install GNOME desktop environment (with GDM for login).
 
 4) Install Cinnamon desktop environment and Gammastep (with LightDM for login).
+
+5) Install KDE desktop enviornment (with SDDM for login).
 
 #### 6) Network tools
 ```
@@ -199,134 +202,163 @@ Automatically install (without prompting) packages and configs.
 
 #### 7) Applications
 ```
-1) Back                    8) Extra applications    15) Printing
-2) All                     9) Emulators             16) TeX Live
-3) Android tools          10) KVM (host)            17) Tor browser
-4) General applications   11) KVM (guest)           18) Vim
-5) AUR applications       12) Messaging             19) VirtualBox (host)
-6) Codecs                 13) MinGW                 20) VirtualBox (guest)
-7) Development            14) Music                 21) Wine
+ 1) Back                      14) KVM (guest)
+ 2) All                       15) Messaging
+ 3) Android tools             16) MinGW
+ 4) General applications      17) Music
+ 5) General KDE applications  18) Printing
+ 6) AUR applications          19) PipeWire
+ 7) AUR KDE applications      20) TeX Live
+ 8) Codecs                    21) Tor browser
+ 9) Development               22) Vim
+10) Extra applications        23) Neovim
+11) Extra KDE applications    24) VirtualBox (host)
+12) Emulators                 25) VirtualBox (guest)
+13) KVM (host)                26) Wine
 ```
 
 3) Install packages in [android.list](packages/android.list) for accessing
    storage on Android devices.
 
-4) Install general daily use applications from [apps.list](packages/apps.list).
+4) Install general GTK applications from [apps.list](packages/apps.list).
 
-5) Install [select packages](packages/aur.list) from the AUR.
+5) Install general KDE (Qt) applications from
+   [apps-kde.list](packages/apps-kde.list).
 
-6) Install GStreamer plugins for handing various media codecs.
+6) Install [select packages](packages/aur.list) from the AUR.
 
-7) Install packages for programming and software development.
+7) Install [KDE-specific packages](packages/aur.list) from the AUR.
 
-8) Install extra, less used applications from [extra.list](packages/extra.list).
+8) Install GStreamer plugins for handing various media codecs.
 
-9) Install game system emulators.
+9) Install packages for programming and software development.
 
-10) Install Virt-Manager and tools for using KVM virtualization.
+10) Install extra GTK applications from [extra.list](packages/extra.list).
 
-11) Install packages for Linux guests to enable host-to-guest sharing and
+11) Install extra KDE (Qt) applications from [extra-kde.list](packages/extra-kde.list).
+
+12) Install game system emulators.
+
+13) Install Virt-Manager and tools for using KVM virtualization.
+
+14) Install packages for Linux guests to enable host-to-guest sharing and
     adjustable display resolution.
 
-12) Install IRC, email, and other messaging clients.
+15) Install IRC, email, and other messaging clients.
 
-13) Install MinGW for Windows/Linux cross-platform compilation.
+16) Install MinGW for Windows/Linux cross-platform compilation.
 
-14) Install applications for playing music (`mpd`, `ncmcpp`, `clementine`),
-    computing replaygain (`bs1770gain`), and using Pandora (`pianobar`).
+17) Install applications for playing music (`mpd`, `ncmcpp`, `clementine`),
+    computing replaygain (`ffmpeg`), and tagging metadata (`beets`).
 
-15) Install CUPS, drivers, and applications for handling printers.
+18) Install CUPS, drivers, and applications for handling printers.
 
-16) Install TeX libraries and Font Awesome icons.
+19) Install PipeWire for A/V handling (replaces PulseAudio, ALSA, etc.).
 
-17) Download and install the Tor browser. Edits the application launcher icon
+20) Install TeX libraries and Font Awesome icons.
+
+21) Download and install the Tor browser. Edits the application launcher icon
     to look for "browser-tor".
 
-18) Install `vim` and `vim-plugins` and then set the user vimrc.
+22) Install `vim` and `vim-plugins` and then set the user vimrc.
 
-19) Install VirtualBox and kernel modules (dkms) for running it (host).
+23) Install `neovim` and `neovim-plugins` and then set the user init.vim.
 
-20) Install kernel modules (dkms) and tools for VirtualBox guests.
+24) Install VirtualBox and kernel modules (dkms) for running it (host).
 
-21) Install Wine not-emulator, along with the Mono and browser and some audio
+25) Install kernel modules (dkms) and tools for VirtualBox guests.
+
+26) Install Wine not-emulator, along with the Mono and browser and some audio
     libraries.
 
 #### 8) Themes
 ```
-1) Back                 5) Plata (GTK)         9) Colorific themes
-2) All                  6) Materia (GTK )      10) Thunderbird theme
-3) Arc (GTK)            7) Fonts               11) Timed backgrounds
-4) Adapta (GTK)         8) Papirus (icons)
+1) Back                 6) Plata (GTK)        11) Colorific themes
+2) All                  7) Materia (GTK)      12) Thunderbird theme
+3) Arc (GTK)            8) Materia (KDE)      13) Timed backgrounds
+4) Arc (KDE)            9) Fonts
+5) Adapta (GTK)        10) Papirus (icons)
 ```
 
 3) Download, compile, and install a [fork](https://github.com/sudorook/arc-theme)
    of the [Arc GTK theme](https://github.com/horst3180/arc-theme).
 
-4) Download, compile, and install a [fork](https://github.com/sudorook/adapta-gtk-theme)
+4) Download, compile, and install a [fork](https://github.com/sudorook/arc-kde)
+   of the [Arc Kvantum theme](https://github.com/PapirusDevelopmentTeam/arc-kde).
+
+5) Download, compile, and install a [fork](https://github.com/sudorook/adapta-gtk-theme)
    of the [Adapta GTK theme](https://github.com/adapta-project/adapta-gtk-theme).
 
-5) Download, compile, and install a [fork](https://gitlab.com/sudorook/plata-theme)
+6) Download, compile, and install a [fork](https://gitlab.com/sudorook/plata-theme)
    of the [Plata GTK theme](https://gitlab.com/tista500/plata-theme).
 
-6) Download, compile, and install a [fork](https://github.com/sudorook/materia-theme)
+7) Download, compile, and install a [fork](https://github.com/sudorook/materia-theme)
    of the [Materia GTK theme](https://github.com/nana-4/materia-theme).
 
-7) Install Noto, Cantarell, Ubuntu, Dejavu, and Roboto fonts.
+8) Download, compile, and install a [fork](https://github.com/sudorook/materia-kde)
+   of the [Materia Kvantum theme](https://github.com/PapirusDevelopmentTeam/materia-kde).
 
-8) Install tweaked version of Papirus icon theme.
+9) Install Noto, Cantarell, Ubuntu, Dejavu, and Roboto fonts.
 
-9) Install [colorific themes](https://github.com/sudorook/colorific.vim) for
+10) Install tweaked version of Papirus icon theme.
+
+11) Install [colorific themes](https://github.com/sudorook/colorific.vim) for
    alacritty, gitk, kitty, Neovim, tmux, and Vim.
 
-10) Install the [Monterail theme](https://github.com/spymastermatt/thunderbird-monterail)
+12) Install the [Monterail theme](https://github.com/spymastermatt/thunderbird-monterail)
     for Thunderbird.
 
-11) Install [timed backgrounds](https://github.com/sudorook/timed-backgrounds)
+13) Install [timed backgrounds](https://github.com/sudorook/timed-backgrounds)
     where transitions from day to night match sunrise/sunset times.
 
 #### 9) Personalization
 ```
-1) Back                            10) Import application dconf
-2) All                             11) Import GNOME terminal profiles
-3) Select system fonts             12) Enable autologin
-4) Select icon theme               13) Invert brightness (i915)
-5) Select desktop theme            14) Enable IOMMU (Intel)
-6) Set dark GTK                    15) Disable PulseAudio suspend
-7) Select login shell              16) Disable 802.11n
-8) Import Cinnamon dconf           17) Add scripts
-9) Import GNOME dconf              18) Select default kernel
+ 1) Back                            11) Import KDE settings
+ 2) All                             12) Import application dconf
+ 3) Select system fonts             13) Import GNOME terminal profiles
+ 4) Select icon theme               14) Enable autologin
+ 5) Select GTK theme                15) Invert brightness (i915)
+ 6) Select Plasma theme             16) Enable IOMMU (Intel)
+ 7) Set dark GTK                    17) Disable PulseAudio suspend
+ 8) Select login shell              18) Disable 802.11n
+ 9) Import Cinnamon dconf           19) Add scripts
+10) Import GNOME dconf              20) Select default kernel
 ```
 
 3) Select the system font. (Noto or Roboto)
 
 4) Select the system icon theme.
 
-5) Select the system desktop theme.
+5) Select the system desktop theme (GTK).
 
-6) Set applications to prefer the dark theme.
+6) Select the system desktop theme (Plasma).
 
-7) Select default login shell (Bash or Zsh).
+7) Set GTK applications to prefer the dark theme.
 
-8) Import pre-defined dconf settings for Cinnamon.
+8) Select default login shell (Bash or Zsh).
 
-9) Import pre-defined dconf settings for GNOME.
+9) Import pre-defined dconf settings for Cinnamon.
 
-10) Import pre-defined dconf settings for applications.
+10) Import pre-defined dconf settings for GNOME.
 
-11) Import terminal profiles (Light/Dark) via dconf.
+11) Configure default desktop and application settings for Plasma.
 
-12) Enable autologin for the current user.
+12) Import pre-defined dconf settings for applications.
 
-13) Invert brightness via kernel command line options in the GRUB prompt.
+13) Import GNOME-terminal profiles (Light/Dark) via dconf.
 
-14) Enable Intel IOMMU for the i915 graphics driver. Helps fix blank displays
+14) Enable autologin for the current user.
+
+15) Invert brightness via kernel command line options in the GRUB prompt.
+
+16) Enable Intel IOMMU for the i915 graphics driver. Helps fix blank displays
     for Haswell CPUs running kernels >=5.7.
 
-15) Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
+17) Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
 
-16) Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
+18) Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
     connections.
 
-17) Download and install [general utility scripts](https://github.com/sudorook/misc-scripts).
+19) Download and install [general utility scripts](https://github.com/sudorook/misc-scripts).
 
-18) Select the default boot kernel from the currently installed ones.
+20) Select the default boot kernel from the currently installed ones.
