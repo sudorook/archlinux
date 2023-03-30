@@ -31,6 +31,7 @@ okular
 partitionmanager
 plasma-browser-integration
 print-manager
+python-psutil
 qt5-imageformats
 qt6-imageformats
 spectacle

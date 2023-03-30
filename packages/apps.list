@@ -18,6 +18,7 @@ kitty
 kitty-terminfo
 libreoffice-fresh
 mpv
+python-psutil
 syncthing
 transmission-gtk
 webp-pixbuf-loader
