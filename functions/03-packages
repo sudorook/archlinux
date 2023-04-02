@@ -253,7 +253,7 @@ function install_extra_kde {
   cp -f "${ytdlconf}" "${HOME}/.config/yt-dlp/config"
 }
 
-pipewire="${dir}/packages/pipewire.lsit"
+pipewire="${dir}/packages/pipewire.list"
 function install_pipewire {
   show_header "Installing PipeWire A/V processor."
   check_installed "${pipewire}"
