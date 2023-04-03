@@ -691,7 +691,7 @@ function import_kde_settings {
   # needs to be restarted instead.
   #
   # See: https://blog.martin-graesslin.com/blog/2015/06/global-shortcut-handling-in-a-plasma-wayland-session/
-  case "${DESKTOP_SESSION}" in
+  case "${DESKTOP_SESSION:-}" in
     plasma)
       if qdbus org.kde.KWin >/dev/null; then
         qdbus org.kde.KWin /KWin reconfigure
