@@ -1236,6 +1236,7 @@ function select_plasma_theme {
     "Arc-Darker"
     "Breeze"
     "Breeze-dark"
+    "Breeze-twilight"
     "Materia"
     "Materia-dark"
     "Materia-light")
@@ -1246,83 +1247,93 @@ function select_plasma_theme {
         return
         ;;
       "Arc")
-        if [ -d /usr/share/plasma/desktoptheme/Arc ] || \
-           [ -d /usr/local/share/plasma/desktoptheme/Arc ]; then
+        if [ -d /usr/share/plasma/look-and-feel/com.github.sudorook.arc/ ] || \
+           [ -d /usr/local/share/plasma/look-and-feel/com.github.sudorook.arc/ ]; then
           plasmatheme="Arc"
+          gtktheme="Arc"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       "Arc-Darker")
-        if [ -d /usr/share/plasma/desktoptheme/Arc-Darker ] || \
-           [ -d /usr/local/share/plasma/desktoptheme/Arc-Darker ]; then
+        if [ -d /usr/share/plasma/look-and-feel/com.github.sudorook.arc-darker ] || \
+           [ -d /usr/local/share/plasma/look-and-feel/com.github.sudorook.arc-darker ]; then
           plasmatheme="Arc-Darker"
+          gtktheme="Arc-Dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       "Arc-Dark")
-        if [ -d /usr/share/plasma/desktoptheme/Arc-Dark ] || \
-           [ -d /usr/local/share/plasma/desktoptheme/Arc-Dark ]; then
+        if [ -d /usr/share/plasma/look-and-feel/com.github.sudorook.arc-dark ] || \
+           [ -d /usr/local/share/plasma/look-and-feel/com.github.sudorook.arc-dark ]; then
           plasmatheme="Arc-Dark"
+          gtktheme="Arc-Dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       "Breeze")
-        if [ -d /usr/share/plasma/desktoptheme/breeze-light ] || \
-           [ -d /usr/local/share/plasma/desktoptheme/breeze-light ]; then
+        if [ -d /usr/share/plasma/look-and-feel/org.kde.breeze.desktop ] || \
+           [ -d /usr/local/share/plasma/look-and-feel/org.kde.breeze.desktop ]; then
           plasmatheme="breeze"
+          gtktheme="Breeze"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       "Breeze-dark")
-        if [ -d /usr/share/plasma/desktoptheme/breeze-dark ] || \
-           [ -d /usr/local/share/plasma/desktoptheme/breeze-dark ]; then
+        if [ -d /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop ] || \
+           [ -d /usr/local/share/plasma/look-and-feel/org.kde.breezedark.desktop ]; then
           plasmatheme="breeze-dark"
+          gtktheme="Breeze"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
+        fi
+        ;;
+      "Breeze-twilight")
+        if [ -d /usr/share/plasma/look-and-feel/org.kde.breezetwilight.desktop ] || \
+           [ -d /usr/local/share/plasma/look-and-feel/org.kde.breezetwilight.desktop ]; then
+          plasmatheme="breeze-twilight"
+          gtktheme="Breeze"
+          break
+        else
+          show_warning "${option@Q} theme is not installed."
         fi
         ;;
       "Materia")
         if [ -d /usr/share/plasma/desktoptheme/Materia ] || \
            [ -d /usr/local/share/plasma/desktoptheme/Materia ]; then
           plasmatheme="Materia"
+          gtktheme="Materia"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       "Materia-light")
         if [ -d /usr/share/plasma/desktoptheme/Materia-light ] || \
            [ -d /usr/local/share/plasma/desktoptheme/Materia-light ]; then
           plasmatheme="Materia-light"
+          gtktheme="Materia-light"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       "Materia-dark")
         if [ -d /usr/share/plasma/desktoptheme/Materia-dark ] || \
            [ -d /usr/local/share/plasma/desktoptheme/Materia-dark ]; then
           plasmatheme="Materia-dark"
+          gtktheme="Materia-dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
-          select_plasma_theme
         fi
         ;;
       *)
