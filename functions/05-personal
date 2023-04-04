@@ -196,8 +196,6 @@ function set_icon_theme {
 }
 
 function set_gtk_theme {
-  show_header "Setting desktop GTK theme to ${gtktheme@Q}."
-
   if pacman -Qi cinnamon >/dev/null 2>&1; then
     show_info "Setting Cinnamon GTK theme to ${gtktheme@Q}."
     gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
