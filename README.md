@@ -1,8 +1,8 @@
 # Arch Linux Installation
 
 This is a set of scripts installing Arch Linux and running post-installation
-tasks, e.g. installing a DE, packages, and config files. They are intended for
-Cinnamon or GNOME desktop environments.
+tasks, e.g. installing a desktop environment, packages, and config files. They
+are intended for Cinnamon, GNOME, and KDE.
 
 Requirements:
 1. `wget`
@@ -249,7 +249,8 @@ Automatically install (without prompting) packages and configs.
 16) Install MinGW for Windows/Linux cross-platform compilation.
 
 17) Install applications for playing music (`mpd`, `ncmcpp`, `clementine`),
-    computing replaygain (`ffmpeg`), and tagging metadata (`beets`).
+    computing replaygain (`ffmpeg`), tagging metadata (`beets`), and using
+    Pandora (`pianobar`).
 
 18) Install CUPS, drivers, and applications for handling printers.
 
