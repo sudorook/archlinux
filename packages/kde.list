@@ -9,6 +9,7 @@ konsole
 plasma
 plasma-wayland-protocols
 plasma-wayland-session
+qt5-virtualkeyboard
 xdg-desktop-portal
 xdg-desktop-portal-gtk
 yakuake
