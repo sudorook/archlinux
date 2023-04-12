@@ -2,6 +2,7 @@ acpi
 bc
 bcprov
 cpio
+cryfs
 ddrescue
 dmidecode
 dos2unix
