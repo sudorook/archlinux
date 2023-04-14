@@ -314,16 +314,17 @@ Automatically install (without prompting) packages and configs.
 
 #### 9) Personalization
 ```
- 1) Back                            11) Import KDE settings
- 2) All                             12) Import application dconf
- 3) Select system fonts             13) Import GNOME terminal profiles
- 4) Select icon theme               14) Enable autologin
- 5) Select GTK theme                15) Invert brightness (i915)
- 6) Select Plasma theme             16) Enable IOMMU (Intel)
- 7) Set dark GTK                    17) Disable PulseAudio suspend
- 8) Select login shell              18) Disable 802.11n
- 9) Import Cinnamon dconf           19) Add scripts
-10) Import GNOME dconf              20) Select default kernel
+ 1) Back                            12) Import KDE settings
+ 2) All                             13) Import application dconf
+ 3) Select system fonts             14) Import GNOME terminal profiles
+ 4) Select icon theme               15) Enable autologin
+ 5) Select GTK theme                16) Invert brightness (i915)
+ 6) Select Plasma theme             17) Enable IOMMU (Intel)
+ 7) Set dark GTK                    18) Disable PulseAudio suspend
+ 8) Select login shell              19) Disable 802.11n
+ 9) Import Cinnamon dconf           20) Add scripts
+10) Import GNOME dconf              21) Select default kernel
+11) Hide Avahi Programs
 ```
 
 3) Select the system font. (Noto or Roboto)
@@ -342,24 +343,26 @@ Automatically install (without prompting) packages and configs.
 
 10) Import pre-defined dconf settings for GNOME.
 
-11) Configure default desktop and application settings for Plasma.
+11) Hide the Avahi desktop applications in the application list.
 
-12) Import pre-defined dconf settings for applications.
+12) Configure default desktop and application settings for Plasma.
 
-13) Import GNOME-terminal profiles (Light/Dark) via dconf.
+13) Import pre-defined dconf settings for applications.
 
-14) Enable autologin for the current user.
+14) Import GNOME-terminal profiles (Light/Dark) via dconf.
 
-15) Invert brightness via kernel command line options in the GRUB prompt.
+15) Enable autologin for the current user.
 
-16) Enable Intel IOMMU for the i915 graphics driver. Helps fix blank displays
+16) Invert brightness via kernel command line options in the GRUB prompt.
+
+17) Enable Intel IOMMU for the i915 graphics driver. Helps fix blank displays
     for Haswell CPUs running kernels >=5.7.
 
-17) Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
+18) Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
 
-18) Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
+19) Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
     connections.
 
-19) Download and install [general utility scripts](https://github.com/sudorook/misc-scripts).
+20) Download and install [general utility scripts](https://github.com/sudorook/misc-scripts).
 
-20) Select the default boot kernel from the currently installed ones.
+21) Select the default boot kernel from the currently installed ones.

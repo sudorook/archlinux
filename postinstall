@@ -188,6 +188,7 @@ function main {
           set_zsh_shell
           import_cinnamon_dconf
           # import_gnome_dconf
+          # hide_avahi_apps
           # import_kde_settings
           import_apps_dconf
           import_terminal_dconf

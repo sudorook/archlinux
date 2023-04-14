@@ -514,6 +514,19 @@ function import_gnome_dconf {
   show_success "GNOME dconf settings imported."
 }
 
+function hide_avahi_apps {
+  show_header "Hiding Avahi applications."
+  local systemapps="/usr/share/applications"
+  local localapps="${HOME}/.local/share/applications"
+  mkdir -p "${localapps}"
+  cp "${systemapps}/avahi-discover.desktop" "${localapps}/"
+  cp "${systemapps}/bssh.desktop" "${localapps}/"
+  cp "${systemapps}/bvnc.desktop" "${localapps}/"
+  echo "Hidden=true" >> "${localapps}/avahi-discover.desktop"
+  echo "Hidden=true" >> "${localapps}/bssh.desktop"
+  echo "Hidden=true" >> "${localapps}/bvnc.desktop"
+}
+
 function import_kde_settings {
   show_header "Setting default Plasma behavior."
 
@@ -1522,6 +1535,7 @@ function 05-personal {
     "Select login shell"
     "Import Cinnamon dconf"
     "Import GNOME dconf"
+    "Hide Avahi Programs"
     "Import KDE settings"
     "Import application dconf"
     "Import GNOME terminal profiles"
@@ -1550,6 +1564,7 @@ function 05-personal {
         set_login_shell
         import_cinnamon_dconf
         import_gnome_dconf
+        hide_avahi_apps
         import_kde_settings
         import_apps_dconf
         import_terminal_dconf
@@ -1596,6 +1611,10 @@ function 05-personal {
         ;;
       "Import GNOME dconf")
         import_gnome_dconf
+        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        ;;
+      "Hide Avahi Programs")
+        hide_avahi_apps
         show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
         ;;
       "Import application dconf")
