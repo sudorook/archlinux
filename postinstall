@@ -134,6 +134,7 @@ function main {
           # tunnel_pacman_tor
 
           # Install useful packages
+          install_3d_accel
           # install_android
           install_apps
           # install_apps_kde

@@ -202,74 +202,78 @@ Automatically install (without prompting) packages and configs.
 
 #### 7) Applications
 ```
- 1) Back                      14) KVM (guest)
- 2) All                       15) Messaging
- 3) Android tools             16) MinGW
- 4) General applications      17) Music
- 5) General KDE applications  18) Printing
- 6) AUR applications          19) PipeWire
- 7) AUR KDE applications      20) TeX Live
- 8) Codecs                    21) Tor browser
- 9) Development               22) Vim
-10) Extra applications        23) Neovim
-11) Extra KDE applications    24) VirtualBox (host)
-12) Emulators                 25) VirtualBox (guest)
-13) KVM (host)                26) Wine
+ 1) Back                      15) KVM (guest)
+ 2) All                       16) Messaging
+ 3) 3D acceleration           17) MinGW
+ 4) Android tools             18) Music
+ 5) General applications      19) Printing
+ 6) General KDE applications  20) PipeWire
+ 7) AUR applications          21) TeX Live
+ 8) AUR KDE applications      22) Tor browser
+ 9) Codecs                    23) Vim
+10) Development               24) Neovim
+11) Extra applications        25) VirtualBox (host)
+12) Extra KDE applications    26) VirtualBox (guest)
+13) Emulators                 27) Wine
+14) KVM (host)
 ```
 
-3) Install packages in [android.list](packages/android.list) for accessing
+3) Install 3D video acceleration packages in
+   [3d-accel.list](packages/3d-accel.list).
+
+4) Install packages in [android.list](packages/android.list) for accessing
    storage on Android devices.
 
-4) Install general GTK applications from [apps.list](packages/apps.list).
+5) Install general GTK applications from [apps.list](packages/apps.list).
 
-5) Install general KDE (Qt) applications from
+6) Install general KDE (Qt) applications from
    [apps-kde.list](packages/apps-kde.list).
 
-6) Install [select packages](packages/aur.list) from the AUR.
+7) Install [select packages](packages/aur.list) from the AUR.
 
-7) Install [KDE-specific packages](packages/aur.list) from the AUR.
+8) Install [KDE-specific packages](packages/aur.list) from the AUR.
 
-8) Install GStreamer plugins for handing various media codecs.
+9) Install GStreamer plugins for handing various media codecs.
 
-9) Install packages for programming and software development.
+10) Install packages for programming and software development.
 
-10) Install extra GTK applications from [extra.list](packages/extra.list).
+11) Install extra GTK applications from [extra.list](packages/extra.list).
 
-11) Install extra KDE (Qt) applications from [extra-kde.list](packages/extra-kde.list).
+12) Install extra KDE (Qt) applications from [extra-kde.list](packages/extra-kde.list).
 
-12) Install game system emulators.
+13) Install game system emulators.
 
-13) Install Virt-Manager and tools for using KVM virtualization.
+14) Install Virt-Manager and tools for using KVM virtualization.
 
-14) Install packages for Linux guests to enable host-to-guest sharing and
+15) Install packages for Linux guests to enable host-to-guest sharing and
     adjustable display resolution.
 
-15) Install IRC, email, and other messaging clients.
+16) Install IRC, email, and other messaging clients.
 
-16) Install MinGW for Windows/Linux cross-platform compilation.
+17) Install MinGW for Windows/Linux cross-platform compilation.
 
-17) Install applications for playing music (`mpd`, `ncmcpp`, `clementine`),
+18) Install applications for playing music (`mpd`, `ncmcpp`, `clementine`),
     computing replaygain (`ffmpeg`), tagging metadata (`beets`), and using
     Pandora (`pianobar`).
 
-18) Install CUPS, drivers, and applications for handling printers.
+19) Install CUPS, drivers, and applications for handling printers.
 
-19) Install PipeWire for A/V handling (replaces PulseAudio, ALSA, etc.).
+20) Install PipeWire for A/V handling (replaces PulseAudio, ALSA, etc.).
 
-20) Install TeX libraries and Font Awesome icons.
+21) Install TeX libraries and Font Awesome icons.
 
-21) Download and install the Tor browser. Edits the application launcher icon
+22) Download and install the Tor browser. Edits the application launcher icon
     to look for "browser-tor".
 
-22) Install `vim` and `vim-plugins` and then set the user vimrc.
+23) Install `vim` and `vim-plugins` and then set the user vimrc.
 
-23) Install `neovim` and `neovim-plugins` and then set the user init.vim.
+24) Install `neovim` and `neovim-plugins` and then set the user init.vim.
 
-24) Install VirtualBox and kernel modules (dkms) for running it (host).
+25) Install VirtualBox and kernel modules (dkms) for running it (host).
 
-25) Install kernel modules (dkms) and tools for VirtualBox guests.
+26) Install kernel modules (dkms) and tools for VirtualBox guests.
 
-26) Install Wine not-emulator, along with the Mono and browser and some audio
+27) Install Wine not-emulator, along with the Mono and browser and some audio
     libraries.
 
 #### 8) Themes

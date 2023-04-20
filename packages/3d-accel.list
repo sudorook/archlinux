@@ -1,0 +1,8 @@
+intel-media-driver
+libva-intel-driver
+libva-mesa-driver
+libva-utils
+libvdpau-va-gl
+vulkan-intel
+vulkan-radeon
+vulkan-tools
