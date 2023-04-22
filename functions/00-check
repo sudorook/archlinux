@@ -62,6 +62,7 @@ function check_installed {
   local metacount
   local installcount
   local package
+  local to_install=()
   while read -r package; do
     [ -z "${package}" ] && continue
 
@@ -83,10 +84,10 @@ function check_installed {
     # Runs if package is not installed or all members of meta-package are not
     # installed.
     else
-      show_listitem "Installing ${package}."
-      sudo pacman -S --ask 4 --noconfirm "${package}"
+      to_install+=("${package}")
     fi
   done < "${1}"
+  [ "${#to_install}" -gt 0 ] && sudo pacman -S --ask 4 --noconfirm "${to_install[@]}"
 }
 
 function check_aur_installed {
