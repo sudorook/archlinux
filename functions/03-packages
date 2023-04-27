@@ -205,6 +205,15 @@ function install_dev {
   show_info "Installing rust stable toolchain."
   rustup toolchain install stable
 
+  show_info "Building local cache of cargo crates."
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  git clone --depth 1 https://github.com/sudorook/crate_dl.git "${tmpdir}"
+  pushd "${tmpdir}" >/dev/null || exit
+  cargo fetch
+  popd >/dev/null || exit
+  rm -rf "${tmpdir}"
+
   show_info "Setting default clang-format style."
   clang-format -style=mozilla -dump-config > "${HOME}/.clang-format"
 
