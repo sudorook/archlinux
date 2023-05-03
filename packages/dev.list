@@ -40,7 +40,7 @@ nodejs
 npm
 openblas
 openmp
-pandoc
+pandoc-cli
 perl-image-exiftool
 prettier
 pygmentize
