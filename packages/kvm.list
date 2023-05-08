@@ -9,4 +9,5 @@ libvirt
 openbsd-netcat
 qemu
 qemu-desktop
+swtpm
 virt-manager
