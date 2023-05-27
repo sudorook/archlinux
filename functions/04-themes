@@ -232,6 +232,7 @@ function install_materia_kde {
 
 fonts="${dir}/packages/fonts.list"
 function install_fonts {
+  local tmpdir
   show_header "Installing fonts."
   check_installed "${fonts}"
   check_fail
@@ -245,6 +246,14 @@ function install_fonts {
       /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf \
       /etc/fonts/conf.d/
   fi
+
+  show_info "Downloading Jambo fonts."
+  tmpdir="$(mktemp -d)"
+  git clone --depth 1 https://github.com/sudorook/fonts-jambo.git "${tmpdir}"
+  pushd "${tmpdir}" >/dev/null || exit
+  ./install
+  popd >/dev/null || exit
+  rm -rf "${tmpdir}"
 }
 
 function install_papirus_icons {
