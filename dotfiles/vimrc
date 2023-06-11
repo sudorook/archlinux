@@ -13,6 +13,7 @@ set smartcase
 set noerrorbells
 set novisualbell
 "set ruler
+set mouse=
 set wildmenu
 set wildignore=*.o,*~,*.pyc,*.lo
 set spelllang=en
@@ -45,7 +46,7 @@ endif
 set background=dark
 
 "encryption
-set cm=blowfish
+"set cm=blowfish
 
 "syntastic
 set statusline+=%#warningmsg#
