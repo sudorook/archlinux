@@ -212,7 +212,7 @@ function set_system_font {
       fi
       ;;
     *)
-      show_error "Font ${font} not supported."
+      show_error "Font ${font@Q} not supported."
       exit 3
       ;;
   esac
