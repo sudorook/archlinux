@@ -556,17 +556,17 @@ function import_gnome_dconf {
   show_success "GNOME dconf settings imported."
 }
 
+systemappsdir="/usr/share/applications"
+localappsdir="${HOME}/.local/share/applications"
 function hide_avahi_apps {
   show_header "Hiding Avahi applications."
-  local systemapps="/usr/share/applications"
-  local localapps="${HOME}/.local/share/applications"
-  mkdir -p "${localapps}"
-  cp "${systemapps}/avahi-discover.desktop" "${localapps}/"
-  cp "${systemapps}/bssh.desktop" "${localapps}/"
-  cp "${systemapps}/bvnc.desktop" "${localapps}/"
-  echo "Hidden=true" >> "${localapps}/avahi-discover.desktop"
-  echo "Hidden=true" >> "${localapps}/bssh.desktop"
-  echo "Hidden=true" >> "${localapps}/bvnc.desktop"
+  local avahiapps=("avahi-discover" "bssh" "bvnc")
+  local app
+  mkdir -p "${localappsdir}"
+  for app in "${avahiapps[@]}"; do
+    cp "${systemappsdir}/${app}.desktop" "${localappsdir}/"
+    echo "Hidden=true" >> "${localappsdir}/${app}.desktop"
+  done
 }
 
 function import_kde_settings {
