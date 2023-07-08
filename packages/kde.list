@@ -11,6 +11,7 @@ plasma
 plasma-wayland-protocols
 plasma-wayland-session
 qt5-virtualkeyboard
+qt6-wayland
 xdg-desktop-portal
 xdg-desktop-portal-gtk
 yakuake
