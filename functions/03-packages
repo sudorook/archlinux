@@ -203,7 +203,7 @@ function install_dev {
     "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
 
   show_info "Installing rust stable toolchain."
-  rustup toolchain install stable
+  rustup default stable
 
   show_info "Building local cache of cargo crates."
   local tmpdir
