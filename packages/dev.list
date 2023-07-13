@@ -58,6 +58,7 @@ python-memory-profiler
 python-numpy
 python-pandas
 python-pip
+python-pipx
 python-pycurl
 python-pylint
 python-reportlab
