@@ -93,6 +93,16 @@ function superupgrade {
   sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'
 }
 
+if command -v pacdiff >/dev/null; then
+  _vimdiff="$(type vimdiff)"
+  if [[ "${_vimdiff}" =~ alias ]]; then
+    _vimdiff="${_vimdiff##*to \`}"
+    _vimdiff="${_vimdiff%\'*}"
+    alias pacdiff='DIFFPROG=${_vimdiff@Q} pacdiff'
+    unset _vimdiff
+  fi
+fi
+
 function megapurge {
   sudo sh -c 'yes | pacman -Scc' && \
     sudo journalctl --rotate && \
