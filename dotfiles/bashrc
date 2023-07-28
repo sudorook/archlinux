@@ -98,7 +98,7 @@ if command -v pacdiff >/dev/null; then
   if [[ "${_vimdiff}" =~ alias ]]; then
     _vimdiff="${_vimdiff##*to \`}"
     _vimdiff="${_vimdiff%\'*}"
-    alias pacdiff='DIFFPROG=${_vimdiff@Q} pacdiff'
+    alias pacdiff="DIFFPROG=${_vimdiff@Q} pacdiff"
     unset _vimdiff
   fi
 fi
