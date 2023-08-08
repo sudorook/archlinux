@@ -7,6 +7,7 @@ are intended for Cinnamon, GNOME, and KDE.
 Requirements:
 1. `wget`
 2. `git`
+3. `fzf`
 
 ## Install
 
