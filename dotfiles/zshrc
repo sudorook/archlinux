@@ -83,8 +83,8 @@ if command -v pacdiff >/dev/null; then
   if [[ "${_vimdiff}" =~ alias ]]; then
     _vimdiff=${_vimdiff##*for }
     alias pacdiff="DIFFPROG=${_vimdiff:q} pacdiff"
-    unset _vimdiff
   fi
+  unset _vimdiff
 fi
 
 function megapurge {
