@@ -1,5 +1,7 @@
 asciidoc
 automake
+blas64-openblas
+blas-openblas
 blosc
 boost
 boost-libs
@@ -29,8 +31,6 @@ jq
 julia
 jupyter-notebook
 kotlin
-lapack
-lapacke
 libgit2
 mathjax
 meson
@@ -38,7 +38,6 @@ mkvtoolnix-cli
 musl
 nodejs
 npm
-openblas
 openmp
 pandoc-cli
 perl-image-exiftool
