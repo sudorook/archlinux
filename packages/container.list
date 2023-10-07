@@ -1,0 +1,14 @@
+buildah
+cni-plugins
+containerd
+fuse-overlayfs
+lxc
+nerdctl
+nomad
+nomad-driver-containerd
+nomad-driver-lxc
+nomad-driver-podman
+podman
+podman-compose
+podman-docker
+skopeo
