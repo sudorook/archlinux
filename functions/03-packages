@@ -17,7 +17,6 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 dir="$(dirname "$0")"
 
 accel="${dir}/packages/3d-accel.list"
@@ -61,7 +60,7 @@ function install_apps {
     show_info "Installing kitty.vim for Vim syntax highlighting."
     git clone https://github.com/sudorook/kitty.vim.git \
       "${vimpack}/kitty.vim"
-    "${vimpack}/kitty.vim/./build" >/dev/null # in case kitty rules are outdated
+    "${vimpack}/kitty.vim/./build" > /dev/null # in case kitty rules are outdated
   fi
 
   show_info "Setting application MIME associations."
@@ -119,7 +118,7 @@ function install_apps_kde {
     show_info "Installing kitty.vim for Vim syntax highlighting."
     git clone https://github.com/sudorook/kitty.vim.git \
       "${vimpack}/kitty.vim"
-    "${vimpack}/kitty.vim/./build" >/dev/null # in case kitty rules are outdated
+    "${vimpack}/kitty.vim/./build" > /dev/null # in case kitty rules are outdated
   fi
 
   if [[ ${XDG_SESSION_TYPE,,} =~ wayland ]]; then
@@ -191,7 +190,7 @@ function install_dev {
   show_info "Setting up local lib dirs."
   mkdir -p "${HOME}/.local/lib"
   if [ -d "${HOME}/.local/lib64" ]; then
-    if  ! [ -h "${HOME}/.local/lib64" ]; then
+    if ! [ -h "${HOME}/.local/lib64" ]; then
       mv "${HOME}/.local/lib64/"* "${HOME}/.local/lib/"
       rmdir "${HOME}/.local/lib64"
     fi
@@ -202,8 +201,8 @@ function install_dev {
 
   show_info "Installing R packages."
   if ! [[ -v R_LIBS_USER ]]; then
-    R_LIBS_USER="${HOME}/.R/$(R --version | \
-                              sed -n "s/^R version \([0-9\.]*\) .*/\1/p")"
+    R_LIBS_USER="${HOME}/.R/$(R --version |
+      sed -n "s/^R version \([0-9\.]*\) .*/\1/p")"
     export R_LIBS_USER
   fi
   mkdir -p "${R_LIBS_USER}"
@@ -217,9 +216,9 @@ function install_dev {
   local tmpdir
   tmpdir="$(mktemp -d)"
   git clone --depth 1 https://github.com/sudorook/crate_dl.git "${tmpdir}"
-  pushd "${tmpdir}" >/dev/null || exit
+  pushd "${tmpdir}" > /dev/null || exit
   cargo fetch
-  popd >/dev/null || exit
+  popd > /dev/null || exit
   rm -rf "${tmpdir}"
 
   show_info "Setting default clang-format style."
@@ -331,7 +330,7 @@ function install_kvm {
 kvmguest="${dir}/packages/kvm-guest.list"
 mkinitcpioconf="/etc/mkinitcpio.conf"
 function install_kvm_guest {
-  if grep "^flags.*\ hypervisor" /proc/cpuinfo >/dev/null 2>&1; then
+  if grep "^flags.*\ hypervisor" /proc/cpuinfo > /dev/null 2>&1; then
     show_header "Installing tools for KVM guests."
     check_installed "${kvmguest}"
     check_fail
@@ -455,18 +454,18 @@ function install_torbrowser {
     show_info "Downloading Tor developers' GPG key."
     gpg --auto-key-locate nodefault,wkd --locate-keys torbrowser@torproject.org
 
-    torbrowser_version=$(curl https://www.torproject.org/download/ | \
+    torbrowser_version=$(curl https://www.torproject.org/download/ |
                          sed -n 's,^ \+<a class="downloadLink" href="/dist/torbrowser/\([0-9\.]\+\)/tor-browser-linux.*">,\1,p')
     arch=$(uname -m)
     if [ "${arch:(-2)}" = "86" ]; then
-      torbrowser_package=tor-browser-linux32-${torbrowser_version}_ALL.tar.xz
+      torbrowser_package=tor-browser-linux32-"${torbrowser_version}"_ALL.tar.xz
     elif [ "${arch:(-2)}" = "64" ]; then
-      torbrowser_package=tor-browser-linux64-${torbrowser_version}_ALL.tar.xz
+      torbrowser_package=tor-browser-linux64-"${torbrowser_version}"_ALL.tar.xz
     fi
 
     show_info "Downloading release tarball."
     tmpdir="$(mktemp -d)"
-    pushd "${tmpdir}" >/dev/null || exit
+    pushd "${tmpdir}" > /dev/null || exit 3
     wget "${torbrowser_url}/${torbrowser_version}/${torbrowser_package}"
     wget "${torbrowser_url}/${torbrowser_version}/${torbrowser_package}.asc"
     show_info "Extracting..."
@@ -489,7 +488,7 @@ function install_torbrowser {
       "${local_applications}/start-tor-browser.desktop"
     update-desktop-database "${local_applications}"
 
-    popd >/dev/null || exit
+    popd > /dev/null || exit
     rm -r "${tmpdir}"
     show_success "Tor browser installed."
   else
@@ -516,7 +515,7 @@ function install_vim {
   git config --global merge.tool vimdiff
   git config --global --add difftool.prompt false
 
-  if command -v xdg-mime >/dev/null 2>&1; then
+  if command -v xdg-mime > /dev/null 2>&1; then
     show_info "Setting Vim MIME associations."
     xdg-mime default vim.desktop text/plain
   fi
@@ -527,7 +526,7 @@ function install_vim {
   tmpdir="$(mktemp -d)"
   git clone --depth 1 \
     https://github.com/sudorook/wordlist.vim.git "${tmpdir}"
-  pushd "${tmpdir}" >/dev/null || exit
+  pushd "${tmpdir}" > /dev/null || exit
   ./build
   if [ -f "${vimspell}/en.utf-8.add" ]; then
     show_info "Wordlist already exists in ${vimspell@Q}. Appending."
@@ -535,7 +534,7 @@ function install_vim {
   else
     ./install
   fi
-  popd >/dev/null || exit
+  popd > /dev/null || exit
   rm -rf "${tmpdir}"
   show_success "Wordlist installed in ${vimspell@Q}."
   show_info "To use the wordlist, add the following to you vimrc:"
@@ -563,7 +562,7 @@ function install_neovim {
   git config --global merge.tool "nvim -d"
   git config --global --add difftool.prompt false
 
-  if command -v xdg-mime >/dev/null 2>&1; then
+  if command -v xdg-mime > /dev/null 2>&1; then
     show_info "Setting Neovim MIME associations."
     xdg-mime default nvim.desktop text/plain
   fi
@@ -574,7 +573,7 @@ function install_neovim {
   tmpdir="$(mktemp -d)"
   git clone --depth 1 \
     https://github.com/sudorook/wordlist.vim.git "${tmpdir}"
-  pushd "${tmpdir}" >/dev/null || exit
+  pushd "${tmpdir}" > /dev/null || exit
   ./build
   if [ -f "${nvimspell}/en.utf-8.add" ]; then
     show_info "Wordlist already exists in ${nvimspell@Q}. Appending."
@@ -582,7 +581,7 @@ function install_neovim {
   else
     ./install
   fi
-  popd >/dev/null || exit
+  popd > /dev/null || exit
   rm -rf "${tmpdir}"
   show_success "Wordlist installed in ${nvimspell@Q}."
   show_info "To use the wordlist, add the following to you vimrc:"
@@ -605,7 +604,7 @@ function install_virtualbox {
 
 virtualboxguest="${dir}/packages/virtualbox-guest.list"
 function install_virtualbox_guest {
-  if grep "^flags.*\ hypervisor" /proc/cpuinfo >/dev/null 2>&1; then
+  if grep "^flags.*\ hypervisor" /proc/cpuinfo > /dev/null 2>&1; then
     show_header "Installing packages for VirtualBox guests."
     check_installed "${virtualboxguest}"
     check_fail
@@ -618,8 +617,8 @@ function install_virtualbox_guest {
 wine="${dir}/packages/wine.list"
 function install_wine {
   show_header "Installing wine."
-  if [[ $(uname -m) = "x86_64" ]] && \
-    ! grep "^\[multilib\]" /etc/pacman.conf >/dev/null; then
+  if [[ $(uname -m) = "x86_64" ]] &&
+    ! grep "^\[multilib\]" /etc/pacman.conf > /dev/null; then
     show_info "multilib repos need to be enabled for 64-bit architectures."
     enable_multilib
   fi

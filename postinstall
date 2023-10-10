@@ -18,9 +18,7 @@ set -euo pipefail
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 dir="$(dirname "$0")"
-
 
 #
 # Fancy color output
@@ -61,7 +59,6 @@ export -f show_success
 export -f show_header
 export -f show_listitem
 
-
 #
 # Source the functions
 #
@@ -74,7 +71,6 @@ export -f show_listitem
 . "${dir}"/functions/03-packages
 . "${dir}"/functions/04-themes
 . "${dir}"/functions/05-personal
-
 
 #
 # Define main select wrapper
@@ -240,7 +236,6 @@ function main {
   done
 }
 
-
 #
 # Check if dependencies are installed and if network is working
 #
@@ -249,7 +244,6 @@ check_user
 check_network
 sync_repos
 install_post_dependencies
-
 
 #
 # GO!!!

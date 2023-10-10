@@ -17,7 +17,6 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 dir="$(dirname "$0")"
 
 VG=vg
@@ -26,12 +25,12 @@ export VG
 export LV
 
 function is_size_nonzero {
-  if [[ "${1}" != "0" ]] && \
-     [[ "${1}" != "0G" ]] && \
-     [[ "${1}" != "0GiB" ]] && \
-     [[ "${1}" != "0GB" ]] && \
-     [[ "${1}" != "0Gb" ]] && \
-     [[ "${1}" != "[N|n][O|o]" ]] && \
+  if [[ "${1}" != "0" ]] &&
+     [[ "${1}" != "0G" ]] &&
+     [[ "${1}" != "0GiB" ]] &&
+     [[ "${1}" != "0GB" ]] &&
+     [[ "${1}" != "0Gb" ]] &&
+     [[ "${1}" != "[N|n][O|o]" ]] &&
      [[ "${1}" != "[N|n][ONE|one]" ]]; then
     return 0
   else
@@ -239,12 +238,12 @@ function get_base2 {
   value="$(echo "${value} / 1024^${exp}" | bc)"
 
   case "${exp}" in
-    1) suffix="KiB";;
-    2) suffix="MiB";;
-    3) suffix="GiB";;
-    4) suffix="TiB";;
-    5) suffix="PiB";;
-    6) echo "${exp} --- huh?" && exit 3;;
+    1) suffix="KiB" ;;
+    2) suffix="MiB" ;;
+    3) suffix="GiB" ;;
+    4) suffix="TiB" ;;
+    5) suffix="PiB" ;;
+    6) echo "${exp} --- huh?" && exit 3 ;;
   esac
 
   echo "${value}${suffix}"
@@ -261,12 +260,12 @@ function get_base10 {
   value="$(echo "${value} / 1000^${exp}" | bc)"
 
   case "${exp}" in
-    1) suffix="k";;
-    2) suffix="M";;
-    3) suffix="G";;
-    4) suffix="T";;
-    5) suffix="P";;
-    6) echo "${exp} --- huh?" && exit 3;;
+    1) suffix="k" ;;
+    2) suffix="M" ;;
+    3) suffix="G" ;;
+    4) suffix="T" ;;
+    5) suffix="P" ;;
+    6) echo "${exp} --- huh?" && exit 3 ;;
   esac
 
   echo "${value}${suffix}"
@@ -362,7 +361,7 @@ function set_partitions {
     else
       EFI_PARTITION="/dev/${DEVICE}${part_count}"
     fi
-    part_count=$(( part_count + 1 ))
+    part_count=$((part_count + 1))
   fi
 
   if is_size_nonzero "${PARTITIONS["share"]}"; then
@@ -372,7 +371,7 @@ function set_partitions {
     else
       SHARE_PARTITION="/dev/${DEVICE}${part_count}"
     fi
-    part_count=$(( part_count + 1 ))
+    part_count=$((part_count + 1))
   fi
 
   case "${SCHEME}" in
@@ -385,7 +384,7 @@ function set_partitions {
         ROOT_PARTITION="/dev/${DEVICE}${part_count}"
         CRYPT_PARTITION="/dev/${DEVICE}${part_count}"
       fi
-      part_count=$(( part_count + 1 ))
+      part_count=$((part_count + 1))
       ;;
     "LVM")
       sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:0 --typecode=${part_count}:8e00"
@@ -394,7 +393,7 @@ function set_partitions {
       else
         ROOT_PARTITION="/dev/${DEVICE}${part_count}"
       fi
-      part_count=$(( part_count + 1 ))
+      part_count=$((part_count + 1))
       ;;
     "Plain")
       if is_size_nonzero "${PARTITIONS["swap"]}"; then
@@ -404,7 +403,7 @@ function set_partitions {
         else
           SWAP_PARTITION="/dev/${DEVICE}${part_count}"
         fi
-        part_count=$(( part_count + 1 ))
+        part_count=$((part_count + 1))
       fi
       if is_size_nonzero "${PARTITIONS["root"]}"; then
         if  [[ "${PARTITIONS["root"]}" = "fill" ]]; then
@@ -414,7 +413,7 @@ function set_partitions {
           else
             ROOT_PARTITION="/dev/${DEVICE}${part_count}"
           fi
-          part_count=$(( part_count + 1 ))
+          part_count=$((part_count + 1))
         else
           sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:+${PARTITIONS["root"]} --typecode=${part_count}:8300"
           if "${add_p}"; then
@@ -422,7 +421,7 @@ function set_partitions {
           else
             ROOT_PARTITION="/dev/${DEVICE}${part_count}"
           fi
-          part_count=$(( part_count + 1 ))
+          part_count=$((part_count + 1))
           if is_size_nonzero "${PARTITIONS["home"]}"; then
             if  [[ "${PARTITIONS["home"]}" = "fill" ]]; then
               sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:0 --typecode=${part_count}:8300"
@@ -431,7 +430,7 @@ function set_partitions {
               else
                 HOME_PARTITION="/dev/${DEVICE}${part_count}"
               fi
-              part_count=$(( part_count + 1 ))
+              part_count=$((part_count + 1))
             else
               sgdisk_opts="${sgdisk_opts} --new=${part_count}:0:+${PARTITIONS["home"]} --typecode=${part_count}:8300"
               if "${add_p}"; then
@@ -439,7 +438,7 @@ function set_partitions {
               else
                 HOME_PARTITION="/dev/${DEVICE}${part_count}"
               fi
-              part_count=$(( part_count + 1 ))
+              part_count=$((part_count + 1))
             fi
           fi
         fi
@@ -457,13 +456,13 @@ function format_partitions {
   case "${SCHEME}" in
     "LVM on LUKS")
       if [[ "${BOOTMODE}" = "GRUB" ]]; then
-        echo -n "${CRYPT_PASSWORD}" | \
+        echo -n "${CRYPT_PASSWORD}" |
           cryptsetup luksFormat --type luks1 "${CRYPT_PARTITION}" --batch-mode --key-file -
       else
-        echo -n "${CRYPT_PASSWORD}" | \
+        echo -n "${CRYPT_PASSWORD}" |
           cryptsetup luksFormat "${CRYPT_PARTITION}" --batch-mode --key-file -
       fi
-      echo -n "${CRYPT_PASSWORD}" | \
+      echo -n "${CRYPT_PASSWORD}" |
         cryptsetup luksOpen "${CRYPT_PARTITION}" ${LV} --batch-mode --key-file -
 
       pvcreate /dev/mapper/${LV}
@@ -518,7 +517,7 @@ function format_partitions {
       fi
       ;;
     # "Plain")
-    #   part_count=$(( part_count + 1 ))
+    #   part_count=$((part_count + 1))
     #   ;;
   esac
 
@@ -557,7 +556,7 @@ TIMEZONE="UTC"
 function ask_timezone {
   local res
 
-  res="$(timedatectl list-timezones | \
+  res="$(timedatectl list-timezones |
          fzf --layout=reverse --scroll-off=5 --header-first \
              --header="Select time zone ('ESC' for default: ${TIMEZONE})" || true)"
   clear
@@ -581,7 +580,7 @@ function ask_locale {
   local res
 
   res="$(sed -n "s,^#\?\ \?\([[:alnum:]\.@_\-]\+\)\ \([[:alnum:]\-]\+\)\ *$,\1 \2,p" \
-         /etc/locale.gen | \
+         /etc/locale.gen |
          fzf --layout=reverse --scroll-off=5 --header-first \
              --header="Select locale ('ESC' for default: ${LOCALE})" || true)"
   clear
@@ -629,7 +628,7 @@ function ask_username {
   while "${is_invalid}"; do
     tmp="$(ask_question "User name (default: ${USER_NAME})")"
     if [ -n "${tmp}" ]; then
-      if (( "${#tmp}" > 16 )); then
+      if (("${#tmp}" > 16)); then
         show_error "ERROR: user name ${tmp@Q} greater than 16 characters."
         tmp=
         continue
@@ -703,8 +702,8 @@ function add_user {
   usermod -aG wheel,"${USER_NAME}" "${USER_NAME}"
   echo "${USER_NAME}:${USER_PASSWORD}" | chpasswd
 
-  sed -e "s/^# \(%wheel ALL=(ALL:\?\(ALL\)\?) ALL\)$/\1/g" /etc/sudoers | \
-    EDITOR=tee visudo >/dev/null
+  sed -e "s/^# \(%wheel ALL=(ALL:\?\(ALL\)\?) ALL\)$/\1/g" /etc/sudoers |
+    EDITOR="tee" visudo > /dev/null
 }
 export -f add_user
 
@@ -720,7 +719,7 @@ function set_mkinitcpio {
   local vendor
 
   old_hooks="$(sed -n "s/^HOOKS=(\(.*\))$/\1/p" /etc/mkinitcpio.conf)"
-  new_hooks="$(echo "${old_hooks}" | \
+  new_hooks="$(echo "${old_hooks}" |
                sed -e 's/udev/systemd/g' \
                    -e 's/block/block sd-encrypt lvm2/g' \
                    -e 's/keymap consolefont/sd-vconsole/g')"
@@ -729,7 +728,7 @@ function set_mkinitcpio {
   vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
   modules="$(sed -n "s/^MODULES=(\(.*\))$/\1/p" /etc/mkinitcpio.conf)"
   if [[ "${vendor}" =~ "AMD" ]]; then
-    if ! grep "^MODULES.*amdgpu" /etc/mkinitcpio.conf >/dev/null 2>&1; then
+    if ! grep "^MODULES.*amdgpu" /etc/mkinitcpio.conf > /dev/null 2>&1; then
       if [ -n "${modules}" ]; then
         sed -i "s/^MODULES=(\(.*\))$/MODULES=(\1 amdgpu)/g" /etc/mkinitcpio.conf
       else
@@ -737,7 +736,7 @@ function set_mkinitcpio {
       fi
     fi
   elif [[ "${vendor}" =~ "Intel" ]]; then
-    if ! grep "^MODULES.*i915" /etc/mkinitcpio.conf >/dev/null 2>&1; then
+    if ! grep "^MODULES.*i915" /etc/mkinitcpio.conf > /dev/null 2>&1; then
       if [ -n "${modules}" ]; then
         sed -i "s/^MODULES=(\(.*\))$/MODULES=(\1 i915)/g" /etc/mkinitcpio.conf
       else
@@ -761,7 +760,7 @@ function install_ucode {
 export -f install_ucode
 
 function install_gummiboot {
-  if command -v bootctl >/dev/null 2>&1; then
+  if command -v bootctl > /dev/null 2>&1; then
     pacman -S --noconfirm efibootmgr
 
     local root_uuid
@@ -798,25 +797,25 @@ function install_gummiboot {
     cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
     mkdir -p /efi/loader/entries
     {
-      echo "default	linux.conf";
-      echo "timeout	1";
-      echo "console-mode	max";
-      echo "editor	no";
-    }> /efi/loader/loader.conf
+      echo "default	linux.conf"
+      echo "timeout	1"
+      echo "console-mode	max"
+      echo "editor	no"
+    } > /efi/loader/loader.conf
 
     {
-      echo "title	Arch Linux, linux";
-      echo "linux	/vmlinuz-linux";
-      echo "initrd	/initramfs-linux.img";
-      echo "options	${cmdline}";
-    }> /efi/loader/entries/linux.conf
+      echo "title	Arch Linux, linux"
+      echo "linux	/vmlinuz-linux"
+      echo "initrd	/initramfs-linux.img"
+      echo "options	${cmdline}"
+    } > /efi/loader/entries/linux.conf
 
     {
-      echo "title	Arch Linux, linux (fallback)";
-      echo "linux	/vmlinuz-linux";
-      echo "initrd	/initramfs-linux-fallback.img";
-      echo "options	${cmdline}";
-    }> /efi/loader/entries/linux-fallback.conf
+      echo "title	Arch Linux, linux (fallback)"
+      echo "linux	/vmlinuz-linux"
+      echo "initrd	/initramfs-linux-fallback.img"
+      echo "options	${cmdline}"
+    } > /efi/loader/entries/linux-fallback.conf
 
     vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
     if [[ "$vendor" =~ AMD ]] && [ -f /boot/amd-ucode.img ]; then
@@ -888,7 +887,7 @@ function make_luks_key {
   crypt_key="/etc/crypto_keyfile.bin"
   dd bs=512 count=4 if=/dev/random of=${crypt_key}
   chmod 400 ${crypt_key}
-  echo -n "${CRYPT_PASSWORD}" | \
+  echo -n "${CRYPT_PASSWORD}" |
     cryptsetup luksAddKey "${CRYPT_PARTITION}" --key-file=- --batch-mode "${crypt_key}" --key-slot 1
 
   show_info "Rebuilding kernel(s)..."
