@@ -17,14 +17,14 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-dir="$(dirname "$0")"
+DIR="$(dirname "$0")"
 
 # Globals
-gtktheme="Arc-Dark"
-plasmatheme="Arc-Dark"
-icontheme="Papirus-Dark"
-font="Roboto"
-kernel="linux"
+GTKTHEME="Arc-Dark"
+PLASMATHEME="Arc-Dark"
+ICONTHEME="Papirus-Dark"
+FONT="Roboto"
+KERNEL="linux"
 
 function select_system_font {
   show_question "Select a font family:"
@@ -38,7 +38,7 @@ function select_system_font {
         ;;
       "Noto")
         if pacman -Qi noto-fonts > /dev/null 2>&1; then
-          font="Noto"
+          FONT="Noto"
         else
           show_warning "Font family ${option@Q} not found. Skipping."
         fi
@@ -46,7 +46,7 @@ function select_system_font {
         ;;
       "Roboto")
         if pacman -Qi ttf-roboto > /dev/null 2>&1; then
-          font="Roboto"
+          FONT="Roboto"
         else
           show_warning "Font family ${option@Q} not found. Skipping."
         fi
@@ -63,9 +63,9 @@ function select_system_font {
 }
 
 function set_system_font {
-  show_header "Setting system font to ${font@Q}."
+  show_header "Setting system font to ${FONT@Q}."
 
-  case "${font}" in
+  case "${FONT}" in
     "Roboto")
       if pacman -Qi cinnamon > /dev/null 2>&1; then
         show_info "Setting fonts for Cinnamon desktop environment."
@@ -211,71 +211,71 @@ function set_system_font {
       fi
       ;;
     *)
-      show_error "Font ${font@Q} not supported."
+      show_error "Font ${FONT@Q} not supported."
       exit 3
       ;;
   esac
 }
 
 function set_icon_theme {
-  show_header "Setting desktop icon theme to ${icontheme@Q}."
+  show_header "Setting desktop icon theme to ${ICONTHEME@Q}."
 
   if pacman -Qi cinnamon > /dev/null 2>&1; then
-    show_info "Setting Cinnamon icon theme to ${icontheme@Q}."
-    gsettings set org.cinnamon.desktop.interface icon-theme "'${icontheme}'"
+    show_info "Setting Cinnamon icon theme to ${ICONTHEME@Q}."
+    gsettings set org.cinnamon.desktop.interface icon-theme "'${ICONTHEME}'"
   fi
 
   if pacman -Qi gnome-shell > /dev/null 2>&1; then
-    show_info "Setting GNOME icon theme to ${icontheme@Q}."
-    gsettings set org.gnome.desktop.interface icon-theme "'${icontheme}'"
+    show_info "Setting GNOME icon theme to ${ICONTHEME@Q}."
+    gsettings set org.gnome.desktop.interface icon-theme "'${ICONTHEME}'"
   fi
 
   if [ -e /usr/lib/plasma-changeicons ]; then
-    show_info "Setting Plasma icon theme to ${icontheme@Q}."
-    /usr/lib/plasma-changeicons "${icontheme}"
+    show_info "Setting Plasma icon theme to ${ICONTHEME@Q}."
+    /usr/lib/plasma-changeicons "${ICONTHEME}"
   fi
 }
 
 function set_gtk_theme {
   if pacman -Qi cinnamon > /dev/null 2>&1; then
-    show_info "Setting Cinnamon GTK theme to ${gtktheme@Q}."
-    gsettings set org.cinnamon.desktop.interface gtk-theme "'${gtktheme}'"
-    if [[ "${gtktheme}" =~ -Eta$ ]]; then
-      gsettings set org.cinnamon.theme name "'${gtktheme%-*}'"
-      gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
-    elif [[ "${gtktheme}" =~ -Compact$ ]]; then
-      gsettings set org.cinnamon.theme name "'${gtktheme%-*}'"
-      gsettings set org.cinnamon.desktop.wm.preferences theme "'${gtktheme}'"
-    elif [[ "${gtktheme}" =~ -Darker$ ]]; then
-      gsettings set org.cinnamon.theme name "'${gtktheme%er}'"
+    show_info "Setting Cinnamon GTK theme to ${GTKTHEME@Q}."
+    gsettings set org.cinnamon.desktop.interface gtk-theme "'${GTKTHEME}'"
+    if [[ "${GTKTHEME}" =~ -Eta$ ]]; then
+      gsettings set org.cinnamon.theme name "'${GTKTHEME%-*}'"
+      gsettings set org.cinnamon.desktop.wm.preferences theme "'${GTKTHEME}'"
+    elif [[ "${GTKTHEME}" =~ -Compact$ ]]; then
+      gsettings set org.cinnamon.theme name "'${GTKTHEME%-*}'"
+      gsettings set org.cinnamon.desktop.wm.preferences theme "'${GTKTHEME}'"
+    elif [[ "${GTKTHEME}" =~ -Darker$ ]]; then
+      gsettings set org.cinnamon.theme name "'${GTKTHEME%er}'"
     else
-      gsettings set org.cinnamon.theme name "'${gtktheme}'"
+      gsettings set org.cinnamon.theme name "'${GTKTHEME}'"
     fi
   fi
 
   if pacman -Qi gnome-shell > /dev/null 2>&1; then
-    show_info "Setting GNOME GTK theme to ${gtktheme@Q}."
-    gsettings set org.gnome.desktop.wm.preferences theme "'${gtktheme}'"
-    gsettings set org.gnome.desktop.interface gtk-theme "'${gtktheme}'"
+    show_info "Setting GNOME GTK theme to ${GTKTHEME@Q}."
+    gsettings set org.gnome.desktop.wm.preferences theme "'${GTKTHEME}'"
+    gsettings set org.gnome.desktop.interface gtk-theme "'${GTKTHEME}'"
     gnome-extensions enable "user-theme@gnome-shell-extensions.gcampax.github.com" || true
-    gsettings set org.gnome.shell.extensions.user-theme name "'${gtktheme}'"
+    gsettings set org.gnome.shell.extensions.user-theme name "'${GTKTHEME}'"
   fi
 
   if pacman -Qi plasma-desktop > /dev/null 2>&1; then
-    show_info "Setting Plasma GTK theme to ${gtktheme@Q}."
+    show_info "Setting Plasma GTK theme to ${GTKTHEME@Q}."
     if qdbus org.kde.GtkConfig > /dev/null; then
-      qdbus org.kde.GtkConfig /GtkConfig org.kde.GtkConfig.setGtkTheme "${gtktheme}"
+      qdbus org.kde.GtkConfig /GtkConfig org.kde.GtkConfig.setGtkTheme "${GTKTHEME}"
     fi
   fi
 
-  set_config_key_value "${HOME}/.xprofile" "export GTK_THEME" "${gtktheme}"
+  set_config_key_value "${HOME}/.xprofile" "export GTK_THEME" "${GTKTHEME}"
   set_config_key_value \
-    "${HOME}/.config/environment.d/envvars.conf" "GTK_THEME" "${gtktheme}"
+    "${HOME}/.config/environment.d/envvars.conf" "GTK_THEME" "${GTKTHEME}"
 }
 
 function set_plasma_theme {
-  show_header "Setting Plasma theme to ${plasmatheme@Q}."
-  case "${plasmatheme,,}" in
+  show_header "Setting Plasma theme to ${PLASMATHEME@Q}."
+  case "${PLASMATHEME,,}" in
     arc)
       plasma-apply-lookandfeel -a com.github.sudorook.arc
       qdbus org.kde.GtkConfig /GtkConfig org.kde.GtkConfig.setGtkTheme "Arc"
@@ -330,20 +330,20 @@ function set_plasma_theme {
   esac
 }
 
-lightdmgtkconf="/etc/lightdm/lightdm-gtk-greeter.conf"
 function set_lightdm_theme {
+  local lightdmgtkconf="/etc/lightdm/lightdm-gtk-greeter.conf"
   if pacman -Qi lightdm-gtk-greeter > /dev/null 2>&1; then
-    show_header "Setting LightDM login GTK theme to ${gtktheme@Q}."
+    show_header "Setting LightDM login GTK theme to ${GTKTHEME@Q}."
     sudo sed -i "s/^#theme-name=$/theme-name=/g" ${lightdmgtkconf}
-    sudo sed -i "s/^theme-name=.*/theme-name=${gtktheme}/g" ${lightdmgtkconf}
+    sudo sed -i "s/^theme-name=.*/theme-name=${GTKTHEME}/g" ${lightdmgtkconf}
     sudo sed -i "s/^#icon-theme-name=$/icon-theme-name=/g" ${lightdmgtkconf}
-    sudo sed -i "s/^icon-theme-name=.*$/icon-theme-name=${icontheme}/g" ${lightdmgtkconf}
-    if [[ "${font}" == "Noto" ]]; then
+    sudo sed -i "s/^icon-theme-name=.*$/icon-theme-name=${ICONTHEME}/g" ${lightdmgtkconf}
+    if [[ "${FONT}" == "Noto" ]]; then
       if pacman -Qi noto-fonts > /dev/null; then
         sudo sed -i "s/^#font-name=$/font-name=/g" ${lightdmgtkconf}
         sudo sed -i "s/^font-name=.*/font-name=Noto Sans/g" ${lightdmgtkconf}
       fi
-    elif [[ "${font}" == "Roboto" ]]; then
+    elif [[ "${FONT}" == "Roboto" ]]; then
       if pacman -Qi ttf-roboto > /dev/null; then
         sudo sed -i "s/^#font-name=$/font-name=/g" ${lightdmgtkconf}
         sudo sed -i "s/^font-name=.*/font-name=Roboto/g" ${lightdmgtkconf}
@@ -359,21 +359,21 @@ function set_lightdm_theme {
 function set_gdm_theme {
   local gtkthemedir
   if pacman -Qi gdm > /dev/null 2>&1; then
-    if [[ -d "/usr/local/share/themes/${gtktheme}" ]]; then
-      gtkthemedir="/usr/local/share/themes/${gtktheme}"
-    elif [[ -d "${HOME}/.local/share/themes/${gtktheme}" ]]; then
-      gtkthemedir="${HOME}/.local/share/themes/${gtktheme}"
-    elif [[ -d "${HOME}/.themes/${gtktheme}" ]]; then
-      gtkthemedir="${HOME}/.themes/${gtktheme}"
-    elif [[ -d "/usr/share/themes/${gtktheme}" ]]; then
-      gtkthemedir="/usr/share/themes/${gtktheme}"
+    if [[ -d "/usr/local/share/themes/${GTKTHEME}" ]]; then
+      gtkthemedir="/usr/local/share/themes/${GTKTHEME}"
+    elif [[ -d "${HOME}/.local/share/themes/${GTKTHEME}" ]]; then
+      gtkthemedir="${HOME}/.local/share/themes/${GTKTHEME}"
+    elif [[ -d "${HOME}/.themes/${GTKTHEME}" ]]; then
+      gtkthemedir="${HOME}/.themes/${GTKTHEME}"
+    elif [[ -d "/usr/share/themes/${GTKTHEME}" ]]; then
+      gtkthemedir="/usr/share/themes/${GTKTHEME}"
     else
-      show_warning "GTK theme ${gtktheme@Q} not found. Skipping."
+      show_warning "GTK theme ${GTKTHEME@Q} not found. Skipping."
       return
     fi
-    show_header "Setting GDM login theme to ${gtktheme@Q}."
+    show_header "Setting GDM login theme to ${GTKTHEME@Q}."
     sudo cp -r "/usr/share/gnome-shell" "/usr/share/gnome-shell-$(date +%Y%m%d-%H%M%S)"
-    if [[ "${gtktheme}" =~ ^Adapta ]] || [[ "${gtktheme}" =~ ^Plata ]]; then
+    if [[ "${GTKTHEME}" =~ ^Adapta ]] || [[ "${GTKTHEME}" =~ ^Plata ]]; then
       sudo cp -rf \
         "${gtkthemedir}"/gnome-shell/* \
         /usr/share/gnome-shell/
@@ -383,13 +383,13 @@ function set_gdm_theme {
       sudo cp -f \
         "${gtkthemedir}"/gnome-shell/extensions/window-list/stylesheet.css \
         /usr/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com/
-    elif [[ "${gtktheme}" =~ ^Materia ]]; then
+    elif [[ "${GTKTHEME}" =~ ^Materia ]]; then
       sudo glib-compile-resources \
         --target="/usr/share/gnome-shell/gnome-shell-theme.gresource" \
         --sourcedir="${gtkthemedir}/gnome-shell" \
         "${gtkthemedir}/gnome-shell/gnome-shell-theme.gresource.xml"
-    elif [[ "${gtktheme}" =~ ^Arc ]]; then
-      if [[ "${gtktheme}" =~ Dark ]]; then
+    elif [[ "${GTKTHEME}" =~ ^Arc ]]; then
+      if [[ "${GTKTHEME}" =~ Dark ]]; then
         if [ -f "${gtkthemedir}/gnome-shell/gnome-shell-theme-dark.gresource" ]; then
           sudo cp -f "${gtkthemedir}/gnome-shell/gnome-shell-theme-dark.gresource" \
             "/usr/share/gnome-shell/gnome-shell-theme.gresource"
@@ -401,23 +401,23 @@ function set_gdm_theme {
         fi
       fi
     else
-      show_warning "${gtktheme@Q} is unsupported."
+      show_warning "${GTKTHEME@Q} is unsupported."
     fi
   else
     show_warning "GDM is not installed. Skipping."
   fi
 }
 
-sddmconf="/etc/sddm.conf.d/kde_settings.conf"
 function set_sddm_theme {
+  local sddmconf="/etc/sddm.conf.d/kde_settings.conf"
   if pacman -Qi sddm > /dev/null 2>&1; then
-    if [ -d "/usr/share/sddm/themes/${plasmatheme}" ]; then
-      show_header "Setting SDDM login theme to ${plasmatheme@Q}."
-      sudo kwriteconfig5 --file "${sddmconf}" --group Theme --key Current "${plasmatheme}"
-      if [[ "${plasmatheme,,}" =~ ^breeze ]]; then
+    if [ -d "/usr/share/sddm/themes/${PLASMATHEME}" ]; then
+      show_header "Setting SDDM login theme to ${PLASMATHEME@Q}."
+      sudo kwriteconfig5 --file "${sddmconf}" --group Theme --key Current "${PLASMATHEME}"
+      if [[ "${PLASMATHEME,,}" =~ ^breeze ]]; then
         sudo kwriteconfig5 --file "${sddmconf}" --group Theme --key CursorTheme "breeze_cursors"
       fi
-      case "${font}" in
+      case "${FONT}" in
         Noto)
           if pacman -Qi noto-fonts > /dev/null; then
             sudo kwriteconfig5 --file "${sddmconf}" --group Theme --key Font "Noto Sans,10,-1,5,50,0,0,0,0,0"
@@ -436,9 +436,9 @@ function set_sddm_theme {
   fi
 }
 
-bashrc="${dir}/dotfiles/bashrc"
-bashprofile="${dir}/dotfiles/bash_profile"
 function set_bash_shell {
+  local bashrc="${DIR}/dotfiles/bashrc"
+  local bashprofile="${DIR}/dotfiles/bash_profile"
   if ! test "$(getent passwd "$(whoami)" | grep "bash")"; then
     show_info "Changing login shell to Bash. Provide your password."
     chsh -s /bin/bash
@@ -463,9 +463,9 @@ function set_bash_shell {
   fi
 }
 
-zshrc="${dir}/dotfiles/zshrc"
-p10krc="${dir}/dotfiles/p10k"
 function set_zsh_shell {
+  local zshrc="${DIR}/dotfiles/zshrc"
+  local p10krc="${DIR}/dotfiles/p10k"
   if ! test "$(getent passwd "$(whoami)" | grep "zsh")"; then
     show_info "Changing login shell to Zsh. Provide your password."
     chsh -s /bin/zsh
@@ -516,8 +516,8 @@ function set_login_shell {
   done
 }
 
-gtksettings="${HOME}/.config/gtk-3.0/settings.ini"
 function set_dark_gtk {
+  local gtksettings="${HOME}/.config/gtk-3.0/settings.ini"
   show_header "Setting global dark theme for gtk applications."
   local isgtkdark
   if grep ^gtk-application-prefer-dark-theme= "${gtksettings}" > /dev/null 2>&1; then
@@ -538,25 +538,25 @@ function set_dark_gtk {
   fi
 }
 
-cinnamondconf="${dir}/dconf/cinnamon.dconf"
 function import_cinnamon_dconf {
+  local cinnamondconf="${DIR}/dconf/cinnamon.dconf"
   show_header "Importing Cinnamon dconf settings."
   dconf load / < "${cinnamondconf}"
   check_fail
   show_success "Cinnamon dconf settings imported."
 }
 
-gnomedconf="${dir}/dconf/gnome.dconf"
 function import_gnome_dconf {
+  local gnomedconf="${DIR}/dconf/gnome.dconf"
   show_header "Importing GNOME dconf settings."
   dconf load / < "${gnomedconf}"
   check_fail
   show_success "GNOME dconf settings imported."
 }
 
-systemappsdir="/usr/share/applications"
-localappsdir="${HOME}/.local/share/applications"
 function hide_avahi_apps {
+  local systemappsdir="/usr/share/applications"
+  local localappsdir="${HOME}/.local/share/applications"
   show_header "Hiding Avahi applications."
   local avahiapps=("avahi-discover" "bssh" "bvnc")
   local app
@@ -765,28 +765,30 @@ function import_kde_settings {
   show_success "Done! Reload Plasma to update settings."
 }
 
-appsdconf="${dir}/dconf/apps.dconf"
 function import_apps_dconf {
+  local appsdconf="${DIR}/dconf/apps.dconf"
   show_header "Importing application dconf settings."
   dconf load / < "${appsdconf}"
   check_fail
   show_success "Application dconf settings imported."
 }
 
-terminaldconf="${dir}/dconf/terminal.dconf"
 function import_terminal_dconf {
+  local terminaldconf="${DIR}/dconf/terminal.dconf"
   show_header "Importing terminal profiles."
   dconf load / < "${terminaldconf}"
   check_fail
   show_success "GNOME terminal profiles imported."
 }
 
-gdmconf="/etc/gdm/custom.conf"
-lightdmconf="/etc/lightdm/lightdm.conf"
-sddmconf="/etc/sddm.conf.d/kde_settings.conf"
 function enable_autologin {
+  local gdmconf="/etc/gdm/custom.conf"
+  local lightdmconf="/etc/lightdm/lightdm.conf"
+  local sddmconf="/etc/sddm.conf.d/kde_settings.conf"
+
   show_header "Enabling automatic login for ${USER@Q}."
   local is_autologin_set=false
+
   if pacman -Qi gdm > /dev/null 2>&1; then
     show_info "Log in as ${USER@Q} via GDM."
     ! [ -f ${gdmconf} ] && sudo touch ${gdmconf}
@@ -801,6 +803,7 @@ function enable_autologin {
     fi
     is_autologin_set=true
   fi
+
   if pacman -Qi lightdm > /dev/null 2>&1; then
     show_info "Log in as ${USER@Q} via LightDM."
     if ! getent group | grep -q autologin; then
@@ -814,6 +817,7 @@ function enable_autologin {
     sudo sed -i "s/^autologin-user=.*$/autologin-user=${USER}/g" ${lightdmconf}
     is_autologin_set=true
   fi
+
   if pacman -Qi sddm > /dev/null 2>&1; then
     show_info "Log in as ${USER@Q} via SDDM."
     if ! [ -d /etc/sddm.conf.d/ ]; then
@@ -838,6 +842,7 @@ function enable_autologin {
     fi
     is_autologin_set=true
   fi
+
   if "${is_autologin_set}"; then
     show_success "Autologin enabled."
   else
@@ -845,9 +850,9 @@ function enable_autologin {
   fi
 }
 
-grubdefault="/etc/default/grub"
-grubcfg="/boot/grub/grub.cfg"
 function invert_brightness {
+  local grubdefault="/etc/default/grub"
+  local grubcfg="/boot/grub/grub.cfg"
   if [ -f "${grubdefault}" ]; then
     local oldline
     local bootparams
@@ -885,9 +890,9 @@ function invert_brightness {
   fi
 }
 
-grubdefault="/etc/default/grub"
-grubcfg="/boot/grub/grub.cfg"
 function enable_intel_iommu {
+  local grubdefault="/etc/default/grub"
+  local grubcfg="/boot/grub/grub.cfg"
   local vendor
   vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
   if [[ "$vendor" =~ "Intel" ]]; then
@@ -930,8 +935,8 @@ function enable_intel_iommu {
   fi
 }
 
-pulseconfig="/etc/pulse/default.pa"
 function disable_pulseaudio_suspend {
+  local pulseconfig="/etc/pulse/default.pa"
   show_header "Disabling suspend on PulseAudio when sinks/sources idle."
   if [ -f ${pulseconfig} ]; then
     sudo sed -i "s/^load-module module-suspend-on-idle$/#load-module module-suspend-on-idle/g" ${pulseconfig}
@@ -940,8 +945,8 @@ function disable_pulseaudio_suspend {
   fi
 }
 
-iwlwificonf="/etc/modprobe.d/iwlwifi.conf"
 function disable_11n {
+  local iwlwificonf="/etc/modprobe.d/iwlwifi.conf"
   show_header "Disabling 802.11n networking in iwlwifi."
   if ! [ "$(ls -A /etc/modprobe.d/)" ]; then
     sudo sh -c "echo 'options iwlwifi 11n_disable=1' >> ${iwlwificonf}"
@@ -956,10 +961,11 @@ function disable_11n {
   show_success "802.11n networking disabled in ${iwlwificonf@Q}."
 }
 
-autostartdir="${HOME}/.config/autostart"
-scriptdir="${HOME}/.scripts"
-batterydaemon="${dir}/daemons/battery.desktop"
 function install_scripts {
+  local autostartdir="${HOME}/.config/autostart"
+  local scriptdir="${HOME}/.scripts"
+  local batterydaemon="${DIR}/daemons/battery.desktop"
+
   show_header "Installing misc. scripts to the ${scriptdir@Q} folder."
   if [ -d "${HOME}/.scripts" ]; then
     git -C "${HOME}/.scripts" pull
@@ -975,24 +981,25 @@ function install_scripts {
     > "${autostartdir}/battery-watchdog.desktop"
 }
 
-grubdefault="/etc/default/grub"
-grubcfg="/boot/grub/grub.cfg"
-mksdbootcfg="${dir}/utils/sdboot-mkconfig"
 function set_default_kernel {
-  show_info "Setting default boot kernel to ${kernel}."
+  local grubdefault="/etc/default/grub"
+  local grubcfg="/boot/grub/grub.cfg"
+  local mksdbootcfg="${DIR}/utils/sdboot-mkconfig"
+
+  show_info "Setting default boot kernel to ${KERNEL}."
 
   if [ -f "${grubdefault}" ]; then
-    sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${kernel}'/g" ${grubdefault}
+    sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${KERNEL}'/g" ${grubdefault}
     sudo grub-mkconfig -o ${grubcfg}
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
     local sdbootcfg
     sdbootcfg="$(bootctl -p)/loader/loader.conf"
-    if ! [ -f "$(bootctl -p)/loader/entries/${kernel}.conf" ]; then
-      sudo "${mksdbootcfg}" "${kernel}"
+    if ! [ -f "$(bootctl -p)/loader/entries/${KERNEL}.conf" ]; then
+      sudo "${mksdbootcfg}" "${KERNEL}"
     fi
-    sudo sed -i "s/^default\(\s\+\)\(.*\)/default\1${kernel}.conf/g" "${sdbootcfg}"
+    sudo sed -i "s/^default\(\s\+\)\(.*\)/default\1${KERNEL}.conf/g" "${sdbootcfg}"
   fi
 }
 
@@ -1031,7 +1038,7 @@ function select_gtk_theme {
         ;;
       "Adwaita")
         if [ -d /usr/share/themes/Adwaita ]; then
-          gtktheme="Adwaita"
+          GTKTHEME="Adwaita"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1039,7 +1046,7 @@ function select_gtk_theme {
         ;;
       "Adwaita-dark")
         if [ -d /usr/share/themes/Adwaita-dark ]; then
-          gtktheme="Adwaita-dark"
+          GTKTHEME="Adwaita-dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1050,7 +1057,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Arc ] ||
            [ -d "${HOME}/.local/share/themes/Arc" ] ||
            [ -d "${HOME}/.themes/Arc" ]; then
-          gtktheme="Arc"
+          GTKTHEME="Arc"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1061,7 +1068,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Arc-Darker ] ||
            [ -d "${HOME}/.local/share/themes/Arc-Darker" ] ||
            [ -d "${HOME}/.themes/Arc-Darker" ]; then
-          gtktheme="Arc-Darker"
+          GTKTHEME="Arc-Darker"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1072,7 +1079,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Arc-Dark ] ||
            [ -d "${HOME}/.local/share/themes/Arc-Dark" ] ||
            [ -d "${HOME}/.themes/Arc-Dark" ]; then
-          gtktheme="Arc-Dark"
+          GTKTHEME="Arc-Dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1083,7 +1090,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Arc-Lighter ] ||
            [ -d "${HOME}/.local/share/themes/Arc-Lighter" ] ||
            [ -d "${HOME}/.themes/Arc-Lighter" ]; then
-          gtktheme="Arc-Lighter"
+          GTKTHEME="Arc-Lighter"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1094,7 +1101,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Adapta ] ||
            [ -d "${HOME}/.local/share/themes/Adapta" ] ||
            [ -d "${HOME}/.themes/Adapta" ]; then
-          gtktheme="Adapta"
+          GTKTHEME="Adapta"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1105,7 +1112,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Adapta-Eta ] ||
            [ -d "${HOME}/.local/share/themes/Adapta-Eta" ] ||
            [ -d "${HOME}/.themes/Adapta-Eta" ]; then
-          gtktheme="Adapta-Eta"
+          GTKTHEME="Adapta-Eta"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1116,7 +1123,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Adapta-Nokto ] ||
            [ -d "${HOME}/.local/share/themes/Adapta-Nokto" ] ||
            [ -d "${HOME}/.themes/Adapta-Nokto" ]; then
-          gtktheme="Adapta-Nokto"
+          GTKTHEME="Adapta-Nokto"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1127,7 +1134,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Adapta-Nokto-Eta ] ||
            [ -d "${HOME}/.local/share/themes/Adapta-Nokto-Eta" ] ||
            [ -d "${HOME}/.themes/Adapta-Nokto-Eta" ]; then
-          gtktheme="Adapta-Nokto-Eta"
+          GTKTHEME="Adapta-Nokto-Eta"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1138,7 +1145,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Materia ] ||
            [ -d "${HOME}/.local/share/themes/Materia" ] ||
            [ -d "${HOME}/.themes/Materia" ]; then
-          gtktheme="Materia"
+          GTKTHEME="Materia"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1149,7 +1156,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Materia-compact ] ||
            [ -d "${HOME}/.local/share/themes/Materia-compact" ] ||
            [ -d "${HOME}/.themes/Materia-compact" ]; then
-          gtktheme="Materia-compact"
+          GTKTHEME="Materia-compact"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1160,7 +1167,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Materia-light ] ||
            [ -d "${HOME}/.local/share/themes/Materia-light" ] ||
            [ -d "${HOME}/.themes/Materia-light" ]; then
-          gtktheme="Materia-light"
+          GTKTHEME="Materia-light"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1171,7 +1178,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Materia-light-compact ] ||
            [ -d "${HOME}/.local/share/themes/Materia-light-compact" ] ||
            [ -d "${HOME}/.themes/Materia-light-compact" ]; then
-          gtktheme="Materia-light-compact"
+          GTKTHEME="Materia-light-compact"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1182,7 +1189,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Materia-dark ] ||
            [ -d "${HOME}/.local/share/themes/Materia-dark" ] ||
            [ -d "${HOME}/.themes/Materia-dark" ]; then
-          gtktheme="Materia-dark"
+          GTKTHEME="Materia-dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1193,7 +1200,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Materia-dark-compact ] ||
            [ -d "${HOME}/.local/share/themes/Materia-dark-compact" ] ||
            [ -d "${HOME}/.themes/Materia-dark-compact" ]; then
-          gtktheme="Materia-dark-compact"
+          GTKTHEME="Materia-dark-compact"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1204,7 +1211,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Plata ] ||
            [ -d "${HOME}/.local/share/themes/Plata" ] ||
            [ -d "${HOME}/.themes/Plata" ]; then
-          gtktheme="Plata"
+          GTKTHEME="Plata"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1215,7 +1222,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Plata-Compact ] ||
            [ -d "${HOME}/.local/share/themes/Plata-Compact" ] ||
            [ -d "${HOME}/.themes/Plata-Compact" ]; then
-          gtktheme="Plata-Compact"
+          GTKTHEME="Plata-Compact"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1226,7 +1233,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Plata-Lumine ] ||
            [ -d "${HOME}/.local/share/themes/Plata-Lumine" ] ||
            [ -d "${HOME}/.themes/Plata-Lumine" ]; then
-          gtktheme="Plata-Lumine"
+          GTKTHEME="Plata-Lumine"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1237,7 +1244,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Plata-Lumine-Compact ] ||
            [ -d "${HOME}/.local/share/themes/Plata-Lumine-Compact" ] ||
            [ -d "${HOME}/.themes/Plata-Lumine-Compact" ]; then
-          gtktheme="Plata-Lumine-Compact"
+          GTKTHEME="Plata-Lumine-Compact"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1248,7 +1255,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Plata-Noir ] ||
            [ -d "${HOME}/.local/share/themes/Plata-Noir" ] ||
            [ -d "${HOME}/.themes/Plata-Noir" ]; then
-          gtktheme="Plata-Noir"
+          GTKTHEME="Plata-Noir"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1259,7 +1266,7 @@ function select_gtk_theme {
            [ -d /usr/local/share/themes/Plata-Noir-Compact ] ||
            [ -d "${HOME}/.local/share/themes/Plata-Noir-Compact" ] ||
            [ -d "${HOME}/.themes/Plata-Noir-Compact" ]; then
-          gtktheme="Plata-Noir-Compact"
+          GTKTHEME="Plata-Noir-Compact"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1299,8 +1306,8 @@ function select_plasma_theme {
       "Arc")
         if [ -d /usr/share/plasma/look-and-feel/com.github.sudorook.arc/ ] ||
            [ -d /usr/local/share/plasma/look-and-feel/com.github.sudorook.arc/ ]; then
-          plasmatheme="Arc"
-          gtktheme="Arc"
+          PLASMATHEME="Arc"
+          GTKTHEME="Arc"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1309,8 +1316,8 @@ function select_plasma_theme {
       "Arc-Darker")
         if [ -d /usr/share/plasma/look-and-feel/com.github.sudorook.arc-darker ] ||
            [ -d /usr/local/share/plasma/look-and-feel/com.github.sudorook.arc-darker ]; then
-          plasmatheme="Arc-Darker"
-          gtktheme="Arc-Dark"
+          PLASMATHEME="Arc-Darker"
+          GTKTHEME="Arc-Dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1319,8 +1326,8 @@ function select_plasma_theme {
       "Arc-Dark")
         if [ -d /usr/share/plasma/look-and-feel/com.github.sudorook.arc-dark ] ||
            [ -d /usr/local/share/plasma/look-and-feel/com.github.sudorook.arc-dark ]; then
-          plasmatheme="Arc-Dark"
-          gtktheme="Arc-Dark"
+          PLASMATHEME="Arc-Dark"
+          GTKTHEME="Arc-Dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1329,8 +1336,8 @@ function select_plasma_theme {
       "Breeze")
         if [ -d /usr/share/plasma/look-and-feel/org.kde.breeze.desktop ] ||
            [ -d /usr/local/share/plasma/look-and-feel/org.kde.breeze.desktop ]; then
-          plasmatheme="breeze"
-          gtktheme="Breeze"
+          PLASMATHEME="breeze"
+          GTKTHEME="Breeze"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1339,8 +1346,8 @@ function select_plasma_theme {
       "Breeze-dark")
         if [ -d /usr/share/plasma/look-and-feel/org.kde.breezedark.desktop ] ||
            [ -d /usr/local/share/plasma/look-and-feel/org.kde.breezedark.desktop ]; then
-          plasmatheme="breeze-dark"
-          gtktheme="Breeze"
+          PLASMATHEME="breeze-dark"
+          GTKTHEME="Breeze"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1349,8 +1356,8 @@ function select_plasma_theme {
       "Breeze-twilight")
         if [ -d /usr/share/plasma/look-and-feel/org.kde.breezetwilight.desktop ] ||
            [ -d /usr/local/share/plasma/look-and-feel/org.kde.breezetwilight.desktop ]; then
-          plasmatheme="breeze-twilight"
-          gtktheme="Breeze"
+          PLASMATHEME="breeze-twilight"
+          GTKTHEME="Breeze"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1359,8 +1366,8 @@ function select_plasma_theme {
       "Materia")
         if [ -d /usr/share/plasma/desktoptheme/Materia ] ||
            [ -d /usr/local/share/plasma/desktoptheme/Materia ]; then
-          plasmatheme="Materia"
-          gtktheme="Materia"
+          PLASMATHEME="Materia"
+          GTKTHEME="Materia"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1369,8 +1376,8 @@ function select_plasma_theme {
       "Materia-light")
         if [ -d /usr/share/plasma/desktoptheme/Materia-light ] ||
            [ -d /usr/local/share/plasma/desktoptheme/Materia-light ]; then
-          plasmatheme="Materia-light"
-          gtktheme="Materia-light"
+          PLASMATHEME="Materia-light"
+          GTKTHEME="Materia-light"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1379,8 +1386,8 @@ function select_plasma_theme {
       "Materia-dark")
         if [ -d /usr/share/plasma/desktoptheme/Materia-dark ] ||
            [ -d /usr/local/share/plasma/desktoptheme/Materia-dark ]; then
-          plasmatheme="Materia-dark"
-          gtktheme="Materia-dark"
+          PLASMATHEME="Materia-dark"
+          GTKTHEME="Materia-dark"
           break
         else
           show_warning "${option@Q} theme is not installed."
@@ -1419,7 +1426,7 @@ function select_icon_theme {
         ;;
       "Breeze")
         if [ -d /usr/share/icons/breeze ]; then
-          icontheme="breeze"
+          ICONTHEME="breeze"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1427,7 +1434,7 @@ function select_icon_theme {
         ;;
       "Breeze-Dark")
         if [ -d /usr/share/icons/breeze-dark ]; then
-          icontheme="breeze-dark"
+          ICONTHEME="breeze-dark"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1438,7 +1445,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/Papirus ] ||
            [ -d "${HOME}/.local/share/icons/Papirus" ] ||
            [ -d "${HOME}/.icons/Papirus" ]; then
-          icontheme="Papirus"
+          ICONTHEME="Papirus"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1449,7 +1456,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/ePapirus ] ||
            [ -d "${HOME}/.local/share/icons/ePapirus" ] ||
            [ -d "${HOME}/.icons/ePapirus" ]; then
-          icontheme="ePapirus"
+          ICONTHEME="ePapirus"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1460,7 +1467,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/ePapirus-Dark ] ||
            [ -d "${HOME}/.local/share/icons/ePapirus-Dark" ] ||
            [ -d "${HOME}/.icons/ePapirus-Dark" ]; then
-          icontheme="ePapirus-Dark"
+          ICONTHEME="ePapirus-Dark"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1471,7 +1478,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/Papirus-Light ] ||
            [ -d "${HOME}/.local/share/icons/Papirus-Light" ] ||
            [ -d "${HOME}/.icons/Papirus-Light" ]; then
-          icontheme="Papirus-Light"
+          ICONTHEME="Papirus-Light"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1482,7 +1489,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/Papirus-Dark ] ||
            [ -d "${HOME}/.local/share/icons/Papirus-Dark" ] ||
            [ -d "${HOME}/.icons/Papirus-Dark" ]; then
-          icontheme="Papirus-Dark"
+          ICONTHEME="Papirus-Dark"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1493,7 +1500,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/Papirus-Adapta ] ||
            [ -d "${HOME}/.local/share/icons/Papirus-Adapta" ] ||
            [ -d "${HOME}/.icons/Papirus-Adapta" ]; then
-          icontheme="Papirus-Adapta"
+          ICONTHEME="Papirus-Adapta"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1504,7 +1511,7 @@ function select_icon_theme {
            [ -d /usr/local/share/icons/Papirus-Adapta-Nokto ] ||
            [ -d "${HOME}/.local/share/icons/Papirus-Adapta-Nokto" ] ||
            [ -d "${HOME}/.icons/Papirus-Adapta-Nokto" ]; then
-          icontheme="Papirus-Adapta-Nokto"
+          ICONTHEME="Papirus-Adapta-Nokto"
           break
         else
           show_warning "${option@Q} icons are not installed."
@@ -1538,9 +1545,11 @@ function select_default_kernel {
         xargs -0 -I _ basename _ |
         sed -e "s/^vmlinuz-//g")
   fi
+
   kernels=("Back")
-  for kernel in "${kernellist[@]}"; do
-    kernels+=("${kernel}")
+  local _k
+  for _k in "${kernellist[@]}"; do
+    kernels+=("${_k}")
   done
 
   show_question "Select a default kernel:"
@@ -1550,7 +1559,7 @@ function select_default_kernel {
         break
         ;;
       linux | linux-lts | linux-zen | linux-hardened | linux-rt | linux-rt-lts)
-        kernel="${option}"
+        KERNEL="${option}"
         set_default_kernel
         break
         ;;
@@ -1564,7 +1573,7 @@ function select_default_kernel {
 
 function 05-personal {
   show_question "Personal: what do you want to set?"
-  show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+  show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
 
   local options=(
     "Back"
@@ -1617,83 +1626,83 @@ function 05-personal {
         disable_11n
         install_scripts
         set_default_kernel
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Select system fonts")
         select_system_font
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Select icon theme")
         select_icon_theme
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Select GTK theme")
         select_gtk_theme
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Select Plasma theme")
         select_plasma_theme
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Set dark GTK")
         set_dark_gtk
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Select login shell")
         set_login_shell
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Import Cinnamon dconf")
         import_cinnamon_dconf
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Import KDE settings")
         import_kde_settings
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Import GNOME dconf")
         import_gnome_dconf
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Hide Avahi Programs")
         hide_avahi_apps
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Import application dconf")
         import_apps_dconf
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Import GNOME terminal profiles")
         import_terminal_dconf
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Enable autologin")
         enable_autologin
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Invert brightness (i915)")
         invert_brightness
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Enable IOMMU (Intel)")
         enable_intel_iommu
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Disable PulseAudio suspend")
         disable_pulseaudio_suspend
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Disable 802.11n")
         disable_11n
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       "Add scripts")
         install_scripts
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Select default kernel")
         select_default_kernel
-        show_info "Main\n ${endbranch} Personal (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       *)
         show_warning "Invalid option ${option@Q}."

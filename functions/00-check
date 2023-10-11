@@ -17,21 +17,19 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-dir="$(dirname "$0")"
-deps="${dir}/packages/deps.list"
-install="${dir}/packages/install.list"
+DIR="$(dirname "$0")"
 
-export midbranch="\0342\0224\0234\0342\0224\0200\0342\0224\0200"
-export endbranch="\0342\0224\0224\0342\0224\0200\0342\0224\0200"
+export MIDBRANCH="\0342\0224\0234\0342\0224\0200\0342\0224\0200"
+export ENDBRANCH="\0342\0224\0224\0342\0224\0200\0342\0224\0200"
 
-export heirarchy="Main
- ${midbranch} Base
- ${midbranch} Miscellaneous
- ${midbranch} Desktop environment
- ${midbranch} Network tools
- ${midbranch} Applications
- ${midbranch} Themes
- ${endbranch} Personalization"
+export HEIRARCHY="Main
+ ${MIDBRANCH} Base
+ ${MIDBRANCH} Miscellaneous
+ ${MIDBRANCH} Desktop environment
+ ${MIDBRANCH} Network tools
+ ${MIDBRANCH} Applications
+ ${MIDBRANCH} Themes
+ ${ENDBRANCH} Personalization"
 
 function check_user {
   if [ ${EUID} -eq 0 ]; then
@@ -139,6 +137,7 @@ function sync_repos {
 }
 
 function install_post_dependencies {
+  local deps="${DIR}/packages/deps.list"
   show_header "Checking post-installation dependencies."
   local package
   while read -r package; do
@@ -154,8 +153,8 @@ function install_post_dependencies {
 }
 
 function install_dependencies {
+  local install="${DIR}/packages/install.list"
   show_header "Checking installation dependencies."
-
   local state=true
   local exe
   while read -r exe; do

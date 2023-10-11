@@ -17,11 +17,12 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-dir="$(dirname "$0")"
+DIR="$(dirname "$0")"
 
-networking="${dir}/packages/network.list"
-nmconf="/etc/NetworkManager/NetworkManager.conf"
 function install_network {
+  local networking="${DIR}/packages/network.list"
+  local nmconf="/etc/NetworkManager/NetworkManager.conf"
+
   show_header "Setting up networking."
   check_installed "${networking}"
   check_fail
@@ -46,9 +47,10 @@ function install_network {
     /etc/ssh/sshd_config
 }
 
-discovery="${dir}/packages/discover.list"
-nsconf="/etc/nsswitch.conf"
 function install_discovery {
+  local discovery="${DIR}/packages/discover.list"
+  local nsconf="/etc/nsswitch.conf"
+
   show_header "Setting up local network discovery."
   check_installed "${discovery}"
   check_fail
@@ -62,8 +64,9 @@ function install_discovery {
   sudo systemctl start avahi-daemon.service
 }
 
-firewall="${dir}/packages/firewall.list"
 function install_firewall {
+  local firewall="${DIR}/packages/firewall.list"
+
   show_header "Setting up firewall."
   check_installed "${firewall}"
   check_fail
@@ -94,8 +97,9 @@ function install_firewall {
   sudo systemctl enable ufw
 }
 
-tor="${dir}/packages/tor.list"
 function install_tor {
+  local tor="${DIR}/packages/tor.list"
+
   show_header "Installing Tor programs."
   check_installed "${tor}"
   check_fail
@@ -106,8 +110,8 @@ function install_tor {
   sudo systemctl start tor
 }
 
-# pacmanconf="/etc/pacman.conf"
 function tunnel_pacman_tor {
+  # local pacmanconf="/etc/pacman.conf"
   show_header "Tunneling pacman through tor."
   # if ! pacman -Qi tor > /dev/null 2>&1; then
   #   show_warning "Tor not installed. Skipping."
@@ -124,7 +128,7 @@ function tunnel_pacman_tor {
 
 function 03-network {
   show_question "Network: what do you want to install?"
-  show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+  show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
 
   local options=(
     "Back"
@@ -146,27 +150,27 @@ function 03-network {
         install_firewall
         install_tor
         tunnel_pacman_tor
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       "Networking")
         install_network
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       "Local discovery")
         install_discovery
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       "Firewall")
         install_firewall
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       "Install Tor")
         install_tor
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       "Tunnel pacman over Tor")
         tunnel_pacman_tor
-        show_info "Main\n ${endbranch} Network (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Network (Hit ENTER to see options again.)"
         ;;
       *)
         show_warning "Invalid option."

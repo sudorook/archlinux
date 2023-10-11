@@ -18,14 +18,15 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
-dir="$(dirname "$0")"
+DIR="$(dirname "$0")"
 
-mksdbootconf="${dir}/utils/sdboot-mkconfig"
+MKSDBOOTCONF="${DIR}/utils/sdboot-mkconfig"
 
-zsh="${dir}/packages/zsh.list"
-zshrc="${dir}/dotfiles/zshrc"
-p10krc="${dir}/dotfiles/p10k"
 function install_zsh {
+  local zsh="${DIR}/packages/zsh.list"
+  local zshrc="${DIR}/dotfiles/zshrc"
+  local p10krc="${DIR}/dotfiles/p10k"
+
   show_header "Installing zsh."
   check_installed "${zsh}"
   check_fail
@@ -49,12 +50,13 @@ function install_zsh {
   fi
 }
 
-hardened="${dir}/packages/hardened.list"
-hardenedsdadd="${dir}/hooks/999-add-linux-hardened.hook"
-hardenedsdremove="${dir}/hooks/999-remove-linux-hardened.hook"
-hardenedsdupdate="${dir}/hooks/999-update-linux-hardened.hook"
-pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_hardened {
+  local hardened="${DIR}/packages/hardened.list"
+  local hardenedsdadd="${DIR}/hooks/999-add-linux-hardened.hook"
+  local hardenedsdremove="${DIR}/hooks/999-remove-linux-hardened.hook"
+  local hardenedsdupdate="${DIR}/hooks/999-update-linux-hardened.hook"
+  local pacmanhookdir="/etc/pacman.d/hooks"
+
   show_header "Installing linux-hardened kernel."
   check_installed "${hardened}"
   check_fail
@@ -69,16 +71,17 @@ function install_linux_hardened {
     sudo cp -af "${hardenedsdadd}" "${pacmanhookdir}"
     sudo cp -af "${hardenedsdremove}" "${pacmanhookdir}"
     sudo cp -af "${hardenedsdupdate}" "${pacmanhookdir}"
-    sudo "${mksdbootconf}" linux-hardened
+    sudo "${MKSDBOOTCONF}" linux-hardened
   fi
 }
 
-lts="${dir}/packages/lts.list"
-ltssdadd="${dir}/hooks/999-add-linux-lts.hook"
-ltssdremove="${dir}/hooks/999-remove-linux-lts.hook"
-ltssdupdate="${dir}/hooks/999-update-linux-lts.hook"
-pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_lts {
+  local lts="${DIR}/packages/lts.list"
+  local ltssdadd="${DIR}/hooks/999-add-linux-lts.hook"
+  local ltssdremove="${DIR}/hooks/999-remove-linux-lts.hook"
+  local ltssdupdate="${DIR}/hooks/999-update-linux-lts.hook"
+  local pacmanhookdir="/etc/pacman.d/hooks"
+
   show_header "Installing linux-lts kernel."
   check_installed "${lts}"
   check_fail
@@ -93,16 +96,17 @@ function install_linux_lts {
     sudo cp -af "${ltssdadd}" "${pacmanhookdir}"
     sudo cp -af "${ltssdremove}" "${pacmanhookdir}"
     sudo cp -af "${ltssdupdate}" "${pacmanhookdir}"
-    sudo "${mksdbootconf}" linux-lts
+    sudo "${MKSDBOOTCONF}" linux-lts
   fi
 }
 
-zen="${dir}/packages/zen.list"
-zensdadd="${dir}/hooks/999-add-linux-zen.hook"
-zensdremove="${dir}/hooks/999-remove-linux-zen.hook"
-zensdupdate="${dir}/hooks/999-update-linux-zen.hook"
-pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_zen {
+  local zen="${DIR}/packages/zen.list"
+  local zensdadd="${DIR}/hooks/999-add-linux-zen.hook"
+  local zensdremove="${DIR}/hooks/999-remove-linux-zen.hook"
+  local zensdupdate="${DIR}/hooks/999-update-linux-zen.hook"
+  local pacmanhookdir="/etc/pacman.d/hooks"
+
   show_header "Installing linux-zen kernel."
   check_installed "${zen}"
   check_fail
@@ -117,16 +121,17 @@ function install_linux_zen {
     sudo cp -af "${zensdadd}" "${pacmanhookdir}"
     sudo cp -af "${zensdremove}" "${pacmanhookdir}"
     sudo cp -af "${zensdupdate}" "${pacmanhookdir}"
-    sudo "${mksdbootconf}" linux-zen
+    sudo "${MKSDBOOTCONF}" linux-zen
   fi
 }
 
-rt="${dir}/packages/rt.list"
-rtsdadd="${dir}/hooks/999-add-linux-rt.hook"
-rtsdremove="${dir}/hooks/999-remove-linux-rt.hook"
-rtsdupdate="${dir}/hooks/999-update-linux-rt.hook"
-pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_rt {
+  local rt="${DIR}/packages/rt.list"
+  local rtsdadd="${DIR}/hooks/999-add-linux-rt.hook"
+  local rtsdremove="${DIR}/hooks/999-remove-linux-rt.hook"
+  local rtsdupdate="${DIR}/hooks/999-update-linux-rt.hook"
+  local pacmanhookdir="/etc/pacman.d/hooks"
+
   show_header "Installing linux-rt kernel."
   check_installed "${rt}"
   check_fail
@@ -142,16 +147,17 @@ function install_linux_rt {
     sudo cp -af "${rtsdadd}" "${pacmanhookdir}"
     sudo cp -af "${rtsdremove}" "${pacmanhookdir}"
     sudo cp -af "${rtsdupdate}" "${pacmanhookdir}"
-    sudo "${mksdbootconf}" linux-rt
+    sudo "${MKSDBOOTCONF}" linux-rt
   fi
 }
 
-rtlts="${dir}/packages/rt-lts.list"
-rtltssdadd="${dir}/hooks/999-add-linux-rt-lts.hook"
-rtltssdremove="${dir}/hooks/999-remove-linux-rt-lts.hook"
-rtltssdupdate="${dir}/hooks/999-update-linux-rt-lts.hook"
-pacmanhookdir="/etc/pacman.d/hooks"
 function install_linux_rt_lts {
+  local rtlts="${DIR}/packages/rt-lts.list"
+  local rtltssdadd="${DIR}/hooks/999-add-linux-rt-lts.hook"
+  local rtltssdremove="${DIR}/hooks/999-remove-linux-rt-lts.hook"
+  local rtltssdupdate="${DIR}/hooks/999-update-linux-rt-lts.hook"
+  local pacmanhookdir="/etc/pacman.d/hooks"
+
   show_header "Installing linux-rt-lts kernel."
   check_installed "${rtlts}"
   check_fail
@@ -166,14 +172,15 @@ function install_linux_rt_lts {
     sudo cp -af "${rtltssdadd}" "${pacmanhookdir}"
     sudo cp -af "${rtltssdremove}" "${pacmanhookdir}"
     sudo cp -af "${rtltssdupdate}" "${pacmanhookdir}"
-    sudo "${mksdbootconf}" linux-rt-lts
+    sudo "${MKSDBOOTCONF}" linux-rt-lts
   fi
 }
 
-utils="${dir}/packages/utils.list"
-tmuxconfig="${dir}/dotfiles/tmux.conf"
-rkhunterconfig="/etc/rkhunter.conf"
 function install_utils {
+  local utils="${DIR}/packages/utils.list"
+  local tmuxconfig="${DIR}/dotfiles/tmux.conf"
+  local rkhunterconfig="/etc/rkhunter.conf"
+
   show_header "Installing general utilities."
   check_installed "${utils}"
   check_fail
@@ -191,8 +198,9 @@ function install_utils {
     "${rkhunterconfig}"
 }
 
-laptop="${dir}/packages/laptop.list"
 function install_laptop {
+  local laptop="${DIR}/packages/laptop.list"
+
   show_header "Installing laptop utilities."
   check_installed "${laptop}"
   check_fail
@@ -207,7 +215,7 @@ function install_laptop {
 
 function 01-misc {
   show_question "Misc: what do you want to install?"
-  show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+  show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
 
   local options=(
     "Back"
@@ -235,43 +243,43 @@ function 01-misc {
         install_utils
         install_laptop
         install_zsh
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux hardened kernel")
         install_linux_hardened
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux LTS kernel")
         install_linux_lts
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux RT kernel")
         install_linux_rt
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux RT LTS kernel")
         install_linux_rt_lts
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux zen kernel")
         install_linux_zen
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Linux utilities")
         install_utils
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Laptop tools")
         install_laptop
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "zsh")
         install_zsh
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       *)
         show_warning "Invalid option."
-        show_info "Main\n ${endbranch} Misc (Hit ENTER to see options again.)"
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
     esac
   done
