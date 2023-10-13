@@ -182,6 +182,11 @@ function install_dependencies {
 function check_network {
   show_header "Checking network connection."
 
+  if command -v wget >/dev/null 2>&1; then
+    show_error "wget not installed. Exiting."
+    exit 1
+  fi
+
   if wget -q --tries=10 --timeout=20 --spider https://archlinux.org > /dev/null; then
     show_success "Network is working."
   else
