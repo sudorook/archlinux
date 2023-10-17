@@ -782,7 +782,7 @@ function enable_autologin {
 
   if pacman -Qi lightdm > /dev/null 2>&1; then
     show_info "Log in as ${USER@Q} via LightDM."
-    if ! getent group | grep -q autologin; then
+    if ! grep -q autologin <(getent group); then
       sudo groupadd -r autologin
     fi
     if ! [[ $(groups) =~ autologin ]]; then
