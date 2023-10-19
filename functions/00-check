@@ -83,7 +83,9 @@ function check_installed {
       to_install+=("${package}")
     fi
   done < "${1}"
-  [[ -v to_install ]] && sudo pacman -S --ask 4 --noconfirm "${to_install[@]}"
+  if [[ -v to_install ]]; then
+    sudo pacman -S --ask 4 --noconfirm "${to_install[@]}"
+  fi
 }
 
 function check_aur_installed {
