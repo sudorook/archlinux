@@ -214,6 +214,10 @@ function install_dev {
   Rscript -e \
     "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
 
+  show_info "Installing Julia packages."
+  julia -e \
+    'f = open("julia.list"); pkg = readlines(f); close(f); import Pkg; Pkg.add(pkg)'
+
   show_info "Installing rust stable toolchain."
   rustup default stable
 
