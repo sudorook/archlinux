@@ -495,13 +495,12 @@ function install_torbrowser {
       show_warning "Backing up and replacing existing Tor Browser installation."
       mv "${torbrowser_path}" "${torbrowser_path}.$(date +%Y%m%d-%k%M%S)"
     fi
-    mv tor-browser_en-US "${torbrowser_path}"
+    mv tor-browser "${torbrowser_path}"
     cp -f "${torbrowser_path}/start-tor-browser.desktop" "${local_applications}/"
     chmod -x "${local_applications}/start-tor-browser.desktop"
     sed -i \
       -e "s,^Name=.*,Name=Tor Browser,g" \
-      -e "s,^Icon=.*,Icon=browser-tor,g" \
-      -e "s,^Exec=.*,Exec=sh -c '\"${torbrowser_path}/Browser/start-tor-browser\" --detach || ([ !  -x \"${torbrowser_path}/Browser/start-tor-browser\" ] \&\& \"\$(dirname \"\$*\")\"/Browser/start-tor-browser --detach)' dummy %k,g" \
+      -e "s,^Exec=.*,Exec=sh -c '\"${torbrowser_path}/Browser/start-tor-browser\" --detach || ([ ! -x \"${torbrowser_path}/Browser/start-tor-browser\" ] \&\& \"\$(dirname \"\$*\")\"/Browser/start-tor-browser --detach)' dummy %k,g" \
       "${local_applications}/start-tor-browser.desktop"
     update-desktop-database "${local_applications}"
 
