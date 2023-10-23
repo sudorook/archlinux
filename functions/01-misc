@@ -34,13 +34,9 @@ function install_zsh {
 
   mkdir -p "${HOME}/.local/share/zsh/site-functions"
 
-  show_info "Copying zshrc."
-  cp -f "${zshrc}" "${HOME}/.zshrc"
+  copy_config_file "${zshrc}" "${HOME}/.zshrc"
+  copy_config_file "${p10krc}" "${HOME}/.p10k.zsh"
 
-  show_info "Copying powerlevel10k config."
-  cp -f "${p10krc}" "${HOME}/.p10k.zsh"
-
-  show_info "Setting nerd font config (for powerlevel10k theme)."
   if ! [ -d /etc/fonts/conf.d ]; then
     show_warning "'/etc/fonts/conf.d' for fontconfig is missing. Skipping."
   elif ! [ -e /etc/fonts/conf.d/10-nerd-font-symbols.conf ]; then
