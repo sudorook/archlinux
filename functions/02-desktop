@@ -36,10 +36,12 @@ function install_gnome {
   sudo systemctl enable gdm.service
 
   local extensiondir=${HOME}/.local/share/gnome-shell/extensions
-  mkdir -p "${extensiondir}"
   show_info "Downloading 'Desktop Icons' GNOME extension."
-  git clone https://gitlab.com/rastersoft/desktop-icons-ng.git \
-    "${HOME}/.local/share/gnome-shell/extensions/ding@rastersoft.com"
+  if ! [ -d "${HOME}/.local/share/gnome-shell/extensions/ding@rastersoft.com" ]; then
+    mkdir -p "${extensiondir}"
+    git clone https://gitlab.com/rastersoft/desktop-icons-ng.git \
+      "${HOME}/.local/share/gnome-shell/extensions/ding@rastersoft.com"
+  fi
 
   show_info "Setting kitty as default terminal."
   gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
