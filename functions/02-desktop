@@ -148,7 +148,8 @@ function install_kde {
   sudo systemctl enable sddm.service
 
   # Set flag to enable KDE dialog boxes for GTK applications.
-  set_config_key_value "${HOME}/.config/environment.d/envvars.conf" "GTK_USE_PORTAL" "1"
+  set_config_key_value \
+    "${HOME}/.config/environment.d/envvars.conf" "GTK_USE_PORTAL" "1"
   set_config_key_value "${HOME}/.xprofile" "export GTK_USE_PORTAL" "1"
 
   show_info "Setting kitty as default terminal."
