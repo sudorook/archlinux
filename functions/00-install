@@ -764,75 +764,77 @@ function install_ucode {
 export -f install_ucode
 
 function install_gummiboot {
-  if command -v bootctl > /dev/null 2>&1; then
-    pacman -S --noconfirm efibootmgr
+  if ! command -v bootctl > /dev/null 2>&1; then
+    pacman -S --noconfirm systemd
+  fi
 
-    local root_uuid
-    local crypt_uuid
-    local cmdline
+  pacman -S --noconfirm efibootmgr
 
-    root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
-    crypt_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
+  local root_uuid
+  local crypt_uuid
+  local cmdline
 
-    if [[ "${SCHEME}" =~ LVM ]]; then
-      if [ -n "${crypt_uuid}" ]; then
-        cmdline="rd.luks.name=${crypt_uuid}=${LV} rd.luks.options=discard"
-        if [ -e /dev/mapper/${VG}-root ]; then
-          cmdline="${cmdline} root=/dev/mapper/${VG}-root"
-        fi
-        if [ -e /dev/mapper/${VG}-home ]; then
-          cmdline="${cmdline} home=/dev/mapper/${VG}-home"
-        fi
-        if [ -e /dev/mapper/${VG}-swap ]; then
-          cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
-        fi
-      elif [ -n "${root_uuid}" ]; then
-        cmdline="root=/dev/mapper/${VG}-root"
-      else
-        show_error "ERROR: Missing root ${root_uuid}."
-        exit 3
+  root_uuid=$(sed -n "s,^UUID=\(\S\+\)\s\+/\s\+.*,\1,p" /etc/fstab)
+  crypt_uuid=$(blkid | grep crypto_LUKS | sed -n 's,.* UUID="\(\S\+\)" TYPE.*,\1,p')
+
+  if [[ "${SCHEME}" =~ LVM ]]; then
+    if [ -n "${crypt_uuid}" ]; then
+      cmdline="rd.luks.name=${crypt_uuid}=${LV} rd.luks.options=discard"
+      if [ -e /dev/mapper/${VG}-root ]; then
+        cmdline="${cmdline} root=/dev/mapper/${VG}-root"
       fi
-      cmdline="${cmdline} rw"
+      if [ -e /dev/mapper/${VG}-home ]; then
+        cmdline="${cmdline} home=/dev/mapper/${VG}-home"
+      fi
+      if [ -e /dev/mapper/${VG}-swap ]; then
+        cmdline="${cmdline} resume=/dev/mapper/${VG}-swap"
+      fi
+    elif [ -n "${root_uuid}" ]; then
+      cmdline="root=/dev/mapper/${VG}-root"
     else
-      cmdline="rw"
+      show_error "ERROR: Missing root ${root_uuid}."
+      exit 3
     fi
+    cmdline="${cmdline} rw"
+  else
+    cmdline="rw"
+  fi
 
-    bootctl --esp-path=/efi install
-    cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
-    mkdir -p /efi/loader/entries
-    {
-      echo "default	linux.conf"
-      echo "timeout	1"
-      echo "console-mode	max"
-      echo "editor	no"
-    } > /efi/loader/loader.conf
+  bootctl --esp-path=/efi install
+  cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
+  mkdir -p /efi/loader/entries
+  {
+    echo "default	linux.conf"
+    echo "timeout	1"
+    echo "console-mode	max"
+    echo "editor	no"
+  } > /efi/loader/loader.conf
 
-    {
-      echo "title	Arch Linux, linux"
-      echo "linux	/vmlinuz-linux"
-      echo "initrd	/initramfs-linux.img"
-      echo "options	${cmdline}"
-    } > /efi/loader/entries/linux.conf
+  {
+    echo "title	Arch Linux, linux"
+    echo "linux	/vmlinuz-linux"
+    echo "initrd	/initramfs-linux.img"
+    echo "options	${cmdline}"
+  } > /efi/loader/entries/linux.conf
 
-    {
-      echo "title	Arch Linux, linux (fallback)"
-      echo "linux	/vmlinuz-linux"
-      echo "initrd	/initramfs-linux-fallback.img"
-      echo "options	${cmdline}"
-    } > /efi/loader/entries/linux-fallback.conf
+  {
+    echo "title	Arch Linux, linux (fallback)"
+    echo "linux	/vmlinuz-linux"
+    echo "initrd	/initramfs-linux-fallback.img"
+    echo "options	${cmdline}"
+  } > /efi/loader/entries/linux-fallback.conf
 
-    vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-    if [[ "$vendor" =~ AMD ]] && [ -f /boot/amd-ucode.img ]; then
-      cp -af /boot/amd-ucode.img /efi
-      sed -i "/^linux\s+\/vmlinuz/a initrd	\/amd-ucode.img" \
-        /efi/loader/entries/linux.conf \
-        /efi/loader/entries/linux-fallback.conf
-    elif [[ "$vendor" =~ Intel ]] && [ -f /boot/intel-ucode.img ]; then
-      cp -af /boot/intel-ucode.img /efi
-      sed -i "/^linux\s+\/vmlinuz/a initrd	\/intel-ucode.img" \
-        /efi/loader/entries/linux.conf \
-        /efi/loader/entries/linux-fallback.conf
-    fi
+  vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
+  if [[ "$vendor" =~ AMD ]] && [ -f /boot/amd-ucode.img ]; then
+    cp -af /boot/amd-ucode.img /efi
+    sed -i "/^linux\s+\/vmlinuz/a initrd	\/amd-ucode.img" \
+      /efi/loader/entries/linux.conf \
+      /efi/loader/entries/linux-fallback.conf
+  elif [[ "$vendor" =~ Intel ]] && [ -f /boot/intel-ucode.img ]; then
+    cp -af /boot/intel-ucode.img /efi
+    sed -i "/^linux\s+\/vmlinuz/a initrd	\/intel-ucode.img" \
+      /efi/loader/entries/linux.conf \
+      /efi/loader/entries/linux-fallback.conf
   fi
 }
 export -f install_gummiboot
