@@ -438,6 +438,7 @@ function install_texlive {
   texmfconfig=$(kpsewhich texmf.cnf)
   mkdir -p "${HOME}/.texmf"
   sudo sed -i "s,^TEXMFHOME = .*$,TEXMFHOME = ~/.texmf,g" "${texmfconfig}"
+  sudo sed -i "s,^TEXMFHOME = .*$,TEXMFHOME = ~/.texmf,g"  "${texmfconfig//\/usr\/share\/texmf-dist/\/etc\/texmf}"
 }
 
 function install_torbrowser {
