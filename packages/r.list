@@ -6,7 +6,19 @@ data.table
 devtools
 dplyr
 expm
+ggalluvial
+gganimate
+ggbeeswarm
+ggdendro
 ggplot2
+ggplot.multistats
+ggraph
+ggridges
+ggsci
+ggseqlogo
+ggsignif
+ggtext
+ggthemes
 glmnet
 gridExtra
 hdf5r
@@ -20,6 +32,7 @@ magrittr
 MASS
 mvtnorm
 optparse
+patchwork
 purrr
 quadprog
 RColorBrewer
