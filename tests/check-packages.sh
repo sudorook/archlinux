@@ -18,7 +18,6 @@ set -eu
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 #
 # Check that all the packages in ../packages actually exist.
 #
@@ -31,7 +30,7 @@ for FILE in "${PKGDIR}"/*; do
 
   # Skip the wine list if multilib is not enabled.
   if [[ "${FILE}" = "../packages/wine.list" ]]; then
-    if ! pacman -Sl multilib >/dev/null 2>&1; then
+    if ! pacman -Sl multilib > /dev/null 2>&1; then
       echo "[multilib] not enabled. Skipping."
       echo
       continue
@@ -39,7 +38,7 @@ for FILE in "${PKGDIR}"/*; do
   fi
 
   while read -r PACKAGE; do
-    if pacman -Ss ^"${PACKAGE//+/\\\+}"$ >/dev/null; then
+    if pacman -Ss ^"${PACKAGE//+/\\\+}"$ > /dev/null; then
       echo -e "\033[1;35m✓\033[0m" "${PACKAGE}"
     else
       MISSING=true

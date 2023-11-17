@@ -18,7 +18,6 @@ set -eu
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 #
 # Check that all the packages in ../packages actually exist.
 #
@@ -31,7 +30,7 @@ for FILE in "${PKGDIR}"/*; do
 
   # Skip the wine list if multilib is not enabled.
   if [[ "${FILE}" = "../packages/wine.list" ]]; then
-    if ! pacman -Sl multilib >/dev/null 2>&1; then
+    if ! pacman -Sl multilib > /dev/null 2>&1; then
       echo "[multilib] not enabled. Skipping."
       echo
       continue
@@ -39,19 +38,18 @@ for FILE in "${PKGDIR}"/*; do
   fi
 
   while read -r PACKAGE; do
-    METACOUNT=$(pacman -Ss "${PACKAGE}" | \
+    METACOUNT=$(pacman -Ss "${PACKAGE}" |
                 grep -c "(.*${PACKAGE}.*)" || true)
-    INSTALLCOUNT=$(pacman -Qs "${PACKAGE}" | \
+    INSTALLCOUNT=$(pacman -Qs "${PACKAGE}" |
                    grep -c "^local.*(.*${PACKAGE}.*)$" || true)
 
     # Check if package is installed.
-    if pacman -Qi "${PACKAGE}" >/dev/null 2>&1; then
+    if pacman -Qi "${PACKAGE}" > /dev/null 2>&1; then
       echo -e "\033[1;35m✓\033[0m" "${PACKAGE}"
 
     # pacman -Qi won't work with meta packages, so check if all meta package
     # members are installed instead.
-    elif [[ (${INSTALLCOUNT} -eq ${METACOUNT}) \
-            && ! (${INSTALLCOUNT} -eq 0) ]]; then
+    elif [[ (${INSTALLCOUNT} -eq ${METACOUNT}) && ! (${INSTALLCOUNT} -eq 0) ]]; then
       echo -e "\033[1;35m✓\033[0m" "${PACKAGE}"
 
     # Runs if package is not installed or all members of meta-package are not
