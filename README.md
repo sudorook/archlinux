@@ -6,9 +6,9 @@ are intended for Cinnamon, GNOME, and KDE.
 
 Requirements:
 
-1. `wget`
-2. `git`
-3. `fzf`
+1. `curl`
+2. `fzf`
+3. `git`
 
 ## Install
 
