@@ -924,7 +924,7 @@ export -f update_mirrorlist
 function install_packages {
   pacman --noconfirm -S \
     base-devel linux linux-headers linux-firmware cryptsetup lvm2 \
-    networkmanager man-db man-pages vim wget rsync git iwd
+    networkmanager man-db man-pages curl fzf rsync git iwd
   systemctl enable NetworkManager
 }
 export -f install_packages
