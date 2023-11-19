@@ -42,7 +42,7 @@ function enable_multilib {
     sudo sed -i "s/#\[multilib\]/\[multilib\]/g" ${pacmanconf}
     sudo sed -i "/\[multilib\]/{n;s/#Include = /Include = /}" ${pacmanconf}
     check_fail
-    sudo pacman -Sy --noconfirm
+    sync_repos
     show_success "Multilib enabled."
   else
     show_warning "Multilib not applicable for 32-bit installations. Skipping."
@@ -157,7 +157,8 @@ function parallelize_pacman {
 
 function update_packages {
   show_header "Updating packages."
-  sudo pacman -Syu --noconfirm
+  sync_repos
+  sudo pacman -Su --noconfirm
   check_fail
   show_success "Packages updated."
 }

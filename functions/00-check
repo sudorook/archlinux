@@ -188,6 +188,26 @@ function check_aur_installed {
   cd "${curdir}" || exit
 }
 
+function check_sync_repos {
+  local last_update
+
+  # Check the pacman log to see if synchronized within the past hour. If so,
+  # return.
+  if [ -f /var/log/pacman.log ]; then
+    last_update="$(grep -a "synchronizing package lists$" /var/log/pacman.log |
+                   tail -n 1 |
+                   sed -n "s/\[\(.*\)\] \[PACMAN\] .*/\1/p")"
+    if [ -n "${last_update}" ]; then
+      if [ "$(date --date="${last_update}" +%s)" -gt \
+           "$(date --date="1 hour ago" +%s)" ]; then
+        return
+      fi
+    fi
+  fi
+
+  sync_repos
+}
+
 function sync_repos {
   show_header "Synchronizing repos."
   if [ ${EUID} -eq 0 ]; then

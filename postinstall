@@ -204,7 +204,7 @@ function main {
 
 check_user
 check_network
-sync_repos
+check_sync_repos
 install_post_dependencies
 
 #
