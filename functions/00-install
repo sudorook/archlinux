@@ -674,22 +674,22 @@ function format_partitions {
       pvcreate /dev/mapper/${LV}
       vgcreate ${VG} /dev/mapper/${LV}
       if is_size_nonzero "${PARTITIONS["swap"]}"; then
-        lvcreate -L "${PARTITIONS["swap"]}" ${VG} -n swap
+        lvcreate -L "${PARTITIONS["swap"]}" ${VG} -n swap --yes
         SWAP_PARTITION=/dev/mapper/${VG}-swap
       fi
       if is_size_nonzero "${PARTITIONS["root"]}"; then
         if [[ "${PARTITIONS["root"]}" = "fill" ]]; then
-          lvcreate -l +100%FREE ${VG} -n root
+          lvcreate -l +100%FREE ${VG} -n root --yes
           ROOT_PARTITION=/dev/mapper/${VG}-root
         else
-          lvcreate -L "${PARTITIONS["root"]}" ${VG} -n root
+          lvcreate -L "${PARTITIONS["root"]}" ${VG} -n root --yes
           ROOT_PARTITION=/dev/mapper/${VG}-root
           if is_size_nonzero "${PARTITIONS["home"]}"; then
             if [[ "${PARTITIONS["home"]}" = "fill" ]]; then
-              lvcreate -l +100%FREE ${VG} -n home
+              lvcreate -l +100%FREE ${VG} -n home --yes
               HOME_PARTITION=/dev/mapper/${VG}-home
             else
-              lvcreate -L "${PARTITIONS["home"]}" ${VG} -n home
+              lvcreate -L "${PARTITIONS["home"]}" ${VG} -n home --yes
               HOME_PARTITION=/dev/mapper/${VG}-home
             fi
           fi
@@ -700,22 +700,22 @@ function format_partitions {
       pvcreate "${ROOT_PARTITION}"
       vgcreate ${VG} "${ROOT_PARTITION}"
       if is_size_nonzero "${PARTITIONS["swap"]}"; then
-        lvcreate -L "${PARTITIONS["swap"]}" ${VG} -n swap
+        lvcreate -L "${PARTITIONS["swap"]}" ${VG} -n swap --yes
         SWAP_PARTITION=/dev/mapper/${VG}-swap
       fi
       if is_size_nonzero "${PARTITIONS["root"]}"; then
         if [[ "${PARTITIONS["root"]}" = "fill" ]]; then
-          lvcreate -l +100%FREE ${VG} -n root
+          lvcreate -l +100%FREE ${VG} -n root --yes
           ROOT_PARTITION=/dev/mapper/${VG}-root
         else
-          lvcreate -L "${PARTITIONS["root"]}" ${VG} -n root
+          lvcreate -L "${PARTITIONS["root"]}" ${VG} -n root --yes
           ROOT_PARTITION=/dev/mapper/${VG}-root
           if is_size_nonzero "${PARTITIONS["home"]}"; then
             if [[ "${PARTITIONS["home"]}" = "fill" ]]; then
-              lvcreate -l +100%FREE ${VG} -n home
+              lvcreate -l +100%FREE ${VG} -n home --yes
               HOME_PARTITION=/dev/mapper/${VG}-home
             else
-              lvcreate -L "${PARTITIONS["home"]}" ${VG} -n home
+              lvcreate -L "${PARTITIONS["home"]}" ${VG} -n home --yes
               HOME_PARTITION=/dev/mapper/${VG}-home
             fi
           fi
