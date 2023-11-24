@@ -1000,26 +1000,27 @@ function install_gummiboot {
   bootctl --esp-path=/efi install
   cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
   mkdir -p /efi/loader/entries
-  {
-    echo "default	linux.conf"
-    echo "timeout	1"
-    echo "console-mode	max"
-    echo "editor	no"
-  } > /efi/loader/loader.conf
 
-  {
-    echo "title	Arch Linux, linux"
-    echo "linux	/vmlinuz-linux"
-    echo "initrd	/initramfs-linux.img"
-    echo "options	${cmdline}"
-  } > /efi/loader/entries/linux.conf
+  cat > /efi/loader/loader.conf << EOF
+default	linux.conf
+timeout	1
+console-mode	max
+editor	no
+EOF
 
-  {
-    echo "title	Arch Linux, linux (fallback)"
-    echo "linux	/vmlinuz-linux"
-    echo "initrd	/initramfs-linux-fallback.img"
-    echo "options	${cmdline}"
-  } > /efi/loader/entries/linux-fallback.conf
+  cat > /efi/loader/entries/linux.conf << EOF
+title	Arch Linux, linux
+linux	/vmlinuz-linux
+initrd	/initramfs-linux.img
+options	${cmdline}
+EOF
+
+  cat > /efi/loader/entries/linux-fallback.conf << EOF
+title	Arch Linux, linux (fallback)
+linux	/vmlinuz-linux
+initrd	/initramfs-linux-fallback.img
+options	${cmdline}
+EOF
 
   vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
   if [[ "$vendor" =~ AMD ]] && [ -f /boot/amd-ucode.img ]; then
