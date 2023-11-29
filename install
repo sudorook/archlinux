@@ -63,6 +63,9 @@ function main {
   mount_install
   pacstrap /mnt base
   genfstab -U /mnt >> /mnt/etc/fstab
+  if [[ "${BOOTMODE}" = "systemd-boot" ]]; then
+    sed -i "/\(.*\)\s\+\/efi\s\+vfat/s/0022/0077/g" /mnt/etc/fstab
+  fi
   TIMEZONE="${TIMEZONE}" arch-chroot /mnt /bin/bash -c "set_timezone"
   LOCALE="${LOCALE}" CHARSET="${CHARSET}" \
     arch-chroot /mnt /bin/bash -c "set_locale"
