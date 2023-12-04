@@ -16,6 +16,7 @@ kitty-terminfo
 nautilus
 nautilus-share
 networkmanager
+xdg-desktop-portal
 xdg-desktop-portal-gnome
 xdg-user-dirs
 xdg-user-dirs-gtk
