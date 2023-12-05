@@ -1,6 +1,7 @@
 arch-install-scripts
 bc
 cryptsetup
+curl
 dosfstools
 fzf
 git
@@ -10,4 +11,3 @@ pacman
 pacman-contrib
 pacman-mirrorlist
 parted
-wget
