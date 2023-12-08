@@ -23,7 +23,6 @@ function install_3d_accel {
   local accel="${DIR}/packages/3d-accel.list"
   show_header "Installing mesa/vulkan packages for 3D acceleration."
   check_installed "${accel}"
-  check_fail
   show_success "Video acceleration packages installed."
 }
 
@@ -31,7 +30,6 @@ function install_android {
   local android="${DIR}/packages/android.list"
   show_header "Installing tools for Android devices."
   check_installed "${android}"
-  check_fail
   show_success "Android tools installed."
 }
 
@@ -46,7 +44,6 @@ function install_apps {
 
   show_header "Installing desktop applications."
   check_installed "${apps}"
-  check_fail
   show_success "Applications installed."
 
   show_info "Copying mpv config."
@@ -106,7 +103,6 @@ function install_apps_kde {
 
   show_header "Installing KDE desktop applications."
   check_installed "${appskde}"
-  check_fail
   show_success "Applications installed."
 
   show_info "Copying mpv config."
@@ -143,7 +139,6 @@ function install_aur {
   local aur="${DIR}/packages/aur.list"
   show_header "Installing AUR applications."
   check_aur_installed "${aur}"
-  check_fail
   show_success "Done!"
 }
 
@@ -151,7 +146,6 @@ function install_aur_kde {
   local aurkde="${DIR}/packages/aur-kde.list"
   show_header "Installing KDE AUR applications."
   check_aur_installed "${aurkde}"
-  check_fail
   show_success "Done!"
 }
 
@@ -159,7 +153,6 @@ function install_codecs {
   local codecs="${DIR}/packages/codecs.list"
   show_header "Installing codecs."
   check_installed "${codecs}"
-  check_fail
   show_success "Codecs installed."
 }
 
@@ -167,7 +160,6 @@ function install_containers {
   local containers="${DIR}/packages/container.list"
   show_header "Installing container packages (containerd, LXC, Nomad, Podman)."
   check_installed "${containers}"
-  check_fail
   show_success "Container packages installed."
 }
 
@@ -180,7 +172,6 @@ function install_dev {
 
   show_header "Installing languages, libraries, and tools for development."
   check_installed "${dev}"
-  check_fail
   show_success "Development packages installed."
 
   show_info "Setting Git global defaults."
@@ -260,7 +251,6 @@ function install_extra {
 
   show_header "Installing extra desktop applications."
   check_installed "${extra}"
-  check_fail
   show_success "Extra applications installed."
 
   show_info "Installing yt-dlp/youtube-dl config."
@@ -277,7 +267,6 @@ function install_extra_kde {
 
   show_header "Installing extra KDE desktop applications."
   check_installed "${extrakde}"
-  check_fail
   show_success "Extra applications installed."
 
   show_info "Installing yt-dlp/youtube-dl config."
@@ -292,7 +281,6 @@ function install_pipewire {
   local pipewire="${DIR}/packages/pipewire.list"
   show_header "Installing PipeWire A/V processor."
   check_installed "${pipewire}"
-  check_fail
   show_success "Pipewire installed."
 }
 
@@ -300,7 +288,6 @@ function install_printing {
   local printer="${DIR}/packages/printer.list"
   show_header "Installing CPUS and printer firmware."
   check_installed "${printer}"
-  check_fail
   show_success "Printing applications installed."
 
   sudo systemctl enable --now cups
@@ -310,7 +297,6 @@ function install_games {
   local games="${DIR}/packages/games.list"
   show_header "Installing game emulators."
   check_installed "${games}"
-  check_fail
   show_success "Emulators installed."
 }
 
@@ -320,7 +306,6 @@ function install_kvm {
 
   show_header "Installing KVM."
   check_installed "${kvm}"
-  check_fail
   show_success "KVM installed."
 
   show_info "Adding $(whoami) to kvm and libvirt groups."
@@ -345,7 +330,6 @@ function install_kvm_guest {
   if grep "^flags.*\ hypervisor" /proc/cpuinfo > /dev/null 2>&1; then
     show_header "Installing tools for KVM guests."
     check_installed "${kvmguest}"
-    check_fail
     show_success "KVM installed."
 
     show_info "Adding virtio modules to initramfs."
@@ -371,7 +355,6 @@ function install_messaging {
 
   show_header "Installing messaging applications."
   check_installed "${message}"
-  check_fail
   show_success "Messaging applications installed."
 
   show_info "Installing WeeChat plugin for Slack."
@@ -391,7 +374,6 @@ function install_mingw {
   local mingw="${DIR}/packages/mingw.list"
   show_header "Installing MinGW for cross-platform compilation."
   check_installed "${mingw}"
-  check_fail
   show_success "MinGW installed."
 }
 
@@ -406,7 +388,6 @@ function install_music {
 
   show_header "Installing music applications."
   check_installed "${music}"
-  check_fail
   show_success "Music applications installed."
 
   show_info "Copying beets config."
@@ -430,7 +411,6 @@ function install_texlive {
 
   show_header "Installing TeX Live."
   check_installed "${texlive}"
-  check_fail
   show_success "TeX Live installed."
 
   show_info "Changing the default local texmf path to ~/.texmf"
@@ -527,7 +507,6 @@ function install_vim {
 
   show_header "Installing Vim and Vim plugins."
   check_installed "${vim}"
-  check_fail
   show_success "Vim and Vim plugins installed."
 
   show_info "Installing vimrc."
@@ -574,7 +553,6 @@ function install_neovim {
 
   show_header "Installing Neovim."
   check_installed "${nvim}"
-  check_fail
   show_success "Neovim installed."
 
   mkdir -p "${HOME}/.config/nvim"
@@ -615,7 +593,6 @@ function install_virtualbox {
 
   show_header "Installing VirtualBox."
   check_installed "${virtualbox}"
-  check_fail
   show_success "VirtualBox installed."
 
   if getent group vboxusers; then
@@ -629,7 +606,6 @@ function install_virtualbox_guest {
   if grep "^flags.*\ hypervisor" /proc/cpuinfo > /dev/null 2>&1; then
     show_header "Installing packages for VirtualBox guests."
     check_installed "${virtualboxguest}"
-    check_fail
     show_success "VirtualBox guest packages installed."
   else
     show_warning "Not running on a virtualized machine. Skipping."
@@ -645,7 +621,6 @@ function install_wine {
     enable_multilib
   fi
   check_installed "${wine}"
-  check_fail
   show_success "Wine installed."
 }
 

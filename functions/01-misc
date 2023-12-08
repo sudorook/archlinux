@@ -28,7 +28,6 @@ function install_zsh {
 
   show_header "Installing zsh."
   check_installed "${zsh}"
-  check_fail
   show_success "zsh installed."
 
   mkdir -p "${HOME}/.local/share/zsh/site-functions"
@@ -55,7 +54,6 @@ function install_linux_hardened {
 
   show_header "Installing linux-hardened kernel."
   check_installed "${hardened}"
-  check_fail
   show_success "Hardened kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
@@ -80,7 +78,6 @@ function install_linux_lts {
 
   show_header "Installing linux-lts kernel."
   check_installed "${lts}"
-  check_fail
   show_success "LTS kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
@@ -105,7 +102,6 @@ function install_linux_zen {
 
   show_header "Installing linux-zen kernel."
   check_installed "${zen}"
-  check_fail
   show_success "Zen kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
@@ -130,7 +126,6 @@ function install_linux_rt {
 
   show_header "Installing linux-rt kernel."
   check_installed "${rt}"
-  check_fail
   show_success "Zen kernel installed."
   show_success "Real-time kernel installed."
 
@@ -156,7 +151,6 @@ function install_linux_rt_lts {
 
   show_header "Installing linux-rt-lts kernel."
   check_installed "${rtlts}"
-  check_fail
   show_success "Real-time LTS kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
@@ -179,7 +173,6 @@ function install_utils {
 
   show_header "Installing general utilities."
   check_installed "${utils}"
-  check_fail
   show_success "Utilities installed."
 
   show_info "Installing tmux config."
@@ -199,7 +192,6 @@ function install_laptop {
 
   show_header "Installing laptop utilities."
   check_installed "${laptop}"
-  check_fail
   show_success "Laptop utilities installed."
 
   # Enable tlp on laptops.
