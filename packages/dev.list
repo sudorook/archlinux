@@ -70,10 +70,6 @@ python-urllib3
 python-wheel
 qwt
 r
-ruby
-ruby-bundler
-ruby-cucumber
-ruby-rake
 rustup
 sassc
 scour
