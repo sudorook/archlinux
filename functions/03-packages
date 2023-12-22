@@ -163,9 +163,47 @@ function install_containers {
   show_success "Container packages installed."
 }
 
+function _install_julia {
+  local julia="${DIR}/package/julia.list"
+
+  show_info "Installing Julia packages."
+  julia -e \
+    "f = open(\"${julia}\"); pkg = readlines(f); close(f); import Pkg; Pkg.add(pkg)"
+}
+
+function _install_r {
+  local r="${DIR}/packages/r.list"
+
+  show_info "Installing Rprofile."
+  cp -f "${rprofile}" "${HOME}/.Rprofile"
+
+  show_info "Installing R packages."
+  if ! [[ -v R_LIBS_USER ]]; then
+    R_LIBS_USER="${HOME}/.R/$(R --version |
+      sed -n "s/^R version \([0-9\.]*\) .*/\1/p")"
+    export R_LIBS_USER
+  fi
+  mkdir -p "${R_LIBS_USER}"
+  Rscript -e \
+    "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
+}
+
+function _install_rust {
+  show_info "Installing rust stable toolchain."
+  rustup default stable
+
+  show_info "Building local cache of cargo crates."
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  git clone --depth 1 https://github.com/sudorook/crate_dl.git "${tmpdir}"
+  pushd "${tmpdir}" > /dev/null || exit
+  cargo fetch
+  popd > /dev/null || exit
+  rm -rf "${tmpdir}"
+}
+
 function install_dev {
   local dev="${DIR}/packages/dev.list"
-  local r="${DIR}/packages/r.list"
   local npmrc="${DIR}/dotfiles/npmrc"
   local rprofile="${DIR}/dotfiles/Rprofile"
   local vimpack="${HOME}/.vim/pack/dist/start"
@@ -180,9 +218,6 @@ function install_dev {
   show_info "Installing npmrc."
   cp -f "${npmrc}" "${HOME}/.npmrc"
 
-  show_info "Installing Rprofile."
-  cp -f "${rprofile}" "${HOME}/.Rprofile"
-
   show_info "Setting up local lib dirs."
   mkdir -p "${HOME}/.local/lib"
   if [ -d "${HOME}/.local/lib64" ]; then
@@ -195,34 +230,12 @@ function install_dev {
   fi
   ln -sf "${HOME}/.local/lib" "${HOME}/.local/lib64"
 
-  show_info "Installing R packages."
-  if ! [[ -v R_LIBS_USER ]]; then
-    R_LIBS_USER="${HOME}/.R/$(R --version |
-      sed -n "s/^R version \([0-9\.]*\) .*/\1/p")"
-    export R_LIBS_USER
-  fi
-  mkdir -p "${R_LIBS_USER}"
-  Rscript -e \
-    "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
-
-  show_info "Installing Julia packages."
-  julia -e \
-    'f = open("julia.list"); pkg = readlines(f); close(f); import Pkg; Pkg.add(pkg)'
-
-  show_info "Installing rust stable toolchain."
-  rustup default stable
-
-  show_info "Building local cache of cargo crates."
-  local tmpdir
-  tmpdir="$(mktemp -d)"
-  git clone --depth 1 https://github.com/sudorook/crate_dl.git "${tmpdir}"
-  pushd "${tmpdir}" > /dev/null || exit
-  cargo fetch
-  popd > /dev/null || exit
-  rm -rf "${tmpdir}"
-
   show_info "Setting default clang-format style."
   clang-format -style=mozilla -dump-config > "${HOME}/.clang-format"
+
+  _install_julia
+  _install_r
+  _install_rust
 
   show_info "Installing Vim packages."
   mkdir -p "${vimpack}"
