@@ -135,14 +135,14 @@ function install_apps_kde {
   cp -f "${keepassxcini}" "${HOME}/.config/keepassxc/"
 }
 
-function install_aur {
+function install_apps_aur {
   local aur="${DIR}/packages/apps-aur.list"
   show_header "Installing AUR applications."
   check_aur_installed "${aur}"
   show_success "Done!"
 }
 
-function install_aur_kde {
+function instlal_apps_kde_aur {
   local aurkde="${DIR}/packages/apps-kde-aur.list"
   show_header "Installing KDE AUR applications."
   check_aur_installed "${aurkde}"
@@ -653,9 +653,9 @@ function 03-packages {
     "3D acceleration"
     "Android tools"
     "General applications"
+    "General applications (AUR)"
     "General KDE applications"
-    "AUR applications"
-    "AUR KDE applications"
+    "General KDE applications (AUR)"
     "Codecs"
     "Containers"
     "Development"
@@ -688,8 +688,8 @@ function 03-packages {
         install_android
         install_apps
         install_apps_kde
-        install_aur
-        install_aur_kde
+        install_apps_aur
+        instlal_apps_kde_aur
         install_codecs
         install_containers
         install_dev
@@ -721,20 +721,20 @@ function 03-packages {
         install_android
         show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
-      "AUR applications")
-        install_aur
-        show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
-        ;;
-      "AUR KDE applications")
-        install_aur_kde
-        show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
-        ;;
       "General applications")
         install_apps
         show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
         ;;
+      "General applications (AUR)")
+        install_apps_aur
+        show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
+        ;;
       "General KDE applications")
         install_apps_kde
+        show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
+        ;;
+      "General KDE applications (AUR)")
+        instlal_apps_kde_aur
         show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
         ;;
       "Codecs")
