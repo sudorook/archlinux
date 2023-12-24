@@ -136,14 +136,14 @@ function install_apps_kde {
 }
 
 function install_aur {
-  local aur="${DIR}/packages/aur.list"
+  local aur="${DIR}/packages/apps-aur.list"
   show_header "Installing AUR applications."
   check_aur_installed "${aur}"
   show_success "Done!"
 }
 
 function install_aur_kde {
-  local aurkde="${DIR}/packages/aur-kde.list"
+  local aurkde="${DIR}/packages/apps-kde-aur.list"
   show_header "Installing KDE AUR applications."
   check_aur_installed "${aurkde}"
   show_success "Done!"
