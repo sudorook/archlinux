@@ -258,6 +258,13 @@ function install_dev {
   fi
 }
 
+function install_dev_aur {
+  local devaur="${DIR}/packages/dev-aur.list"
+  show_header "Installing development packages from AUR."
+  check_installed "${devaur}"
+  show_success "Development packages installed."
+}
+
 function _configure_ytdlp {
   local ytdlconf="${DIR}/configs/ytdl.conf"
   show_info "Installing yt-dlp/youtube-dl config."
@@ -652,6 +659,7 @@ function 03-packages {
     "Codecs"
     "Containers"
     "Development"
+    "Development (AUR)"
     "Extra applications"
     "Extra KDE applications"
     "Emulators"
@@ -685,6 +693,7 @@ function 03-packages {
         install_codecs
         install_containers
         install_dev
+        install_dev_aur
         install_extra
         install_extra_kde
         install_pipewire
@@ -738,6 +747,10 @@ function 03-packages {
         ;;
       "Development")
         install_dev
+        show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
+        ;;
+      "Development (AUR)")
+        install_dev_aur
         show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
         ;;
       "Extra applications")
