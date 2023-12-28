@@ -53,7 +53,7 @@ function select_system_font {
         break
         ;;
       *)
-        show_error "Font ${option} not supported."
+        show_error "Font ${option@Q} not supported."
         exit 3
         ;;
     esac
