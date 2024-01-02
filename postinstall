@@ -113,8 +113,8 @@ function main {
           install_printing
           install_texlive
           # install_torbrowser
-          install_vim
-          # install_neovim
+          # install_vim
+          install_neovim
           # install_virtualbox
           # install_virtualbox_guest
           # install_wine
