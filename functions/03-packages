@@ -609,6 +609,62 @@ function install_neovim {
   show_success "Wordlist installed in ${nvimspell@Q}."
 }
 
+function install_lazyvim {
+  if [ $EUID -ne 0 ]; then
+    local lazyvim="${DIR}/packages/lazyvim.list"
+    local lazyvimaur="${DIR}/packages/lazyvim-aur.list"
+    local lazygit="${DIR}/configs/lazygit.yml"
+
+    show_info "Installing LazyVim dependencies."
+    check_installed "${lazyvim}"
+    show_success "LazyVim dependencies installed."
+
+    show_info "Installing LazyVim AUR dependencies."
+    check_aur_installed "${lazyvimaur}"
+    show_success "LazyVim AUR dependencies installed."
+
+    copy_config_file "${lazygit}" "${HOME}/.config/lazygit/config.yml"
+
+    if command -v julia > /dev/null; then
+      show_info "Installing Julia language server."
+      if ! julia -e 'using Pkg; Pkg.status()' |
+         grep -q "\[[0-9a-f]\+\]\s\+LanguageServer\s\+"; then
+        julia -e 'import Pkg; Pkg.add("LanguageServer")'
+      fi
+    fi
+
+    if command -v R > /dev/null; then
+      if [[ -v R_LIBS_USER ]] && [ -d "${R_LIBS_USER}" ]; then
+        show_info "Installing R language server and code formatter."
+        Rscript -e "if (system.file(package='languageserver') == '') {
+                      install.packages(c('languageserver'),
+                                       lib=\"${R_LIBS_USER}\",
+                                       repo='https://cloud.r-project.org/')
+                    }"
+        Rscript -e "if (system.file(package='styler') == '') {
+                      install.packages(c('styler'),
+                                       lib=\"${R_LIBS_USER}\",
+                                       repo='https://cloud.r-project.org/')
+                    }"
+      fi
+    fi
+
+    if command -v rust > /dev/null; then
+      rustup component add rust-analyzer
+    fi
+
+    show_info "Installing LazyVim configuration files for Neovim."
+    if [ -d "${HOME}/.config/nvim" ]; then
+      show_info "Backing up existing ${HOME}/.config/nvim directory."
+      mv -v "${HOME}/.config/nvim" "${HOME}/.config/nvim_$(date +%Y%m%d-%k%M%S)"
+    fi
+    git clone https://github.com/sudorook/lazyvim.nvim.git "${HOME}/.config/nvim"
+    show_success "LazyVim installed."
+  else
+    show_warning "Don't do this as root. Skipping..."
+  fi
+}
+
 function install_virtualbox {
   local virtualbox="${DIR}/packages/virtualbox.list"
 
@@ -676,6 +732,7 @@ function 03-packages {
     "Tor browser"
     "Vim"
     "Neovim"
+    "LazyVim (Neovim)"
     "VirtualBox (host)"
     "VirtualBox (guest)"
     "Wine")
@@ -710,6 +767,7 @@ function 03-packages {
         install_torbrowser
         install_vim
         install_neovim
+        install_lazyvim
         install_virtualbox
         install_virtualbox_guest
         install_wine
@@ -810,6 +868,10 @@ function 03-packages {
       "Neovim")
         install_neovim
         show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
+        ;;
+      "LazyVim (Neovim)")
+        install_lazyvim
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "VirtualBox (host)")
         install_virtualbox
