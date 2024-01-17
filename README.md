@@ -216,16 +216,21 @@ Automatically install (without prompting) packages and configs.
 #### 7) Applications
 
 ```
- 1) Back                      11) Development               21) PipeWire
- 2) All                       12) Extra applications        22) TeX Live
- 3) 3D acceleration           13) Extra KDE applications    23) Tor browser
- 4) Android tools             14) Emulators                 24) Vim
- 5) General applications      15) KVM (host)                25) Neovim
- 6) General KDE applications  16) KVM (guest)               26) VirtualBox (host)
- 7) AUR applications          17) Messaging                 27) VirtualBox (guest)
- 8) AUR KDE applications      18) MinGW                     28) Wine
- 9) Codecs                    19) Music
-10) Containers                20) Printing
+ 1) Back                            16) KVM (host)
+ 2) All                             17) KVM (guest)
+ 3) 3D acceleration                 18) Messaging
+ 4) Android tools                   19) MinGW
+ 5) General applications            20) Music
+ 6) General applications (AUR)      21) Printing
+ 7) General KDE applications        22) PipeWire
+ 8) General KDE applications (AUR)  23) TeX Live
+ 9) Codecs                          24) Tor browser
+10) Containers                      25) Vim
+11) Development                     26) Neovim
+12) Development (AUR)               27) LazyVim (Neovim)
+13) Extra applications              28) VirtualBox (host)
+14) Extra KDE applications          29) VirtualBox (guest)
+15) Emulators                       30) Wine
 ```
 
 3. Install 3D video acceleration packages in
@@ -236,12 +241,14 @@ Automatically install (without prompting) packages and configs.
 
 5. Install general GTK applications from [apps.list](packages/apps.list).
 
-6. Install general KDE (Qt) applications from
+6. Install general GTK AUR applications from
+   [apps-aur.list](packages/apps-aur.list).
+
+7. Install general KDE (Qt) applications from
    [apps-kde.list](packages/apps-kde.list).
 
-7. Install [select packages](packages/aur.list) from the AUR.
-
-8. Install [KDE-specific packages](packages/aur.list) from the AUR.
+8. Install general KDE (Qt) AUR applications from
+   [apps-kde-aur.list](packages/apps-kde-aur.list).
 
 9. Install GStreamer plugins for handing various media codecs.
 
@@ -249,54 +256,60 @@ Automatically install (without prompting) packages and configs.
 
 11. Install packages for programming and software development.
 
-12. Install extra GTK applications from [extra.list](packages/extra.list).
+12. Install AUR packages for programming and software development.
 
-13. Install extra KDE (Qt) applications from
+13. Install extra GTK applications from [extra.list](packages/extra.list).
+
+14. Install extra KDE (Qt) applications from
     [extra-kde.list](packages/extra-kde.list).
 
-14. Install game system emulators.
+15. Install game system emulators.
 
-15. Install Virt-Manager and tools for using KVM virtualization.
+16. Install Virt-Manager and tools for using KVM virtualization.
 
-16. Install packages for Linux guests to enable host-to-guest sharing and
+17. Install packages for Linux guests to enable host-to-guest sharing and
     adjustable display resolution.
 
-17. Install IRC, email, and other messaging clients.
+18. Install IRC, email, and other messaging clients.
 
-18. Install MinGW for Windows/Linux cross-platform compilation.
+19. Install MinGW for Windows/Linux cross-platform compilation.
 
-19. Install applications for playing music (`mpd`, `ncmcpp`, `strawberry`),
+20. Install applications for playing music (`mpd`, `ncmcpp`, `strawberry`),
     computing replaygain (`ffmpeg`), tagging metadata (`beets`), and using
     Pandora (`pianobar`).
 
-20. Install CUPS, drivers, and applications for handling printers.
+21. Install CUPS, drivers, and applications for handling printers.
 
-21. Install PipeWire for A/V handling (replaces PulseAudio, ALSA, etc.).
+22. Install PipeWire for A/V handling (replaces PulseAudio, ALSA, etc.).
 
-22. Install TeX libraries and Font Awesome icons.
+23. Install TeX libraries and Font Awesome icons.
 
-23. Download and install the Tor browser. Edits the application launcher icon to
+24. Download and install the Tor browser. Edits the application launcher icon to
     look for "browser-tor".
 
-24. Install `vim` and `vim-plugins` and then set the user vimrc.
+25. Install `vim` and `vim-plugins` and then set the user vimrc.
 
-25. Install `neovim` and `neovim-plugins` and then set the user init.vim.
+26. Install `neovim` and `neovim-plugins` and then set the user init.vim.
 
-26. Install VirtualBox and kernel modules (dkms) for running it (host).
+27. Install LazyVim for Neovim and its dependencies.
 
-27. Install kernel modules (dkms) and tools for VirtualBox guests.
+28. Install VirtualBox and kernel modules (dkms) for running it (host).
 
-28. Install Wine not-emulator, along with the Mono and browser and some audio
+29. Install kernel modules (dkms) and tools for VirtualBox guests.
+
+30. Install Wine not-emulator, along with the Mono and browser and some audio
     libraries.
 
 #### 8) Themes
 
 ```
-1) Back                 6) Plata (GTK)        11) Colorific themes
-2) All                  7) Materia (GTK)      12) Timed backgrounds
-3) Arc (GTK)            8) Materia (KDE)
-4) Arc (KDE)            9) Fonts
-5) Adapta (GTK)        10) Papirus (icons)
+1) Back                           8) Materia (KDE)
+2) All                            9) Fonts
+3) Arc (GTK)                     10) Papirus (icons)
+4) Arc (KDE)                     11) Colorific themes
+5) Adapta (GTK)                  12) Nightfox themes
+6) Plata (GTK)                   13) Timed backgrounds
+7) Materia (GTK)                 14) Dynamic wallpapers (Plasma)
 ```
 
 3. Download, compile, and install a
@@ -330,8 +343,15 @@ Automatically install (without prompting) packages and configs.
 11. Install [colorific themes](https://github.com/sudorook/colorific.vim) for
     alacritty, gitk, kitty, Neovim, tmux, and Vim.
 
-12. Install [timed backgrounds](https://github.com/sudorook/timed-backgrounds)
+12. Install [Nightfox themes](https://github.com/sudorook/nightfox.nvim) for
+    alacritty, kitty, Neovim, and tmux.
+
+13. Install [timed backgrounds](https://github.com/sudorook/timed-backgrounds)
     where transitions from day to night match sunrise/sunset times.
+
+14. Install
+    [timed backgrounds](https://github.com/sudorook/plasma5-timed-backgrounds)
+    for Plasma where transitions from day to night match sunrise/sunset times.
 
 #### 9) Personalization
 
