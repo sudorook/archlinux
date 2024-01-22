@@ -29,6 +29,7 @@ intltool
 jq
 julia
 jupyter-notebook
+jupyter-server-mathjax
 kotlin
 libgit2
 mathjax
