@@ -24,6 +24,8 @@ python-lsp-server
 python-pynvim
 python-pytest-lsp
 ripgrep
+rubocop
+ruby-rspec
 ruff
 ruff-lsp
 selene
