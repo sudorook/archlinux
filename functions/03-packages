@@ -184,8 +184,16 @@ function _install_r {
     export R_LIBS_USER
   fi
   mkdir -p "${R_LIBS_USER}"
-  Rscript -e \
-    "pkg <- readLines(\"${r}\"); install.packages(pkg, lib=\"${R_LIBS_USER}\", repo='https://cloud.r-project.org/')"
+  Rscript <(
+    cat << EOF
+pkg <- readLines("${r}")
+install.packages(pkg,
+                 lib = "${R_LIBS_USER}",
+                 Ncpus = $(nproc),
+                 clean = TRUE,
+                 repo = 'https://cloud.r-project.org/')
+EOF
+  )
 }
 
 function _install_rust {
