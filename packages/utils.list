@@ -8,9 +8,11 @@ dmg2img
 dmidecode
 dos2unix
 dosfstools
+ecryptfs-utils
 ethtool
 exfatprogs
 gnupg
+gocryptfs
 gptfdisk
 inotify-tools
 java-commons-lang
