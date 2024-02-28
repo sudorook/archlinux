@@ -17,6 +17,7 @@ gptfdisk
 inotify-tools
 java-commons-lang
 lm_sensors
+lshw
 mtools
 net-tools
 nmap
