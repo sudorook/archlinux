@@ -21,6 +21,7 @@ kitty
 kitty-terminfo
 libreoffice-fresh
 mpv
+mpv-mpris
 python-psutil
 syncthing
 transmission-gtk
