@@ -18,6 +18,7 @@ ggseqlogo
 ggsignif
 ggtext
 ggthemes
+ggvis
 glmnet
 gridExtra
 hdf5r
@@ -29,7 +30,9 @@ latex2exp
 MASS
 mvtnorm
 optparse
+parallel
 patchwork
+plyr
 quadprog
 RColorBrewer
 Rcpp
@@ -38,8 +41,14 @@ RcppEigen
 reshape2
 Rglpk
 rmarkdown
+roxygen2
+shiny
 testthat
 tidyverse
 vegan
 viridis
 viridisLite
+xml
+xtable
+xts
+zoo
