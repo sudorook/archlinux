@@ -10,6 +10,7 @@ haskell-lsp
 haskell-lsp-test
 jedi-language-server
 lazygit
+luacheck
 lua-language-server
 neovim
 perl-file-homedir
