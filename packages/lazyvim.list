@@ -12,6 +12,8 @@ jedi-language-server
 lazygit
 luacheck
 lua-language-server
+markdownlint
+marksman
 neovim
 perl-file-homedir
 perl-yaml-tiny
