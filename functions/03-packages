@@ -637,7 +637,7 @@ function install_lazyvim {
     copy_config_file "${rubocop}" "${HOME}/.config/rubocop/config.yml"
 
     if command -v gem > /dev/null; then
-      gem install solargraph
+      gem install rufo solargraph
     fi
 
     if command -v julia > /dev/null; then
