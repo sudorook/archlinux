@@ -1661,7 +1661,7 @@ function 05-personal {
     "Select login shell"
     "Import Cinnamon dconf"
     "Import GNOME dconf"
-    "Hide Avahi Programs"
+    "Hide Avahi programs"
     "Import KDE settings"
     "Import application dconf"
     "Import GNOME terminal profiles"
@@ -1739,7 +1739,7 @@ function 05-personal {
         import_gnome_dconf
         show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
-      "Hide Avahi Programs")
+      "Hide Avahi programs")
         hide_avahi_apps
         show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
