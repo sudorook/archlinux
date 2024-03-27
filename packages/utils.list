@@ -14,6 +14,7 @@ exfatprogs
 gnupg
 gocryptfs
 gptfdisk
+hyperfine
 inotify-tools
 java-commons-lang
 lm_sensors
