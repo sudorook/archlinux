@@ -60,6 +60,7 @@ python-pip
 python-pipx
 python-pycurl
 python-pylint
+python-pyxdg
 python-reportlab
 python-scikit-learn
 python-scipy
