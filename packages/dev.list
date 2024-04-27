@@ -32,6 +32,7 @@ jupyter-notebook
 jupyter-server-mathjax
 kotlin
 libgit2
+luarocks
 mathjax
 meson
 mkvtoolnix-cli
