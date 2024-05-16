@@ -1,3 +1,5 @@
+ansible-language-server
+ansible-lint
 bash-language-server
 codespell
 delve
