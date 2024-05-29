@@ -6,8 +6,10 @@ dosfstools
 fzf
 git
 gptfdisk
+grep
 lvm2
 pacman
 pacman-contrib
 pacman-mirrorlist
 parted
+sed
