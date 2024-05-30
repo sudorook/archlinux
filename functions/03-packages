@@ -368,7 +368,7 @@ function install_kvm_guest {
     else
       local mkinitcpiomodules
       mkinitcpiomodules=$(sed -n "s/^MODULES=(\(.*\))/\1 ${virtiomodules}/p" ${mkinitcpioconf} | sed -e "s/^[[:space:]]//g")
-      sudo sed -i "s/^MODULES=(.*)/MODULES=(${mkinitcpiomodules})/" ${mkinitcpioconf}
+      sudo sed -i "s/^MODULES=(.*)$/MODULES=(${mkinitcpiomodules})/" ${mkinitcpioconf}
       show_info "Rebuilding kernel(s)"
       sudo mkinitcpio -P
     fi
