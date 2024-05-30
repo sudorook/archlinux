@@ -98,7 +98,7 @@ function install_firmware {
         /etc/pacman.d/hooks/
 
       for conf in "${efidir}"/loader/entries/*.conf; do
-        if ! grep "^initrd\s\+/amd-ucode.img" "${conf}" > /dev/null 2>&1; then
+        if ! grep -q "^initrd\s\+/amd-ucode.img" "${conf}"; then
           sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
         fi
       done
@@ -114,7 +114,7 @@ function install_firmware {
         /etc/pacman.d/hooks/
 
       for conf in "${efidir}"/loader/entries/*.conf; do
-        if ! grep "^initrd\s\+/intel-ucode.img" "${conf}" > /dev/null 2>&1; then
+        if ! grep -q "^initrd\s\+/intel-ucode.img" "${conf}"; then
           sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/intel-ucode.img" "${conf}"
         fi
       done
@@ -124,7 +124,7 @@ function install_firmware {
 
 function enable_sudo_insults {
   # Customize sudo to insult incorrect password attempts
-  if ! sudo grep "^Defaults\s\+insults" /etc/sudoers > /dev/null 2>&1; then
+  if ! sudo grep -q "^Defaults\s\+insults" /etc/sudoers; then
     show_info "Enabling sudo insults."
     sudo sh -c \
       'sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" /etc/sudoers | \
@@ -170,11 +170,11 @@ function disable_beep {
     sudo sh -c "echo 'blacklist snd_pcsp' >> ${pcspkr_blacklist}"
   else
     if ! find /etc/modprobe.d/ -type f \
-         -exec grep "blacklist pcspkr" {} + > /dev/null 2>&1; then
+         -exec grep -q "blacklist pcspkr" {} +; then
       sudo sh -c "echo 'blacklist pcspkr' >> ${pcspkr_blacklist}"
     fi
     if ! find /etc/modprobe.d/ -type f \
-         -exec grep "blacklist snd_pcsp" {} + > /dev/null 2>&1; then
+         -exec grep -q "blacklist snd_pcsp" {} +; then
       sudo sh -c "echo 'blacklist snd_pcsp' >> ${pcspkr_blacklist}"
     fi
   fi
@@ -182,7 +182,7 @@ function disable_beep {
 
   show_info "Disabling gtk2 and gtk3 error-bell."
   if [ -f "${gtk2conf}" ]; then
-    if grep "^gtk-error-bell=" "${gtk2conf}" > /dev/null 2>&1; then
+    if grep -q "^gtk-error-bell=" "${gtk2conf}"; then
       sed -i "s/^gtk-error-bell=.*$/gtk-error-bell=0/g" "${gtk2conf}"
     else
       echo "gtk-error-bell=0" >> "${gtk2conf}"
@@ -192,9 +192,9 @@ function disable_beep {
     echo "gtk-error-bell=0" >> "${gtk2conf}"
   fi
   if [ -f "${gtk3conf}" ]; then
-    if grep "^gtk-error-bell=" "${gtk3conf}" > /dev/null 2>&1; then
+    if grep -q "^gtk-error-bell=" "${gtk3conf}"; then
       sed -i "s/^gtk-error-bell=.*$/gtk-error-bell=0/g" "${gtk3conf}"
-    elif grep "^[Settings]" "${gtk3conf}" > /dev/null 2>&1; then
+    elif grep -q "^[Settings]" "${gtk3conf}"; then
       sed -i "/^[Settings]$/a gtk-error-bell=0" "${gtk3conf}"
     else
       echo "[Settings]" >> "${gtk3conf}"

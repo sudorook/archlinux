@@ -356,7 +356,7 @@ function install_kvm {
 function install_kvm_guest {
   local kvmguest="${DIR}/packages/kvm-guest.list"
   local mkinitcpioconf="/etc/mkinitcpio.conf"
-  if grep "^flags.*\ hypervisor" /proc/cpuinfo > /dev/null 2>&1; then
+  if grep -q "^flags.*\ hypervisor" /proc/cpuinfo; then
     show_header "Installing tools for KVM guests."
     check_installed "${kvmguest}"
     show_success "KVM installed."
@@ -736,7 +736,7 @@ function install_virtualbox {
 
 function install_virtualbox_guest {
   local virtualboxguest="${DIR}/packages/virtualbox-guest.list"
-  if grep "^flags.*\ hypervisor" /proc/cpuinfo > /dev/null 2>&1; then
+  if grep -q "^flags.*\ hypervisor" /proc/cpuinfo; then
     show_header "Installing packages for VirtualBox guests."
     check_installed "${virtualboxguest}"
     show_success "VirtualBox guest packages installed."
@@ -749,7 +749,7 @@ function install_wine {
   local wine="${DIR}/packages/wine.list"
   show_header "Installing wine."
   if [[ $(uname -m) = "x86_64" ]] &&
-    ! grep "^\[multilib\]" /etc/pacman.conf > /dev/null; then
+    ! grep -q "^\[multilib\]" /etc/pacman.conf; then
     show_info "multilib repos need to be enabled for 64-bit architectures."
     enable_multilib
   fi

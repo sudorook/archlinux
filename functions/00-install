@@ -929,7 +929,7 @@ function set_mkinitcpio {
   vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
   modules="$(sed -n "s/^MODULES=(\(.*\))$/\1/p" /etc/mkinitcpio.conf)"
   if [[ "${vendor}" =~ "AMD" ]]; then
-    if ! grep "^MODULES.*amdgpu" /etc/mkinitcpio.conf > /dev/null 2>&1; then
+    if ! grep -q "^MODULES.*amdgpu" /etc/mkinitcpio.conf; then
       if [ -n "${modules}" ]; then
         sed -i "s/^MODULES=(\(.*\))$/MODULES=(\1 amdgpu)/g" /etc/mkinitcpio.conf
       else
@@ -937,7 +937,7 @@ function set_mkinitcpio {
       fi
     fi
   elif [[ "${vendor}" =~ "Intel" ]]; then
-    if ! grep "^MODULES.*i915" /etc/mkinitcpio.conf > /dev/null 2>&1; then
+    if ! grep -q "^MODULES.*i915" /etc/mkinitcpio.conf; then
       if [ -n "${modules}" ]; then
         sed -i "s/^MODULES=(\(.*\))$/MODULES=(\1 i915)/g" /etc/mkinitcpio.conf
       else
