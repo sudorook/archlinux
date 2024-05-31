@@ -127,8 +127,8 @@ function enable_sudo_insults {
   if ! sudo grep -q "^Defaults\s\+insults" /etc/sudoers; then
     show_info "Enabling sudo insults."
     sudo sh -c \
-      'sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" /etc/sudoers | \
-       (EDITOR="tee" visudo >/dev/null)'
+      'sed -e "/^# Defaults!REBOOT !log_output$/a Defaults insults" /etc/sudoers |
+       EDITOR="tee -p" visudo > /dev/null'
   else
     show_info "Insults already enabled, you masochist."
   fi
