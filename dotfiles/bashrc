@@ -126,7 +126,7 @@ alias sudo='sudo '
 alias visudo='EDITOR=${EDITOR} visudo '
 alias grep='grep --color=auto'
 alias diff='diff --color=auto'
-alias happymake="make -j\$(nproc) && sudo make install"
+alias happymake='make -j$(nproc) && sudo make install'
 
 function superupgrade {
   sudo sh -c 'pacman -Syu && paccache -r && paccache -ruk0'
@@ -139,9 +139,9 @@ function megapurge {
     pacdiff -s
 
   local pkg
-  pkg=$(pacman -Qtdq | tr '\n' ' ') || true
-  if [[ -n "${pkg}" ]]; then
-    sudo sh -c "yes | pacman -Rs ${pkg}"
+  mapfile -t pkg < <(pacman -Qtdq)
+  if [ "${#pkg}" -gt 0 ]; then
+    sudo pacman -Rs --noconfirm "${pkg[@]}"
   fi
 }
 
