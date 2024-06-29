@@ -142,7 +142,7 @@ function install_apps_aur {
   show_success "Done!"
 }
 
-function instlal_apps_kde_aur {
+function install_apps_kde_aur {
   local aurkde="${DIR}/packages/apps-kde-aur.list"
   show_header "Installing KDE AUR applications."
   check_aur_installed "${aurkde}"
@@ -804,7 +804,7 @@ function 03-packages {
         install_apps
         install_apps_kde
         install_apps_aur
-        instlal_apps_kde_aur
+        install_apps_kde_aur
         install_codecs
         install_containers
         install_dev
@@ -850,7 +850,7 @@ function 03-packages {
         show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
         ;;
       "General KDE applications (AUR)")
-        instlal_apps_kde_aur
+        install_apps_kde_aur
         show_info "Main\n ${ENDBRANCH} Apps (Hit ENTER to see options again.)"
         ;;
       "Codecs")

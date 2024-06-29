@@ -29,7 +29,7 @@ Windows / MacOS for USB drive installations.
 The rough partition scheme is:
 
 ```
-1. BIOS compatibility parition, empty if GRUB not used (1 MiB)
+1. BIOS compatibility partition, empty if GRUB not used (1 MiB)
 2. EFI partition (512 MiB)
 3. Share partition (optional)
 4. Arch Linux system (Plain / LVM / LUKS-encrypted partitions or volumes)
@@ -191,7 +191,7 @@ Automatically install (without prompting) packages and configs.
 
 4. Install Cinnamon desktop environment and Gammastep (with LightDM for login).
 
-5. Install KDE desktop enviornment (with SDDM for login).
+5. Install KDE desktop environment (with SDDM for login).
 
 #### 6) Network tools
 
