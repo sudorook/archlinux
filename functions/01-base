@@ -98,11 +98,11 @@ function install_firmware {
         "${DIR}/hooks/999-update-amd-ucode.hook" \
         /etc/pacman.d/hooks/
 
-      for conf in "${efidir}"/loader/entries/*.conf; do
+      while read -r conf; do
         if ! grep -q "^initrd\s\+/amd-ucode.img" "${conf}"; then
           sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
         fi
-      done
+      done < <(sudo find "${efidir}"/loader/entries/ -name "*.conf")
     elif [[ "${vendor}" =~ "Intel" ]]; then
       sudo cp -af /boot/intel-ucode.img "${efidir}"
 
@@ -114,11 +114,11 @@ function install_firmware {
         "${DIR}/hooks/999-update-intel-ucode.hook" \
         /etc/pacman.d/hooks/
 
-      for conf in "${efidir}"/loader/entries/*.conf; do
+      while read -r conf; do
         if ! grep -q "^initrd\s\+/intel-ucode.img" "${conf}"; then
           sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/intel-ucode.img" "${conf}"
         fi
-      done
+      done < <(sudo find "${efidir}"/loader/entries/ -name "*.conf")
     fi
   fi
 }
