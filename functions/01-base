@@ -38,8 +38,9 @@ function enable_multilib {
 
   if [[ $(uname -m) = "x86_64" ]]; then
     show_info "Enabling multilib pacman repository."
-    sudo sed -i "s/#\[multilib\]/\[multilib\]/g" ${pacmanconf}
-    sudo sed -i "/\[multilib\]/{n;s/#Include = /Include = /}" ${pacmanconf}
+    sudo sed -i \
+      -e "s/^#\[multilib\]$/\[multilib\]/g" \
+      -e "/^\[multilib\]$/{n;s/^#Include = /Include = /}" "${pacmanconf}"
     sync_repos
     show_success "Multilib enabled."
   else
