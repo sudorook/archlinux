@@ -30,7 +30,6 @@ latex2exp
 MASS
 mvtnorm
 optparse
-parallel
 patchwork
 plyr
 quadprog
