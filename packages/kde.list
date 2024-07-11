@@ -10,7 +10,7 @@ kitty-terminfo
 konsole
 plasma
 plasma-wayland-protocols
-qt5-virtualkeyboard
+qt6-virtualkeyboard
 qt6-wayland
 xdg-desktop-portal
 xdg-desktop-portal-gtk
