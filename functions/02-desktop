@@ -142,6 +142,11 @@ function install_kde {
   fi
 
   show_info "Setting up SDDM greeter."
+  sudo mkdir -p /etc/sddm.conf.d/
+  sudo tee /etc/sddm.conf.d/virtualkbd.conf > /dev/null << EOF
+[General]
+InputMethod=qtvirtualkeyboard
+EOF
   sudo systemctl enable sddm.service
 
   # Set flag to enable KDE dialog boxes for GTK applications.
