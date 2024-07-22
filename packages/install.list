@@ -3,6 +3,7 @@ bc
 cryptsetup
 curl
 dosfstools
+findutils
 fzf
 git
 gptfdisk
