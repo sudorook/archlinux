@@ -5,6 +5,7 @@ blas-openblas
 blosc
 boost
 boost-libs
+catch2
 clang
 cmake
 cppcheck
@@ -23,6 +24,7 @@ glpk
 gnuplot
 go
 graphviz
+gtest
 hdf5-openmpi
 hugo
 intltool
