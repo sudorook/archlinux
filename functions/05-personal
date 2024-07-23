@@ -437,12 +437,12 @@ function set_lightdm_theme {
     sudo sed -i "s/^#icon-theme-name=$/icon-theme-name=/g" ${lightdmgtkconf}
     sudo sed -i "s/^icon-theme-name=.*$/icon-theme-name=${ICONTHEME}/g" ${lightdmgtkconf}
     if [[ "${FONT}" == "Noto" ]]; then
-      if pacman -Qi noto-fonts > /dev/null; then
+      if pacman -Qi noto-fonts > /dev/null 2>&1; then
         sudo sed -i "s/^#font-name=$/font-name=/g" ${lightdmgtkconf}
         sudo sed -i "s/^font-name=.*/font-name=Noto Sans/g" ${lightdmgtkconf}
       fi
     elif [[ "${FONT}" == "Roboto" ]]; then
-      if pacman -Qi ttf-roboto > /dev/null; then
+      if pacman -Qi ttf-roboto > /dev/null 2>&1; then
         sudo sed -i "s/^#font-name=$/font-name=/g" ${lightdmgtkconf}
         sudo sed -i "s/^font-name=.*/font-name=Roboto/g" ${lightdmgtkconf}
       fi
@@ -528,12 +528,12 @@ function set_sddm_theme {
         fi
         case "${FONT}" in
           Noto)
-            if pacman -Qi noto-fonts > /dev/null; then
+            if pacman -Qi noto-fonts > /dev/null 2>&1; then
               sudo "${kwconfig}" --file "${sddmconf}" --group Theme --key Font "Noto Sans,10,-1,5,50,0,0,0,0,0"
             fi
             ;;
           Roboto)
-            if pacman -Qi ttf-roboto > /dev/null; then
+            if pacman -Qi ttf-roboto > /dev/null 2>&1; then
               sudo "${kwconfig}" --file "${sddmconf}" --group Theme --key Font "Roboto,10,-1,5,50,0,0,0,0,0"
             fi
             ;;
