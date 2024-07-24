@@ -99,7 +99,7 @@ function install_firmware {
         /etc/pacman.d/hooks/
 
       while read -r conf; do
-        if ! grep -q "^initrd\s\+/amd-ucode.img" "${conf}"; then
+        if ! sudo grep -q "^initrd\s\+/amd-ucode.img" "${conf}"; then
           sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
         fi
       done < <(sudo find "${efidir}"/loader/entries/ -name "*.conf")
