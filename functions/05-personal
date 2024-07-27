@@ -1121,28 +1121,6 @@ function install_scripts {
     > "${autostartdir}/battery-watchdog.desktop"
 }
 
-function set_default_kernel {
-  local grubdefault="/etc/default/grub"
-  local grubcfg="/boot/grub/grub.cfg"
-  local mksdbootcfg="${DIR}/utils/sdboot-mkconfig"
-
-  show_info "Setting default boot kernel to ${KERNEL}."
-
-  if [ -f "${grubdefault}" ]; then
-    sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${KERNEL}'/g" ${grubdefault}
-    sudo grub-mkconfig -o ${grubcfg}
-  fi
-
-  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
-    local sdbootcfg
-    sdbootcfg="$(bootctl -p)/loader/loader.conf"
-    if ! [ -f "$(bootctl -p)/loader/entries/${KERNEL}.conf" ]; then
-      sudo "${mksdbootcfg}" "${KERNEL}"
-    fi
-    sudo sed -i "s/^default\(\s\+\)\(.*\)/default\1${KERNEL}.conf/g" "${sdbootcfg}"
-  fi
-}
-
 function select_gtk_theme {
   show_question "Select a GTK theme:"
 
@@ -1676,7 +1654,65 @@ function select_icon_theme {
   set_lightdm_theme
 }
 
-grubcfg="/boot/grub/grub.cfg"
+function set_plymouth_theme {
+  local theme="${1:-default}"
+  if command -v plymouth-set-default-theme > /dev/null; then
+    case "${theme}" in
+      Back)
+        return
+        ;;
+      default)
+        sudo plymouth-set-default-theme -r -R
+        ;;
+      breeze-text)
+        show_warning "WARNING: ${theme@Q} not working as of 03/07/2024."
+        ;;
+      *)
+        sudo plymouth-set-default-theme -R "${theme}"
+        ;;
+    esac
+  else
+    show_warning "'plymouth-set-default-theme' executable not found. Skipping."
+  fi
+}
+
+function select_plymouth_theme {
+  if command -v plymouth-set-default-theme > /dev/null; then
+    show_info "Select Plymouth theme:"
+    local choice
+    local choices
+    mapfile -t choices < <(plymouth-set-default-theme -l)
+    select choice in Back default "${choices[@]}"; do
+      set_plymouth_theme "${choice}"
+      break
+    done
+  else
+    show_warning "'plymouth-set-default-theme' executable not found. Skipping."
+  fi
+}
+
+function set_default_kernel {
+  local grubdefault="/etc/default/grub"
+  local grubcfg="/boot/grub/grub.cfg"
+  local mksdbootcfg="${DIR}/utils/sdboot-mkconfig"
+
+  show_info "Setting default boot kernel to ${KERNEL}."
+
+  if [ -f "${grubdefault}" ]; then
+    sudo sed -i "s/^GRUB_DEFAULT=.*$/GRUB_DEFAULT='Advanced options for Arch Linux>Arch Linux, with Linux ${KERNEL}'/g" ${grubdefault}
+    sudo grub-mkconfig -o ${grubcfg}
+  fi
+
+  if [[ "$(sudo bootctl is-installed)" = yes ]]; then
+    local sdbootcfg
+    sdbootcfg="$(bootctl -p)/loader/loader.conf"
+    if ! [ -f "$(bootctl -p)/loader/entries/${KERNEL}.conf" ]; then
+      sudo "${mksdbootcfg}" "${KERNEL}"
+    fi
+    sudo sed -i "s/^default\(\s\+\)\(.*\)/default\1${KERNEL}.conf/g" "${sdbootcfg}"
+  fi
+}
+
 function select_default_kernel {
   local kernellist
   local kernels
@@ -1731,6 +1767,7 @@ function 05-personal {
     "Select icon theme"
     "Select GTK theme"
     "Select Plasma theme"
+    "Select Plymouth theme"
     "Set dark GTK"
     "Select login shell"
     "Import Cinnamon dconf"
@@ -1760,6 +1797,7 @@ function 05-personal {
         set_lightdm_theme
         set_gdm_theme
         set_sddm_theme
+        set_plymouth_theme
         set_dark_gtk
         set_login_shell
         import_cinnamon_dconf
@@ -1791,6 +1829,10 @@ function 05-personal {
         ;;
       "Select Plasma theme")
         select_plasma_theme
+        show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
+        ;;
+      "Select Plymouth theme")
+        select_plymouth_theme
         show_info "Main\n ${ENDBRANCH} Personal (Hit ENTER to see options again.)"
         ;;
       "Set dark GTK")
