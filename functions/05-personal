@@ -1731,11 +1731,7 @@ function select_default_kernel {
         sed -e "s/^vmlinuz-//g")
   fi
 
-  kernels=("Back")
-  local _k
-  for _k in "${kernellist[@]}"; do
-    kernels+=("${_k}")
-  done
+  kernels=("Back" "${kernellist[@]}")
 
   show_question "Select a default kernel:"
   select option in "${kernels[@]}"; do
