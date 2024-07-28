@@ -78,6 +78,7 @@ function install_firmware {
     show_info "Rebuilding grub.cfg to use microcode updates."
     sudo grub-mkconfig -o ${grubcfg}
   fi
+
   # If booting with Gummiboot.
   if [ "$(sudo bootctl is-installed)" = yes ]; then
     show_info "Copying over Pacman hooks for CPU microcode."

@@ -109,14 +109,14 @@ function install_tor {
   check_installed "${tor}"
   show_success "Tor installed."
 
-  show_info "Enabling and starting tor service."
+  show_info "Enabling and starting Tor service."
   sudo systemctl enable tor
   sudo systemctl start tor
 }
 
 function tunnel_pacman_tor {
   # local pacmanconf="/etc/pacman.conf"
-  show_header "Tunneling pacman through tor."
+  show_header "Tunneling pacman through Tor."
   # if ! pacman -Qi tor > /dev/null 2>&1; then
   #   show_warning "Tor not installed. Skipping."
   # elif ! [[ $(systemctl is-active tor) == "active" ]]; then
