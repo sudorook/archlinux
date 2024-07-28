@@ -123,7 +123,7 @@ function tunnel_pacman_tor {
   #   show_warning "Tor systemd unit is not active. Skipping."
   # else
   #   sudo cp ${pacmanconf} ${pacmanconf}.${RANDOM}.bak
-  #   sudo sed -i "s,^#XferCommand = /usr/bin/curl .*,XferCommand = /usr/bin/curl --socks5-hostname localhost:9050 -C - -f %u > %o,g" ${pacmanconf}
+  #   sudo sed -i "s,^#XferCommand = /usr/bin/curl .*,XferCommand = /usr/bin/curl --socks5-hostname localhost:9050 --location --continue-at - --fail --output %o %u "${pacmanconf}"
   #   sudo pacman -Syy
   #   show_success "Done."
   # fi
