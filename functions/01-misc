@@ -217,7 +217,7 @@ function install_plymouth {
     show_success "Plymouth integration installed."
   fi
 
-  show_info "Enabling Plymouth in mkinitcpio.conf and rebuilding initrd(s)."
+  show_info "Enabling Plymouth in mkinitcpio.conf."
   if ! grep -q "^HOOKS=(.*plymouth.*)$" "${mkinitcpioconf}"; then
     # Insert the Plymouth hook after kernel mode setting.
     sudo sed -i '/^HOOKS=/s/ kms / kms plymouth /' "${mkinitcpioconf}"
