@@ -32,7 +32,16 @@ function install_gnome {
   fi
 
   show_info "Setting up GDM greeter."
-  sudo systemctl enable gdm.service
+  if [ -f /etc/systemd/system/display-manager.service ]; then
+    if [[ "$(systemctl is-active gdm)" = inactive ]]; then
+      local display_manager
+      display_manager="$(readlink -f /etc/systemd/system/display-manager.service)"
+      display_manager="${display_manager##*/}"
+      show_warning "Display manager already set to ${display_manager@Q}. Skipping GDM."
+    fi
+  else
+    sudo systemctl enable gdm.service
+  fi
 
   local extensiondir=${HOME}/.local/share/gnome-shell/extensions
   show_info "Downloading 'Desktop Icons' GNOME extension."
@@ -88,7 +97,17 @@ function install_cinnamon {
   sudo sed -i \
     "s/^#greeter-session=.*/greeter-session=lightdm-gtk-greeter/g" \
     "${lightdmconf}"
-  sudo systemctl enable lightdm.service
+
+  if [ -f /etc/systemd/system/display-manager.service ]; then
+    if [[ "$(systemctl is-active lightdm)" = inactive ]]; then
+      local display_manager
+      display_manager="$(readlink -f /etc/systemd/system/display-manager.service)"
+      display_manager="${display_manager##*/}"
+      show_warning "Display manager already set to ${display_manager@Q}. Skipping LightDM."
+    fi
+  else
+    sudo systemctl enable lightdm.service
+  fi
 
   # Get latitude and longitude using GeoClue2 for Gammastep.
   show_info "Setting Gammastep config."
@@ -147,7 +166,17 @@ function install_kde {
 [General]
 InputMethod=qtvirtualkeyboard
 EOF
-  sudo systemctl enable sddm.service
+
+  if [ -f /etc/systemd/system/display-manager.service ]; then
+    if [[ "$(systemctl is-active sddm)" = inactive ]]; then
+      local display_manager
+      display_manager="$(readlink -f /etc/systemd/system/display-manager.service)"
+      display_manager="${display_manager##*/}"
+      show_warning "Display manager already set to ${display_manager@Q}. Skipping SDDM."
+    fi
+  else
+    sudo systemctl enable sddm.service
+  fi
 
   # Set flag to enable KDE dialog boxes for GTK applications.
   set_config_key_value \
