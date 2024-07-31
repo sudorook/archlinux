@@ -269,7 +269,7 @@ function set_system_font {
         fi
       fi
 
-      if pacman -Qi plasma-shell > /dev/null 2>&1; then
+      if pacman -Qi plasma-desktop > /dev/null 2>&1; then
         local kwconfig
         local qdb
         if kwconfig="$(_get_kwrite_config)"; then
