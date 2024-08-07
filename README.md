@@ -7,8 +7,11 @@ are intended for Cinnamon, GNOME, and KDE.
 Requirements:
 
 1. `curl`
-2. `fzf`
-3. `git`
+2. `findutils`
+3. `fzf`
+4. `git`
+5. `grep`
+6. `sed`
 
 ## Install
 
@@ -155,8 +158,8 @@ Automatically install (without prompting) packages and configs.
 
 ```
 1) Back                     5) Linux RT kernel         9) Laptop tools
-2) All                      6) Linux RT LTS kernel    10) zsh
-3) Linux hardened kernel    7) Linux zen kernel
+2) All                      6) Linux RT LTS kernel    10) Plymouth
+3) Linux hardened kernel    7) Linux zen kernel       10) zsh
 4) Linux LTS kernel         8) Linux utilities
 ```
 
@@ -175,7 +178,9 @@ Automatically install (without prompting) packages and configs.
 9. Install `tlp` for power management and `xorg-xbacklight` for screen
    brightness.
 
-10. Install `zsh`, fish-like plugins, nerd fonts, and powerlevel10k theme.
+10. Install Plymouth splash screen.
+
+11. Install `zsh`, fish-like plugins, nerd fonts, and powerlevel10k theme.
 
 #### 5) Desktop environment
 
@@ -356,17 +361,17 @@ Automatically install (without prompting) packages and configs.
 #### 9) Personalization
 
 ```
- 1) Back                            12) Import KDE settings
- 2) All                             13) Import application dconf
- 3) Select system fonts             14) Import GNOME terminal profiles
- 4) Select icon theme               15) Enable autologin
- 5) Select GTK theme                16) Invert brightness (i915)
- 6) Select Plasma theme             17) Enable IOMMU (Intel)
- 7) Set dark GTK                    18) Disable PulseAudio suspend
- 8) Select login shell              19) Disable 802.11n
- 9) Import Cinnamon dconf           20) Add scripts
-10) Import GNOME dconf              21) Select default kernel
-11) Hide Avahi Programs
+ 1) Back                            12) Hide Avahi programs
+ 2) All                             13) Import KDE settings
+ 3) Select system fonts             14) Import application dconf
+ 4) Select icon theme               15) Import GNOME terminal profiles
+ 5) Select GTK theme                16) Enable autologin
+ 6) Select Plasma theme             17) Invert brightness (i915)
+ 7) Select Plymouth theme           18) Enable IOMMU (Intel)
+ 8) Set dark GTK                    19) Disable PulseAudio suspend
+ 9) Select login shell              20) Disable 802.11n
+10) Import Cinnamon dconf           21) Add scripts
+11) Import GNOME dconf              22) Select default kernel
 ```
 
 3. Select the system font. (Noto or Roboto)
@@ -377,35 +382,37 @@ Automatically install (without prompting) packages and configs.
 
 6. Select the system desktop theme (Plasma).
 
-7. Set GTK applications to prefer the dark theme.
+7. Select the Plymouth splash screen theme.
 
-8. Select default login shell (Bash or Zsh).
+8. Set GTK applications to prefer the dark theme.
 
-9. Import pre-defined dconf settings for Cinnamon.
+9. Select default login shell (Bash or Zsh).
 
-10. Import pre-defined dconf settings for GNOME.
+10. Import pre-defined dconf settings for Cinnamon.
 
-11. Hide the Avahi desktop applications in the application list.
+11. Import pre-defined dconf settings for GNOME.
 
-12. Configure default desktop and application settings for Plasma.
+12. Hide the Avahi desktop applications in the application list.
 
-13. Import pre-defined dconf settings for applications.
+13. Configure default desktop and application settings for Plasma.
 
-14. Import GNOME-terminal profiles (Light/Dark) via dconf.
+14. Import pre-defined dconf settings for applications.
 
-15. Enable autologin for the current user.
+15. Import GNOME-terminal profiles (Light/Dark) via dconf.
 
-16. Invert brightness via kernel command line options in the GRUB prompt.
+16. Enable autologin for the current user.
 
-17. Enable Intel IOMMU for the i915 graphics driver. Helps fix blank displays
+17. Invert brightness via kernel command line options in the GRUB prompt.
+
+18. Enable Intel IOMMU for the i915 graphics driver. Helps fix blank displays
     for Haswell CPUs running kernels >=5.7.
 
-18. Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
+19. Disable PulseAudio suspend (suspend can sometimes cause weird buzzing).
 
-19. Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
+20. Disable 802.11n networking in iwlwifi. May help speed up poor 802.11ac
     connections.
 
-20. Download and install
+21. Download and install
     [general utility scripts](https://github.com/sudorook/misc-scripts).
 
-21. Select the default boot kernel from the currently installed ones.
+22. Select the default boot kernel from the currently installed ones.
