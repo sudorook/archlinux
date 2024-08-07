@@ -1,9 +1,0 @@
-[Trigger]
-Type = Package
-Operation = Remove
-Target = amd-ucode
-
-[Action]
-Description = Removing AMD microcode from EFI system path
-When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/rm -f $EFI/amd-ucode.img && /usr/bin/sed -i "/^initrd\s\+\/amd-ucode.img/d" $EFI/loader/entries/*.conf'

@@ -47,10 +47,6 @@ function install_zsh {
 
 function install_linux_hardened {
   local hardened="${DIR}/packages/hardened.list"
-  local hardenedsdadd="${DIR}/hooks/999-add-linux-hardened.hook"
-  local hardenedsdremove="${DIR}/hooks/999-remove-linux-hardened.hook"
-  local hardenedsdupdate="${DIR}/hooks/999-update-linux-hardened.hook"
-  local pacmanhookdir="/etc/pacman.d/hooks"
 
   show_header "Installing linux-hardened kernel."
   check_installed "${hardened}"
@@ -62,19 +58,13 @@ function install_linux_hardened {
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
-    sudo cp -af "${hardenedsdadd}" "${pacmanhookdir}"
-    sudo cp -af "${hardenedsdremove}" "${pacmanhookdir}"
-    sudo cp -af "${hardenedsdupdate}" "${pacmanhookdir}"
-    sudo "${MKSDBOOTCONF}" linux-hardened
+    sudo "${MKSDBOOTCONF}" init linux-hardened
+    sudo systemctl enable --now efi-update@linux-hardened.path
   fi
 }
 
 function install_linux_lts {
   local lts="${DIR}/packages/lts.list"
-  local ltssdadd="${DIR}/hooks/999-add-linux-lts.hook"
-  local ltssdremove="${DIR}/hooks/999-remove-linux-lts.hook"
-  local ltssdupdate="${DIR}/hooks/999-update-linux-lts.hook"
-  local pacmanhookdir="/etc/pacman.d/hooks"
 
   show_header "Installing linux-lts kernel."
   check_installed "${lts}"
@@ -86,19 +76,13 @@ function install_linux_lts {
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
-    sudo cp -af "${ltssdadd}" "${pacmanhookdir}"
-    sudo cp -af "${ltssdremove}" "${pacmanhookdir}"
-    sudo cp -af "${ltssdupdate}" "${pacmanhookdir}"
-    sudo "${MKSDBOOTCONF}" linux-lts
+    sudo "${MKSDBOOTCONF}" init linux-lts
+    sudo systemctl enable --now efi-update@linux-lts.path
   fi
 }
 
 function install_linux_zen {
   local zen="${DIR}/packages/zen.list"
-  local zensdadd="${DIR}/hooks/999-add-linux-zen.hook"
-  local zensdremove="${DIR}/hooks/999-remove-linux-zen.hook"
-  local zensdupdate="${DIR}/hooks/999-update-linux-zen.hook"
-  local pacmanhookdir="/etc/pacman.d/hooks"
 
   show_header "Installing linux-zen kernel."
   check_installed "${zen}"
@@ -110,23 +94,16 @@ function install_linux_zen {
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
-    sudo cp -af "${zensdadd}" "${pacmanhookdir}"
-    sudo cp -af "${zensdremove}" "${pacmanhookdir}"
-    sudo cp -af "${zensdupdate}" "${pacmanhookdir}"
-    sudo "${MKSDBOOTCONF}" linux-zen
+    sudo "${MKSDBOOTCONF}" init linux-zen
+    sudo systemctl enable --now efi-update@linux-zen.path
   fi
 }
 
 function install_linux_rt {
   local rt="${DIR}/packages/rt.list"
-  local rtsdadd="${DIR}/hooks/999-add-linux-rt.hook"
-  local rtsdremove="${DIR}/hooks/999-remove-linux-rt.hook"
-  local rtsdupdate="${DIR}/hooks/999-update-linux-rt.hook"
-  local pacmanhookdir="/etc/pacman.d/hooks"
 
   show_header "Installing linux-rt kernel."
   check_installed "${rt}"
-  show_success "Zen kernel installed."
   show_success "Real-time kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
@@ -135,19 +112,13 @@ function install_linux_rt {
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
-    sudo cp -af "${rtsdadd}" "${pacmanhookdir}"
-    sudo cp -af "${rtsdremove}" "${pacmanhookdir}"
-    sudo cp -af "${rtsdupdate}" "${pacmanhookdir}"
-    sudo "${MKSDBOOTCONF}" linux-rt
+    sudo "${MKSDBOOTCONF}" init linux-rt
+    sudo systemctl enable --now efi-update@linux-rt.path
   fi
 }
 
 function install_linux_rt_lts {
   local rtlts="${DIR}/packages/rt-lts.list"
-  local rtltssdadd="${DIR}/hooks/999-add-linux-rt-lts.hook"
-  local rtltssdremove="${DIR}/hooks/999-remove-linux-rt-lts.hook"
-  local rtltssdupdate="${DIR}/hooks/999-update-linux-rt-lts.hook"
-  local pacmanhookdir="/etc/pacman.d/hooks"
 
   show_header "Installing linux-rt-lts kernel."
   check_installed "${rtlts}"
@@ -159,10 +130,8 @@ function install_linux_rt_lts {
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
-    sudo cp -af "${rtltssdadd}" "${pacmanhookdir}"
-    sudo cp -af "${rtltssdremove}" "${pacmanhookdir}"
-    sudo cp -af "${rtltssdupdate}" "${pacmanhookdir}"
-    sudo "${MKSDBOOTCONF}" linux-rt-lts
+    sudo "${MKSDBOOTCONF}" init linux-rt-lts
+    sudo systemctl enable --now efi-update@linux-rt-lts.path
   fi
 }
 

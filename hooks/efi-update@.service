@@ -1,0 +1,6 @@
+[Unit]
+Description=Copy '%i' to EFI system partition
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'EFI=$(bootctl -p) && if [ -f /boot/initramfs-%i-fallback.img ]; then if [ -f /usr/local/sbin/sdboot-mkconfig ]; then /usr/local/sbin/sdboot-mkconfig update %i; else /usr/bin/cp -af /boot/vmlinuz-%i /boot/initramfs-%i{,-fallback}.img -t $EFI; fi; else if [ -f /usr/local/sbin/sdboot-mkconfig ]; then /usr/local/sbin/sdboot-mkconfig remove %i; else /usr/bin/rm -f $EFI/vmlinuz-%i $EFI/initramfs-%i{,-fallback}.img $EFI/loader/entries/linux{,-fallback}.conf; fi; fi'

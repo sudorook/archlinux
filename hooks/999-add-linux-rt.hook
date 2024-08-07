@@ -1,9 +1,0 @@
-[Trigger]
-Type = Package
-Operation = Install
-Target = linux-rt
-
-[Action]
-Description = Installing Linux RT to EFI system path
-When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/cp -af /boot/vmlinuz-linux-rt /boot/initramfs-linux-rt{-fallback,}.img -t $EFI && [ -f /usr/local/sbin/sdboot-mkconfig ] && /usr/local/sbin/sdboot-mkconfig linux-rt'

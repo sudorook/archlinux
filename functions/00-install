@@ -1002,6 +1002,8 @@ function install_gummiboot {
   fi
 
   bootctl --esp-path=/efi install
+  systemctl enable systemd-boot-update
+  systemctl enable efi-update@linux.path
   cp -af /boot/vmlinuz* /boot/initramfs-linux* /efi
   mkdir -p /efi/loader/entries
 
@@ -1025,19 +1027,6 @@ linux	/vmlinuz-linux
 initrd	/initramfs-linux-fallback.img
 options	${cmdline}
 EOF
-
-  vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-  if [[ "$vendor" =~ AMD ]] && [ -f /boot/amd-ucode.img ]; then
-    cp -af /boot/amd-ucode.img /efi
-    sed -i "/^linux\s+\/vmlinuz/a initrd	\/amd-ucode.img" \
-      /efi/loader/entries/linux.conf \
-      /efi/loader/entries/linux-fallback.conf
-  elif [[ "$vendor" =~ Intel ]] && [ -f /boot/intel-ucode.img ]; then
-    cp -af /boot/intel-ucode.img /efi
-    sed -i "/^linux\s+\/vmlinuz/a initrd	\/intel-ucode.img" \
-      /efi/loader/entries/linux.conf \
-      /efi/loader/entries/linux-fallback.conf
-  fi
 }
 export -f install_gummiboot
 
@@ -1074,6 +1063,12 @@ function install_grub {
 
   if [ -n "${crypt_uuid}" ]; then
     sed -i "s/^#GRUB_ENABLE_CRYPTODISK/GRUB_ENABLE_CRYPTODISK/g" /etc/default/grub
+  fi
+
+  if grep -q ^GRUB_EARLY_INITRD_LINUX_STOCK /etc/default/grub; then
+    sed -i 's/^GRUB_EARLY_INITRD_LINUX_STOCK=.*/GRUB_EARLY_INITRD_LINUX_STOCK=""/g' /etc/default/grub
+  else
+    sed -i '/^GRUB_CMDLINE_LINUX=/a GRUB_EARLY_INITRD_LINUX_STOCK=""' /etc/default/grub
   fi
 
   if [ -e /sys/firmware/efi ]; then

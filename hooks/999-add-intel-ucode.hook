@@ -1,9 +1,0 @@
-[Trigger]
-Type = Package
-Operation = Install
-Target = intel-ucode
-
-[Action]
-Description = Copying Intel microcode to EFI system path and updating entries
-When = PostTransaction
-Exec = /bin/sh -c '/usr/bin/bootctl is-installed >/dev/null 2>&1 && EFI=$(/usr/bin/bootctl -p) && /usr/bin/cp -af /boot/intel-ucode.img $EFI && [ -f /usr/local/sbin/sdboot-mkconfig ] && /usr/local/sbin/sdboot-mkconfig ucode'

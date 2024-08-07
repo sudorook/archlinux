@@ -1,0 +1,9 @@
+[Unit]
+Description=Copy '%i' to EFI system partition
+
+[Path]
+PathModified=/boot/initramfs-%i-fallback.img
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=system-update.target

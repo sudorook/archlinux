@@ -68,60 +68,9 @@ function update_mirrorlist {
 
 function install_firmware {
   local firmware="${DIR}/packages/firmware.list"
-  local grubcfg="/boot/grub/grub.cfg"
 
   show_header "Installing firmware and microcode."
   check_installed "${firmware}"
-
-  # If booting with GRUB.
-  if command -v grub-mkconfig > /dev/null 2>&1; then
-    show_info "Rebuilding grub.cfg to use microcode updates."
-    sudo grub-mkconfig -o ${grubcfg}
-  fi
-
-  # If booting with Gummiboot.
-  if [ "$(sudo bootctl is-installed)" = yes ]; then
-    show_info "Copying over Pacman hooks for CPU microcode."
-
-    local vendor
-    local efidir
-    local conf
-    vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-    efidir="$(bootctl -p)"
-    if [[ "${vendor}" =~ "AMD" ]]; then
-      sudo cp -af /boot/amd-ucode.img "${efidir}"
-
-      # Copy pacman hooks for microcode updates.
-      mkdir -p /etc/pacman.d/hooks/
-      sudo cp -af \
-        "${DIR}/hooks/999-add-amd-ucode.hook" \
-        "${DIR}/hooks/999-remove-amd-ucode.hook" \
-        "${DIR}/hooks/999-update-amd-ucode.hook" \
-        /etc/pacman.d/hooks/
-
-      while read -r conf; do
-        if ! sudo grep -q "^initrd\s\+/amd-ucode.img" "${conf}"; then
-          sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/amd-ucode.img" "${conf}"
-        fi
-      done < <(sudo find "${efidir}"/loader/entries/ -name "*.conf")
-    elif [[ "${vendor}" =~ "Intel" ]]; then
-      sudo cp -af /boot/intel-ucode.img "${efidir}"
-
-      # Copy pacman hooks for microcode updates.
-      mkdir -p /etc/pacman.d/hooks/
-      sudo cp -af \
-        "${DIR}/hooks/999-add-intel-ucode.hook" \
-        "${DIR}/hooks/999-remove-intel-ucode.hook" \
-        "${DIR}/hooks/999-update-intel-ucode.hook" \
-        /etc/pacman.d/hooks/
-
-      while read -r conf; do
-        if ! grep -q "^initrd\s\+/intel-ucode.img" "${conf}"; then
-          sudo sed -i "/^initrd\s\+\/initramfs/i initrd	\/intel-ucode.img" "${conf}"
-        fi
-      done < <(sudo find "${efidir}"/loader/entries/ -name "*.conf")
-    fi
-  fi
 }
 
 function enable_sudo_insults {

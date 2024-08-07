@@ -85,28 +85,10 @@ function main {
         arch-chroot /mnt /bin/bash -c "make_luks_key"
     fi
   elif [[ "${BOOTMODE}" = "systemd-boot" ]]; then
-    mkdir -p /mnt/etc/pacman.d/hooks/
     cp -f \
-      "${DIR}/hooks/999-add-linux.hook" \
-      "${DIR}/hooks/999-remove-linux.hook" \
-      "${DIR}/hooks/999-update-linux.hook" \
-      "${DIR}/hooks/999-update-systemd-boot.hook" \
-      /mnt/etc/pacman.d/hooks/
-    local vendor
-    vendor="$(lscpu | sed -n "s,^Vendor ID: \+\([A-Za-z]\+\),\1,p")"
-    if [[ "${vendor}" =~ "AMD" ]]; then
-      cp -f \
-        "${DIR}/hooks/999-add-amd-ucode.hook" \
-        "${DIR}/hooks/999-update-amd-ucode.hook" \
-        "${DIR}/hooks/999-remove-amd-ucode.hook" \
-        /mnt/etc/pacman.d/hooks/
-    elif [[ "${vendor}" =~ "Intel" ]]; then
-      cp -f \
-        "${DIR}/hooks/999-add-intel-ucode.hook" \
-        "${DIR}/hooks/999-update-intel-ucode.hook" \
-        "${DIR}/hooks/999-remove-intel-ucode.hook" \
-        /mnt/etc/pacman.d/hooks/
-    fi
+      "${DIR}/hooks/efi-update@.path" \
+      "${DIR}/hooks/efi-update@.service" \
+      /mnt/etc/systemd/system/
     cp -f "${DIR}/utils/sdboot-mkconfig" /mnt/usr/local/sbin/
     chmod +x /mnt/usr/local/sbin/sdboot-mkconfig
 
