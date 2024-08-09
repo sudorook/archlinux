@@ -51,6 +51,9 @@ function install_gnome {
       "${HOME}/.local/share/gnome-shell/extensions/ding@rastersoft.com"
   fi
 
+  show_info "Enabling Night Light."
+  gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+
   show_info "Setting kitty as default terminal."
   gsettings set org.gnome.desktop.default-applications.terminal exec 'kitty'
 
