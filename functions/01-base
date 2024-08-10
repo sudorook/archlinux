@@ -101,7 +101,9 @@ function stylize_pacman {
 function parallelize_pacman {
   local pacmanconf="/etc/pacman.conf"
   show_info "Enabling parallel pacman downloads."
-  sudo sed -i "s/^#ParallelDownloads = \([0-9]\+\)$/ParallelDownloads = \1/g" ${pacmanconf}
+  if ! grep -q "^ParallelDownloads = [0-9]\+$" "${pacmanconf}"; then
+    sudo sed -i "s/^#ParallelDownloads = \([0-9]\+\)$/ParallelDownloads = \1/g" ${pacmanconf}
+  fi
 }
 
 function update_packages {
