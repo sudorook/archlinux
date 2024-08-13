@@ -61,6 +61,7 @@ python-numpy
 python-pandas
 python-pip
 python-pipx
+python-poetry
 python-pycurl
 python-pylint
 python-pyxdg
