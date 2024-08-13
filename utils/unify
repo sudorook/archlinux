@@ -18,19 +18,60 @@ set -eu
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-function make_single_file {
-  local contents
-  local mode="${1}"
+function make_install {
+  local archive
+  local contents=(
+    ./functions/00-check
+    ./functions/00-install
+    ./hooks
+    ./install
+    ./packages/install.list
+    ./utils/sdboot-mkconfig
+  )
   pushd "$(git rev-parse --show-toplevel)" > /dev/null
-  contents="$(tar -cz -O -T <(git ls-files --full-name) | base64 -w 0)"
+  archive="$(tar -cz -O "${contents[@]}" | base64 -w 0)"
   cat << EOF
 #! /bin/bash
 set -Eeu
+echo "Running unified Arch Linux 'install' script ($(git rev-parse HEAD))."
 TMP="\$(mktemp -d)"
 trap 'rm -rf "\${TMP}"; exit' INT TERM ERR EXIT
 cd "\${TMP}"
-tar -m -xzf <(base64 -d <<< ${contents})
-./${mode}
+tar -m -xzf <(base64 -d <<< ${archive})
+./install
+EOF
+  popd > /dev/null
+}
+
+function make_postinstall {
+  local archive
+  local contents=(
+    ./configs
+    ./daemons
+    ./dconf
+    ./dotfiles
+    ./functions/00-check
+    ./functions/01-base
+    ./functions/01-misc
+    ./functions/02-desktop
+    ./functions/03-network
+    ./functions/03-packages
+    ./functions/04-themes
+    ./functions/05-personal
+    ./packages
+    ./postinstall
+  )
+  pushd "$(git rev-parse --show-toplevel)" > /dev/null
+  archive="$(tar -cz -O "${contents[@]}" | base64 -w 0)"
+  cat << EOF
+#! /bin/bash
+set -Eeu
+echo "Running unified Arch Linux 'postinstall' script ($(git rev-parse HEAD))."
+TMP="\$(mktemp -d)"
+trap 'rm -rf "\${TMP}"; exit' INT TERM ERR EXIT
+cd "\${TMP}"
+tar -m -xzf <(base64 -d <<< ${archive})
+./postinstall
 EOF
   popd > /dev/null
 }
@@ -40,12 +81,12 @@ MODE="${1:-both}"
 case "${MODE}" in
   both)
     for MODE in install postinstall; do
-      make_single_file "${MODE}" > archlinux_"${MODE}"
+      make_"${MODE}" > archlinux_"${MODE}"
       chmod +x archlinux_"${MODE}"
     done
     ;;
   install | postinstall)
-    make_single_file "${MODE}" > archlinux_"${MODE}"
+    make_"${MODE}" > archlinux_"${MODE}"
     chmod +x archlinux_"${MODE}"
     ;;
   *)
