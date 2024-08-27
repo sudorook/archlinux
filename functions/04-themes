@@ -302,6 +302,23 @@ function install_nightfox_themes {
   show_success "Themes installed."
 }
 
+function install_powerlevel10k {
+  local p10krc="${DIR}/dotfiles/p10k"
+  check_aur_installed <(echo zsh-theme-powerlevel10k)
+  show_success "Done!"
+
+  copy_config_file "${p10krc}" "${HOME}/.p10k.zsh"
+
+  if ! [ -d /etc/fonts/conf.d ]; then
+    show_warning "'/etc/fonts/conf.d' for fontconfig is missing. Skipping."
+  elif ! [ -e /etc/fonts/conf.d/10-nerd-font-symbols.conf ] &&
+         [ -e /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]; then
+    sudo ln -s \
+      /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf \
+      /etc/fonts/conf.d/
+  fi
+}
+
 function install_timed_backgrounds {
   show_header "Installing timed backgrounds."
   local tmpdir
@@ -366,6 +383,7 @@ function 04-themes {
     "Papirus (icons)"
     "Colorific themes"
     "Nightfox themes"
+    "Powerlevel10k Zsh theme (AUR)"
     "Timed backgrounds"
     "Dynamic wallpapers (Plasma)")
   local option
@@ -387,6 +405,7 @@ function 04-themes {
         install_papirus_icons
         install_colorific_themes
         install_nightfox_themes
+        install_powerlevel10k
         install_timed_backgrounds
         install_plasma_timed_backgrounds
         set_qtcompat
@@ -440,6 +459,10 @@ function 04-themes {
         ;;
       "Nightfox themes")
         install_nightfox_themes
+        show_info "Main\n ${ENDBRANCH} Themes (Hit ENTER to see options again.)"
+        ;;
+      "Powerlevel10k Zsh theme (AUR)")
+        install_powerlevel10k
         show_info "Main\n ${ENDBRANCH} Themes (Hit ENTER to see options again.)"
         ;;
       "Timed backgrounds")

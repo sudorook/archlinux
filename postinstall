@@ -138,6 +138,7 @@ function main {
           # install_papirus_icons
           # install_colorific_themes
           install_nightfox_themes
+          install_powerlevel10k
           # install_timed_backgrounds
           install_plasma_timed_backgrounds
           # set_qtcompat

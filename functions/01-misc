@@ -24,7 +24,6 @@ MKSDBOOTCONF="${DIR}/utils/sdboot-mkconfig"
 function install_zsh {
   local zsh="${DIR}/packages/zsh.list"
   local zshrc="${DIR}/dotfiles/zshrc"
-  local p10krc="${DIR}/dotfiles/p10k"
 
   show_header "Installing zsh."
   check_installed "${zsh}"
@@ -33,16 +32,6 @@ function install_zsh {
   mkdir -p "${HOME}/.local/share/zsh/site-functions"
 
   copy_config_file "${zshrc}" "${HOME}/.zshrc"
-  copy_config_file "${p10krc}" "${HOME}/.p10k.zsh"
-
-  if ! [ -d /etc/fonts/conf.d ]; then
-    show_warning "'/etc/fonts/conf.d' for fontconfig is missing. Skipping."
-  elif ! [ -e /etc/fonts/conf.d/10-nerd-font-symbols.conf ] &&
-         [ -e /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]; then
-    sudo ln -s \
-      /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf \
-      /etc/fonts/conf.d/
-  fi
 }
 
 function install_linux_hardened {
