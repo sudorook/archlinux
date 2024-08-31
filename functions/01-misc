@@ -145,6 +145,14 @@ function install_utils {
     "${rkhunterconfig}"
 }
 
+function install_utils_aur {
+  local aurutils="${DIR}/packages/utils-aur.list"
+
+  show_header "Installing general utilities (AUR)."
+  check_installed "${aurutils}"
+  show_success "AUR utilities installed."
+}
+
 function install_laptop {
   local laptop="${DIR}/packages/laptop.list"
 
@@ -230,6 +238,7 @@ function 01-misc {
         install_linux_rt_lts
         install_linux_zen
         install_utils
+        install_utils_aur
         install_laptop
         install_plymouth
         install_zsh
@@ -257,6 +266,10 @@ function 01-misc {
         ;;
       "Linux utilities")
         install_utils
+        show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
+        ;;
+      "Linux utilities (AUR)")
+        install_utils_aur
         show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
       "Laptop tools")

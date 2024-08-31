@@ -79,6 +79,7 @@ function main {
           # install_linux_rt_lts
           # install_linux_zen
           install_utils
+          install_utils_aur
           # install_laptop
           # install_plymouth
           install_zsh
