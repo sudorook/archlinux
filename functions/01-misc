@@ -25,9 +25,9 @@ function install_zsh {
   local zsh="${DIR}/packages/zsh.list"
   local zshrc="${DIR}/dotfiles/zshrc"
 
-  show_header "Installing zsh."
+  show_header "Installing Zsh."
   check_installed "${zsh}"
-  show_success "zsh installed."
+  show_success "Zsh installed."
 
   mkdir -p "${HOME}/.local/share/zsh/site-functions"
 
@@ -224,7 +224,7 @@ function 01-misc {
     "Linux utilities"
     "Laptop tools"
     "Plymouth"
-    "zsh")
+    "Zsh")
   local option
   select option in "${options[@]}"; do
     case "${option}" in
@@ -280,7 +280,7 @@ function 01-misc {
         install_plymouth
         show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;
-      "zsh")
+      "Zsh")
         install_zsh
         show_info "Main\n ${ENDBRANCH} Misc (Hit ENTER to see options again.)"
         ;;

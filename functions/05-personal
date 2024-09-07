@@ -573,7 +573,7 @@ function set_zsh_shell {
   local p10krc="${DIR}/dotfiles/p10k"
 
   if ! command -v zsh > /dev/null 2>&1; then
-    show_warning "zsh not installed. Skipping."
+    show_warning "Zsh not installed. Skipping."
     return
   fi
 
@@ -581,7 +581,7 @@ function set_zsh_shell {
     show_info "Changing login shell to Zsh. Provide your password."
     chsh -s /bin/zsh
   else
-    show_info "Default shell already set to zsh."
+    show_info "Default shell already set to Zsh."
   fi
 
   mkdir -p "${HOME}/.local/share/zsh/site-functions"
