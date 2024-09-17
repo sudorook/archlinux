@@ -45,7 +45,6 @@ typescript-language-server
 vscode-css-languageserver
 vscode-html-languageserver
 vscode-json-languageserver
-vscode-markdown-languageserver
 vue-language-server
 yamlfmt
 yaml-language-server
