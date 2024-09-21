@@ -629,7 +629,6 @@ function install_neovim {
 function install_lazyvim {
   if [ $EUID -ne 0 ]; then
     local lazyvim="${DIR}/packages/lazyvim.list"
-    local lazyvimaur="${DIR}/packages/lazyvim-aur.list"
     local lazygit="${DIR}/configs/lazygit.yml"
     local nvimspell="${HOME}/.config/nvim/spell"
     local rubocop="${DIR}/configs/rubocop.yml"
@@ -638,52 +637,9 @@ function install_lazyvim {
     check_installed "${lazyvim}"
     show_success "LazyVim dependencies installed."
 
-    show_info "Installing LazyVim AUR dependencies."
-    check_aur_installed "${lazyvimaur}"
-    show_success "LazyVim AUR dependencies installed."
-
     copy_config_file "${lazygit}" "${HOME}/.config/lazygit/config.yml"
 
     copy_config_file "${rubocop}" "${HOME}/.config/rubocop/config.yml"
-
-    if command -v gem > /dev/null; then
-      gem install rufo solargraph
-    fi
-
-    if command -v julia > /dev/null; then
-      show_info "Installing Julia language server."
-      if ! julia --project="${HOME}"/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.status()' |
-         grep -q "\[[0-9a-f]\+\]\s\+LanguageServer\s\+"; then
-        julia --project="${HOME}"/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
-      fi
-    fi
-
-    if command -v R > /dev/null; then
-      if [[ -v R_LIBS_USER ]] && [ -n "${R_LIBS_USER}" ]; then
-        show_info "Installing R language server and code formatter."
-        mkdir -p "${R_LIBS_USER}"
-        Rscript <(
-          cat << EOF
-if (system.file(package='languageserver') == '') {
-  install.packages(c('languageserver'),
-                   lib = "${R_LIBS_USER}",
-                   clean = TRUE
-                   repo = 'https://cloud.r-project.org/')
-}
-if (system.file(package='styler') == '') {
-  install.packages(c('styler'),
-                   lib = "${R_LIBS_USER}",
-                   clean = TRUE
-                   repo = 'https://cloud.r-project.org/')
-}
-EOF
-        )
-      fi
-    fi
-
-    if command -v rust > /dev/null; then
-      rustup component add rust-analyzer
-    fi
 
     show_info "Installing LazyVim configuration files for Neovim."
     if [ -d "${HOME}/.config/nvim" ]; then
@@ -702,11 +658,6 @@ EOF
     else
       git clone https://github.com/sudorook/lazyvim.nvim.git "${HOME}/.config/nvim"
       show_success "LazyVim installed."
-    fi
-
-    if ! [ -f /usr/bin/markdownlint ] && [ -f /usr/bin/mdl ]; then
-      mkdir -p "${HOME}/.local/bin"
-      ln -sf /usr/bin/mdl "${HOME}/.local/bin/markdownlint"
     fi
 
     show_info "Install local wordlist."
