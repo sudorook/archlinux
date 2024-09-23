@@ -342,6 +342,7 @@ function install_kvm {
   # local qemuconf="/etc/libvirt/qemu.conf"
   local libvirtlocaldir="${HOME}/.local/libvirt"
   local nsconf="/etc/nsswitch.conf"
+  local libvirtnetworkconf="/etc/libvirt/network.conf"
 
   show_header "Installing KVM virtualization packages."
   check_installed "${kvm}"
@@ -358,6 +359,9 @@ function install_kvm {
     show_info "Enabling access to VMs on un-isolated bridge network."
     sudo sed -i "/^hosts/{s/files/files libvirt libvirt_guest/g}" "${nsconf}"
   fi
+
+  show_info "Setting libvirt to use iptables (for UFW compatibility)."
+  sudo sed -i 's/^#\?firewall_backend = "nftables"/firewall_backend = "iptables"/g' "${libvirtnetworkconf}"
 
   sudo systemctl enable libvirtd
   sudo systemctl start libvirtd
