@@ -1,4 +1,6 @@
 otf-font-awesome
 pdfpc
+perl-file-homedir
+perl-yaml-tiny
 texlive
 ttf-font-awesome
