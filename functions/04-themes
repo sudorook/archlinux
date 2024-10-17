@@ -304,6 +304,7 @@ function install_nightfox_themes {
 
 function install_powerlevel10k {
   local p10krc="${DIR}/dotfiles/p10k"
+  gpg --recv-keys 90ACE942EB90C3DD
   check_aur_installed <(echo zsh-theme-powerlevel10k)
   show_success "Done!"
 
