@@ -6,7 +6,6 @@ data.table
 devtools
 expm
 ggalluvial
-gganimate
 ggbeeswarm
 ggdendro
 ggplot2
