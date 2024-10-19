@@ -39,6 +39,7 @@ RcppEigen
 reshape2
 Rglpk
 rmarkdown
+Rmpfr
 roxygen2
 shiny
 testthat
