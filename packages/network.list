@@ -1,4 +1,6 @@
 networkmanager
 networkmanager-openvpn
 openssh
+tcpdump
+traceroute
 wireguard-tools
