@@ -48,7 +48,6 @@ prettier
 pygmentize
 python
 python-beautifulsoup4
-python-biopython
 python-black
 python-certifi
 python-h5py-openmpi
