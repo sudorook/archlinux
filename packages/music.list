@@ -3,6 +3,7 @@ ffmpeg
 imagemagick
 mpc
 mpd
+mpd-mpris
 ncmpcpp
 pianobar
 python-mpd2
