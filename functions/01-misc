@@ -42,8 +42,10 @@ function install_linux_hardened {
   show_success "Hardened kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
-    show_info "Regenerating grub.cfg"
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    if sudo sh -c '[ -d /boot/grub ]'; then
+      show_info "Regenerating grub.cfg"
+      sudo grub-mkconfig -o /boot/grub/grub.cfg
+    fi
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
@@ -60,8 +62,10 @@ function install_linux_lts {
   show_success "LTS kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
-    show_info "Regenerating grub.cfg"
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    if sudo sh -c '[ -d /boot/grub ]'; then
+      show_info "Regenerating grub.cfg"
+      sudo grub-mkconfig -o /boot/grub/grub.cfg
+    fi
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
@@ -78,8 +82,10 @@ function install_linux_zen {
   show_success "Zen kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
-    show_info "Regenerating grub.cfg"
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    if sudo sh -c '[ -d /boot/grub ]'; then
+      show_info "Regenerating grub.cfg"
+      sudo grub-mkconfig -o /boot/grub/grub.cfg
+    fi
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
@@ -96,8 +102,10 @@ function install_linux_rt {
   show_success "Real-time kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
-    show_info "Regenerating grub.cfg"
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    if sudo sh -c '[ -d /boot/grub ]'; then
+      show_info "Regenerating grub.cfg"
+      sudo grub-mkconfig -o /boot/grub/grub.cfg
+    fi
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
@@ -114,8 +122,10 @@ function install_linux_rt_lts {
   show_success "Real-time LTS kernel installed."
 
   if command -v grub-mkconfig > /dev/null 2>&1; then
-    show_info "Regenerating grub.cfg"
-    sudo grub-mkconfig -o /boot/grub/grub.cfg
+    if sudo sh -c '[ -d /boot/grub ]'; then
+      show_info "Regenerating grub.cfg"
+      sudo grub-mkconfig -o /boot/grub/grub.cfg
+    fi
   fi
 
   if [[ "$(sudo bootctl is-installed)" = yes ]]; then
