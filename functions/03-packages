@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # SPDX-FileCopyrightText: 2016 - 2024 sudorook <daemon@nullcodon.com>
 #
